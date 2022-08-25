@@ -32,7 +32,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { SIGNUP } from "../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../graphql/queries";
 
-export const SignUpForm = ({ isMobile }) => {
+export const CareOverviewForm = ({ isMobile }) => {
   const [signup, { data, loading, error }] = useMutation(SIGNUP);
   const [
     addressLookup,
