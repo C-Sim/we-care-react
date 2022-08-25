@@ -3,7 +3,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { ImageWithBackground } from "../components/ImageWithBackground";
 import { LoginForm } from "../components/LoginForm";
-import landingImage from "../components/atoms/images/carers-pills.svg";
+import loginImage from "../components/atoms/images/sign-up.svg";
 
 export const LoginPage = () => {
   const isMobile = useMediaQuery("(max-width:900px)");
@@ -12,7 +12,7 @@ export const LoginPage = () => {
     <Grid container sx={{ minHeight: "95vh" }}>
       {!isMobile && (
         <Grid item md={6}>
-          <img src={landingImage} />
+          <img src={loginImage} />
         </Grid>
       )}
       <Grid
