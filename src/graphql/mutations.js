@@ -14,6 +14,22 @@ export const SIGNUP = gql`
   }
 `;
 
+export const PROFILE_SETUP = gql`
+  mutation Mutation($patientInput: PatientInput!) {
+    patientSetup(patientInput: $patientInput) {
+      success
+      patient {
+        username
+        // gender
+        // genderPreference
+        // postcode
+        // days
+      }
+      userId
+    }
+  }
+`;
+
 export const LOGIN = gql`
   mutation Mutation($loginInput: LoginInput!) {
     login(loginInput: $loginInput) {
