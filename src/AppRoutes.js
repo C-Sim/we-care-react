@@ -4,6 +4,12 @@ import { LoginPage } from "./containers/LoginPage";
 import { SignUpPage } from "./containers/SignUpPage";
 import { DashboardPage } from "./containers/DashboardPage";
 import { AboutPage } from "./containers/AboutPage";
+import { AssignmentsPage } from "./containers/AssignmentsPage";
+import { CareOverviewPage } from "./containers/CareOverviewPage";
+import { CarePlanPage } from "./containers/CarePlanPage";
+import { NotificationsPage } from "./containers/NotificationsPage";
+import { PatientsPage } from "./containers/PatientsPage";
+import { ResourcesPage } from "./containers/ResourcesPage";
 
 import { useAuth } from "./context/AppProvider";
 
