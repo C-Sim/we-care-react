@@ -18,8 +18,8 @@ import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import FormHelperText from "@mui/material/FormHelperText";
 
-import { LOGIN } from "../graphql/mutations";
-import { useAuth } from "../context/AppProvider";
+import { LOGIN } from "../../graphql/mutations";
+import { useAuth } from "../../context/AppProvider";
 
 export const LoginForm = ({ isMobile }) => {
   const [login, { data, loading, error }] = useMutation(LOGIN);

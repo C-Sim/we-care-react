@@ -12,7 +12,7 @@ import Stack from "@mui/material/Stack";
 
 import { AppProvider } from "./context/AppProvider";
 import { AppRoutes } from "./AppRoutes";
-import { NavBar } from "./components/NavBar";
+// import { NavBar } from "./components/organisms/NavBar";
 
 const link = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL || "http://localhost:4000",
@@ -41,7 +41,7 @@ export const App = () => {
       <BrowserRouter>
         <AppProvider>
           <Stack sx={{ minHeight: "100vh" }} spacing={0}>
-            <NavBar
+            {/* <NavBar
               navItems={[
                 {
                   label: "About",
@@ -52,7 +52,7 @@ export const App = () => {
                   path: "/login",
                 },
               ]}
-            />
+            /> */}
             <AppRoutes />
           </Stack>
         </AppProvider>

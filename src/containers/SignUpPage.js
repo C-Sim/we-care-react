@@ -1,8 +1,7 @@
 import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { ImageWithBackground } from "../components/ImageWithBackground";
-import { SignUpForm } from "../components/SignUpForm";
+import { SignUpForm } from "../components/organisms/SignUpForm";
 import signUpImage from "../components/atoms/images/sign-up.svg";
 
 export const SignUpPage = () => {

@@ -1,8 +1,7 @@
 import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { ImageWithBackground } from "../components/ImageWithBackground";
-import { LoginForm } from "../components/LoginForm";
+import { LoginForm } from "../components/organisms/LoginForm";
 import loginImage from "../components/atoms/images/sign-up.svg";
 
 export const LoginPage = () => {

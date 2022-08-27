@@ -29,8 +29,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
-import { SIGNUP } from "../graphql/mutations";
-import { ADDRESS_LOOKUP } from "../graphql/queries";
+import { SIGNUP } from "../../graphql/mutations";
+import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
 export const SignUpForm = ({ isMobile }) => {
   const [signup, { data, loading, error }] = useMutation(SIGNUP);
