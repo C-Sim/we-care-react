@@ -19,13 +19,10 @@ import Link from "@mui/material/Link";
 import FormHelperText from "@mui/material/FormHelperText";
 
 import { SIGNUP } from "../../graphql/mutations";
-import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
 export const SignUpForm = ({ isMobile }) => {
   const [signup, { data, loading, error }] = useMutation(SIGNUP);
-  const [] = useLazyQuery(ADDRESS_LOOKUP, {
-    fetchPolicy: "network-only",
-  });
+
   const {
     register,
     formState: { errors },
@@ -38,7 +35,6 @@ export const SignUpForm = ({ isMobile }) => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
-  const [selectedAddressId, setSelectedAddressId] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
