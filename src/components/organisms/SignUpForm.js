@@ -17,31 +17,13 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import FormHelperText from "@mui/material/FormHelperText";
-import SearchIcon from "@mui/icons-material/Search";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 
 import { SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
 export const SignUpForm = ({ isMobile }) => {
   const [signup, { data, loading, error }] = useMutation(SIGNUP);
-  const [
-    addressLookup,
-    {
-      data: addressLookupData,
-      loading: addressLookupLoading,
-      error: addressLookupError,
-    },
-  ] = useLazyQuery(ADDRESS_LOOKUP, {
+  const [] = useLazyQuery(ADDRESS_LOOKUP, {
     fetchPolicy: "network-only",
   });
   const {
@@ -56,9 +38,7 @@ export const SignUpForm = ({ isMobile }) => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
-  const [open, setOpen] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState();
-  const [selectedAddress, setSelectedAddress] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,12 +46,6 @@ export const SignUpForm = ({ isMobile }) => {
       navigate("/login", { replace: true });
     }
   }, [data, navigate]);
-
-  useEffect(() => {
-    if (addressLookupData?.addressLookup) {
-      handleOpenModal();
-    }
-  }, [addressLookupData]);
 
   const onSubmit = (formData) => {
     if (formData.password !== formData.confirmPassword) {
@@ -89,10 +63,9 @@ export const SignUpForm = ({ isMobile }) => {
         firstName: formData.firstName,
         lastName: formData.lastName,
         phoneNumber: formData.phoneNumber,
-        imageUrl: formData.imageUrl,
         email: formData.email,
         password: formData.password,
-        userType: "petCarer",
+        accountType: "patient",
         address: selectedAddressId,
       };
 
@@ -112,59 +85,8 @@ export const SignUpForm = ({ isMobile }) => {
     setShowConfirmedPassword(!showConfirmedPassword);
   };
 
-  const handleAddressLookup = () => {
-    addressLookup({
-      variables: {
-        postcode: getValues("postcode"),
-      },
-    });
-  };
-
-  const handleOpenModal = () => {
-    setOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
-
-  const handleAddressSelection = (event) => {
-    setSelectedAddressId(event.currentTarget.id);
-    const { fullAddress } = addressLookupData?.addressLookup?.addresses.find(
-      (each) => each._id === event.currentTarget.id
-    );
-    setSelectedAddress(fullAddress);
-    clearErrors("postcode");
-    handleCloseModal();
-  };
-
   return (
     <Paper sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }} elevation={6}>
-      <Dialog open={open} onClose={handleCloseModal}>
-        <DialogTitle>Select Address</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please select one address from the following list:
-          </DialogContentText>
-          <List>
-            {addressLookupData?.addressLookup?.addresses?.map((address) => {
-              return (
-                <ListItem disablePadding key={address._id}>
-                  <ListItemButton
-                    onClick={handleAddressSelection}
-                    id={address._id}
-                  >
-                    <ListItemText primary={address.fullAddress} />
-                  </ListItemButton>
-                </ListItem>
-              );
-            })}
-          </List>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
       <Typography component="h1" variant="h4" align="center">
         Sign Up
       </Typography>

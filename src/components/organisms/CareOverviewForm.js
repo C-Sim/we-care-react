@@ -85,20 +85,13 @@ export const CareOverviewForm = ({ isMobile }) => {
         message: "Please select an address",
       });
     } else {
-      const signupInput = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        phoneNumber: formData.phoneNumber,
-        imageUrl: formData.imageUrl,
-        email: formData.email,
-        password: formData.password,
-        userType: "petCarer",
+      const patientInput = {
         address: selectedAddressId,
       };
 
       signup({
         variables: {
-          signupInput,
+          patientInput,
         },
       });
     }

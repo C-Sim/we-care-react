@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
+import { LandingPage } from "./containers/LandingPage";
 import { LoginPage } from "./containers/LoginPage";
 import { SignUpPage } from "./containers/SignUpPage";
 import { DashboardPage } from "./containers/DashboardPage";
@@ -20,6 +21,8 @@ export const AppRoutes = () => {
     <Routes>
       {!isLoggedIn && (
         <>
+          <Route path="/" element={<LandingPage />} />
+
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/about" element={<AboutPage />} />

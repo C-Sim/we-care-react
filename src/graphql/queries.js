@@ -84,20 +84,23 @@ export const PATIENT_DASHBOARD = gql`
   }
 `;
 
-export const FIND_BY_GENDER = gql`query FindPatientsByCarerGender($userId: ID!) {
-  findPatientsByCarerGender(userId: $userId) {
+export const FIND_BY_GENDER = gql`
+  query FindPatientsByCarerGender($userId: ID!) {
+    findPatientsByCarerGender(userId: $userId) {
       userId {
-          id
-          firstName
-          lastName
-          email
+        id
+        firstName
+        lastName
+        email
       }
       gender
       postcode
       days
       notificationCount
       appointmentCount
-    }`;
+    }
+  }
+`;
 
 export const FIND_BY_GENDER_AND_DAY = gql`
   query FindPatientsByCarerGenderAndDay($userId: ID!, $dayInput: DayInput) {

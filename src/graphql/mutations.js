@@ -20,10 +20,6 @@ export const PROFILE_SETUP = gql`
       success
       patient {
         username
-        // gender
-        // genderPreference
-        // postcode
-        // days
       }
       userId
     }
