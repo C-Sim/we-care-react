@@ -7,6 +7,7 @@ export const USERS = gql`
       firstName
       lastName
       email
+      phoneNumber
       accountType
     }
   }
@@ -19,6 +20,7 @@ export const USER_ID = gql`
       firstName
       lastName
       email
+      phoneNumber
       accountType
     }
   }
@@ -92,6 +94,7 @@ export const FIND_BY_GENDER = gql`
         firstName
         lastName
         email
+        phoneNumber
       }
       gender
       postcode
@@ -110,6 +113,7 @@ export const FIND_BY_GENDER_AND_DAY = gql`
         firstName
         lastName
         email
+        phoneNumber
       }
       gender
       postcode
