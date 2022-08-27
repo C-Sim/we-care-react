@@ -53,11 +53,6 @@ export const SignUpForm = ({ isMobile }) => {
         type: "manual",
         message: "Passwords do not match.",
       });
-    } else if (!selectedAddressId) {
-      setError("postcode", {
-        type: "manual",
-        message: "Please select an address",
-      });
     } else {
       const signupInput = {
         firstName: formData.firstName,
@@ -66,7 +61,6 @@ export const SignUpForm = ({ isMobile }) => {
         email: formData.email,
         password: formData.password,
         accountType: "patient",
-        address: selectedAddressId,
       };
 
       signup({
