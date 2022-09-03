@@ -17,12 +17,33 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import FormHelperText from "@mui/material/FormHelperText";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Button from "@mui/material/Button";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { SIGNUP } from "../../graphql/mutations";
+import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
 export const SignUpForm = ({ isMobile }) => {
   const [signup, { data, loading, error }] = useMutation(SIGNUP);
-
+  const [
+    addressLookup,
+    {
+      data: addressLookupData,
+      loading: addressLookupLoading,
+      error: addressLookupError,
+    },
+  ] = useLazyQuery(ADDRESS_LOOKUP, {
+    fetchPolicy: "network-only",
+  });
   const {
     register,
     formState: { errors },
@@ -35,6 +56,9 @@ export const SignUpForm = ({ isMobile }) => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedAddressId, setSelectedAddressId] = useState();
+  const [selectedAddress, setSelectedAddress] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,11 +67,22 @@ export const SignUpForm = ({ isMobile }) => {
     }
   }, [data, navigate]);
 
+  useEffect(() => {
+    if (addressLookupData?.addressLookup) {
+      handleOpenModal();
+    }
+  }, [addressLookupData]);
+
   const onSubmit = (formData) => {
     if (formData.password !== formData.confirmPassword) {
       setError("confirmPassword", {
         type: "manual",
         message: "Passwords do not match.",
+      });
+    } else if (!selectedAddressId) {
+      setError("postcode", {
+        type: "manual",
+        message: "Please select an address",
       });
     } else {
       const signupInput = {
@@ -75,8 +110,60 @@ export const SignUpForm = ({ isMobile }) => {
     setShowConfirmedPassword(!showConfirmedPassword);
   };
 
+  const handleAddressLookup = () => {
+    addressLookup({
+      variables: {
+        postcode: getValues("postcode"),
+      },
+    });
+  };
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
+  const handleAddressSelection = (event) => {
+    setSelectedAddressId(event.currentTarget.id);
+    const { fullAddress } = addressLookupData?.addressLookup?.addresses.find(
+      (each) => each._id === event.currentTarget.id
+    );
+    setSelectedAddress(fullAddress);
+    clearErrors("postcode");
+    handleCloseModal();
+  };
+
   return (
     <Paper sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }} elevation={6}>
+      <Dialog open={open} onClose={handleCloseModal}>
+        <DialogTitle>Select Address</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please select one address from the following list:
+          </DialogContentText>
+          <List>
+            {addressLookupData?.addressLookup?.addresses?.map((address) => {
+              return (
+                <ListItem disablePadding key={address._id}>
+                  <ListItemButton
+                    onClick={handleAddressSelection}
+                    id={address._id}
+                  >
+                    <ListItemText primary={address.fullAddress} />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+
       <Typography component="h1" variant="h4" align="center">
         Sign Up
       </Typography>
@@ -126,6 +213,8 @@ export const SignUpForm = ({ isMobile }) => {
               required: true,
             })}
           />
+          {/* <Stack spacing={2}> */}
+
           <Typography component="h2" variant="button" align="left">
             Account Details
           </Typography>
@@ -205,6 +294,46 @@ export const SignUpForm = ({ isMobile }) => {
               </FormHelperText>
             )}
           </FormControl>
+          <Typography component="h2" variant="button" align="left">
+            Address Details
+          </Typography>
+          <FormControl sx={{ m: 1 }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              Postcode
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type="text"
+              // value={postcode}
+              // onChange={handleOnChangeAddress}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleAddressLookup}
+                    onMouseDown={handleAddressLookup}
+                    edge="end"
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+              {...register("postcode", {
+                required: true,
+              })}
+            />
+            {!!errors.postcode && (
+              <FormHelperText error={!!errors.postcode}>
+                {errors.postcode?.message}
+              </FormHelperText>
+            )}
+          </FormControl>
+          {selectedAddress && (
+            <Typography component="div" variant="caption" align="left">
+              {selectedAddress}
+            </Typography>
+          )}
         </Stack>
         <Stack spacing={2}>
           <LoadingButton variant="contained" type="submit" loading={loading}>
