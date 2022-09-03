@@ -30,6 +30,9 @@ import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 import { SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
@@ -269,7 +272,6 @@ export const SignUpForm = ({ isMobile }) => {
           <Typography component="h2" variant="button" align="left">
             Personal Details
           </Typography>
-
           <TextField
             required
             error={!!errors.firstName}
@@ -305,7 +307,6 @@ export const SignUpForm = ({ isMobile }) => {
             })}
           />
           {/* <Stack spacing={2}> */}
-
           <FormControl sx={{ m: 1 }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Postcode
@@ -343,30 +344,71 @@ export const SignUpForm = ({ isMobile }) => {
               {selectedAddress}
             </Typography>
           )}
-          <div>
-            <TextField
-              required
-              error={!!errors.lastName}
-              label="Gender"
-              variant="outlined"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClickMenu}
-            />{" "}
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={openMenu}
-              onClose={handleCloseMenu}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={handleCloseMenu}>Male</MenuItem>
-              <MenuItem onClick={handleCloseMenu}>Female</MenuItem>
-            </Menu>
-          </div>
+          <TextField
+            required
+            error={!!errors.lastName}
+            label="Gender"
+            variant="outlined"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClickMenu}
+          />{" "}
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={openMenu}
+            onClose={handleCloseMenu}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleCloseMenu}>Male</MenuItem>
+            <MenuItem onClick={handleCloseMenu}>Female</MenuItem>
+          </Menu>
+        </Stack>
+        <Stack spacing={2}>
+          <Typography component="h2" variant="button" align="left">
+            Care Requirements
+          </Typography>
+          <TextField
+            required
+            error={!!errors.lastName}
+            label="Preferred gender of carer"
+            variant="outlined"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClickMenu}
+          />{" "}
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={openMenu}
+            onClose={handleCloseMenu}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleCloseMenu}>Male</MenuItem>
+            <MenuItem onClick={handleCloseMenu}>Female</MenuItem>
+            <MenuItem onClick={handleCloseMenu}>No preference</MenuItem>
+          </Menu>
+          <FormGroup
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space - between",
+            }}
+          >
+            <FormControlLabel control={<Checkbox />} label="Mon" />
+            <FormControlLabel control={<Checkbox />} label="Tue" />
+            <FormControlLabel control={<Checkbox />} label="Wed" />
+            <FormControlLabel control={<Checkbox />} label="Thu" />
+            <FormControlLabel control={<Checkbox />} label="Fri" />
+            <FormControlLabel control={<Checkbox />} label="Sat" />
+            <FormControlLabel control={<Checkbox />} label="Sun" />
+          </FormGroup>
         </Stack>
         <Stack spacing={2}>
           <LoadingButton variant="contained" type="submit" loading={loading}>
