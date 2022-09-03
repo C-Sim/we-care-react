@@ -28,33 +28,37 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-
+import Select from "@mui/material/Select";
 import { SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
 export const SignUpForm = ({ isMobile }) => {
   const [signup, { data, loading, error }] = useMutation(SIGNUP);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openMenu = Boolean(anchorEl);
-  const handleClickMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-  };
+  //dropdown menu
+  const [gender, setGender] = useState("");
+
+  const [genderCare, setGenderCare] = useState("");
+
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const openMenu = Boolean(anchorEl);
+  // const handleClickMenu = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleCloseMenu = () => {
+  //   setAnchorEl(null);
+  // };
 
   const [
     addressLookup,
     {
       data: addressLookupData,
-      loading: addressLookupLoading,
-      error: addressLookupError,
+      // loading: addressLookupLoading,
+      // error: addressLookupError,
     },
   ] = useLazyQuery(ADDRESS_LOOKUP, {
     fetchPolicy: "network-only",
@@ -149,6 +153,14 @@ export const SignUpForm = ({ isMobile }) => {
     setSelectedAddress(fullAddress);
     clearErrors("postcode");
     handleCloseModal();
+  };
+
+  const handleChangeGender = (event) => {
+    setGender(event.target.value);
+  };
+
+  const handleChangeGenderCare = (event) => {
+    setGenderCare(event.target.value);
   };
 
   return (
@@ -344,7 +356,21 @@ export const SignUpForm = ({ isMobile }) => {
               {selectedAddress}
             </Typography>
           )}
-          <TextField
+          <FormControl>
+            <InputLabel id="gender">Gender</InputLabel>
+            <Select
+              labelId="gender"
+              id="gender"
+              value={gender}
+              label="Gender"
+              onChange={handleChangeGender}
+            >
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
+            </Select>
+          </FormControl>
+
+          {/* <TextField
             required
             error={!!errors.lastName}
             label="Gender"
@@ -365,35 +391,15 @@ export const SignUpForm = ({ isMobile }) => {
           >
             <MenuItem onClick={handleCloseMenu}>Male</MenuItem>
             <MenuItem onClick={handleCloseMenu}>Female</MenuItem>
-          </Menu>
+          </Menu> */}
         </Stack>
         <Stack spacing={2}>
           <Typography component="h2" variant="button" align="left">
             Care Requirements
           </Typography>
-          <TextField
-            required
-            error={!!errors.lastName}
-            label="Preferred gender of carer"
-            variant="outlined"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClickMenu}
-          />{" "}
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={openMenu}
-            onClose={handleCloseMenu}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={handleCloseMenu}>Male</MenuItem>
-            <MenuItem onClick={handleCloseMenu}>Female</MenuItem>
-            <MenuItem onClick={handleCloseMenu}>No preference</MenuItem>
-          </Menu>
+          <Typography variant="caption" align="left">
+            Days Care Required*
+          </Typography>
           <FormGroup
             sx={{
               display: "flex",
@@ -409,6 +415,25 @@ export const SignUpForm = ({ isMobile }) => {
             <FormControlLabel control={<Checkbox />} label="Sat" />
             <FormControlLabel control={<Checkbox />} label="Sun" />
           </FormGroup>
+        </Stack>
+        <Stack spacing={1}>
+          <Typography variant="caption" align="left">
+            Preferred Carer Gender*
+          </Typography>
+          <FormControl fullWidth>
+            <InputLabel id="gendercare">Gender</InputLabel>
+            <Select
+              labelId="gendercare"
+              id="gendercare"
+              value={genderCare}
+              label="Gender"
+              onChange={handleChangeGenderCare}
+            >
+              <MenuItem value="none">None</MenuItem>
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
+            </Select>
+          </FormControl>
         </Stack>
         <Stack spacing={2}>
           <LoadingButton variant="contained" type="submit" loading={loading}>
