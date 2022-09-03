@@ -10,7 +10,7 @@ export const ButtonDark = ({ label, type }) => {
         fontWeight: 100,
         backgroundColor: "#3f3d56",
         color: "#eef5dbff",
-        "&:hover": { backgroundColor: "#c99f32" },
+        "&:hover": { backgroundColor: "#f7b801" },
         width: "50%",
         borderRadius: "18px",
       }}

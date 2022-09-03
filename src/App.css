@@ -1,10 +1,10 @@
 :root {
   --framework-blue: #3f3d56;
   --bright-blue: #00b0ff;
-  --transparent-blue: rgba(0, 176, 255, 0.18);
+  --transparent-blue: #00b0ff2e;
   --off-white: #eef5dbff;
-  --grey: #e6e6e6;
-  --accent: #c99f32;
+  --grey: #d0cde1;
+  --accent: #f7b801;
 }
 
 .App {

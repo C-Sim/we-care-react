@@ -8,11 +8,11 @@ export const ButtonDisabled = ({ label, type }) => {
       type={type}
       sx={{
         fontWeight: 100,
-        backgroundColor: "#e6e6e6",
+        backgroundColor: "#00b0ff2e",
         color: "#3f3d56",
         width: "50%",
         borderRadius: "18px",
-        "&:hover": { backgroundColor: "#e6e6e6" },
+        "&:hover": { backgroundColor: "#3f3d56" },
       }}
     >
       {label}
