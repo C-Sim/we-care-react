@@ -7,7 +7,6 @@ import { ButtonBright } from "../components/atoms/ButtonBright";
 import { ButtonDark } from "../components/atoms/ButtonDark";
 import { ButtonDisabled } from "../components/atoms/ButtonDisabled";
 import { Input } from "../components/atoms/Input";
-// import { Checkbox } from "../components/atoms/Checkbox";
 
 import { Error } from "../components/atoms/Error";
 
@@ -22,8 +21,6 @@ export const AboutPage = () => {
       <ButtonBright label="Button Bright" type="submit" />
       <ButtonDisabled label="Button Disabled" type="submit" />
       <Input label="Input" helperText="Please enter a valid something" />
-      {/* <Checkbox label="Monday" /> */}
-
       <Error message="Failed. Please try again." />
     </Stack>
   );
