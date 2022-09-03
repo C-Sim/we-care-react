@@ -28,12 +28,24 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 import { SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
 export const SignUpForm = ({ isMobile }) => {
   const [signup, { data, loading, error }] = useMutation(SIGNUP);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openMenu = Boolean(anchorEl);
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   const [
     addressLookup,
     {
@@ -174,6 +186,85 @@ export const SignUpForm = ({ isMobile }) => {
         spacing={4}
         onSubmit={handleSubmit(onSubmit)}
       >
+        <Typography component="h2" variant="button" align="left">
+          Account Details
+        </Typography>
+        <TextField
+          required
+          error={!!errors.email}
+          label="Email"
+          variant="outlined"
+          helperText={!!errors.email ? "Please enter a valid email." : ""}
+          {...register("email", {
+            required: true,
+          })}
+        />
+        <FormControl sx={{ m: 1 }} variant="outlined">
+          <InputLabel error={!!errors.password} htmlFor="password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            error={!!errors.password}
+            id="password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={toggleShowPassword}
+                  onMouseDown={toggleShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+            {...register("password", {
+              required: true,
+            })}
+          />
+          {!!errors.password && (
+            <FormHelperText error={!!errors.password}>
+              Please enter a valid password.
+            </FormHelperText>
+          )}
+        </FormControl>
+        <FormControl sx={{ m: 1 }} variant="outlined">
+          <InputLabel
+            error={!!errors.confirmPassword}
+            htmlFor="confirm-password"
+          >
+            Confirm Password
+          </InputLabel>
+          <OutlinedInput
+            error={!!errors.confirmPassword}
+            id="confirm-password"
+            type={showConfirmedPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle confirm password visibility"
+                  onClick={toggleShowConfirmedPassword}
+                  onMouseDown={toggleShowConfirmedPassword}
+                  edge="end"
+                >
+                  {showConfirmedPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Confirm Password"
+            {...register("confirmPassword", {
+              required: true,
+              validate: (value) => getValues("password") === value,
+            })}
+          />
+          {errors.confirmPassword && (
+            <FormHelperText error={!!errors.confirmPassword}>
+              {errors.confirmPassword?.message || "Passwords do not match."}
+            </FormHelperText>
+          )}
+        </FormControl>
         <Stack spacing={2}>
           <Typography component="h2" variant="button" align="left">
             Personal Details
@@ -215,88 +306,6 @@ export const SignUpForm = ({ isMobile }) => {
           />
           {/* <Stack spacing={2}> */}
 
-          <Typography component="h2" variant="button" align="left">
-            Account Details
-          </Typography>
-          <TextField
-            required
-            error={!!errors.email}
-            label="Email"
-            variant="outlined"
-            helperText={!!errors.email ? "Please enter a valid email." : ""}
-            {...register("email", {
-              required: true,
-            })}
-          />
-          <FormControl sx={{ m: 1 }} variant="outlined">
-            <InputLabel error={!!errors.password} htmlFor="password">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              error={!!errors.password}
-              id="password"
-              type={showPassword ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={toggleShowPassword}
-                    onMouseDown={toggleShowPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-              {...register("password", {
-                required: true,
-              })}
-            />
-            {!!errors.password && (
-              <FormHelperText error={!!errors.password}>
-                Please enter a valid password.
-              </FormHelperText>
-            )}
-          </FormControl>
-          <FormControl sx={{ m: 1 }} variant="outlined">
-            <InputLabel
-              error={!!errors.confirmPassword}
-              htmlFor="confirm-password"
-            >
-              Confirm Password
-            </InputLabel>
-            <OutlinedInput
-              error={!!errors.confirmPassword}
-              id="confirm-password"
-              type={showConfirmedPassword ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle confirm password visibility"
-                    onClick={toggleShowConfirmedPassword}
-                    onMouseDown={toggleShowConfirmedPassword}
-                    edge="end"
-                  >
-                    {showConfirmedPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Confirm Password"
-              {...register("confirmPassword", {
-                required: true,
-                validate: (value) => getValues("password") === value,
-              })}
-            />
-            {errors.confirmPassword && (
-              <FormHelperText error={!!errors.confirmPassword}>
-                {errors.confirmPassword?.message || "Passwords do not match."}
-              </FormHelperText>
-            )}
-          </FormControl>
-          <Typography component="h2" variant="button" align="left">
-            Address Details
-          </Typography>
           <FormControl sx={{ m: 1 }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Postcode
@@ -334,6 +343,30 @@ export const SignUpForm = ({ isMobile }) => {
               {selectedAddress}
             </Typography>
           )}
+          <div>
+            <TextField
+              required
+              error={!!errors.lastName}
+              label="Gender"
+              variant="outlined"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClickMenu}
+            />{" "}
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={openMenu}
+              onClose={handleCloseMenu}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleCloseMenu}>Male</MenuItem>
+              <MenuItem onClick={handleCloseMenu}>Female</MenuItem>
+            </Menu>
+          </div>
         </Stack>
         <Stack spacing={2}>
           <LoadingButton variant="contained" type="submit" loading={loading}>
