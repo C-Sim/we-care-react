@@ -6,30 +6,33 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import Typography from "@mui/material/Typography";
-import ManIcon from "@mui/icons-material/Man";
-import WomanIcon from "@mui/icons-material/Woman";
+import { Typography } from "@mui/material";
 
-export const PatientTimeline = ({ visits }) => {
+export const CarerTimeline = ({ date, patients }) => {
   return (
     <React.Fragment>
       <Typography align="center" color="#00b0ff" fontWeight={200}>
-        Your Upcoming Visits
+        Your visits for {date}
       </Typography>
 
       <Timeline sx={{ color: "#3f3d56" }}>
-        {visits.map((visit) => (
+        {patients.map((patient) => (
           <TimelineItem>
-            <TimelineOppositeContent>
-              {visit.date} at {visit.time}
-            </TimelineOppositeContent>
+            <TimelineOppositeContent>{patient.time}</TimelineOppositeContent>
             <TimelineSeparator sx={{ color: "#00b0ff" }}>
-              <TimelineDot sx={{ bgcolor: "#00b0ff" }}>
-                visit.carerGender === "male" ? <ManIcon />: <WomanIcon />
-              </TimelineDot>
+              <TimelineDot
+                sx={{
+                  bgcolor:
+                    patient.timeFrame === "past"
+                      ? "#00b0ff2e"
+                      : patient.timeFrame === "current"
+                      ? "#f7b801"
+                      : "#00b0ff",
+                }}
+              />
               <TimelineConnector sx={{ bgcolor: "#00b0ff" }} />
             </TimelineSeparator>
-            <TimelineContent>{visit.carerName}</TimelineContent>
+            <TimelineContent>{patient.patientName}</TimelineContent>
           </TimelineItem>
         ))}
       </Timeline>

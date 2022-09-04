@@ -4,6 +4,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 
 import { ProfileAvatar } from "../components/atoms/Avatar";
 import { ButtonBright } from "../components/atoms/ButtonBright";
@@ -14,6 +15,7 @@ import { Error } from "../components/atoms/Error";
 
 import { NotificationBadge } from "../components/molecules/NotificationBadge";
 import { PatientTimeline } from "../components/molecules/PatientTimeline";
+import { CarerTimeline } from "../components/molecules/CarerTimeline";
 
 export const AboutPage = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -40,9 +42,46 @@ export const AboutPage = () => {
       </Box>
 
       <PatientTimeline
+        visits={[
+          {
+            date: "Monday 8th August",
+            time: "08:00",
+            carerName: "Alice Bond",
+            carerGender: "female",
+          },
+          {
+            date: "Thursday 11th August",
+            time: "08:00",
+            carerName: "Alan Bates",
+            carerGender: "male",
+          },
+        ]}
+      />
+
+      <Divider />
+
+      <CarerTimeline
         date="Monday 8th August"
-        time="08:00"
-        carerName="Alice Bond"
+        patients={[
+          {
+            time: "08:00",
+            timeFrame: "past",
+            patientName: "Charlie Dean",
+            gender: "male",
+          },
+          {
+            time: "10:00",
+            timeFrame: "current",
+            patientName: "Carol Davies",
+            gender: "female",
+          },
+          {
+            time: "08:00",
+            timeFrame: "future",
+            patientName: "Abe Zephaniah",
+            gender: "male",
+          },
+        ]}
       />
     </Stack>
   );
