@@ -5,6 +5,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
 import { ProfileAvatar } from "../components/atoms/Avatar";
 import { ButtonBright } from "../components/atoms/ButtonBright";
@@ -16,6 +18,8 @@ import { Error } from "../components/atoms/Error";
 import { NotificationBadge } from "../components/molecules/NotificationBadge";
 import { PatientTimeline } from "../components/molecules/PatientTimeline";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
+import { Dropdown } from "../components/molecules/Dropdown";
+import { DropdownDisabled } from "../components/molecules/DropdownDisabled";
 
 export const AboutPage = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -40,6 +44,9 @@ export const AboutPage = () => {
       <Box sx={{ backgroundColor: "#3f3d56" }}>
         <NotificationBadge notificationCount={8} />
       </Box>
+
+      <Dropdown />
+      <DropdownDisabled gender="Male" />
 
       <PatientTimeline
         visits={[
