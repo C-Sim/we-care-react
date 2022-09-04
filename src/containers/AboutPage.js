@@ -13,6 +13,7 @@ import { Input } from "../components/atoms/Input";
 import { Error } from "../components/atoms/Error";
 
 import { NotificationBadge } from "../components/molecules/NotificationBadge";
+import { PatientTimeline } from "../components/molecules/PatientTimeline";
 
 export const AboutPage = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -37,6 +38,12 @@ export const AboutPage = () => {
       <Box sx={{ backgroundColor: "#3f3d56" }}>
         <NotificationBadge notificationCount={8} />
       </Box>
+
+      <PatientTimeline
+        date="Monday 8th August"
+        time="08:00"
+        carerName="Alice Bond"
+      />
     </Stack>
   );
 };
