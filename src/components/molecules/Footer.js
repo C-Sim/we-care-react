@@ -3,16 +3,16 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
 
 import GitHub from "@mui/icons-material/GitHub";
 
 import { ProfileAvatar } from "../atoms/Avatar";
-import { AlignVerticalCenter } from "@mui/icons-material";
 
 export const Footer = () => {
   return (
-    // <Box sx={{ display: "flex" }} component="footer-box">
-    <Box
+    <Grid
+      container
       component="footer"
       width="100vw"
       sx={{
@@ -21,33 +21,36 @@ export const Footer = () => {
         display: "flex",
         alignItems: "center",
         m: 0,
-        p: 0,
+        p: 2,
       }}
     >
-      <Toolbar>
-        <Box
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={6}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+        }}
+      >
+        <ProfileAvatar
+          image="../atoms/images/WeCare-hands.png"
+          imageAlt="WeCare logo"
+        />
+        <Typography
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-start",
+            textAlign: "center",
+            pl: 4,
+            pr: 4,
           }}
         >
-          <ProfileAvatar
-            image="../atoms/images/WeCare-hands.png"
-            imageAlt="WeCare logo"
-          />
-          <Typography
-            sx={{
-              textAlign: "center",
-              pl: 4,
-              pr: 4,
-            }}
-          >
-            WeCare &copy; 2022
-          </Typography>
-        </Box>
+          WeCare &copy; 2022
+        </Typography>
+      </Grid>
 
-        {/* <IconButton
+      {/* <IconButton
           sx={{
             textAlign: "center",
             color: "#eef5dbff",
@@ -61,9 +64,9 @@ export const Footer = () => {
         >
           <GitHub />
         </IconButton> */}
-
-        <Stack sx={{ fontSize: "0.5rem" }}>
-          <Typography sx={{ fontSize: "0.6rem" }}>
+      <Grid item xs={12} sm={6} md={6}>
+        <Stack>
+          <Typography sx={{ fontSize: "0.6rem", textAlign: "right" }}>
             University of Birmingham B29 6AG
           </Typography>
           <Typography sx={{ fontSize: "0.6rem", textAlign: "right" }}>
@@ -73,8 +76,7 @@ export const Footer = () => {
             0121 444 8888
           </Typography>
         </Stack>
-      </Toolbar>
-    </Box>
-    // </Box>
+      </Grid>
+    </Grid>
   );
 };
