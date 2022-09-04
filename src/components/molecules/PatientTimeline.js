@@ -21,15 +21,19 @@ export const PatientTimeline = ({ visits }) => {
         {visits.map((visit) => (
           <TimelineItem>
             <TimelineOppositeContent>
-              {visit.date} at {visit.time}
+              <Typography fontSize="0.64rem">{visit.date}</Typography>
+              <Typography variant="body2">{visit.time}</Typography>
             </TimelineOppositeContent>
             <TimelineSeparator sx={{ color: "#00b0ff" }}>
               <TimelineDot sx={{ bgcolor: "#00b0ff" }}>
-                visit.carerGender === "male" ? <ManIcon />: <WomanIcon />
+                {visit.carerGender === "male" ? <ManIcon /> : <WomanIcon />}
               </TimelineDot>
               <TimelineConnector sx={{ bgcolor: "#00b0ff" }} />
             </TimelineSeparator>
-            <TimelineContent>{visit.carerName}</TimelineContent>
+            <TimelineContent>
+              <Typography fontSize="0.64rem">Carer</Typography>
+              <Typography variant="body2">{visit.carerName}</Typography>
+            </TimelineContent>
           </TimelineItem>
         ))}
       </Timeline>

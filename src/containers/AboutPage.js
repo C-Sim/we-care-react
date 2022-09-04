@@ -67,19 +67,22 @@ export const AboutPage = () => {
             time: "08:00",
             timeFrame: "past",
             patientName: "Charlie Dean",
-            gender: "male",
+            patientGender: "male",
+            patientAddress: "Dale Rd B29 6AG",
           },
           {
             time: "10:00",
             timeFrame: "current",
             patientName: "Carol Davies",
-            gender: "female",
+            patientGender: "female",
+            patientAddress: "Paganel Rd B29 5TG",
           },
           {
-            time: "08:00",
+            time: "14:00",
             timeFrame: "future",
             patientName: "Abe Zephaniah",
-            gender: "male",
+            patientGender: "male",
+            patientAddress: "Ambassador Ave B31 2GZ",
           },
         ]}
       />
