@@ -1,15 +1,13 @@
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
-
-import GitHub from "@mui/icons-material/GitHub";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { ProfileAvatar } from "../atoms/Avatar";
 
 export const Footer = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
     <Grid
       container
@@ -19,63 +17,72 @@ export const Footer = () => {
         backgroundColor: "#3f3d56",
         color: "#eef5dbff",
         display: "flex",
+        flexDirection: "row",
         alignItems: "center",
         m: 0,
         p: 2,
       }}
     >
-      <Grid
-        item
-        xs={12}
-        sm={6}
-        md={6}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
-      >
+      <Grid item xs={4} sm={1} md={1}>
         <ProfileAvatar
           image="../atoms/images/WeCare-hands.png"
           imageAlt="WeCare logo"
         />
-        <Typography
-          sx={{
-            textAlign: "center",
-            pl: 4,
-            pr: 4,
-          }}
-        >
-          WeCare &copy; 2022
-        </Typography>
       </Grid>
 
-      {/* <IconButton
+      <Grid container xs={8} sm={11} md={11}>
+        <Grid
+          item
+          xs={10}
+          sm={6}
+          md={6}
           sx={{
-            textAlign: "center",
-            color: "#eef5dbff",
-            pl: 4,
-            pr: 4,
+            display: "flex",
+            alignItems: "center",
           }}
-          key="GitHub Repo"
-          href="https://github.com/C-Sim/we-care-react"
-          target="_blank"
-          className="icon"
         >
-          <GitHub />
-        </IconButton> */}
-      <Grid item xs={12} sm={6} md={6}>
-        <Stack>
-          <Typography sx={{ fontSize: "0.6rem", textAlign: "right" }}>
-            University of Birmingham B29 6AG
+          <Typography
+            sx={{
+              textAlign: "center",
+              fontWeight: 100,
+              pl: isMobile ? 0 : 2,
+            }}
+          >
+            WeCare &copy; 2022
           </Typography>
-          <Typography sx={{ fontSize: "0.6rem", textAlign: "right" }}>
-            Info@WeCare.com
-          </Typography>
-          <Typography sx={{ fontSize: "0.6rem", textAlign: "right" }}>
-            0121 444 8888
-          </Typography>
-        </Stack>
+        </Grid>
+
+        <Grid item xs={10} sm={6} md={6}>
+          <Stack spacing={0.5}>
+            <Typography
+              sx={{
+                fontSize: "0.6rem",
+                textAlign: isMobile ? "left" : "right",
+                fontWeight: 100,
+              }}
+            >
+              University of Birmingham B29 6AG
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.6rem",
+                textAlign: isMobile ? "left" : "right",
+                fontWeight: 100,
+              }}
+            >
+              Info@WeCare.com
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.6rem",
+                textAlign: isMobile ? "left" : "right",
+                fontWeight: 100,
+              }}
+            >
+              0121 444 8888
+            </Typography>
+          </Stack>
+        </Grid>
       </Grid>
     </Grid>
   );

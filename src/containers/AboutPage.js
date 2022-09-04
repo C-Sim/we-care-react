@@ -8,12 +8,15 @@ import { ButtonDark } from "../components/atoms/ButtonDark";
 import { ButtonDisabled } from "../components/atoms/ButtonDisabled";
 import { Input } from "../components/atoms/Input";
 import { Footer } from "../components/molecules/Footer";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Error } from "../components/atoms/Error";
 
 export const AboutPage = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
-    <Stack spacing={2} sx={{ m: 4 }}>
+    <Stack spacing={2}>
       <ProfileAvatar
         imageAlt="Alice Smith"
         image="https://images.unsplash.com/photo-1542884748-2b87b36c6b90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"

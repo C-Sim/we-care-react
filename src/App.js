@@ -1,4 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import {
   ApolloClient,
@@ -36,6 +37,8 @@ const client = new ApolloClient({
 });
 
 export const App = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
