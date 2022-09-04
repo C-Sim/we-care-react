@@ -1,6 +1,8 @@
 import { BrowserRouter } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
+import { Footer } from "../src/components/molecules/Footer";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -56,7 +58,10 @@ export const App = () => {
                 },
               ]}
             /> */}
+
             <AppRoutes />
+
+            <Footer />
           </Stack>
         </AppProvider>
       </BrowserRouter>
