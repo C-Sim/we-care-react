@@ -1,36 +1,36 @@
-import * as React from "react";
+import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-export const Dropdown = () => {
-  const [age, setAge] = React.useState("");
+export const Dropdown = ({ label, helperText, defaultSelection, options }) => {
+  const [value, setValue] = useState(defaultSelection);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setValue(event.target.value);
   };
+
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   return (
     <div>
-      <FormControl required sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-required-label">Age</InputLabel>
+      <FormControl required sx={{ width: isMobile ? "90%" : "80%" }}>
+        <InputLabel id="demo-simple-select-required-label">{label}</InputLabel>
         <Select
           labelId="demo-simple-select-required-label"
           id="demo-simple-select-required"
-          value={age}
-          label="Age *"
+          value={value}
+          label={label}
           onChange={handleChange}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {options.map((option) => (
+            <MenuItem value={option.value}>{option.label}</MenuItem>
+          ))}
         </Select>
-        <FormHelperText>Required</FormHelperText>
+        <FormHelperText>{helperText}</FormHelperText>
       </FormControl>
     </div>
   );

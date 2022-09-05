@@ -41,7 +41,11 @@ export const AboutPage = () => {
       <ButtonDark label="Button Dark" type="submit" />
       <ButtonBright label="Button Bright" type="submit" />
       <ButtonDisabled label="Button Disabled" type="submit" />
-      <Input label="Input" helperText="Please enter a valid something" />
+      <Input
+        label="Input"
+        value=""
+        helperText="Please enter a valid something"
+      />
       <InputDisabled label="Gender" value="Male" />
 
       <Error message="Failed. Please try again." />
@@ -56,7 +60,25 @@ export const AboutPage = () => {
       <ReviewEditable value={0} />
       <ReviewFixed value={4.5} />
 
-      <Dropdown />
+      <Dropdown
+        label="Preferred Carer Gender"
+        helperText=""
+        defaultSelection="none"
+        options={[
+          {
+            value: "none",
+            label: "None",
+          },
+          {
+            value: "male",
+            label: "Male",
+          },
+          {
+            value: "female",
+            label: "Female",
+          },
+        ]}
+      />
 
       <PatientTimeline
         visits={[
