@@ -4,7 +4,7 @@ const center = { lat: 52.489471, lng: -1.898575 };
 
 export const LandingPage = () => {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.GOOGLE_MAP_API,
+    googleMapsApiKey: "AIzaSyDUUFeATzTUoPA37N2JF00Qzfz-2E_v09w",
   });
 
   if (!isLoaded) {
