@@ -25,8 +25,8 @@ import { PatientTimeline } from "../components/molecules/PatientTimeline";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { ReviewEditable } from "../components/molecules/ReviewEditable";
 import { ReviewFixed } from "../components/molecules/ReviewFixed";
-
 import { Dropdown } from "../components/molecules/Dropdown";
+import { HowItWorks } from "../components/molecules/HowItWorks";
 
 export const AboutPage = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -126,6 +126,8 @@ export const AboutPage = () => {
           },
         ]}
       />
+
+      <HowItWorks />
     </Stack>
   );
 };
