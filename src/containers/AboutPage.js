@@ -10,6 +10,7 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 
+import { PageTitle } from "../components/atoms/PageTitle";
 import { ProfileAvatar } from "../components/atoms/Avatar";
 import { ButtonBright } from "../components/atoms/ButtonBright";
 import { ButtonDark } from "../components/atoms/ButtonDark";
@@ -32,7 +33,7 @@ export const AboutPage = () => {
 
   return (
     <Stack spacing={2} sx={{ m: 2 }}>
-      <Typography align="center">Atoms</Typography>
+      <PageTitle title="Atoms" />
 
       <ProfileAvatar
         imageAlt="Alice Smith"
@@ -50,7 +51,7 @@ export const AboutPage = () => {
 
       <Error message="Failed. Please try again." />
 
-      <Typography align="center">Molecules</Typography>
+      <PageTitle title="Molecules" />
 
       {/* Don't include box as standard - this is just for background colour here */}
       <Box sx={{ backgroundColor: "#3f3d56" }}>
