@@ -15,6 +15,8 @@ import { ButtonBright } from "../components/atoms/ButtonBright";
 import { ButtonDark } from "../components/atoms/ButtonDark";
 import { ButtonDisabled } from "../components/atoms/ButtonDisabled";
 import { Input } from "../components/atoms/Input";
+import { InputDisabled } from "../components/atoms/InputDisabled";
+
 import { Error } from "../components/atoms/Error";
 
 import { NotificationBadge } from "../components/molecules/NotificationBadge";
@@ -24,12 +26,9 @@ import { ReviewEditable } from "../components/molecules/ReviewEditable";
 import { ReviewFixed } from "../components/molecules/ReviewFixed";
 
 import { Dropdown } from "../components/molecules/Dropdown";
-import { DropdownDisabled } from "../components/molecules/DropdownDisabled";
 
 export const AboutPage = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
-
-  const [newValue, setValue] = useState(3);
 
   return (
     <Stack spacing={2} sx={{ m: 2 }}>
@@ -43,6 +42,8 @@ export const AboutPage = () => {
       <ButtonBright label="Button Bright" type="submit" />
       <ButtonDisabled label="Button Disabled" type="submit" />
       <Input label="Input" helperText="Please enter a valid something" />
+      <InputDisabled label="Gender" value="Male" />
+
       <Error message="Failed. Please try again." />
 
       <Typography align="center">Molecules</Typography>
@@ -56,7 +57,6 @@ export const AboutPage = () => {
       <ReviewFixed value={4.5} />
 
       <Dropdown />
-      <DropdownDisabled gender="Male" />
 
       <PatientTimeline
         visits={[
