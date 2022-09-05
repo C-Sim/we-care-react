@@ -1,5 +1,7 @@
 // overview of how the service works
 
+import { useEffect, useState } from "react";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -18,11 +20,16 @@ import { Error } from "../components/atoms/Error";
 import { NotificationBadge } from "../components/molecules/NotificationBadge";
 import { PatientTimeline } from "../components/molecules/PatientTimeline";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
+import { ReviewEditable } from "../components/molecules/ReviewEditable";
+import { ReviewFixed } from "../components/molecules/ReviewFixed";
+
 import { Dropdown } from "../components/molecules/Dropdown";
 import { DropdownDisabled } from "../components/molecules/DropdownDisabled";
 
 export const AboutPage = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
+
+  const [newValue, setValue] = useState(3);
 
   return (
     <Stack spacing={2} sx={{ m: 2 }}>
@@ -44,6 +51,9 @@ export const AboutPage = () => {
       <Box sx={{ backgroundColor: "#3f3d56" }}>
         <NotificationBadge notificationCount={8} />
       </Box>
+
+      <ReviewEditable value={0} />
+      <ReviewFixed value={4.5} />
 
       <Dropdown />
       <DropdownDisabled gender="Male" />
