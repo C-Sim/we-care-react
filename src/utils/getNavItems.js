@@ -14,11 +14,11 @@ export const navItems = {
 
     { label: "Notifications", path: "/notifications" },
 
-    { label: "Assignments", path: "/notifications" },
+    { label: "Assignments", path: "/assignments" },
 
-    { label: "Dashboard", path: "/dashboard" },
+    { label: "Dashboard", path: "/carer-dashboard" },
 
-    { label: "Login/out", path: "/login" },
+    { label: "Logout", path: "/logout" },
   ],
   patient: [
     {
@@ -34,7 +34,7 @@ export const navItems = {
 
     { label: "Dashboard", path: "/dashboard" },
 
-    { label: "Logout/in", path: "/logout" },
+    { label: "Logout", path: "/logout" },
   ],
   supervisor: [
     {
@@ -46,6 +46,6 @@ export const navItems = {
 
     { label: "Dashboard", path: "/dashboard" },
 
-    { label: "Logout/in", path: "/logout" },
+    { label: "Logout", path: "/logout" },
   ],
 };

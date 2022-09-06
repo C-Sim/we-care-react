@@ -13,7 +13,7 @@ import { CarePlanPage } from "./containers/CarePlanPage";
 import { NotificationsPage } from "./containers/NotificationsPage";
 import { PatientsPage } from "./containers/PatientsPage";
 import { ResourcesPage } from "./containers/ResourcesPage";
-
+import { ProfilePage } from "./containers/ProfilePage";
 import { useAuth } from "./context/AppProvider";
 
 export const AppRoutes = () => {
@@ -30,23 +30,24 @@ export const AppRoutes = () => {
         </>
       )}
 
-      {isLoggedIn && (
-        <>
-          <Route path="/carer-dashboard" element={<CarerDashboardPage />} />
-          <Route path="/patient-dashboard" element={<PatientDashboardPage />} />
-          <Route
-            path="/supervisor-dashboard"
-            element={<SupervisorDashboardPage />}
-          />
-
-          <Route path="/notifications" element={<NotificationsPage />} />
-          <Route path="/resources" element={<ResourcesPage />} />
-          <Route path="/care-overview" element={<CareOverviewPage />} />
-          <Route path="/care-plan" element={<CarePlanPage />} />
-          <Route path="/assignments" element={<AssignmentsPage />} />
-          <Route path="/patients" element={<PatientsPage />} />
-        </>
-      )}
+      {/* {isLoggedIn && ( */}
+      <>
+        <Route path="/carer-dashboard" element={<CarerDashboardPage />} />
+        <Route path="/patient-dashboard" element={<PatientDashboardPage />} />
+        <Route
+          path="/supervisor-dashboard"
+          element={<SupervisorDashboardPage />}
+        />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/care-overview" element={<CareOverviewPage />} />
+        <Route path="/care-plan" element={<CarePlanPage />} />
+        <Route path="/assignments" element={<AssignmentsPage />} />
+        <Route path="/patients" element={<PatientsPage />} />
+      </>
+      <Route path="/logout" element={<LandingPage />} />
+      {/* )} */}
     </Routes>
   );
 };

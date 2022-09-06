@@ -46,7 +46,7 @@ export const NavBar = ({ navItems }) => {
         position="static"
         component="nav"
         sx={{
-          backgroundColor: "#264653",
+          backgroundColor: "#00b0ff",
           height: "64px",
         }}
       >
@@ -61,7 +61,7 @@ export const NavBar = ({ navItems }) => {
             <MenuIcon />
           </IconButton>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.public.map((item) => (
+            {navItems.carer.map((item) => (
               <Button
                 key={item.label}
                 sx={{ color: "#fff" }}
