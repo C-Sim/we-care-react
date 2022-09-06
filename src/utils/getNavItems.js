@@ -9,10 +9,10 @@ export const navItems = {
   carer: [
     {
       label: "profile",
-      path: "/profile",
+      path: "/carer-profile",
     },
 
-    { label: "Notifications", path: "/notifications" },
+    { label: "Notifications", path: "/carer-notifications" },
 
     { label: "Assignments", path: "/assignments" },
 
@@ -28,23 +28,23 @@ export const navItems = {
 
     { label: "Resources", path: "/resources" },
 
-    { label: "profile", path: "/profile" },
+    { label: "profile", path: "/patient-profile" },
 
     { label: "Care Plan", path: "/care-plan" },
 
-    { label: "Dashboard", path: "/dashboard" },
+    { label: "Dashboard", path: "/patient-dashboard" },
 
     { label: "Logout", path: "/logout" },
   ],
   supervisor: [
     {
       label: "Notifications",
-      path: "/notifications",
+      path: "/supervisor-notifications",
     },
 
-    { label: "Assignments", path: "/resources" },
+    { label: "Assignments", path: "/assignments" },
 
-    { label: "Dashboard", path: "/dashboard" },
+    { label: "Dashboard", path: "/supervisor-dashboard" },
 
     { label: "Logout", path: "/logout" },
   ],

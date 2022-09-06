@@ -24,7 +24,7 @@ export const NavBar = ({ navItems }) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <List>
-        {navItems.carer.map((item) => (
+        {navItems.patient.map((item) => (
           <ListItem key={item.label} disablePadding>
             <ListItemButton
               sx={{ textAlign: "center" }}
