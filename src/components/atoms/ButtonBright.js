@@ -11,7 +11,6 @@ export const ButtonBright = ({ label, type }) => {
         backgroundColor: "#00b0ff",
         color: "#eef5dbff",
         "&:hover": { backgroundColor: "#f7b801" },
-        width: "50%",
         borderRadius: "18px",
       }}
     >
