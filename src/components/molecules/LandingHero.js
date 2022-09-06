@@ -28,7 +28,7 @@ export const LandingHero = () => {
           marginRight: isMobile ? "1rem" : 0,
         }}
       >
-        <ButtonDark label="Get Started" type="button" />
+        <ButtonDark label="Get Started" type="button" href="/login" />
       </Box>
     </Box>
   );

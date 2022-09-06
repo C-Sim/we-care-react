@@ -1,11 +1,12 @@
 import Button from "@mui/material/Button";
 
-export const ButtonDark = ({ label, type }) => {
+export const ButtonDark = ({ label, type, href }) => {
   return (
     <Button
       className="button"
       variant="contained"
       type={type}
+      href={href}
       sx={{
         fontWeight: 100,
         backgroundColor: "#3f3d56",
