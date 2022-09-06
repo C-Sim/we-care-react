@@ -51,12 +51,13 @@ export const SignUpForm = ({ isMobile }) => {
     addressLookup,
     {
       data: addressLookupData,
-      // loading: addressLookupLoading,
-      // error: addressLookupError,
+      loading: addressLookupLoading,
+      error: addressLookupError,
     },
   ] = useLazyQuery(ADDRESS_LOOKUP, {
     fetchPolicy: "network-only",
   });
+
   const {
     register,
     formState: { errors },
@@ -124,6 +125,7 @@ export const SignUpForm = ({ isMobile }) => {
   };
 
   const handleAddressLookup = () => {
+    console.log("searching...");
     addressLookup({
       variables: {
         postcode: getValues("postcode"),
@@ -151,7 +153,6 @@ export const SignUpForm = ({ isMobile }) => {
 
   const handleChangeGender = (event) => {
     setGender(event.target.value);
-    console.log(gender);
   };
 
   const handleChangeGenderCare = (event) => {
@@ -164,10 +165,11 @@ export const SignUpForm = ({ isMobile }) => {
       setDay([...day, e.target.value]);
     } else {
       setDay(day.filter((skill) => skill !== e.target.value));
-
-      console.log(day);
     }
   };
+  console.log(day);
+  console.log(gender);
+  console.log(genderCare);
 
   return (
     <Paper sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }} elevation={6}>
