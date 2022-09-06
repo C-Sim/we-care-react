@@ -3,6 +3,9 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 export const CalendarSmall = () => {
+  //this component contains the calendar item and will need to contain the timeline inside it too, so the required states can be set here and not at parent component level
+  //**
+
   //fake array of appointments to check if click on date returns the appointments for that day
   //data returned is likely to be of that format - but can be adjusted if needed - which fields do we actually need?
   const userResults = [
