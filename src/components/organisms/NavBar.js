@@ -11,8 +11,9 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-
-import hands from "../atoms/images/WeCare-light.png";
+import Grid from "@mui/material/Grid";
+import logo from "../atoms/images/WeCare-1.png";
+import { ProfileAvatar } from "../atoms/Avatar";
 
 export const NavBar = ({ navItems }) => {
   console.log(navItems);
@@ -47,9 +48,15 @@ export const NavBar = ({ navItems }) => {
       <AppBar
         position="static"
         component="nav"
+        width="100vw"
         sx={{
           backgroundColor: "#3f3d56",
-          height: "64px",
+          color: "#eef5dbff",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          m: 0,
+          p: 2,
         }}
       >
         <Toolbar>
@@ -62,9 +69,11 @@ export const NavBar = ({ navItems }) => {
           >
             <MenuIcon></MenuIcon>
           </IconButton>
-
+          <Grid item xs={5} sm={4} md={1}>
+            <ProfileAvatar image={logo} imageAlt="WeCare logo" />
+          </Grid>
           <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
-            {navItems.patient.map((item) => (
+            {navItems.public.map((item) => (
               <Button
                 key={item.label}
                 sx={{ color: "#fff" }}

@@ -42,6 +42,7 @@ export const AppRoutes = () => {
         />
         <Route path="/carer-profile" element={<CarerProfilePage />} />
         <Route path="/patient-profile" element={<PatientsProfilePage />} />
+
         <Route
           path="/carer-notifications"
           element={<CarerNotificationsPage />}
@@ -57,7 +58,7 @@ export const AppRoutes = () => {
         <Route path="/assignments" element={<AssignmentsPage />} />
         <Route path="/patients" element={<PatientsPage />} />
       </>
-      <Route path="/logout" element={<LandingPage />} />
+      <Route path="/logout" element={<LoginPage />} />
       {/* )} */}
     </Routes>
   );
