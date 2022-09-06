@@ -11,7 +11,7 @@ export const PageTitle = ({ title }) => {
         gutterBottom
         align="center"
         sx={{
-          paddingTop: 0.8,
+          paddingTop: 4,
           color: "#3f3d56",
           fontWeight: 100,
           fontSize: 32,

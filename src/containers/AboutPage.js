@@ -154,7 +154,7 @@ export const AboutPage = () => {
 
       <HowItWorks />
 
-      <Box align="center" m={4}>
+      <Box align="center" m={4} p={4}>
         <ReviewFixed align="center" value="4.5" />
 
         <Typography fontSize="0.8rem" fontWeight={100}>
