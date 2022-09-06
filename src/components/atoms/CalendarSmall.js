@@ -2,77 +2,10 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-export const CalendarSmall = () => {
+export const CalendarSmall = ({ userResults }) => {
   //this component contains the calendar item and will need to contain the timeline inside it too, so the required states can be set here and not at parent component level
   //**
 
-  //fake array of appointments to check if click on date returns the appointments for that day
-  //data returned is likely to be of that format - but can be adjusted if needed - which fields do we actually need?
-  const userResults = [
-    {
-      id: "4152856987",
-      appointmentDate: "2022-09-06T10:00:00",
-      start: "2022-09-06T10:00:00",
-      title: "New appointment",
-      carerId: {
-        firstName: "Mary",
-        lastName: "Brown",
-        carerProfileId: {
-          gender: "female",
-        },
-      },
-      patientId: {
-        firstName: "Tania",
-        lastName: "James",
-        patientProfileId: {
-          gender: "female",
-          postcode: "B155PZ",
-        },
-      },
-    },
-    {
-      id: "4157312987",
-      appointmentDate: "2022-09-08T09:00:00",
-      start: "2022-09-08T09:00:00",
-      title: "New meeting",
-      carerId: {
-        firstName: "Janet",
-        lastName: "White",
-        carerProfileId: {
-          gender: "female",
-        },
-      },
-      patientId: {
-        firstName: "Molly",
-        lastName: "Brown",
-        patientProfileId: {
-          gender: "female",
-          postcode: "B115PZ",
-        },
-      },
-    },
-    {
-      id: "4157314001",
-      appointmentDate: "2022-09-08T14:00:00",
-      start: "2022-09-08T14:00:00",
-      title: "Visit to the zoo",
-      carerId: {
-        firstName: "Alice",
-        lastName: "Smith",
-        carerProfileId: {
-          gender: "female",
-        },
-      },
-      patientId: {
-        firstName: "Lena",
-        lastName: "Johnson",
-        patientProfileId: {
-          gender: "female",
-          postcode: "B295PZ",
-        },
-      },
-    },
-  ];
   // set states of calendar date
   const [calDate, setCalDate] = useState(new Date());
   const [resultArr, setResultArr] = useState([]);
