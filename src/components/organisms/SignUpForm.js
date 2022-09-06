@@ -44,14 +44,8 @@ export const SignUpForm = ({ isMobile }) => {
 
   const [genderCare, setGenderCare] = useState("");
 
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // const openMenu = Boolean(anchorEl);
-  // const handleClickMenu = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleCloseMenu = () => {
-  //   setAnchorEl(null);
-  // };
+  //days of the week checkbox
+  const [day, setDay] = useState([]);
 
   const [
     addressLookup,
@@ -157,14 +151,27 @@ export const SignUpForm = ({ isMobile }) => {
 
   const handleChangeGender = (event) => {
     setGender(event.target.value);
+    console.log(gender);
   };
 
   const handleChangeGenderCare = (event) => {
     setGenderCare(event.target.value);
   };
 
+  const handleDayValue = (e) => {
+    let data = day.indexOf(e.target.value);
+    if (data === -1) {
+      setDay([...day, e.target.value]);
+    } else {
+      setDay(day.filter((skill) => skill !== e.target.value));
+
+      console.log(day);
+    }
+  };
+
   return (
     <Paper sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }} elevation={6}>
+      {/* //address lookup modal */}
       <Dialog open={open} onClose={handleCloseModal}>
         <DialogTitle>Select Address</DialogTitle>
         <DialogContent>
@@ -191,6 +198,7 @@ export const SignUpForm = ({ isMobile }) => {
         </DialogActions>
       </Dialog>
 
+      {/* form */}
       <Typography component="h1" variant="h4" align="center">
         Sign Up
       </Typography>
@@ -356,6 +364,8 @@ export const SignUpForm = ({ isMobile }) => {
               {selectedAddress}
             </Typography>
           )}
+
+          {/* drop down menu */}
           <FormControl>
             <InputLabel id="gender">Gender</InputLabel>
             <Select
@@ -400,6 +410,8 @@ export const SignUpForm = ({ isMobile }) => {
           <Typography variant="caption" align="left">
             Days Care Required*
           </Typography>
+
+          {/* check boxes */}
           <FormGroup
             sx={{
               display: "flex",
@@ -407,15 +419,52 @@ export const SignUpForm = ({ isMobile }) => {
               justifyContent: "space - between",
             }}
           >
-            <FormControlLabel control={<Checkbox />} label="Mon" />
-            <FormControlLabel control={<Checkbox />} label="Tue" />
-            <FormControlLabel control={<Checkbox />} label="Wed" />
-            <FormControlLabel control={<Checkbox />} label="Thu" />
-            <FormControlLabel control={<Checkbox />} label="Fri" />
-            <FormControlLabel control={<Checkbox />} label="Sat" />
-            <FormControlLabel control={<Checkbox />} label="Sun" />
+            <FormControlLabel
+              value="Monday"
+              control={<Checkbox />}
+              label="Mon"
+              onChange={(e) => handleDayValue(e)}
+            />
+            <FormControlLabel
+              value="Tuesday"
+              control={<Checkbox />}
+              label="Tue"
+              onChange={(e) => handleDayValue(e)}
+            />
+            <FormControlLabel
+              value="Wednesday"
+              control={<Checkbox />}
+              label="Wed"
+              onChange={(e) => handleDayValue(e)}
+            />
+            <FormControlLabel
+              value="Thursday"
+              control={<Checkbox />}
+              label="Thu"
+              onChange={(e) => handleDayValue(e)}
+            />
+            <FormControlLabel
+              value="Friday"
+              control={<Checkbox />}
+              label="Fri"
+              onChange={(e) => handleDayValue(e)}
+            />
+            <FormControlLabel
+              value="Saturday"
+              control={<Checkbox />}
+              label="Sat"
+              onChange={(e) => handleDayValue(e)}
+            />
+            <FormControlLabel
+              value="Sunday"
+              control={<Checkbox />}
+              label="Sun"
+              onChange={(e) => handleDayValue(e)}
+            />
           </FormGroup>
         </Stack>
+
+        {/* preferred gender drop down */}
         <Stack spacing={1}>
           <Typography variant="caption" align="left">
             Preferred Carer Gender*
