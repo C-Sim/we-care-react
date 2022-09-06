@@ -64,6 +64,7 @@ export const CalendarSmall = ({ userResults }) => {
       <div className="weekView-calendar">
         <Calendar onChange={onChange} value={calDate} />
       </div>
+      {/* to be replaced by a timeline component */}
       <div className="weekView-timeline">
         {resultArr.length ? (
           resultArr.map((result) => (
