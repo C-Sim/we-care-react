@@ -1,14 +1,8 @@
 // overview of how the service works
 
-import { useEffect, useState } from "react";
-
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
 
 import { PageTitle } from "../components/atoms/PageTitle";
 import { ProfileAvatar } from "../components/atoms/Avatar";
@@ -26,11 +20,11 @@ import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { ReviewEditable } from "../components/molecules/ReviewEditable";
 import { ReviewFixed } from "../components/molecules/ReviewFixed";
 import { Dropdown } from "../components/molecules/Dropdown";
+import { CalendarSmall } from "../components/molecules/CalendarSmall";
+
 import { HowItWorks } from "../components/molecules/HowItWorks";
 
 export const AboutPage = () => {
-  const isMobile = useMediaQuery("(max-width:600px)");
-
   return (
     <Stack spacing={2} sx={{ m: 2 }}>
       <PageTitle title="Atoms" />
@@ -128,6 +122,8 @@ export const AboutPage = () => {
       />
 
       <HowItWorks />
+
+      <CalendarSmall />
     </Stack>
   );
 };
