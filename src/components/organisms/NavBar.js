@@ -12,6 +12,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 
+import hands from "../atoms/images/WeCare-light.png";
+
 export const NavBar = ({ navItems }) => {
   console.log(navItems);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -22,12 +24,12 @@ export const NavBar = ({ navItems }) => {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box>
       <List>
-        {navItems.patient.map((item) => (
+        {navItems.public.map((item) => (
           <ListItem key={item.label} disablePadding>
             <ListItemButton
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: "centre" }}
               onClick={() => {
                 navigate(item.path, { replace: true });
               }}
@@ -46,7 +48,7 @@ export const NavBar = ({ navItems }) => {
         position="static"
         component="nav"
         sx={{
-          backgroundColor: "#00b0ff",
+          backgroundColor: "#3f3d56",
           height: "64px",
         }}
       >
@@ -58,10 +60,11 @@ export const NavBar = ({ navItems }) => {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: "none" } }}
           >
-            <MenuIcon />
+            <MenuIcon></MenuIcon>
           </IconButton>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.carer.map((item) => (
+
+          <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
+            {navItems.patient.map((item) => (
               <Button
                 key={item.label}
                 sx={{ color: "#fff" }}
