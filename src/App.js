@@ -1,4 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+import { Footer } from "../src/components/molecules/Footer";
 
 import {
   ApolloClient,
@@ -37,6 +40,8 @@ const client = new ApolloClient({
 });
 
 export const App = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
@@ -44,6 +49,8 @@ export const App = () => {
           <Stack sx={{ minHeight: "100vh" }} spacing={0}>
             {<NavBar navItems={navItems} />}
             <AppRoutes />
+
+            <Footer />
           </Stack>
         </AppProvider>
       </BrowserRouter>
