@@ -1,6 +1,4 @@
 import Box from "@mui/material/Box";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import landingImage from "../atoms/images/landing.png";
 import { ButtonDark } from "../atoms/ButtonDark";
@@ -14,26 +12,14 @@ export const LandingHero = () => {
         backgroundImage: `url(${landingImage})`,
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
-        textAlign: "center",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      {/* <ImageListItemBar
-        className="image-bar"
-        subtitle="Get Started"
-        sx={{
-          textAlign: "right",
-          fontSize: "8px",
-          fontWeight: 100,
-          width: "50%",
-        }}
-      > */}
-      <ButtonDark
-        label="Get Started"
-        type="button"
-        width="48%"
-        sx={{ position: "absolute", top: "50%", right: "50%" }}
-      />
-      {/* </ImageListItemBar> */}
+      <Box mb={18} textAlign="center">
+        <ButtonDark label="Get Started" type="button" />
+      </Box>
     </Box>
   );
 };
