@@ -3,7 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import { LandingPage } from "./containers/LandingPage";
 import { LoginPage } from "./containers/LoginPage";
 import { SignUpPage } from "./containers/SignUpPage";
-import { DashboardPage } from "./containers/DashboardPage";
+import { CarerDashboardPage } from "./containers/CarerDashboardPage";
+import { PatientDashboardPage } from "./containers/PatientDashboardPage";
+import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
 import { AssignmentsPage } from "./containers/AssignmentsPage";
 import { CareOverviewPage } from "./containers/CareOverviewPage";
@@ -22,7 +24,6 @@ export const AppRoutes = () => {
       {!isLoggedIn && (
         <>
           <Route path="/" element={<LandingPage />} />
-
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -31,7 +32,13 @@ export const AppRoutes = () => {
 
       {isLoggedIn && (
         <>
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/carer-dashboard" element={<CarerDashboardPage />} />
+          <Route path="/patient-dashboard" element={<PatientDashboardPage />} />
+          <Route
+            path="/supervisor-dashboard"
+            element={<SupervisorDashboardPage />}
+          />
+
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/care-overview" element={<CareOverviewPage />} />

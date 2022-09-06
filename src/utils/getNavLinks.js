@@ -1,4 +1,4 @@
-const navItems = {
+export const navItems = {
     Public:{
      label: "About",
      path: "/about",
@@ -58,4 +58,4 @@ const navItems = {
      path: "/logout",
    },
 
-   export default shuffleArray;
+   
