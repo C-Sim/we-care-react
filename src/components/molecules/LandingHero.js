@@ -14,6 +14,7 @@ export const LandingHero = () => {
         backgroundImage: `url(${landingImage})`,
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
+        textAlign: "center",
       }}
     >
       {/* <ImageListItemBar
@@ -29,6 +30,7 @@ export const LandingHero = () => {
       <ButtonDark
         label="Get Started"
         type="button"
+        width="48%"
         sx={{ position: "absolute", top: "50%", right: "50%" }}
       />
       {/* </ImageListItemBar> */}
