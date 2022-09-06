@@ -13,6 +13,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 
 export const NavBar = ({ navItems }) => {
+  console.log(navItems);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ export const NavBar = ({ navItems }) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <List>
-        {navItems.map((item) => (
+        {navItems.carer.map((item) => (
           <ListItem key={item.label} disablePadding>
             <ListItemButton
               sx={{ textAlign: "center" }}
@@ -60,7 +61,7 @@ export const NavBar = ({ navItems }) => {
             <MenuIcon />
           </IconButton>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
+            {navItems.public.map((item) => (
               <Button
                 key={item.label}
                 sx={{ color: "#fff" }}
