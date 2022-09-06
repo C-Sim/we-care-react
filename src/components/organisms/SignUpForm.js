@@ -164,7 +164,7 @@ export const SignUpForm = ({ isMobile }) => {
     if (data === -1) {
       setDay([...day, e.target.value]);
     } else {
-      setDay(day.filter((skill) => skill !== e.target.value));
+      setDay(day.filter((data) => data !== e.target.value));
     }
   };
   console.log(day);
@@ -186,7 +186,7 @@ export const SignUpForm = ({ isMobile }) => {
                 <ListItem disablePadding key={address._id}>
                   <ListItemButton
                     onClick={handleAddressSelection}
-                    id={address._id}
+                    // id={address._id}
                   >
                     <ListItemText primary={address.fullAddress} />
                   </ListItemButton>
@@ -350,7 +350,7 @@ export const SignUpForm = ({ isMobile }) => {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="Postcode"
               {...register("postcode", {
                 required: true,
               })}
