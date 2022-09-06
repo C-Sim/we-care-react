@@ -1,3 +1,12 @@
+:root {
+  --framework-blue: #3f3d56;
+  --bright-blue: #00b0ff;
+  --transparent-blue: #00b0ff2e;
+  --off-white: #eef5dbff;
+  --grey: #d0cde1;
+  --accent: #f7b801;
+}
+
 * {
   box-sizing: border-box;
 }
