@@ -13,7 +13,7 @@ import Stack from "@mui/material/Stack";
 import { AppProvider } from "./context/AppProvider";
 import { AppRoutes } from "./AppRoutes";
 import { NavBar } from "./components/organisms/NavBar";
-import { navItems } from "./utils/getNavLinks";
+import { navItems } from "./utils/getNavItems";
 
 const link = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL || "http://localhost:4000",
