@@ -125,7 +125,7 @@ export const FIND_BY_GENDER_AND_DAY = gql`
 `;
 
 export const ADDRESS_LOOKUP = gql`
-  query Query($postcode: String!) {
+  query AddressLookup($postcode: String!) {
     addressLookup(postcode: $postcode) {
       postcode
       latitude
@@ -146,7 +146,7 @@ export const ADDRESS_LOOKUP = gql`
         county
         district
         country
-        # _id
+        _id
         fullAddress
       }
     }

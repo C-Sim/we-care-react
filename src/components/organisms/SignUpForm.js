@@ -33,11 +33,11 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Select from "@mui/material/Select";
-import { SIGNUP } from "../../graphql/mutations";
+import { PATIENT_SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
 export const SignUpForm = ({ isMobile }) => {
-  const [signup, { data, loading, error }] = useMutation(SIGNUP);
+  const [signup, { data, loading, error }] = useMutation(PATIENT_SIGNUP);
 
   //dropdown menu
   const [gender, setGender] = useState("");
@@ -99,18 +99,28 @@ export const SignUpForm = ({ isMobile }) => {
         message: "Please select an address",
       });
     } else {
+      debugger;
       const signupInput = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         phoneNumber: formData.phoneNumber,
         email: formData.email,
         password: formData.password,
-        accountType: "patient",
+        postcode: formData.postcode,
+        address: selectedAddressId,
       };
 
+      console.log(signupInput);
+      const patientInput = {
+        gender: gender,
+        genderPreference: genderCare,
+        days: day,
+      };
+      console.log(patientInput);
       signup({
         variables: {
           signupInput,
+          patientInput,
         },
       });
     }
@@ -126,6 +136,7 @@ export const SignUpForm = ({ isMobile }) => {
 
   const handleAddressLookup = () => {
     console.log("searching...");
+    console.log(getValues("postcode"));
     addressLookup({
       variables: {
         postcode: getValues("postcode"),
@@ -167,9 +178,8 @@ export const SignUpForm = ({ isMobile }) => {
       setDay(day.filter((data) => data !== e.target.value));
     }
   };
-  console.log(day);
-  console.log(gender);
-  console.log(genderCare);
+
+  console.log(addressLookupData);
 
   return (
     <Paper sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }} elevation={6}>
@@ -186,7 +196,7 @@ export const SignUpForm = ({ isMobile }) => {
                 <ListItem disablePadding key={address._id}>
                   <ListItemButton
                     onClick={handleAddressSelection}
-                    // id={address._id}
+                    id={address._id}
                   >
                     <ListItemText primary={address.fullAddress} />
                   </ListItemButton>
@@ -211,89 +221,12 @@ export const SignUpForm = ({ isMobile }) => {
         spacing={4}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Typography component="h2" variant="button" align="left">
-          Account Details
-        </Typography>
-        <TextField
-          required
-          error={!!errors.email}
-          label="Email"
-          variant="outlined"
-          helperText={!!errors.email ? "Please enter a valid email." : ""}
-          {...register("email", {
-            required: true,
-          })}
-        />
-        <FormControl sx={{ m: 1 }} variant="outlined">
-          <InputLabel error={!!errors.password} htmlFor="password">
-            Password
-          </InputLabel>
-          <OutlinedInput
-            error={!!errors.password}
-            id="password"
-            type={showPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleShowPassword}
-                  onMouseDown={toggleShowPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-            {...register("password", {
-              required: true,
-            })}
-          />
-          {!!errors.password && (
-            <FormHelperText error={!!errors.password}>
-              Please enter a valid password.
-            </FormHelperText>
-          )}
-        </FormControl>
-        <FormControl sx={{ m: 1 }} variant="outlined">
-          <InputLabel
-            error={!!errors.confirmPassword}
-            htmlFor="confirm-password"
-          >
-            Confirm Password
-          </InputLabel>
-          <OutlinedInput
-            error={!!errors.confirmPassword}
-            id="confirm-password"
-            type={showConfirmedPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle confirm password visibility"
-                  onClick={toggleShowConfirmedPassword}
-                  onMouseDown={toggleShowConfirmedPassword}
-                  edge="end"
-                >
-                  {showConfirmedPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Confirm Password"
-            {...register("confirmPassword", {
-              required: true,
-              validate: (value) => getValues("password") === value,
-            })}
-          />
-          {errors.confirmPassword && (
-            <FormHelperText error={!!errors.confirmPassword}>
-              {errors.confirmPassword?.message || "Passwords do not match."}
-            </FormHelperText>
-          )}
-        </FormControl>
+        {/* user account details - needed for signupInput*/}
         <Stack spacing={2}>
           <Typography component="h2" variant="button" align="left">
-            Personal Details
+            User account Details
           </Typography>
+
           <TextField
             required
             error={!!errors.firstName}
@@ -318,6 +251,82 @@ export const SignUpForm = ({ isMobile }) => {
           />
           <TextField
             required
+            error={!!errors.email}
+            label="Email"
+            variant="outlined"
+            helperText={!!errors.email ? "Please enter a valid email." : ""}
+            {...register("email", {
+              required: true,
+            })}
+          />
+          <FormControl sx={{ m: 1 }} variant="outlined">
+            <InputLabel error={!!errors.password} htmlFor="password">
+              Password
+            </InputLabel>
+            <OutlinedInput
+              error={!!errors.password}
+              id="password"
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={toggleShowPassword}
+                    onMouseDown={toggleShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+              {...register("password", {
+                required: true,
+              })}
+            />
+            {!!errors.password && (
+              <FormHelperText error={!!errors.password}>
+                Please enter a valid password.
+              </FormHelperText>
+            )}
+          </FormControl>
+          <FormControl sx={{ m: 1 }} variant="outlined">
+            <InputLabel
+              error={!!errors.confirmPassword}
+              htmlFor="confirm-password"
+            >
+              Confirm Password
+            </InputLabel>
+            <OutlinedInput
+              error={!!errors.confirmPassword}
+              id="confirm-password"
+              type={showConfirmedPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle confirm password visibility"
+                    onClick={toggleShowConfirmedPassword}
+                    onMouseDown={toggleShowConfirmedPassword}
+                    edge="end"
+                  >
+                    {showConfirmedPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Confirm Password"
+              {...register("confirmPassword", {
+                required: true,
+                validate: (value) => getValues("password") === value,
+              })}
+            />
+            {errors.confirmPassword && (
+              <FormHelperText error={!!errors.confirmPassword}>
+                {errors.confirmPassword?.message || "Passwords do not match."}
+              </FormHelperText>
+            )}
+          </FormControl>
+          <TextField
+            required
             error={!!errors.phoneNumber}
             label="Phone Number"
             variant="outlined"
@@ -328,13 +337,10 @@ export const SignUpForm = ({ isMobile }) => {
               required: true,
             })}
           />
-          {/* <Stack spacing={2}> */}
           <FormControl sx={{ m: 1 }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Postcode
-            </InputLabel>
+            <InputLabel htmlFor="postcode">Postcode</InputLabel>
             <OutlinedInput
-              id="outlined-adornment-password"
+              id="postcode"
               type="text"
               // value={postcode}
               // onChange={handleOnChangeAddress}
@@ -366,7 +372,10 @@ export const SignUpForm = ({ isMobile }) => {
               {selectedAddress}
             </Typography>
           )}
-
+          {/* patient account details - needed for patientInput*/}
+          <Typography component="h2" variant="button" align="left">
+            Profile Details
+          </Typography>
           {/* drop down menu */}
           <FormControl>
             <InputLabel id="gender">Gender</InputLabel>
@@ -381,31 +390,6 @@ export const SignUpForm = ({ isMobile }) => {
               <MenuItem value="female">Female</MenuItem>
             </Select>
           </FormControl>
-
-          {/* <TextField
-            required
-            error={!!errors.lastName}
-            label="Gender"
-            variant="outlined"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClickMenu}
-          />{" "}
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={openMenu}
-            onClose={handleCloseMenu}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={handleCloseMenu}>Male</MenuItem>
-            <MenuItem onClick={handleCloseMenu}>Female</MenuItem>
-          </Menu> */}
-        </Stack>
-        <Stack spacing={2}>
           <Typography component="h2" variant="button" align="left">
             Care Requirements
           </Typography>
@@ -422,52 +406,49 @@ export const SignUpForm = ({ isMobile }) => {
             }}
           >
             <FormControlLabel
-              value="Monday"
+              value="monday"
               control={<Checkbox />}
               label="Mon"
               onChange={(e) => handleDayValue(e)}
             />
             <FormControlLabel
-              value="Tuesday"
+              value="tuesday"
               control={<Checkbox />}
               label="Tue"
               onChange={(e) => handleDayValue(e)}
             />
             <FormControlLabel
-              value="Wednesday"
+              value="wednesday"
               control={<Checkbox />}
               label="Wed"
               onChange={(e) => handleDayValue(e)}
             />
             <FormControlLabel
-              value="Thursday"
+              value="thursday"
               control={<Checkbox />}
               label="Thu"
               onChange={(e) => handleDayValue(e)}
             />
             <FormControlLabel
-              value="Friday"
+              value="friday"
               control={<Checkbox />}
               label="Fri"
               onChange={(e) => handleDayValue(e)}
             />
             <FormControlLabel
-              value="Saturday"
+              value="saturday"
               control={<Checkbox />}
               label="Sat"
               onChange={(e) => handleDayValue(e)}
             />
             <FormControlLabel
-              value="Sunday"
+              value="sunday"
               control={<Checkbox />}
               label="Sun"
               onChange={(e) => handleDayValue(e)}
             />
           </FormGroup>
-        </Stack>
-
-        {/* preferred gender drop down */}
-        <Stack spacing={1}>
+          {/* preferred gender drop down */}
           <Typography variant="caption" align="left">
             Preferred Carer Gender*
           </Typography>
@@ -486,6 +467,7 @@ export const SignUpForm = ({ isMobile }) => {
             </Select>
           </FormControl>
         </Stack>
+
         <Stack spacing={2}>
           <LoadingButton variant="contained" type="submit" loading={loading}>
             Sign Up
