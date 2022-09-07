@@ -70,7 +70,7 @@ export const CreateCarerForm = ({ isMobile }) => {
     mode: "onBlur",
   });
   const [successStatus, setSuccessStatus] = useState(false);
-  const [formKey, setFormKey] = useState(`${new Date()}`);
+  const [formKey, setFormKey] = useState(new Date());
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
   const [open, setOpen] = useState(false);
@@ -176,7 +176,7 @@ export const CreateCarerForm = ({ isMobile }) => {
   };
 
   const resetForm = () => {
-    setFormKey(`${new Date()}`);
+    setFormKey(new Date());
     setSuccessStatus(!successStatus);
     //TODO: it brings back the form but it's already populated with the previous data - need to find a way to empty the fields
   };
