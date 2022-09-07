@@ -14,6 +14,14 @@ export const SIGNUP = gql`
   }
 `;
 
+export const CARER_SIGNUP = gql`
+  mutation CarerSignup($signupInput: SignupInput!, $carerInput: CarerInput!) {
+    carerSignup(signupInput: $signupInput, carerInput: $carerInput) {
+      success
+    }
+  }
+`;
+
 export const PROFILE_SETUP = gql`
   mutation Mutation($patientInput: PatientInput!) {
     patientSetup(patientInput: $patientInput) {
