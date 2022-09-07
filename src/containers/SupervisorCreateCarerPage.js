@@ -1,5 +1,8 @@
-// For each user type to view top level information most relevant to them - may need to split into 3, but use first created as template for others
+// For the supervisor only - to be able to create a new carer in the database
 
 export const SupervisorCreateCarerPage = () => {
-  return <h1>Welcome to the Supervisor Page - Form to add a carer</h1>;
+  return <div>
+    <h1>Welcome to the Supervisor Page - Form to add a carer</h1>
+    <CreateCarerForm />
+  </div>;
 };
