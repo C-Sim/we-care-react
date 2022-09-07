@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import logo from "../atoms/images/WeCare-1.png";
+import logo from "../atoms/images/WeCare-1_260x60.png";
 import { ProfileAvatar } from "../atoms/Avatar";
 
 export const NavBar = ({ navItems }) => {
@@ -48,11 +48,11 @@ export const NavBar = ({ navItems }) => {
       <AppBar
         position="static"
         component="nav"
-        width="100vw"
         sx={{
           backgroundColor: "#3f3d56",
           color: "#eef5dbff",
           display: "flex",
+
           flexDirection: "row",
           alignItems: "center",
           m: 0,
@@ -69,21 +69,37 @@ export const NavBar = ({ navItems }) => {
           >
             <MenuIcon></MenuIcon>
           </IconButton>
-          <Grid item xs={5} sm={4} md={1}>
-            <ProfileAvatar image={logo} imageAlt="WeCare logo" />
-          </Grid>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
-            {navItems.public.map((item) => (
-              <Button
-                key={item.label}
-                sx={{ color: "#fff" }}
-                onClick={() => {
-                  navigate(item.path, { replace: true });
-                }}
-              >
-                {item.label}
-              </Button>
-            ))}
+
+          <Box className="LogoNav">
+            <ProfileAvatar
+              image={logo}
+              imageAlt="We Care logo"
+              alignItems="center"
+              boxSizing="border-box"
+            />
+          </Box>
+
+          <Box
+            variant="h6"
+            component="div"
+            sx={{
+              textAlign: "center",
+              fontWeight: 100,
+            }}
+          >
+            <Grid item xs={4}>
+              {navItems.public.map((item) => (
+                <Button
+                  key={item.label}
+                  sx={{ color: "#fff" }}
+                  onClick={() => {
+                    navigate(item.path, { replace: true });
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </Grid>
           </Box>
         </Toolbar>
       </AppBar>
