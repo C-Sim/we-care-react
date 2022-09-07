@@ -12,6 +12,7 @@ import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
 import { SupervisorNotificationsPage } from "./containers/SupervisorNotificationsPage";
+import { SupervisorCreateCarerPage } from "./containers/SupervisorCreateCarerPage";
 import { PatientsPage } from "./containers/PatientsPage";
 import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
@@ -49,6 +50,10 @@ export const AppRoutes = () => {
         <Route
           path="/supervisor-notifications"
           element={<SupervisorNotificationsPage />}
+        />
+        <Route
+          path="/supervisor-create-carer"
+          element={<SupervisorCreateCarerPage />}
         />
 
         <Route path="/resources" element={<ResourcesPage />} />
