@@ -7,21 +7,6 @@ export const PATIENT_SIGNUP = gql`
   ) {
     patientSignup(signupInput: $signupInput, patientInput: $patientInput) {
       success
-      user {
-        firstName
-        lastName
-        email
-        accountType
-        postcode
-      }
-      patient {
-        username
-        days
-        notificationCount
-        appointmentCount
-        gender
-      }
-      userId
     }
   }
 `;

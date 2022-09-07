@@ -76,7 +76,7 @@ export const SignUpForm = ({ isMobile }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data?.signup?.success) {
+    if (data?.patientSignup?.success) {
       navigate("/login", { replace: true });
     }
   }, [data, navigate]);
@@ -99,7 +99,6 @@ export const SignUpForm = ({ isMobile }) => {
         message: "Please select an address",
       });
     } else {
-      debugger;
       const signupInput = {
         firstName: formData.firstName,
         lastName: formData.lastName,
