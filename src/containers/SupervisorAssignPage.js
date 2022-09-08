@@ -6,10 +6,6 @@ import { Dropdown } from "../components/molecules/Dropdown";
 import { CheckList } from "../components/molecules/CheckList";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-
-import { TextField } from "@mui/material";
 import { DatePicker } from "../components/atoms/DatePicker";
 
 export const SupervisorAssignPage = () => {
@@ -49,7 +45,7 @@ export const SupervisorAssignPage = () => {
     },
   ];
 
-  //patients check boxes
+  //patients check boxes - retrieving the selected patients' id in a variable
   const [patient, setPatientId] = useState([]);
 
   const handlePatientSelect = (e) => {
@@ -61,60 +57,56 @@ export const SupervisorAssignPage = () => {
     }
   };
 
-  //dropdown carer selection
+  //dropdown carer selection - retrieving the selected carer id in a variable
   const [carerId, setCarerId] = useState(patientsArray[0].value);
 
   const handleCarerSelect = (event) => {
     setCarerId(event.target.value);
   };
 
-  //date picker
+  //date picker - retrieving the selected date in a variable
   const [dateValue, setDateValue] = useState(format(new Date(), "yyyy-MM-dd"));
 
   const handleDateChange = (newValue) => {
     setDateValue(newValue);
   };
 
-  console.log(dateValue);
-
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
+    <div>
+      <h1>Welcome to the Supervisor assign page</h1>
       <div>
-        <h1>Welcome to the Supervisor assign page</h1>
-        <div>
-          <h1>A div for the date</h1>
-          <DatePicker handleDateChange={handleDateChange} />
-        </div>
-        <div>
-          <h1>A div for carers selection</h1>
-          <Dropdown
-            label="Select Carer"
-            helperText=""
-            defaultSelection={patientsArray[0].value}
-            options={patientsArray}
-            handleSelect={handleCarerSelect}
-          />
-        </div>
-        <div>
-          <h1>A div for patients selection</h1>
-          <CheckList
-            patientsArray={patientsArray}
-            handleSelect={handlePatientSelect}
-          />
-        </div>
-        <div>
-          <h1>A button</h1>
-        </div>
-        <div>
-          <h1>A div for the potential timeline</h1>
-        </div>
-        <div>
-          <h1>A button to create the appointments</h1>
-        </div>
-        <div>
-          <h1>A div for a success message</h1>
-        </div>
+        <h1>A div for the date</h1>
+        <DatePicker handleDateChange={handleDateChange} />
       </div>
-    </LocalizationProvider>
+      <div>
+        <h1>A div for carers selection</h1>
+        <Dropdown
+          label="Select Carer"
+          helperText=""
+          defaultSelection={patientsArray[0].value}
+          options={patientsArray}
+          handleSelect={handleCarerSelect}
+        />
+      </div>
+      <div>
+        <h1>A div for patients selection</h1>
+        <CheckList
+          patientsArray={patientsArray}
+          handleSelect={handlePatientSelect}
+        />
+      </div>
+      <div>
+        <h1>A button</h1>
+      </div>
+      <div>
+        <h1>A div for the potential timeline</h1>
+      </div>
+      <div>
+        <h1>A button to create the appointments</h1>
+      </div>
+      <div>
+        <h1>A div for a success message</h1>
+      </div>
+    </div>
   );
 };
