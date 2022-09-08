@@ -24,6 +24,9 @@ import { CalendarSmall } from "../components/molecules/CalendarSmall";
 
 import { HowItWorks } from "../components/molecules/HowItWorks";
 
+import { ModalForCarer } from "../components/molecules/ModalForCarer";
+import { ModalForSupervisor } from "../components/molecules/ModalForSupervisor";
+
 export const AboutPage = () => {
   return (
     <Stack spacing={2} sx={{ m: 2 }}>
@@ -124,6 +127,9 @@ export const AboutPage = () => {
       <HowItWorks />
 
       <CalendarSmall />
+
+      <ModalForCarer />
+      <ModalForSupervisor />
     </Stack>
   );
 };
