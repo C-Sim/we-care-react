@@ -11,7 +11,11 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { IconButton } from "@mui/material";
 
 const PaperComponent = (props) => {
   return (
@@ -30,12 +34,15 @@ const createData = (rowTitle, rowValue) => {
 
 //template data for now
 const rows = [
+  createData("Carer:", "Alice Bond"),
   createData("Patient:", "Charlie Dean"),
-  createData("Visit Date:", "25/08/22"),
-  createData("Visit Time:", "12:00"),
-  createData("Location:", "Paganel Rd, B29 5TG"),
   createData("Submitted:", "18/08/22"),
-  createData("Special Care Requirement:", ""),
+  createData("Visit Date:", "18/08/22"),
+  createData("Visit Time:", "12:00"),
+  createData(
+    "Comment:",
+    "It will be dificult to get across town from my last appointment in time"
+  ),
 ];
 
 export const ModalForSupervisor = () => {
@@ -61,10 +68,13 @@ export const ModalForSupervisor = () => {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
-          Appointment Detail
+          Request Detail
         </DialogTitle>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 430 }} aria-label="simple table">
+          <Table
+            sx={{ minWidth: 400, maxWidth: 500 }}
+            aria-label="simple table"
+          >
             <TableBody>
               {rows.map((row) => (
                 <TableRow
@@ -79,21 +89,51 @@ export const ModalForSupervisor = () => {
               ))}
             </TableBody>
           </Table>
-          <TextareaAutosize
-            aria-label="minimum height"
-            minRows={3}
-            placeholder="text"
-            style={{
-              width: 200,
-            }}
-          />
-        </TableContainer>
 
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} variant="contained">
-            Close
-          </Button>
-        </DialogActions>
+          <Box>
+            {" "}
+            <IconButton
+              size="large"
+              color="success"
+              sx={{ width: "5vw", height: "7vh" }}
+            >
+              {" "}
+              <CheckCircleIcon />
+            </IconButton>
+            <IconButton
+              size="large"
+              color="secondary"
+              sx={{
+                width: "5vw",
+                height: "7vh",
+              }}
+            >
+              <HighlightOffIcon />
+            </IconButton>
+          </Box>
+
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "97%" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            {" "}
+            <TextField
+              id="filled-basic"
+              label="Enter reason"
+              variant="filled"
+            />
+          </Box>
+
+          <DialogActions>
+            <Button autoFocus onClick={handleClose} variant="contained">
+              Close
+            </Button>
+          </DialogActions>
+        </TableContainer>
       </Dialog>
     </div>
   );
