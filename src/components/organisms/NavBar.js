@@ -1,3 +1,5 @@
+//need to complete styling format logo on nav bar and set nav link buttons to the right.
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
