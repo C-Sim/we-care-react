@@ -37,7 +37,7 @@ import Select from "@mui/material/Select";
 import { PATIENT_SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
-export const CheckList = ({ patientsArray, handleSelectPatient }) => {
+export const CheckList = ({ patientsArray, handleSelect }) => {
   return (
     <FormGroup
       sx={{
@@ -53,7 +53,7 @@ export const CheckList = ({ patientsArray, handleSelectPatient }) => {
             value={option.value}
             control={<Checkbox />}
             label={option.label}
-            onChange={(e) => handleSelectPatient(e)}
+            onChange={(e) => handleSelect(e)}
           />
         );
       })}

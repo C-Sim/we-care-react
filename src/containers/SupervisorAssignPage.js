@@ -4,10 +4,16 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Dropdown } from "../components/molecules/Dropdown";
 import { CheckList } from "../components/molecules/CheckList";
-import { MobileDatePicker } from "@mui/lab";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+
 import { TextField } from "@mui/material";
+import { DatePicker } from "../components/atoms/DatePicker";
 
 export const SupervisorAssignPage = () => {
+  //static data as example - need to query to get the carer and patient arrays
   const patientsArray = [
     {
       value: "63185053e763bfb7288867cc",
@@ -46,7 +52,7 @@ export const SupervisorAssignPage = () => {
   //patients check boxes
   const [patient, setPatientId] = useState([]);
 
-  const handleSelectPatient = (e) => {
+  const handlePatientSelect = (e) => {
     let data = patient.indexOf(e.target.value);
     if (data === -1) {
       setPatientId([...patient, e.target.value]);
@@ -56,63 +62,59 @@ export const SupervisorAssignPage = () => {
   };
 
   //dropdown carer selection
-  //need to bring the state variables here instead of in component
   const [carerId, setCarerId] = useState(patientsArray[0].value);
 
   const handleCarerSelect = (event) => {
     setCarerId(event.target.value);
   };
 
-  console.log(carerId);
   //date picker
-  // const [dateValue, setDateValue] = useState(format(new Date(), "yyyy-MM-DD"));
+  const [dateValue, setDateValue] = useState(format(new Date(), "yyyy-MM-dd"));
 
-  // const handleDateChange = (newValue) => {
-  //   setDateValue(newValue);
-  // };
+  const handleDateChange = (newValue) => {
+    setDateValue(newValue);
+  };
+
+  console.log(dateValue);
 
   return (
-    <div>
-      <h1>Welcome to the Supervisor assign page</h1>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div>
-        <h1>A div for the date</h1>
-        {/* <MobileDatePicker
-          label="Date"
-          inputFormat="MM/DD/YYYY"
-          value={dateValue}
-          onChange={handleDateChange}
-          renderInput={(params) => <TextField {...params} />}
-        /> */}
+        <h1>Welcome to the Supervisor assign page</h1>
+        <div>
+          <h1>A div for the date</h1>
+          <DatePicker handleDateChange={handleDateChange} />
+        </div>
+        <div>
+          <h1>A div for carers selection</h1>
+          <Dropdown
+            label="Select Carer"
+            helperText=""
+            defaultSelection={patientsArray[0].value}
+            options={patientsArray}
+            handleSelect={handleCarerSelect}
+          />
+        </div>
+        <div>
+          <h1>A div for patients selection</h1>
+          <CheckList
+            patientsArray={patientsArray}
+            handleSelect={handlePatientSelect}
+          />
+        </div>
+        <div>
+          <h1>A button</h1>
+        </div>
+        <div>
+          <h1>A div for the potential timeline</h1>
+        </div>
+        <div>
+          <h1>A button to create the appointments</h1>
+        </div>
+        <div>
+          <h1>A div for a success message</h1>
+        </div>
       </div>
-      <div>
-        <h1>A div for carers selection</h1>
-        <Dropdown
-          label="Select Carer"
-          helperText=""
-          defaultSelection={patientsArray[0].value}
-          options={patientsArray}
-          handleSelect={handleCarerSelect}
-        />
-      </div>
-      <div>
-        <h1>A div for patients selection</h1>
-        <CheckList
-          patientsArray={patientsArray}
-          handleSelectPatient={handleSelectPatient}
-        />
-      </div>
-      <div>
-        <h1>A button</h1>
-      </div>
-      <div>
-        <h1>A div for the potential timeline</h1>
-      </div>
-      <div>
-        <h1>A button to create the appointments</h1>
-      </div>
-      <div>
-        <h1>A div for a success message</h1>
-      </div>
-    </div>
+    </LocalizationProvider>
   );
 };
