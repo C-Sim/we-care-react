@@ -7,12 +7,13 @@ import { CarerDashboardPage } from "./containers/CarerDashboardPage";
 import { PatientDashboardPage } from "./containers/PatientDashboardPage";
 import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
-import { AssignmentsPage } from "./containers/AssignmentsPage";
+
 import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
 import { SupervisorNotificationsPage } from "./containers/SupervisorNotificationsPage";
 import { SupervisorCreateCarerPage } from "./containers/SupervisorCreateCarerPage";
+import { SupervisorAssignPage } from "./containers/SupervisorAssignPage";
 import { PatientsPage } from "./containers/PatientsPage";
 import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
@@ -59,7 +60,7 @@ export const AppRoutes = () => {
         <Route path="/resources" element={<ResourcesPage />} />
         <Route path="/care-overview" element={<CareOverviewPage />} />
         <Route path="/care-plan" element={<CarePlanPage />} />
-        <Route path="/assignments" element={<AssignmentsPage />} />
+        <Route path="/supervisor-assign" element={<SupervisorAssignPage />} />
         <Route path="/patients" element={<PatientsPage />} />
       </>
       <Route path="/logout" element={<LandingPage />} />
