@@ -1,15 +1,12 @@
 import { gql } from "@apollo/client";
 
-export const SIGNUP = gql`
-  mutation Mutation($signupInput: SignupInput!) {
-    signup(signupInput: $signupInput) {
+export const PATIENT_SIGNUP = gql`
+  mutation PatientSignup(
+    $signupInput: SignupInput!
+    $patientInput: PatientInput!
+  ) {
+    patientSignup(signupInput: $signupInput, patientInput: $patientInput) {
       success
-      user {
-        id
-        firstName
-        lastName
-        email
-      }
     }
   }
 `;
@@ -22,20 +19,8 @@ export const CARER_SIGNUP = gql`
   }
 `;
 
-export const PROFILE_SETUP = gql`
-  mutation Mutation($patientInput: PatientInput!) {
-    patientSetup(patientInput: $patientInput) {
-      success
-      patient {
-        username
-      }
-      userId
-    }
-  }
-`;
-
 export const LOGIN = gql`
-  mutation Mutation($loginInput: LoginInput!) {
+  mutation Login($loginInput: LoginInput!) {
     login(loginInput: $loginInput) {
       success
       token
