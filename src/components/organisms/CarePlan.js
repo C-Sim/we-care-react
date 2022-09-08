@@ -15,15 +15,38 @@ import { useEffect, useState } from "react";
 import { Input } from "../atoms/Input";
 
 import { Login } from "../../graphql/mutations";
-import { ADDRESS_LOOKUP } from "../../graphql/queries";
+
 import { ButtonDark } from "../atoms/ButtonDark";
 
-export const CarePlan = ({ isMobile }) => {
-  const [Login, { data, loading, error }] = useMutation(Login);
+= ({ isMobile }) => {
+  const ["", { data, loading, error }] = useMutation("");
 
-  const [checked, setCheckBoxChecked] = useState(false);
+  //state for y/n checkboxes
+  const [option, setOption] = useState([]);
 
-  const selectOption = (value) => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setError,
+    clearErrors,
+    getValues,
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  const [successStatus, setSuccessStatus] = useState(false);
+  const [formKey, setFormKey] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (data?.carePlanForm?.success) {
+      setSuccessStatus(!successStatus);
+    }
+  }, [data, navigate]);
+
+  const handleYesNoOption = (value) => {
     console.log(value);
     if (value === "yes") {
       setCheckBoxChecked((checked) => !checked);
@@ -31,11 +54,12 @@ export const CarePlan = ({ isMobile }) => {
     if (value === "no") {
       setCheckBoxChecked((checked) => !checked);
     }
+  };
 
-    const options = [
-      { label: "Yes", value: "start" },
-      { label: "No", value: "start" },
-    ];
+  const resetForm = () => {
+    setFormKey(new Date());
+    setSuccessStatus(!successStatus);
+    //TODO: it brings back the form but it's populated with the previous data
   };
 
   return (
