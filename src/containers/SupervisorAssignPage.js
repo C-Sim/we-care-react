@@ -6,6 +6,7 @@ import { Dropdown } from "../components/molecules/Dropdown";
 import { CheckList } from "../components/molecules/CheckList";
 import { DatePicker } from "../components/atoms/DatePicker";
 import { ButtonDark } from "../components/atoms/ButtonDark";
+import { Alert } from "@mui/material";
 
 export const SupervisorAssignPage = () => {
   //static data as example - need to query to get the carer and patient arrays
@@ -44,6 +45,9 @@ export const SupervisorAssignPage = () => {
     },
   ];
 
+  //success state changes on create success
+  const [assignSuccess, setAssignSuccess] = useState(true);
+
   //patients check boxes - retrieving the selected patients' id in a variable
   const [patient, setPatientId] = useState([]);
 
@@ -70,12 +74,17 @@ export const SupervisorAssignPage = () => {
     setDateValue(newValue);
   };
 
+  //run simulation with selected data (dateValue, carerId, patient)
+  //function to be developed > need to retrieve postcode lat/lon or address so we can calculate the distance between each appointment being setup
   const runSimulation = () => {
     console.log("running simulation...");
+    //result will be an array of objects to be used as appointmentInput
   };
 
-  const createAppointments = () => {
-    console.log("creating appointments...");
+  //creates appointments with a useMutation and a loop over the array of draft appointments
+  const assignAppointments = () => {
+    console.log("creating and assigning appointments in db...");
+    //useMutation
   };
 
   return (
@@ -118,11 +127,16 @@ export const SupervisorAssignPage = () => {
         <ButtonDark
           label="Save Appointments"
           type="button"
-          onClick={createAppointments}
+          onClick={assignAppointments}
         />
       </div>
       <div>
         <h1>A div for a success message</h1>
+        {assignSuccess && (
+          <Alert severity="success">
+            The appointments have been created successfully!
+          </Alert>
+        )}
       </div>
     </div>
   );
