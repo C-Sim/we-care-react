@@ -24,6 +24,8 @@ import { CalendarSmall } from "../components/molecules/CalendarSmall";
 import { HowItWorks } from "../components/molecules/HowItWorks";
 
 import logo from "../components/atoms/images/WeCare-dark.png";
+import { ModalForCarer } from "../components/molecules/ModalForCarer";
+import { ModalForSupervisor } from "../components/molecules/ModalForSupervisor";
 
 export const AboutPage = () => {
   return (
@@ -121,6 +123,9 @@ export const AboutPage = () => {
           },
         ]}
       />
+
+      <ModalForCarer />
+      <ModalForSupervisor />
 
       <CalendarSmall />
 
