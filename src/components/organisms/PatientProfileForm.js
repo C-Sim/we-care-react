@@ -33,8 +33,16 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Select from "@mui/material/Select";
+//import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import EditIcon from "@mui/icons-material/Edit";
+
 //import { PATIENT_SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
+
+import { ProfileAvatar } from "../atoms/Avatar";
+
+import { ButtonBright } from "../atoms/ButtonBright";
 
 export const PatientProfileForm = ({ isMobile }) => {
   //const [signup, { data, loading }] = useMutation(PATIENT_SIGNUP);
@@ -67,7 +75,7 @@ export const PatientProfileForm = ({ isMobile }) => {
     mode: "onBlur",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
+  //const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState();
   const [selectedAddress, setSelectedAddress] = useState();
@@ -126,9 +134,9 @@ export const PatientProfileForm = ({ isMobile }) => {
     setShowPassword(!showPassword);
   };
 
-  const toggleShowConfirmedPassword = () => {
-    setShowConfirmedPassword(!showConfirmedPassword);
-  };
+  // const toggleShowConfirmedPassword = () => {
+  //   setShowConfirmedPassword(!showConfirmedPassword);
+  // };
 
   const handleAddressLookup = () => {
     console.log("searching...");
@@ -217,6 +225,16 @@ export const PatientProfileForm = ({ isMobile }) => {
         My Profile
       </Typography>
       <Divider />
+
+      <Grid container marginTop={5} marginLeft={4}>
+        <Grid item marginRight={4}>
+          {" "}
+          <ProfileAvatar />
+        </Grid>
+        <Grid item>
+          <ButtonBright label="Update image" type="submit" />
+        </Grid>
+      </Grid>
       <Stack
         component="form"
         sx={{ p: 3 }}
@@ -225,35 +243,17 @@ export const PatientProfileForm = ({ isMobile }) => {
       >
         {/* user account details - needed for signupInput*/}
         <Stack spacing={2}>
-          <Typography component="h2" variant="button" align="left">
-            User account Details
-          </Typography>
-
-          <TextField
-            sx
-            required
-            error={!!errors.firstName}
-            label="First name"
-            variant="outlined"
-            helperText={
-              !!errors.firstName ? "Please enter your first name." : ""
-            }
-            {...register("firstName", {
-              required: true,
-            })}
-            sx={{ backgroundColor: "#FFFFFF" }}
-          />
-          <TextField
-            required
-            error={!!errors.lastName}
-            label="Last name"
-            variant="outlined"
-            helperText={!!errors.lastName ? "Please enter your last name." : ""}
-            {...register("lastName", {
-              required: true,
-            })}
-            sx={{ backgroundColor: "#FFFFFF" }}
-          />
+          <Grid container>
+            {" "}
+            <Grid item>
+              <Typography component="h2" variant="button" align="left">
+                Account Details
+              </Typography>
+            </Grid>
+            <Grid item paddingLeft={2}>
+              <EditIcon fontSize="small" />
+            </Grid>
+          </Grid>
           <TextField
             required
             error={!!errors.email}
@@ -298,7 +298,7 @@ export const PatientProfileForm = ({ isMobile }) => {
               </FormHelperText>
             )}
           </FormControl>
-          <FormControl sx={{ m: 1 }} variant="outlined">
+          {/* <FormControl sx={{ m: 1 }} variant="outlined">
             <InputLabel
               error={!!errors.confirmPassword}
               htmlFor="confirm-password"
@@ -334,148 +334,171 @@ export const PatientProfileForm = ({ isMobile }) => {
                 {errors.confirmPassword?.message || "Passwords do not match."}
               </FormHelperText>
             )}
-          </FormControl>
-          <TextField
-            required
-            error={!!errors.phoneNumber}
-            label="Phone Number"
-            variant="outlined"
-            helperText={
-              !!errors.phoneNumber ? "Please enter your phone number." : ""
-            }
-            {...register("phoneNumber", {
-              required: true,
-            })}
-            sx={{ backgroundColor: "#FFFFFF" }}
-          />
-          <FormControl sx={{ m: 1 }} variant="outlined">
-            <InputLabel htmlFor="postcode">Postcode</InputLabel>
-            <OutlinedInput
-              id="postcode"
-              type="text"
-              // value={postcode}
-              // onChange={handleOnChangeAddress}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleAddressLookup}
-                    onMouseDown={handleAddressLookup}
-                    edge="end"
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
+          </FormControl> */}
+          <Stack spacing={2}>
+            <Grid container>
+              {" "}
+              <Grid item>
+                <Typography component="h2" variant="button" align="left">
+                  Contact Details
+                </Typography>
+              </Grid>
+              <Grid item paddingLeft={2}>
+                <EditIcon fontSize="small" />
+              </Grid>
+            </Grid>
+
+            <TextField
+              required
+              error={!!errors.phoneNumber}
+              label="Phone Number"
+              variant="outlined"
+              helperText={
+                !!errors.phoneNumber ? "Please enter your phone number." : ""
               }
-              label="Postcode"
-              {...register("postcode", {
+              {...register("phoneNumber", {
                 required: true,
               })}
               sx={{ backgroundColor: "#FFFFFF" }}
             />
-            {!!errors.postcode && (
-              <FormHelperText error={!!errors.postcode}>
-                {errors.postcode?.message}
-              </FormHelperText>
+            <FormControl sx={{ m: 1 }} variant="outlined">
+              <InputLabel htmlFor="postcode">Address</InputLabel>
+              <OutlinedInput
+                id="postcode"
+                type="text"
+                // value={postcode}
+                // onChange={handleOnChangeAddress}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleAddressLookup}
+                      onMouseDown={handleAddressLookup}
+                      edge="end"
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Address"
+                {...register("postcode", {
+                  required: true,
+                })}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+              {!!errors.postcode && (
+                <FormHelperText error={!!errors.postcode}>
+                  {errors.postcode?.message}
+                </FormHelperText>
+              )}
+            </FormControl>
+            {selectedAddress && (
+              <Typography component="div" variant="caption" align="left">
+                {selectedAddress}
+              </Typography>
             )}
-          </FormControl>
-          {selectedAddress && (
-            <Typography component="div" variant="caption" align="left">
-              {selectedAddress}
+          </Stack>
+          <Stack spacing={2}>
+            <Grid container>
+              {" "}
+              <Grid item>
+                <Typography component="h2" variant="button" align="left">
+                  Your Care Requirement Details
+                </Typography>
+              </Grid>
+              <Grid item paddingLeft={2}>
+                <EditIcon fontSize="small" />
+              </Grid>
+            </Grid>
+          </Stack>
+          <Stack spacing={2}>
+            <Typography variant="caption" align="left">
+              Days Care Required*
             </Typography>
-          )}
-          {/* patient account details - needed for patientInput*/}
-          <Typography component="h2" variant="button" align="left">
-            Profile Details
-          </Typography>
 
-          <Typography component="h2" variant="button" align="left">
-            Care Requirements
-          </Typography>
-          <Typography variant="caption" align="left">
-            Days Care Required*
-          </Typography>
-
-          {/* check boxes */}
-          <FormGroup
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space - between",
-            }}
-          >
-            <FormControlLabel
-              value="monday"
-              control={<Checkbox />}
-              label="Mon"
-              onChange={(e) => handleDayValue(e)}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-            <FormControlLabel
-              value="tuesday"
-              control={<Checkbox />}
-              label="Tue"
-              onChange={(e) => handleDayValue(e)}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-            <FormControlLabel
-              value="wednesday"
-              control={<Checkbox />}
-              label="Wed"
-              onChange={(e) => handleDayValue(e)}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-            <FormControlLabel
-              value="thursday"
-              control={<Checkbox />}
-              label="Thu"
-              onChange={(e) => handleDayValue(e)}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-            <FormControlLabel
-              value="friday"
-              control={<Checkbox />}
-              label="Fri"
-              onChange={(e) => handleDayValue(e)}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-            <FormControlLabel
-              value="saturday"
-              control={<Checkbox />}
-              label="Sat"
-              onChange={(e) => handleDayValue(e)}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-            <FormControlLabel
-              value="sunday"
-              control={<Checkbox />}
-              label="Sun"
-              onChange={(e) => handleDayValue(e)}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-          </FormGroup>
-          {/* preferred gender drop down */}
-          <Typography variant="caption" align="left">
-            Preferred Carer Gender*
-          </Typography>
-          <FormControl>
-            <InputLabel id="gendercare">Gender</InputLabel>
-            <Select
-              labelId="gendercare"
-              id="gendercare"
-              value={genderCare}
-              label="Gender"
-              onChange={handleChangeGenderCare}
-              sx={{ backgroundColor: "#FFFFFF" }}
+            {/* check boxes */}
+            <FormGroup
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space - between",
+              }}
             >
-              <MenuItem value="none">None</MenuItem>
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
-            </Select>
-          </FormControl>
+              <FormControlLabel
+                value="monday"
+                control={<Checkbox />}
+                label="Mon"
+                onChange={(e) => handleDayValue(e)}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+              <FormControlLabel
+                value="tuesday"
+                control={<Checkbox />}
+                label="Tue"
+                onChange={(e) => handleDayValue(e)}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+              <FormControlLabel
+                value="wednesday"
+                control={<Checkbox />}
+                label="Wed"
+                onChange={(e) => handleDayValue(e)}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+              <FormControlLabel
+                value="thursday"
+                control={<Checkbox />}
+                label="Thu"
+                onChange={(e) => handleDayValue(e)}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+              <FormControlLabel
+                value="friday"
+                control={<Checkbox />}
+                label="Fri"
+                onChange={(e) => handleDayValue(e)}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+              <FormControlLabel
+                value="saturday"
+                control={<Checkbox />}
+                label="Sat"
+                onChange={(e) => handleDayValue(e)}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+              <FormControlLabel
+                value="sunday"
+                control={<Checkbox />}
+                label="Sun"
+                onChange={(e) => handleDayValue(e)}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+            </FormGroup>
+            {/* preferred gender drop down */}
+            <Typography variant="caption" align="left">
+              Preferred Carer Gender*
+            </Typography>
+            <FormControl>
+              <InputLabel id="gendercare">Gender</InputLabel>
+              <Select
+                labelId="gendercare"
+                id="gendercare"
+                value={genderCare}
+                label="Gender"
+                onChange={handleChangeGenderCare}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              >
+                <MenuItem value="none">None</MenuItem>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
         </Stack>
 
-        <Stack spacing={2}></Stack>
+        <Stack spacing={2}>
+          <ButtonBright label="Update profile" type="submit" />
+        </Stack>
       </Stack>
     </Paper>
   );
