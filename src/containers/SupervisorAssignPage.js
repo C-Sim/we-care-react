@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Dropdown } from "../components/molecules/Dropdown";
 import { CheckList } from "../components/molecules/CheckList";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "../components/atoms/DatePicker";
+import { ButtonDark } from "../components/atoms/ButtonDark";
 
 export const SupervisorAssignPage = () => {
   //static data as example - need to query to get the carer and patient arrays
@@ -71,6 +70,14 @@ export const SupervisorAssignPage = () => {
     setDateValue(newValue);
   };
 
+  const runSimulation = () => {
+    console.log("running simulation...");
+  };
+
+  const createAppointments = () => {
+    console.log("creating appointments...");
+  };
+
   return (
     <div>
       <h1>Welcome to the Supervisor assign page</h1>
@@ -97,12 +104,22 @@ export const SupervisorAssignPage = () => {
       </div>
       <div>
         <h1>A button</h1>
+        <ButtonDark
+          label="Build timeline"
+          type="button"
+          onClick={runSimulation}
+        />
       </div>
       <div>
         <h1>A div for the potential timeline</h1>
       </div>
       <div>
         <h1>A button to create the appointments</h1>
+        <ButtonDark
+          label="Save Appointments"
+          type="button"
+          onClick={createAppointments}
+        />
       </div>
       <div>
         <h1>A div for a success message</h1>

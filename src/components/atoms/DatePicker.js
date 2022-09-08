@@ -17,7 +17,6 @@ export const DatePicker = ({ handleDateChange }) => {
     setValue(newValue);
     handleDateChange(newValue);
   };
-  console.log(isMobile);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
