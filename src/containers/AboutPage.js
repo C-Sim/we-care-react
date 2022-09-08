@@ -24,7 +24,8 @@ import { CalendarSmall } from "../components/molecules/CalendarSmall";
 
 import { HowItWorks } from "../components/molecules/HowItWorks";
 
-import { DraggableDialog } from "../components/molecules/Modal";
+import { ModalForCarer } from "../components/molecules/ModalForCarer";
+import { ModalForSupervisor } from "../components/molecules/modalForSupervisor";
 
 export const AboutPage = () => {
   return (
@@ -127,7 +128,8 @@ export const AboutPage = () => {
 
       <CalendarSmall />
 
-      <DraggableDialog />
+      <ModalForCarer />
+      <ModalForSupervisor />
     </Stack>
   );
 };

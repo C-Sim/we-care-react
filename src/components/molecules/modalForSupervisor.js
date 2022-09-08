@@ -38,7 +38,7 @@ const rows = [
   createData("Special Care Requirement:", ""),
 ];
 
-export const DraggableDialog = () => {
+export const ModalForSupervisor = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -52,7 +52,7 @@ export const DraggableDialog = () => {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Open draggable dialog
+        Open Modal For Supervisor
       </Button>
       <Dialog
         open={open}
