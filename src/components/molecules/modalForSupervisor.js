@@ -90,26 +90,22 @@ export const ModalForSupervisor = () => {
             </TableBody>
           </Table>
 
-          <Box>
+          <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
             {" "}
-            <IconButton
-              size="large"
+            <Button
+              variant="contained"
               color="success"
-              sx={{ width: "5vw", height: "7vh" }}
+              endIcon={<CheckCircleIcon />}
             >
-              {" "}
-              <CheckCircleIcon />
-            </IconButton>
-            <IconButton
-              size="large"
+              Approve
+            </Button>
+            <Button
+              variant="contained"
               color="secondary"
-              sx={{
-                width: "5vw",
-                height: "7vh",
-              }}
+              endIcon={<HighlightOffIcon />}
             >
-              <HighlightOffIcon />
-            </IconButton>
+              Deny
+            </Button>
           </Box>
 
           <Box

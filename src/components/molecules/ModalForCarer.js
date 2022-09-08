@@ -12,6 +12,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Box from "@mui/material/Box";
 
 const PaperComponent = (props) => {
   return (
@@ -79,6 +80,14 @@ export const ModalForCarer = () => {
               ))}
             </TableBody>
           </Table>
+        </TableContainer>
+        <Box
+          sx={{
+            m: 2,
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
           <TextareaAutosize
             aria-label="minimum height"
             minRows={3}
@@ -87,8 +96,7 @@ export const ModalForCarer = () => {
               width: 200,
             }}
           />
-        </TableContainer>
-
+        </Box>
         <DialogActions>
           <Button autoFocus onClick={handleClose} variant="contained">
             Close
