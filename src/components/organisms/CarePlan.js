@@ -14,12 +14,12 @@ import FormLabel from "@mui/material/FormLabel";
 import { useEffect, useState } from "react";
 import { Input } from "../atoms/Input";
 
-import { Login } from "../../graphql/mutations";
+import { userId } from "../../graphql/mutations";
 
 import { ButtonDark } from "../atoms/ButtonDark";
 
 = ({ isMobile }) => {
-  const ["", { data, loading, error }] = useMutation("");
+  const [userId, { data, loading, error }] = useMutation(createCarePlan);
 
   //state for y/n checkboxes
   const [option, setOption] = useState([]);
@@ -96,13 +96,13 @@ import { ButtonDark } from "../atoms/ButtonDark";
 
       <h2>How would you best describe your current ability to communicate?</h2>
       <FormControlLabel
-        value="communicate"
+        value="communication"
         control={<Checkbox />}
         label="Yes"
         labelPlacement="start"
       />
       <FormControlLabel
-        value="communicate"
+        value="communication"
         control={<Checkbox />}
         label="No"
         labelPlacement="start"
@@ -114,28 +114,28 @@ import { ButtonDark } from "../atoms/ButtonDark";
         personal care?
       </h2>
       <FormControlLabel
-        value="personal care"
+        value="personalCare"
         control={<Checkbox />}
         label="Yes"
         labelPlacement="start"
       />
       <FormControlLabel
-        value="personal care"
+        value="personalCare"
         control={<Checkbox />}
         label="No"
         labelPlacement="start"
       />
       <Input></Input>
 
-      <h2>How would you best describe your current personal care?</h2>
+      <h2>How would you best describe your current mental health?</h2>
       <FormControlLabel
-        value="personal care"
+        value="mentalHealth"
         control={<Checkbox />}
         label="Yes"
         labelPlacement="start"
       />
       <FormControlLabel
-        value="personal care"
+        value="mentalHealth"
         control={<Checkbox />}
         label="No"
         labelPlacement="start"
@@ -144,13 +144,13 @@ import { ButtonDark } from "../atoms/ButtonDark";
 
       <h2>Do you have any dietary requirements?</h2>
       <FormControlLabel
-        value="dietary requirements"
+        value="allergies"
         control={<Checkbox />}
         label="Yes"
         labelPlacement="start"
       />
       <FormControlLabel
-        value="dietary requirements"
+        value="allergies"
         control={<Checkbox />}
         label="No"
         labelPlacement="start"
