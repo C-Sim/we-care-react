@@ -26,3 +26,21 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const USER_PROFILE = gql`
+  mutation UpdateUserInfo($userId: ID!, $updateInput: UserInfoInput) {
+    updateUserInfo(userId: $userId, updateInput: $updateInput) {
+      success
+      userId
+    }
+  }
+`;
+
+export const PATIENT_INFO = gql`
+  mutation UpdatePatientInfo($userId: ID!, $updateInput: PatientInfoInput) {
+    updatePatientInfo(userId: $userId, updateInput: $updateInput) {
+      success
+      userId
+    }
+  }
+`;
