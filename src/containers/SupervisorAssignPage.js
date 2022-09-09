@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Dropdown } from "../components/molecules/Dropdown";
 import { CheckList } from "../components/molecules/CheckList";
+import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { DatePicker } from "../components/atoms/DatePicker";
 import { ButtonDark } from "../components/atoms/ButtonDark";
 import { Alert } from "@mui/material";
+import { ButtonDisabled } from "../components/atoms/ButtonDisabled";
 
 export const SupervisorAssignPage = () => {
   //static data as example - need to query to get the carer and patient arrays
@@ -48,30 +50,65 @@ export const SupervisorAssignPage = () => {
   //success state changes on create success
   const [assignSuccess, setAssignSuccess] = useState(true);
 
-  //patients check boxes - retrieving the selected patients' id in a variable
-  const [patient, setPatientId] = useState([]);
-
-  const handlePatientSelect = (e) => {
-    let data = patient.indexOf(e.target.value);
-    if (data === -1) {
-      setPatientId([...patient, e.target.value]);
-    } else {
-      setPatientId(patient.filter((data) => data !== e.target.value));
-    }
-  };
-
-  //dropdown carer selection - retrieving the selected carer id in a variable
-  const [carerId, setCarerId] = useState(patientsArray[0].value);
-
-  const handleCarerSelect = (event) => {
-    setCarerId(event.target.value);
-  };
-
   //date picker - retrieving the selected date in a variable
   const [dateValue, setDateValue] = useState(format(new Date(), "yyyy-MM-dd"));
 
   const handleDateChange = (newValue) => {
     setDateValue(newValue);
+  };
+  //then locking the date for the next step of the assigning process
+  const [selectedDate, setSelectedDate] = useState();
+  const [dateLock, setDateLock] = useState(false);
+  const saveSelectedDate = () => {
+    setDateLock(true);
+    setSelectedDate(format(new Date(dateValue), "yyyy-MM-dd"));
+  };
+
+  //retrieve the list of available carers
+  // const [
+  //   availableCarers,
+  //   { data: carerData, loading: carerLoading, error: carerError },
+  // ] = useLazyQuery(CARER_LOOKUP, {
+  //   fetchPolicy: "network-only",
+  // });
+  //need to add the query into graphql>queries
+
+  //dropdown carer selection - retrieving the selected carer id in a variable **CHECK DATA GETS SAVED**
+  const [carerId, setCarerId] = useState(patientsArray[0].value);
+  const [selectedCarer, setSelectedCarer] = useState(patientsArray[0].label);
+  const handleCarerSelect = (event) => {
+    setCarerId(event.target.value);
+    setSelectedCarer(event.target.label);
+  };
+  //then locking the carer for the next step of the assigning process
+  const [carerLock, setCarerLock] = useState(false);
+  const saveSelectedCarer = () => {
+    setCarerLock(true);
+  };
+
+  //retrieving the available patients for this carer
+
+  //patients check boxes - retrieving the selected patients' id in a variable
+  const [patient, setPatientId] = useState([]);
+  const [selectedPatients, setSelectedPatients] = useState([]);
+
+  const handlePatientSelect = (e) => {
+    let data = patient.indexOf(e.target.value);
+    if (data === -1) {
+      setPatientId([...patient, e.target.value]);
+      setSelectedPatients([...selectedPatients, e.target.label]);
+    } else {
+      setPatientId(patient.filter((data) => data !== e.target.value));
+      setSelectedPatients(
+        selectedPatients.filter((data) => data !== e.target.label)
+      );
+    }
+  };
+
+  //then locking the patients for the next step of the assigning process
+  const [patientLock, setPatientLock] = useState(false);
+  const saveSelectedPatients = () => {
+    setPatientLock(true);
   };
 
   //run simulation with selected data (dateValue, carerId, patient)
@@ -93,6 +130,15 @@ export const SupervisorAssignPage = () => {
       <div>
         <h1>A div for the date</h1>
         <DatePicker handleDateChange={handleDateChange} />
+        {!dateLock && (
+          <ButtonDark
+            label="Use this date"
+            type="button"
+            onClick={saveSelectedDate}
+          />
+        )}
+        {dateLock && <ButtonDisabled label="Date saved" type="button" />}
+        <h1>Selected date: {selectedDate}</h1>
       </div>
       <div>
         <h1>A div for carers selection</h1>
@@ -103,6 +149,15 @@ export const SupervisorAssignPage = () => {
           options={patientsArray}
           handleSelect={handleCarerSelect}
         />
+        {!carerLock && (
+          <ButtonDark
+            label="Use this carer"
+            type="button"
+            onClick={saveSelectedCarer}
+          />
+        )}
+        {carerLock && <ButtonDisabled label="Carer saved" type="button" />}
+        {carerLock && <h1>Selected carer: {selectedCarer}</h1>}
       </div>
       <div>
         <h1>A div for patients selection</h1>
@@ -110,6 +165,26 @@ export const SupervisorAssignPage = () => {
           patientsArray={patientsArray}
           handleSelect={handlePatientSelect}
         />
+        <ButtonDark
+          label="Use these patients"
+          type="button"
+          disabled={patientLock}
+          onClick={saveSelectedPatients}
+        />
+        {patientLock && (
+          <div>
+            <h1>Selected patients:</h1>
+            <ul>
+              {selectedPatients.map((result) => {
+                return (
+                  <li key={result} value={result}>
+                    {result}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </div>
       <div>
         <h1>A button</h1>
