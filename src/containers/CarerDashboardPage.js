@@ -30,7 +30,7 @@ export const CarerDashboardPage = () => {
           width: "30%",
           height: "30%",
           position: "absolute",
-          top: "200px",
+          top: "700px",
         }}
         onLoad={(map) => setMap(map)}
       />
