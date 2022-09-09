@@ -169,9 +169,10 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align={"center"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={{ backgroundColor: "#00b0ff2e", color: "#3f3d56" }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -320,17 +321,17 @@ export const NotificationsTable = () => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.type);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
+                      onClick={(event) => handleClick(event, row.type)}
+                      //   role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.type}
                       selected={isItemSelected}
                     >
                       {/* <TableCell padding="checkbox">
@@ -347,14 +348,25 @@ export const NotificationsTable = () => {
                         id={labelId}
                         scope="row"
                         padding="none"
+                        align="center"
                       >
                         {row.type}
                       </TableCell>
-                      <TableCell align="right">{row.carer}</TableCell>
-                      <TableCell align="right">{row.patient}</TableCell>
-                      <TableCell align="right">{row.dateSubmitted}</TableCell>
-                      <TableCell align="right">{row.visitDate}</TableCell>
-                      <TableCell align="right">{row.visitTime}</TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 100 }}>
+                        {row.carer}
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 100 }}>
+                        {row.patient}
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 100 }}>
+                        {row.dateSubmitted}
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 100 }}>
+                        {row.visitDate}
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 100 }}>
+                        {row.visitTime}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
