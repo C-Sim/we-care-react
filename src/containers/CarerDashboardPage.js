@@ -1,6 +1,7 @@
-// For each user type to view top level information most relevant to them - may need to split into 3, but use first created as template for others
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import { useState } from "react";
+
+import { NextVisitForCarer } from "../components/organisms/NextVisit";
 
 const center = { lat: 52.489471, lng: -1.898575 };
 
@@ -21,13 +22,15 @@ export const CarerDashboardPage = () => {
   return (
     /* map goes here */
     <>
+      <NextVisitForCarer />
       <GoogleMap
         center={center}
         zoom={15}
         mapContainerStyle={{
-          width: "100%",
-          height: "100%",
+          width: "30%",
+          height: "30%",
           position: "absolute",
+          top: "200px",
         }}
         onLoad={(map) => setMap(map)}
       />
