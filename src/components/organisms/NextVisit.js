@@ -4,38 +4,84 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 import { useState } from "react";
 
-export const NextVisitForCarer = () => {
+const CheckInAndOut = () => {
+  const [alignment, setAlignment] = useState("");
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
+  return (
+    <ToggleButtonGroup
+      color="primary"
+      value={alignment}
+      exclusive
+      onChange={handleChange}
+      aria-label="Platform"
+      sx={{ p: 2 }}
+    >
+      <ToggleButton value="web">Check In</ToggleButton>
+      <ToggleButton value="android">Check Out</ToggleButton>
+    </ToggleButtonGroup>
+  );
+};
+
+const BtnUpdateNotes = () => {
   const updateCareNotes = () => {
     console.log("updateCareNotes");
   };
+  return (
+    <Button variant="Contained" onClick={updateCareNotes}>
+      Update care notes
+    </Button>
+  );
+};
+
+const BtnPastNotes = () => {
   const viewPastVisitNotes = () => {
     console.log("viewPastVisitNotes");
   };
+  return (
+    <Button variant="contained" onClick={viewPastVisitNotes}>
+      View past visit notes
+    </Button>
+  );
+};
+
+const BtnPatientProfile = () => {
   const ViewPatientProfile = () => {
     console.log("ViewPatientProfile");
   };
-  const [value, setValue] = useState("");
+  return (
+    <Button variant="Contained" onClick={ViewPatientProfile}>
+      View Patient Profile
+    </Button>
+  );
+};
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+export const NextVisitForCarer = () => {
   return (
     <Paper sx={{ p: 3, width: "30%", height: 800 }} elevation={6}>
       <div>
         <h2>Next Appointment Patient Detail</h2>
         <h4>Name of the Patient | Address of the Patient</h4>
       </div>
+      <CheckInAndOut />
       <TextField
         sx={{ width: "500px" }}
         id="outlined-textarea"
         label="Your Special Care Requirement"
         multiline
         row={4}
-        value={value}
-        onChange={handleChange}
         variant="filled"
       />
       <Stack
@@ -44,15 +90,9 @@ export const NextVisitForCarer = () => {
         spacing={2}
         sx={{ p: 3 }}
       >
-        <Button variant="Contained" onClick={updateCareNotes}>
-          Update care notes
-        </Button>
-        <Button variant="contained" onClick={viewPastVisitNotes}>
-          View past visit notes
-        </Button>
-        <Button variant="Contained" onClick={ViewPatientProfile}>
-          View Patient Profile
-        </Button>
+        <BtnUpdateNotes />
+        <BtnPastNotes />
+        <BtnPatientProfile />
       </Stack>
     </Paper>
   );
