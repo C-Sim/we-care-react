@@ -25,7 +25,7 @@ import { HowItWorks } from "../components/molecules/HowItWorks";
 
 import logo from "../components/atoms/images/WeCare-dark.png";
 import { ModalForCarer } from "../components/molecules/ModalForCarer";
-import { ModalForSupervisor } from "../components/molecules/ModalForSupervisor";
+import { ModalForSupervisor } from "../components/molecules/modalForSupervisor";
 
 export const AboutPage = () => {
   return (

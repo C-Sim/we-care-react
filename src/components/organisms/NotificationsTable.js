@@ -22,15 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 
-function createData(
-  type,
-  carer,
-  patient,
-  dateSubmitted,
-  visitDate,
-  visitTime,
-  requestDetail
-) {
+function createData(type, carer, patient, dateSubmitted, visitDate, visitTime) {
   return {
     type,
     carer,
@@ -38,7 +30,6 @@ function createData(
     dateSubmitted,
     visitDate,
     visitTime,
-    requestDetail,
   };
 }
 
@@ -49,22 +40,27 @@ const rows = [
     "Charlie Dean",
     "18/08/22",
     "25/08/22",
-    "12:00",
-    "View Detail"
+    "12:00"
   ),
+  createData("New Patient", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
   createData(
-    "New Patient",
-    "N/A",
-    "Abe Zephaniah",
+    "Shift Change",
+    "Alice Bond",
+    "Charlie Dean",
     "18/08/22",
-    "N/A",
-    "N/A",
-    "View Detail"
+    "25/08/22",
+    "12:00"
   ),
-  createData("Shift Change", 262, 16.0, 24, 6.0),
-  createData("Shift Change", 159, 6.0, 24, 4.0),
-  createData("New Patient", 356, 16.0, 49, 3.9),
-  createData("Patient Amend", 408, 3.2, 87, 6.5),
+  createData("New Patient", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
+  createData(
+    "Shift Change",
+    "Alice Bond",
+    "Charlie Dean",
+    "18/08/22",
+    "25/08/22",
+    "12:00"
+  ),
+  createData("Patient Amend", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -135,12 +131,12 @@ const headCells = [
     disablePadding: false,
     label: "Visit Time",
   },
-  {
-    id: "requestDetail",
-    numeric: false,
-    disablePadding: true,
-    label: "Request Detail",
-  },
+  //   {
+  //     id: "requestDetail",
+  //     numeric: false,
+  //     disablePadding: true,
+  //     label: "Request Detail",
+  //   },
 ];
 
 function EnhancedTableHead(props) {
@@ -238,7 +234,7 @@ EnhancedTableToolbar.propTypes = {
 
 export const NotificationsTable = () => {
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("calories");
+  const [orderBy, setOrderBy] = useState("dateSubmitted");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
@@ -259,25 +255,25 @@ export const NotificationsTable = () => {
   //     setSelected([]);
   //   };
 
-  //   const handleClick = (event, name) => {
-  //     const selectedIndex = selected.indexOf(name);
-  //     let newSelected = [];
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
 
-  //     if (selectedIndex === -1) {
-  //       newSelected = newSelected.concat(selected, name);
-  //     } else if (selectedIndex === 0) {
-  //       newSelected = newSelected.concat(selected.slice(1));
-  //     } else if (selectedIndex === selected.length - 1) {
-  //       newSelected = newSelected.concat(selected.slice(0, -1));
-  //     } else if (selectedIndex > 0) {
-  //       newSelected = newSelected.concat(
-  //         selected.slice(0, selectedIndex),
-  //         selected.slice(selectedIndex + 1)
-  //       );
-  //     }
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
 
-  //     setSelected(newSelected);
-  //   };
+    setSelected(newSelected);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -292,7 +288,7 @@ export const NotificationsTable = () => {
   //     setDense(event.target.checked);
   //   };
 
-  //   const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -324,18 +320,18 @@ export const NotificationsTable = () => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  //   const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
-                      //   hover
-                      //   onClick={(event) => handleClick(event, row.name)}
-                      //   role="checkbox"
-                      //   aria-checked={isItemSelected}
-                      //   tabIndex={-1}
+                      hover
+                      onClick={(event) => handleClick(event, row.name)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
                       key={row.name}
-                      //   selected={isItemSelected}
+                      selected={isItemSelected}
                     >
                       {/* <TableCell padding="checkbox">
                         <Checkbox
@@ -352,12 +348,13 @@ export const NotificationsTable = () => {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {row.type}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.carer}</TableCell>
+                      <TableCell align="right">{row.patient}</TableCell>
+                      <TableCell align="right">{row.dateSubmitted}</TableCell>
+                      <TableCell align="right">{row.visitDate}</TableCell>
+                      <TableCell align="right">{row.visitTime}</TableCell>
                     </TableRow>
                   );
                 })}
