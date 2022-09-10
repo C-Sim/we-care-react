@@ -1,6 +1,10 @@
 import zIndex from "@mui/material/styles/zIndex";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -18,6 +22,37 @@ export const CarerDashboardPage = () => {
     googleMapsApiKey: "AIzaSyDUUFeATzTUoPA37N2JF00Qzfz-2E_v09w",
     libraries: ["places"],
   });
+
+  const patientAddress = [
+    {
+      time: "08:00",
+      timeFrame: "past",
+      patientName: "Charlie Dean",
+      patientGender: "male",
+      patientAddress: "Dale Rd B29 6AG",
+    },
+    {
+      time: "10:00",
+      timeFrame: "current",
+      patientName: "Carol Davies",
+      patientGender: "female",
+      patientAddress: "Paganel Rd B29 5TG",
+    },
+    {
+      time: "14:00",
+      timeFrame: "future",
+      patientName: "Abe Zephaniah",
+      patientGender: "male",
+      patientAddress: "Ambassador Ave B31 2GZ",
+    },
+    {
+      time: "15:00",
+      timeFrame: "future",
+      patientName: "Abe Zephaniah",
+      patientGender: "male",
+      patientAddress: "Ambassador Ave B31 2GZ",
+    },
+  ];
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionResponse, setDirectionResponse] = useState(null);
@@ -43,17 +78,17 @@ export const CarerDashboardPage = () => {
   }, []);
 
   const calculateRoute = async () => {
-    if (originRef.current.value === "" || destinationRef.current.value === "") {
-      return;
-    }
-    console.log(originRef.current.value);
-    console.log(destinationRef.current.value);
+    // if (originRef.current.value === "" || destinationRef.current.value === "") {
+    //   return;
+    // }
+    // console.log(originRef.current.value);
+    // console.log(destinationRef.current.value);
 
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
-      origin: originRef.current.value,
-      destination: destinationRef.current.value,
+      origin,
+      destination,
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
     });
@@ -61,6 +96,14 @@ export const CarerDashboardPage = () => {
     setDistance(results.routes[0].legs[0].distance.text);
     setDuration(results.routes[0].legs[0].duration.text);
   };
+
+  const handleChange = (event) => {
+    setOrigin(event.target.value);
+    setDestination("hockley social club");
+  };
+
+  console.log(origin);
+  console.log(destination);
 
   if (!isLoaded) {
     return <h1>map is not loading</h1>;
@@ -73,68 +116,51 @@ export const CarerDashboardPage = () => {
         {/* <NextVisitForCarer /> */}
         <Box
           zIndex="modal"
-          sx={{ backgroundColor: "#DFE2E2", width: 250, height: 400, p: 1 }}
+          sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
         >
           {" "}
-          <CarerTimeline
-            date="Monday 8th August"
-            patients={[
-              {
-                time: "08:00",
-                timeFrame: "past",
-                patientName: "Charlie Dean",
-                patientGender: "male",
-                patientAddress: "Dale Rd B29 6AG",
-              },
-              {
-                time: "10:00",
-                timeFrame: "current",
-                patientName: "Carol Davies",
-                patientGender: "female",
-                patientAddress: "Paganel Rd B29 5TG",
-              },
-              {
-                time: "14:00",
-                timeFrame: "future",
-                patientName: "Abe Zephaniah",
-                patientGender: "male",
-                patientAddress: "Ambassador Ave B31 2GZ",
-              },
-            ]}
-          />
+          <CarerTimeline date="Monday 8th August" patients={patientAddress} />
         </Box>
 
         <Box
           zIndex="modal"
-          sx={{ backgroundColor: "#9AC7C7", width: 250, height: 250, p: 2 }}
+          sx={{ backgroundColor: "#9AC7C7", width: 300, height: 300, p: 2 }}
         >
-          <div className="row">
-            <div className="col-md-6 col-lg-4">
-              <div className="form-group">
-                <label htmlFor="ORIGIN">Origin</label>
-                <br />
-                <input
-                  id="ORIGIN"
-                  className="form-control"
-                  type="text"
-                  ref={originRef}
-                />
-              </div>
-            </div>
+          <FormControl variant="filled" sx={{ m: 1, width: 230 }}>
+            <InputLabel id="demo-simple-select-filled-label">
+              Choose Your Origin
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={origin}
+              onChange={handleChange}
+            >
+              {patientAddress.map((address, index) => (
+                <MenuItem value={address.patientAddress} key={index}>
+                  {address.patientAddress}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl variant="filled" sx={{ m: 1, width: 230 }}>
+            <InputLabel id="demo-simple-select-filled-label">
+              Choose Your Destination
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={origin}
+              onChange={handleChange}
+            >
+              {patientAddress.map((address, index) => (
+                <MenuItem value={address.patientAddress} key={index}>
+                  {address.patientAddress}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-            <div className="col-md-6 col-lg-4">
-              <div className="form-group">
-                <label htmlFor="DESTINATION">Destination</label>
-                <br />
-                <input
-                  id="DESTINATION"
-                  className="form-control"
-                  type="text"
-                  ref={destinationRef}
-                />
-              </div>
-            </div>
-          </div>
           <div className="map-settings">
             <hr className="mt-0 mb-3" />
             <div>
@@ -147,7 +173,7 @@ export const CarerDashboardPage = () => {
               type="button"
               onClick={calculateRoute}
             >
-              Build Route
+              Check Directions
             </button>
           </div>
         </Box>
