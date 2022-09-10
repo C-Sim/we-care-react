@@ -36,12 +36,23 @@ export const USER_PROFILE = gql`
   mutation UpdateUserInfo($userId: ID!, $updateInput: UserInfoInput) {
     updateUserInfo(userId: $userId, updateInput: $updateInput) {
       success
-      userId
+      user {
+        id
+        firstName
+        lastName
+        email
+        accountType
+        postcode
+        phoneNumber
+        address {
+          fullAddress
+        }
+      }
     }
   }
 `;
 
-export const PATIENT_INFO = gql`
+export const PATIENT_PROFILE = gql`
   mutation UpdatePatientInfo($userId: ID!, $updateInput: PatientInfoInput) {
     updatePatientInfo(userId: $userId, updateInput: $updateInput) {
       success

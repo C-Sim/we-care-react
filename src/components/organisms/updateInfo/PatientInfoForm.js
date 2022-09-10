@@ -45,14 +45,15 @@ import { ProfileAvatar } from "../../atoms/Avatar";
 
 import { ButtonBright } from "../../atoms/ButtonBright";
 
-import { USER_PROFILE } from "../../../graphql/mutations";
+import { PATIENT_PROFILE } from "../../../graphql/mutations";
 
 import { AppContext } from "../../../context/AppProvider";
 import { LoadingButton } from "@mui/lab";
 
-export const PhoneNumberForm = () => {
+export const PatientInfoForm = () => {
   //mutations
-  const [updateUserInfo, { data, loading, error }] = useMutation(USER_PROFILE);
+  const [updatePatientInfo, { data, loading, error }] =
+    useMutation(PATIENT_PROFILE);
   //get context
   const context = useContext(AppContext);
   const userId = context.user.id;
@@ -70,18 +71,21 @@ export const PhoneNumberForm = () => {
   });
 
   //phone number update
-  const [phoneState, setPhoneState] = useState(false);
+  const [phoneState, setPhoneState] = useState(context.user.phoneNumber);
   const handlePhoneUpdate = (formData) => {
-    debugger;
-    const updateInput = {
-      phoneNumber: formData.phoneNumber,
+    const updatePatientInput = {
+      gender: formData.gender,
     };
-    updateUserInfo({
+    updatePatientInfo({
       variables: {
         userId,
-        updateInput,
+        updatePatientInput,
       },
     });
+    const user = context.user;
+    user.phoneNumber = formData.phoneNumber;
+    context.setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
   };
 
   //form display on the page
@@ -93,10 +97,19 @@ export const PhoneNumberForm = () => {
       onSubmit={handleSubmit(handlePhoneUpdate)}
     >
       <Stack spacing={2}>
+        <Typography component="h2" variant="button" align="left">
+          Phone number:
+        </Typography>
+        {context.user.phoneNumber && (
+          <Typography component="h2" variant="button" align="left">
+            {context.user.phoneNumber}
+          </Typography>
+        )}
         <FormControl>
           <TextField
             id="phoneNumber"
             name="phoneNumber"
+            value={phoneState}
             required
             error={!!errors.phoneNumber}
             label="Phone Number"
@@ -108,6 +121,7 @@ export const PhoneNumberForm = () => {
               required: true,
             })}
             sx={{ backgroundColor: "#FFFFFF" }}
+            onChange={(e) => setPhoneState(e.target.value)}
           />
         </FormControl>
       </Stack>

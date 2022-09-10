@@ -48,35 +48,12 @@ import { AppContext } from "../context/AppProvider";
 
 import { LoadingButton } from "@mui/lab";
 
-import { PhoneNumberForm } from "../components/organisms//updateInfo/PhoneNumberForm";
+import { UserInfoForm } from "../components/organisms/updateInfo/UserInfoForm";
+import { PatientInfoForm } from "../components/organisms/updateInfo/PatientInfoForm";
 
 export const PatientsProfilePage = () => {
-  debugger;
   //get context
   const context = useContext(AppContext);
-  const userId = context.user.id;
-
-  //**************** */
-  const [userInfo, setUserInfo] = useState();
-  const [
-    getUserInfo,
-    { data: userInfoData, loading: userInfoLoading, error: userInfoError },
-  ] = useLazyQuery(USER_ID);
-
-  useEffect(() => {
-    async function fetchData() {
-      await getUserInfo({
-        variables: {
-          userId: userId,
-        },
-      });
-    }
-    const fetchedUserInfo = fetchData();
-  }, []);
-
-  //phone number
-  const [phoneState, setPhoneState] = useState(false);
-  //************************* */
 
   //overall page display
   return (
@@ -114,34 +91,32 @@ export const PatientsProfilePage = () => {
           {/* form */}
 
           <Typography component="h1" variant="h4" align="center">
-            My Profile:
+            My Account details:
           </Typography>
           <Divider />
+          <UserInfoForm />
+          <Divider />
+        </Paper>
+        <Paper
+          sx={{
+            mt: 4,
+            mb: 4,
+            p: 3,
+            //minWidth: isMobile ? "90%" : "80%",
+            color: "#3f3d56",
+            backgroundColor: "#00b0ff2e",
+            borderRadius: "25px",
+          }}
+          elevation={6}
+        >
+          {/* form */}
 
-          <Grid container marginTop={5} marginLeft={4}>
-            <Grid item marginRight={4}>
-              <ProfileAvatar />
-            </Grid>
-            <Grid item>
-              <ButtonBright label="Update image" type="submit" />
-            </Grid>
-          </Grid>
-
-          <Typography component="h2" variant="button" align="left">
-            Phone number:
+          <Typography component="h1" variant="h4" align="center">
+            My patient details:
           </Typography>
-          {userInfoData && (
-            <Typography component="h2" variant="button" align="left">
-              {userInfoData.phoneNumber}
-            </Typography>
-          )}
-          <EditIcon fontSize="small" />
-          <ButtonBright
-            label="Edit"
-            type="button"
-            onClick={() => setPhoneState(true)}
-          />
-          <PhoneNumberForm />
+          <Divider />
+          <PatientInfoForm />
+          <Divider />
         </Paper>
       </Grid>
     </Box>
