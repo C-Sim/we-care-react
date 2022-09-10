@@ -14,19 +14,23 @@ import { Input } from "../atoms/Input";
 import InputDisabled from "../atoms/InputDisabled";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import TextField from "@mui/material/TextField";
 //import { createCarePlan } from "../../graphql/mutations";
 
 export const CarePlanForm = ({ isMobile }) => {
   //care plan check boxes
-  const [AddInput, getInputBox] = useState([]);
-
-  const handleOptions = (e) => {
-    let data = AddInput.indexOf(e.target.value);
-    if (data === -1) {
-      getInputBox([...AddInput, e.target.value]);
-    } else {
-      getInputBox(AddInput.filter((data) => data !== e.target.value));
-      console.log(data);
+  const [AddInput, setInputId] = useState([]);
+  const [disabilityOption, setDisabilityOption] = useState("no");
+  const [disabilities, setDisabilities] = useState("none");
+  const handleDisabilityOptionChange = (event) => {
+    setDisabilityOption(event.target.value);
+    if (event.target.value === "no") {
+      setDisabilities("none");
+    }
+  };
+  const handleDisabilitiesChange = (event) => {
+    if (disabilityOption === "yes") {
+      setDisabilities(event.target.value);
     }
   };
 
@@ -37,21 +41,26 @@ export const CarePlanForm = ({ isMobile }) => {
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          name="disabilities"
         >
           <FormControlLabel
             value="yes"
             control={<Radio />}
             label="Yes"
-            onChange={handleOptions}
+            onChange={handleDisabilityOptionChange}
           />
+
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            onChange={handleOptions}
+            onChange={handleDisabilityOptionChange}
           />
         </RadioGroup>
+
+        {disabilityOption === "yes" && (
+          <TextField onChange={handleDisabilitiesChange} />
+        )}
       </FormControl>
 
       <h2>How would you best describe your current mobility?</h2>
@@ -59,19 +68,19 @@ export const CarePlanForm = ({ isMobile }) => {
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          name="current_mobility"
         >
           <FormControlLabel
             value="yes"
             control={<Radio />}
             label="Yes"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
         </RadioGroup>
       </FormControl>
@@ -81,19 +90,19 @@ export const CarePlanForm = ({ isMobile }) => {
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          name="current_communication_level"
         >
           <FormControlLabel
             value="yes"
             control={<Radio />}
             label="Yes"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
         </RadioGroup>
       </FormControl>
@@ -106,19 +115,19 @@ export const CarePlanForm = ({ isMobile }) => {
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          name="current_personal_care"
         >
           <FormControlLabel
             value="yes"
             control={<Radio />}
             label="Yes"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
         </RadioGroup>
       </FormControl>
@@ -128,19 +137,19 @@ export const CarePlanForm = ({ isMobile }) => {
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          name="current_mental_health"
         >
           <FormControlLabel
             value="yes"
             control={<Radio />}
             label="Yes"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
         </RadioGroup>
       </FormControl>
@@ -151,19 +160,19 @@ export const CarePlanForm = ({ isMobile }) => {
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          name="current_dietary_requirements"
         >
           <FormControlLabel
             value="yes"
             control={<Radio />}
             label="Yes"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            onChange={handleOptions}
+            //onChange={handleOptions}
           />
         </RadioGroup>
       </FormControl>
