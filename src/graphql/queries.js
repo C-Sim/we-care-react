@@ -152,3 +152,16 @@ export const ADDRESS_LOOKUP = gql`
     }
   }
 `;
+
+export const RECEIVED_NOTIFICATIONS = gql`
+  query ReceivedNotificationsByUserId($userId: ID!, $mailType: String!) {
+    notificationsByUserId(userId: $userId, mailType: $mailType) {
+      id
+      notificationDate
+      senderId
+      receiverId
+      notificationText
+      isRead
+    }
+  }
+`;

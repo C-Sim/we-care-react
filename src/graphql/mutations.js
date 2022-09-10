@@ -26,3 +26,16 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const UPDATE_READ = gql`
+  mutation UpdateIsReadStatus($notificationId: ID!, $userId: ID) {
+    updateIsReadStatus(notificationId: $notificationId, userId: $userId) {
+      id
+      notificationDate
+      senderId
+      receiverId
+      notificationText
+      isRead
+    }
+  }
+`;
