@@ -5,51 +5,20 @@ import { NotificationsTable } from "../components/organisms/NotificationsTable";
 import { PageTitle } from "../components/atoms/PageTitle";
 
 export const SupervisorNotificationsPage = () => {
+  // const mailType = "received";
+
+  //   const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS, <TODO: insertvars>);
+
+  //   if (loading) {
+  //     return <h2>LOADING...</h2>;
+  //   }
+
   return (
     <Box>
       <PageTitle title="Notifications" />
 
-      {/* <Dropdown
-        label="Sort"
-        helperText=""
-        defaultSelection=""
-        required=""
-        options={[
-          {
-            value: "submitted",
-            label: "Submitted",
-          },
-          {
-            value: "visitDate",
-            label: "Visit Date",
-          },
-          {
-            value: "visitTime",
-            label: "Visit Time",
-          },
-        ]}
-      />
-
-      <Dropdown
-        label="Filter"
-        helperText=""
-        defaultSelection=""
-        required=""
-        options={[
-          {
-            value: "type",
-            label: "Type",
-          },
-          {
-            value: "carer",
-            label: "Carer",
-          },
-          {
-            value: "patient",
-            label: "Patient",
-          },
-        ]}
-      /> */}
+      {/* call loading here using ifloading */}
+      {/* handle error if doesn't load */}
 
       <NotificationsTable />
     </Box>

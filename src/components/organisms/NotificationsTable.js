@@ -36,9 +36,6 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { RECEIVED_NOTIFICATIONS } from "../../graphql/queries";
 import { UPDATE_READ } from "../../graphql/mutations";
 
-import { ButtonDark } from "../atoms/ButtonDark";
-import { ButtonBright } from "../atoms/ButtonBright";
-
 const PaperComponent = (props) => {
   return (
     <Draggable
@@ -54,7 +51,7 @@ const createData = (rowTitle, rowValue) => {
   return { rowTitle, rowValue };
 };
 
-// const ModalRows
+// const ModalRows =  ()
 
 //template modal data for now
 const ModalRows = [
@@ -65,50 +62,83 @@ const ModalRows = [
   createData("Visit Time:", "12:00"),
   createData(
     "Comment:",
-    "It will be dificult to get across town from my last appointment in time"
+    "It will be difficult to get across town from my last appointment in time"
   ),
 ];
 
-// const Notifications = () => {
-//   const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS);
-
-//   if (loading) {
-//     return <h2>LOADING...</h2>;
-//   }
-
-//   return [createNotification(data.notificationsByUserId)];
-// };
+// const modalData = items.map((notification) => ({
+//   notification: notification.id,
+//   notificationType: notification.notificationType ,
+//   accountType: notification.accountType,
+//   username: notification.senderId.firstName " " notification.senderId.lastName,
+//   notificationDate: notification.notificationDate,
+//   visitDate: notification.appointmentDate || ["N/A"],
+//   visitTime: notification.appointmentDate || ["N/A"],
+//   notificationText: notification.notificationText,
+//   isRead: notification.isRead,
+//   appointmentId: notification.appointmentId || ["N/A"],
+//   carer: notification.appointmentId.carer || ["N/A"],
+//   patient: notification.appointmentId.patient || ["N/A"],
+// }));
 
 const createNotification = (
-  id,
+  notificationId,
   notificationType,
   accountType,
-  senderId,
+  username,
   notificationDate,
-  notificationText,
-  appointmentId,
-  appointmentDate,
+  visitDate,
+  visitTime,
   isRead
 ) => {
   return {
-    id,
+    notificationId,
     notificationType,
     accountType,
-    senderId,
+    username,
     notificationDate,
-    notificationText,
-    appointmentId,
-    appointmentDate,
+    visitDate,
+    visitTime,
     isRead,
   };
 };
+
+// create state for holding query data
+// const [savedNotifications, setNotifications] = useState([]);
+
+// const notificationData = items.map((notification) => ({
+//   notificationId: notification.id,
+//   notificationType: notification.notificationType,
+//   accountType: notification.accountType,
+//   username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
+//   notificationDate: notification.notificationDate,
+//   visitDate: notification.appointmentDate || ["N/A"],
+//   visitTime: notification.appointmentDate || ["N/A"],
+//   isRead: notification.isRead,
+// }));
+
+// setNotifications(notificationData);
+
+// createNotification for Each...
+// const xNotifications = notificationData.forEach((notification) => {
+//   createNotification(
+//     { notificationId },
+//     { notificationType },
+//     { accountType },
+//     { username },
+//     { notificationDate },
+//     { visitDate },
+//     { visitTime },
+//     { isRead }
+//   );
+// });
 
 const Notifications = [
   createNotification(
     "1",
     "Shift Change",
+    "Carer",
     "Alice Bond",
-    "Charlie Dean",
     "18/08/22",
     "25/08/22",
     "12:00",
@@ -117,7 +147,7 @@ const Notifications = [
   createNotification(
     "2",
     "New Patient",
-    "N/A",
+    "Patient",
     "Abe Zephaniah",
     "18/08/22",
     "N/A",
@@ -127,8 +157,8 @@ const Notifications = [
   createNotification(
     "3",
     "Shift Change",
+    "Carer",
     "Alan Bates",
-    "Charlie Dean",
     "18/08/22",
     "25/08/22",
     "15:00",
@@ -137,7 +167,7 @@ const Notifications = [
   createNotification(
     "4",
     "New Patient",
-    "N/A",
+    "Patient",
     "Abe Zephaniah",
     "19/08/22",
     "N/A",
@@ -147,8 +177,8 @@ const Notifications = [
   createNotification(
     "5",
     "Shift Change",
+    "Carer",
     "Alice Bond",
-    "Carol Davies",
     "18/08/22",
     "25/08/22",
     "18:00",
@@ -157,7 +187,7 @@ const Notifications = [
   createNotification(
     "6",
     "Patient Amend",
-    "N/A",
+    "Patient",
     "Abe Zephaniah",
     "20/08/22",
     "N/A",
@@ -198,22 +228,22 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "type",
+    id: "notificationType",
     numeric: false,
     disablePadding: true,
     label: "Type",
   },
   {
-    id: "carer",
+    id: "accountType",
     numeric: false,
     disablePadding: true,
-    label: "Carer",
+    label: "User Type",
   },
   {
-    id: "patient",
+    id: "username",
     numeric: false,
     disablePadding: true,
-    label: "Patient",
+    label: "Name",
   },
 
   {
@@ -234,12 +264,6 @@ const headCells = [
     disablePadding: false,
     label: "Visit Time",
   },
-  //   {
-  //     id: "requestDetail",
-  //     numeric: false,
-  //     disablePadding: true,
-  //     label: "Request Detail",
-  //   },
 ];
 
 function EnhancedTableHead(props) {
@@ -274,17 +298,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all desserts",
-            }}
-          />
-        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -357,9 +370,10 @@ export const NotificationsTable = () => {
   const [orderBy, setOrderBy] = useState("notificationDate");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
+
+  //   useQuery hook - here or on page??
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -385,25 +399,25 @@ export const NotificationsTable = () => {
   //     setSelected([]);
   //   };
 
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
+  //   const handleClick = (event, id) => {
+  //     const selectedIndex = selected.indexOf(id);
+  //     let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
+  //     if (selectedIndex === -1) {
+  //       newSelected = newSelected.concat(selected, id);
+  //     } else if (selectedIndex === 0) {
+  //       newSelected = newSelected.concat(selected.slice(1));
+  //     } else if (selectedIndex === selected.length - 1) {
+  //       newSelected = newSelected.concat(selected.slice(0, -1));
+  //     } else if (selectedIndex > 0) {
+  //       newSelected = newSelected.concat(
+  //         selected.slice(0, selectedIndex),
+  //         selected.slice(selectedIndex + 1)
+  //       );
+  //     }
 
-    setSelected(newSelected);
-  };
+  //     setSelected(newSelected);
+  //   };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -413,10 +427,6 @@ export const NotificationsTable = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  //   const handleChangeDense = (event) => {
-  //     setDense(event.target.checked);
-  //   };
 
   const handleApproval = () => {};
 
@@ -487,7 +497,7 @@ export const NotificationsTable = () => {
           </Box>
 
           {/* Should only render when 'deny' is clicked */}
-          <Box
+          {/* <Box
             component="form"
             sx={{
               "& > :not(style)": { m: 1, width: "97%" },
@@ -501,7 +511,7 @@ export const NotificationsTable = () => {
               label="Enter reason"
               variant="filled"
             />
-          </Box>
+          </Box> */}
 
           <DialogActions>
             <Button autoFocus onClick={handleClose} variant="contained">
@@ -512,20 +522,16 @@ export const NotificationsTable = () => {
       </Dialog>
 
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar
-        // numSelected={selected.length}
-        />
+        <EnhancedTableToolbar />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
+            size={"medium"}
           >
             <EnhancedTableHead
-              //   numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              //   onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={Notifications.length}
             />
@@ -542,21 +548,11 @@ export const NotificationsTable = () => {
                     <TableRow
                       hover
                       onClick={(event) => handleClickOpen(event, row.id)}
-                      //   role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {/* <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell> */}
                       <TableCell
                         component="th"
                         id={labelId}
@@ -564,13 +560,13 @@ export const NotificationsTable = () => {
                         padding="none"
                         align="center"
                       >
-                        {row.type}
+                        {row.notificationType}
                       </TableCell>
                       <TableCell align="center" sx={{ fontWeight: 100 }}>
-                        {row.carer}
+                        {row.accountType}
                       </TableCell>
                       <TableCell align="center" sx={{ fontWeight: 100 }}>
-                        {row.patient}
+                        {row.username}
                       </TableCell>
                       <TableCell align="center" sx={{ fontWeight: 100 }}>
                         {row.notificationDate}
@@ -587,7 +583,7 @@ export const NotificationsTable = () => {
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: 53 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -606,12 +602,6 @@ export const NotificationsTable = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-
-      {/* TODO adjust to switch to dark mode?? */}
-      {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
     </Box>
   );
 };
