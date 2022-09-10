@@ -457,22 +457,23 @@ export const NotificationsTable = () => {
 
           <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
             {" "}
-            <Button
+            <ButtonBright
               variant="contained"
-              color="success"
+              //   color="success"
               endIcon={<CheckCircleIcon />}
             >
               Approve
-            </Button>
-            <Button
+            </ButtonBright>
+            <ButtonDark
               variant="contained"
-              color="secondary"
+              //   color="secondary"
               endIcon={<HighlightOffIcon />}
             >
               Deny
-            </Button>
+            </ButtonDark>
           </Box>
 
+          {/* Should only render when 'deny' is clicked */}
           <Box
             component="form"
             sx={{
