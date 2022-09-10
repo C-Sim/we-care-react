@@ -86,12 +86,29 @@ export const CarePlanForm = ({ isMobile }) => {
   const handleMentalHealthOptionChange = (event) => {
     setMentalHealthOption(event.target.value);
     if (event.target.value === "no") {
-      setPersonalCareProblems("none");
+      setMentalHealthProblems("none");
     }
   };
   const handleMentalHealthChange = (event) => {
     if (mentalHealthOption === "yes") {
       setMentalHealthProblems(event.target.value);
+    }
+  };
+
+  // handle dietary Requirements option
+  const [dietaryRequirementsOption, setDietaryRequirementsOption] =
+    useState("no");
+  const [dietaryRequirementsProblems, setDietaryRequirementsProblems] =
+    useState("none");
+  const handleDietaryRequirementsOptionChange = (event) => {
+    setDietaryRequirementsOption(event.target.value);
+    if (event.target.value === "no") {
+      setDietaryRequirementsProblems("none");
+    }
+  };
+  const handleDietaryRequirementsChange = (event) => {
+    if (dietaryRequirementsOption === "yes") {
+      setDietaryRequirementsProblems(event.target.value);
     }
   };
 
@@ -236,15 +253,18 @@ export const CarePlanForm = ({ isMobile }) => {
             value="yes"
             control={<Radio />}
             label="Yes"
-            //onChange={handleOptions}
+            onChange={handleDietaryRequirementsOptionChange}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            //onChange={handleOptions}
+            onChange={handleDietaryRequirementsOptionChange}
           />
         </RadioGroup>
+        {dietaryRequirementsOption === "yes" && (
+          <TextField onChange={handleDietaryRequirementsChange} />
+        )}
       </FormControl>
     </Box>
   );
