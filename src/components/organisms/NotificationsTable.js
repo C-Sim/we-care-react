@@ -24,20 +24,60 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import visuallyHidden from "@mui/utils/visuallyHidden";
 
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import Draggable from "react-draggable";
+import TextField from "@mui/material/TextField";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+
 import { RECEIVED_NOTIFICATIONS } from "../../graphql/queries";
 import { UPDATE_READ } from "../../graphql/mutations";
 
-// const Rows = () => {
+import { ButtonDark } from "../atoms/ButtonDark";
+import { ButtonBright } from "../atoms/ButtonBright";
+
+const PaperComponent = (props) => {
+  return (
+    <Draggable
+      handle="#draggable-dialog-title"
+      cancel={'[class*="MuiDialogContent-root"]'}
+    >
+      <Paper {...props} />
+    </Draggable>
+  );
+};
+
+const createData = (rowTitle, rowValue) => {
+  return { rowTitle, rowValue };
+};
+
+//template modal data for now
+const rows = [
+  createData("Carer:", "Alice Bond"),
+  createData("Patient:", "Charlie Dean"),
+  createData("Submitted:", "18/08/22"),
+  createData("Visit Date:", "18/08/22"),
+  createData("Visit Time:", "12:00"),
+  createData(
+    "Comment:",
+    "It will be dificult to get across town from my last appointment in time"
+  ),
+];
+
+// const Notifications = () => {
 //   const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS);
 
 //   if (loading) {
 //     return <h2>LOADING...</h2>;
 //   }
 
-//   return [createData(data.notificationsByUserId)];
+//   return [createNotification(data.notificationsByUserId)];
 // };
 
-const createData = (
+const createNotification = (
   id,
   type,
   carer,
@@ -59,8 +99,8 @@ const createData = (
   };
 };
 
-const rows = [
-  createData(
+const notifications = [
+  createNotification(
     "1",
     "Shift Change",
     "Alice Bond",
@@ -70,7 +110,7 @@ const rows = [
     "12:00",
     "true"
   ),
-  createData(
+  createNotification(
     "2",
     "New Patient",
     "N/A",
@@ -80,7 +120,7 @@ const rows = [
     "N/A",
     "true"
   ),
-  createData(
+  createNotification(
     "3",
     "Shift Change",
     "Alan Bates",
@@ -90,7 +130,7 @@ const rows = [
     "15:00",
     "false"
   ),
-  createData(
+  createNotification(
     "4",
     "New Patient",
     "N/A",
@@ -100,7 +140,7 @@ const rows = [
     "N/A",
     "true"
   ),
-  createData(
+  createNotification(
     "5",
     "Shift Change",
     "Alice Bond",
@@ -110,7 +150,7 @@ const rows = [
     "18:00",
     "false"
   ),
-  createData(
+  createNotification(
     "6",
     "Patient Amend",
     "N/A",
@@ -315,6 +355,15 @@ export const NotificationsTable = () => {
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -368,10 +417,86 @@ export const NotificationsTable = () => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - notifications.length) : 0;
 
   return (
     <Box sx={{ width: "100%", padding: 4 }}>
+      {/* Modal */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperComponent={PaperComponent}
+        aria-labelledby="draggable-dialog-title"
+      >
+        <DialogTitle
+          style={{ cursor: "move" }}
+          textAlign="center"
+          id="draggable-dialog-title"
+        >
+          Request Detail
+        </DialogTitle>
+        <TableContainer component={Paper}>
+          <Table
+            sx={{ minWidth: 400, maxWidth: 500 }}
+            aria-label="simple table"
+          >
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  key={row.rowTitle}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.rowTitle}
+                  </TableCell>
+                  <TableCell align="right">{row.rowValue}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+
+          <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
+            {" "}
+            <Button
+              variant="contained"
+              color="success"
+              endIcon={<CheckCircleIcon />}
+            >
+              Approve
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              endIcon={<HighlightOffIcon />}
+            >
+              Deny
+            </Button>
+          </Box>
+
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "97%" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            {" "}
+            <TextField
+              id="filled-basic"
+              label="Enter reason"
+              variant="filled"
+            />
+          </Box>
+
+          <DialogActions>
+            <Button autoFocus onClick={handleClose} variant="contained">
+              Close
+            </Button>
+          </DialogActions>
+        </TableContainer>
+      </Dialog>
+
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
         // numSelected={selected.length}
@@ -388,12 +513,12 @@ export const NotificationsTable = () => {
               orderBy={orderBy}
               //   onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={notifications.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy))
+                 notifications.slice().sort(getComparator(order, orderBy)) */}
+              {stableSort(notifications, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -402,7 +527,7 @@ export const NotificationsTable = () => {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
+                      onClick={(event) => handleClickOpen(event, row.id)}
                       //   role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -460,7 +585,7 @@ export const NotificationsTable = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={notifications.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
