@@ -50,6 +50,21 @@ export const CarePlanForm = ({ isMobile }) => {
     }
   };
 
+  // handle communication option
+  const [communicationOption, setCommunicationOption] = useState("no");
+  const [communicationProblems, setCommunicationProblems] = useState("none");
+  const handleCommunicationOptionChange = (event) => {
+    setCommunicationOption(event.target.value);
+    if (event.target.value === "no") {
+      setCommunicationProblems("none");
+    }
+  };
+  const handleCommunicationChange = (event) => {
+    if (mobilityOption === "yes") {
+      setCommunicationProblems(event.target.value);
+    }
+  };
+
   return (
     <Box>
       <FormControl>
@@ -115,15 +130,18 @@ export const CarePlanForm = ({ isMobile }) => {
             value="yes"
             control={<Radio />}
             label="Yes"
-            //onChange={handleOptions}
+            onChange={handleCommunicationOptionChange}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            //onChange={handleOptions}
+            onChange={handleCommunicationOptionChange}
           />
         </RadioGroup>
+        {communicationOption === "yes" && (
+          <TextField onChange={handleCommunicationChange} />
+        )}
       </FormControl>
 
       <h2>
