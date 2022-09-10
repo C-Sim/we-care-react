@@ -105,7 +105,7 @@ export const ModalForSupervisor = () => {
             </Button>
             <Button
               variant="contained"
-              color="secondary"
+              color="error"
               endIcon={<HighlightOffIcon />}
             >
               Deny

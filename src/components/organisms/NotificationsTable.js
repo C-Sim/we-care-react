@@ -418,6 +418,10 @@ export const NotificationsTable = () => {
   //     setDense(event.target.checked);
   //   };
 
+  const handleApproval = () => {};
+
+  const handleDenial = () => {};
+
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -462,20 +466,24 @@ export const NotificationsTable = () => {
 
           <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
             {" "}
-            <ButtonBright
+            <Button
               variant="contained"
-              //   color="success"
+              color="success"
+              type="submit"
               endIcon={<CheckCircleIcon />}
+              onClick={handleApproval}
             >
               Approve
-            </ButtonBright>
-            <ButtonDark
+            </Button>
+            <Button
               variant="contained"
-              //   color="secondary"
+              color="error"
+              type="submit"
               endIcon={<HighlightOffIcon />}
+              onClick={handleDenial}
             >
               Deny
-            </ButtonDark>
+            </Button>
           </Box>
 
           {/* Should only render when 'deny' is clicked */}
