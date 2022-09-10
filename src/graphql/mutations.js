@@ -27,4 +27,15 @@ export const LOGIN = gql`
   }
 `;
 
-export const CreateCarePlan = gql;
+// //export const CreateCarePlan = gql`
+//   mutation ($notificationId: ID!, $userId: ID) {
+//     updateIsReadStatus(notificationId: $notificationId, userId: $userId) {
+//       id
+//       notificationDate
+//       senderId
+//       receiverId
+//       notificationText
+//       isRead
+//     }
+//   }
+// `;

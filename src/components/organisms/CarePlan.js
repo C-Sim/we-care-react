@@ -152,7 +152,10 @@ export const CarePlanForm = ({ isMobile }) => {
         </RadioGroup>
 
         {disabilityOption === "yes" && (
-          <TextField onChange={handleDisabilitiesChange} />
+          <TextField
+            placeholder="Please best describe your disabilities"
+            onChange={handleDisabilitiesChange}
+          />
         )}
       </FormControl>
 
@@ -177,7 +180,10 @@ export const CarePlanForm = ({ isMobile }) => {
           />
         </RadioGroup>
         {mobilityOption === "yes" && (
-          <TextField onChange={handleMobilityChange} />
+          <TextField
+            placeholder="Please best describe your mobility"
+            onChange={handleMobilityChange}
+          />
         )}
       </FormControl>
 
@@ -202,7 +208,10 @@ export const CarePlanForm = ({ isMobile }) => {
           />
         </RadioGroup>
         {communicationOption === "yes" && (
-          <TextField onChange={handleCommunicationChange} />
+          <TextField
+            placeholder="Please best describe your communication problems"
+            onChange={handleCommunicationChange}
+          />
         )}
       </FormControl>
 
@@ -227,7 +236,10 @@ export const CarePlanForm = ({ isMobile }) => {
           />
         </RadioGroup>
         {personalCareOption === "yes" && (
-          <TextField onChange={handlePersonalCareChange} />
+          <TextField
+            placeholder="Please best describe your Personal Care issues"
+            onChange={handlePersonalCareChange}
+          />
         )}
       </FormControl>
 
@@ -252,7 +264,10 @@ export const CarePlanForm = ({ isMobile }) => {
           />
         </RadioGroup>
         {mentalHealthOption === "yes" && (
-          <TextField onChange={handleMentalHealthChange} />
+          <TextField
+            placeholder="Please best describe your current mental health"
+            onChange={handleMentalHealthChange}
+          />
         )}
       </FormControl>
 
@@ -278,7 +293,10 @@ export const CarePlanForm = ({ isMobile }) => {
           />
         </RadioGroup>
         {dietaryRequirementsOption === "yes" && (
-          <TextField onChange={handleDietaryRequirementsChange} />
+          <TextField
+            placeholder="Please enter your dietary requirements"
+            onChange={handleDietaryRequirementsChange}
+          />
         )}
       </FormControl>
 
@@ -304,7 +322,10 @@ export const CarePlanForm = ({ isMobile }) => {
           />
         </RadioGroup>
         {allergiesOption === "yes" && (
-          <TextField onChange={handleAllergiesChange} />
+          <TextField
+            placeholder="Please enter your allergies"
+            onChange={handleAllergiesChange}
+          />
         )}
       </FormControl>
     </Box>
