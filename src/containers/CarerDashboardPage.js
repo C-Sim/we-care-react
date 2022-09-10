@@ -68,73 +68,79 @@ export const CarerDashboardPage = () => {
   return (
     /* map goes here */
     <>
-      {/* <NextVisitForCarer /> */}
+      <Box sx={{ height: 800 }}>
+        {/* <NextVisitForCarer /> */}
 
-      <Box zIndex="modal">
-        <div className="row">
-          <div className="col-md-6 col-lg-4">
-            <div className="form-group">
-              <label htmlFor="ORIGIN">Origin</label>
-              <br />
-              <input
-                id="ORIGIN"
-                className="form-control"
-                type="text"
-                ref={originRef}
-              />
-            </div>
-          </div>
-
-          <div className="col-md-6 col-lg-4">
-            <div className="form-group">
-              <label htmlFor="DESTINATION">Destination</label>
-              <br />
-              <input
-                id="DESTINATION"
-                className="form-control"
-                type="text"
-                ref={destinationRef}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="map-settings">
-          <hr className="mt-0 mb-3" />
-          <div>
-            <h4>distance: {distance}</h4>
-            <h4>duration: {duration}</h4>
-          </div>
-
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={calculateRoute}
-          >
-            Build Route
-          </button>
-        </div>
-      </Box>
-
-      <Box>
-        {" "}
-        <GoogleMap
-          center={center}
-          zoom={16}
-          mapContainerStyle={{
-            width: "70%",
-            height: "70%",
-            position: "absolute",
-            top: "200px",
-            left: "500px",
-          }}
-          onLoad={(map) => setMap(map)}
+        <Box
+          zIndex="modal"
+          sx={{ backgroundColor: "#AFE0CE", width: 250, height: 250, p: 2 }}
         >
-          {/* displaying markers -render appointments later */}
-          <Marker position={center} />
-          {directionResponse && (
-            <DirectionsRenderer directions={directionResponse} />
-          )}
-        </GoogleMap>
+          <div className="row">
+            <div className="col-md-6 col-lg-4">
+              <div className="form-group">
+                <label htmlFor="ORIGIN">Origin</label>
+                <br />
+                <input
+                  id="ORIGIN"
+                  className="form-control"
+                  type="text"
+                  ref={originRef}
+                />
+              </div>
+            </div>
+
+            <div className="col-md-6 col-lg-4">
+              <div className="form-group">
+                <label htmlFor="DESTINATION">Destination</label>
+                <br />
+                <input
+                  id="DESTINATION"
+                  className="form-control"
+                  type="text"
+                  ref={destinationRef}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="map-settings">
+            <hr className="mt-0 mb-3" />
+            <div>
+              <h4>distance: {distance}</h4>
+              <h4>duration: {duration}</h4>
+            </div>
+
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={calculateRoute}
+            >
+              Build Route
+            </button>
+          </div>
+        </Box>
+
+        <Box>
+          {" "}
+          <GoogleMap
+            center={center}
+            zoom={16}
+            mapContainerStyle={{
+              width: "99.8%",
+              height: "90%",
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              zIndex: "-1",
+            }}
+            onLoad={(map) => setMap(map)}
+          >
+            {/* displaying markers -render appointments later */}
+            <Marker position={center} />
+            {directionResponse && (
+              <DirectionsRenderer directions={directionResponse} />
+            )}
+          </GoogleMap>
+        </Box>
       </Box>
     </>
   );
