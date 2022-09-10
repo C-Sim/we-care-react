@@ -27,63 +27,99 @@ import visuallyHidden from "@mui/utils/visuallyHidden";
 import { RECEIVED_NOTIFICATIONS } from "../../graphql/queries";
 import { UPDATE_READ } from "../../graphql/mutations";
 
-const Notifications = () => {
-  const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS);
+// const Rows = () => {
+//   const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS);
 
-  if (loading) {
-    return <h2>LOADING...</h2>;
-  }
+//   if (loading) {
+//     return <h2>LOADING...</h2>;
+//   }
 
-  return data;
-};
+//   return [createData(data.notificationsByUserId)];
+// };
 
 const createData = (
+  id,
   type,
   carer,
   patient,
-  dateSubmitted,
+  notificationDate,
   visitDate,
-  visitTime
+  visitTime,
+  isRead
 ) => {
   return {
+    id,
     type,
     carer,
     patient,
-    dateSubmitted,
+    notificationDate,
     visitDate,
     visitTime,
+    isRead,
   };
 };
 
 const rows = [
-  data,
-  //   createData(
-  //     "Shift Change",
-  //     "Alice Bond",
-  //     "Charlie Dean",
-  //     "18/08/22",
-  //     "25/08/22",
-  //     "12:00"
-  //   ),
-  //   createData("New Patient", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
-  //   createData(
-  //     "Shift Change",
-  //     "Alice Bond",
-  //     "Charlie Dean",
-  //     "18/08/22",
-  //     "25/08/22",
-  //     "12:00"
-  //   ),
-  //   createData("New Patient", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
-  //   createData(
-  //     "Shift Change",
-  //     "Alice Bond",
-  //     "Charlie Dean",
-  //     "18/08/22",
-  //     "25/08/22",
-  //     "12:00"
-  //   ),
-  //   createData("Patient Amend", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
+  createData(
+    "1",
+    "Shift Change",
+    "Alice Bond",
+    "Charlie Dean",
+    "18/08/22",
+    "25/08/22",
+    "12:00",
+    "true"
+  ),
+  createData(
+    "2",
+    "New Patient",
+    "N/A",
+    "Abe Zephaniah",
+    "18/08/22",
+    "N/A",
+    "N/A",
+    "true"
+  ),
+  createData(
+    "3",
+    "Shift Change",
+    "Alan Bates",
+    "Charlie Dean",
+    "18/08/22",
+    "25/08/22",
+    "15:00",
+    "false"
+  ),
+  createData(
+    "4",
+    "New Patient",
+    "N/A",
+    "Abe Zephaniah",
+    "19/08/22",
+    "N/A",
+    "N/A",
+    "true"
+  ),
+  createData(
+    "5",
+    "Shift Change",
+    "Alice Bond",
+    "Carol Davies",
+    "18/08/22",
+    "25/08/22",
+    "18:00",
+    "false"
+  ),
+  createData(
+    "6",
+    "Patient Amend",
+    "N/A",
+    "Abe Zephaniah",
+    "20/08/22",
+    "N/A",
+    "N/A",
+    "true"
+  ),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -137,7 +173,7 @@ const headCells = [
   },
 
   {
-    id: "dateSubmitted",
+    id: "notificationDate",
     numeric: false,
     disablePadding: false,
     label: "Date Submitted",
@@ -274,7 +310,7 @@ EnhancedTableToolbar.propTypes = {
 
 export const NotificationsTable = () => {
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("dateSubmitted");
+  const [orderBy, setOrderBy] = useState("notificationDate");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
@@ -295,12 +331,12 @@ export const NotificationsTable = () => {
   //     setSelected([]);
   //   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -360,17 +396,17 @@ export const NotificationsTable = () => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.type);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.type)}
+                      onClick={(event) => handleClick(event, row.id)}
                       //   role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.type}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       {/* <TableCell padding="checkbox">
@@ -398,7 +434,7 @@ export const NotificationsTable = () => {
                         {row.patient}
                       </TableCell>
                       <TableCell align="center" sx={{ fontWeight: 100 }}>
-                        {row.dateSubmitted}
+                        {row.notificationDate}
                       </TableCell>
                       <TableCell align="center" sx={{ fontWeight: 100 }}>
                         {row.visitDate}
