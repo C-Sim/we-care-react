@@ -81,17 +81,17 @@ export const CarePlanForm = ({ isMobile }) => {
   };
 
   // handle mental health option
-  const [mentalHealthCareOption, setMentalHealthOption] = useState("no");
-  const [personalCareProblems, setPersonalCareProblems] = useState("none");
-  const handlePersonalCareOptionChange = (event) => {
-    setPersonalCareOption(event.target.value);
+  const [mentalHealthOption, setMentalHealthOption] = useState("no");
+  const [mentalHealthProblems, setMentalHealthProblems] = useState("none");
+  const handleMentalHealthOptionChange = (event) => {
+    setMentalHealthOption(event.target.value);
     if (event.target.value === "no") {
       setPersonalCareProblems("none");
     }
   };
-  const handlePersonalCareChange = (event) => {
-    if (mobilityOption === "yes") {
-      setPersonalCareProblems(event.target.value);
+  const handleMentalHealthChange = (event) => {
+    if (mentalHealthOption === "yes") {
+      setMentalHealthProblems(event.target.value);
     }
   };
 
@@ -210,15 +210,18 @@ export const CarePlanForm = ({ isMobile }) => {
             value="yes"
             control={<Radio />}
             label="Yes"
-            //onChange={handleOptions}
+            onChange={handleMentalHealthOptionChange}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            //onChange={handleOptions}
+            onChange={handleMentalHealthOptionChange}
           />
         </RadioGroup>
+        {mentalHealthOption === "yes" && (
+          <TextField onChange={handleMentalHealthChange} />
+        )}
       </FormControl>
 
       <h2>Do you have any dietary requirements?</h2>
