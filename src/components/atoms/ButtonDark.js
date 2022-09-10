@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 
-export const ButtonDark = ({ label, type, href }) => {
+export const ButtonDark = ({ label, type, href, onClick }) => {
   return (
     <Button
       className="button"
@@ -14,6 +14,7 @@ export const ButtonDark = ({ label, type, href }) => {
         "&:hover": { backgroundColor: "#f7b801" },
         borderRadius: "18px",
       }}
+      onClick={onClick}
     >
       {label}
     </Button>
