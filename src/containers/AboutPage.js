@@ -1,5 +1,5 @@
 // overview of how the service works
-
+import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -23,8 +23,21 @@ import { Dropdown } from "../components/molecules/Dropdown";
 import { CalendarSmall } from "../components/molecules/CalendarSmall";
 
 import { HowItWorks } from "../components/molecules/HowItWorks";
+import { ImageUploader } from "../components/molecules/ImageUploader";
+
+import { ModalForCarer } from "../components/molecules/ModalForCarer";
+import { ModalForSupervisor } from "../components/molecules/ModalForSupervisor";
 
 export const AboutPage = () => {
+  const [imageUrl, setImageUrl] = useState();
+  const [fileName, setFileName] = useState();
+
+  const handleSubmit = () => {
+    console.log("form submit");
+    // make mutation request
+    console.log(imageUrl, fileName);
+  };
+
   return (
     <Stack spacing={2} sx={{ m: 2 }}>
       <PageTitle title="Atoms" />
@@ -46,6 +59,15 @@ export const AboutPage = () => {
       <Error message="Failed. Please try again." />
 
       <PageTitle title="Molecules" />
+
+      <form onSubmit={handleSubmit}>
+        <ImageUploader
+          imageUrl={imageUrl}
+          setImageUrl={setImageUrl}
+          setFileName={setFileName}
+        />
+        <button type="submit">Submit</button>
+      </form>
 
       {/* Don't include box as standard - this is just for background colour here */}
       <Box sx={{ backgroundColor: "#3f3d56" }}>
@@ -124,6 +146,9 @@ export const AboutPage = () => {
       <HowItWorks />
 
       <CalendarSmall />
+
+      <ModalForCarer />
+      <ModalForSupervisor />
     </Stack>
   );
 };
