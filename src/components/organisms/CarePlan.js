@@ -112,6 +112,21 @@ export const CarePlanForm = ({ isMobile }) => {
     }
   };
 
+  // handle allergies option
+  const [allergiesOption, setAllergiesOption] = useState("no");
+  const [allergiesProblems, setAllergiesProblems] = useState("none");
+  const handleAllergiesOptionChange = (event) => {
+    setAllergiesOption(event.target.value);
+    if (event.target.value === "no") {
+      setAllergiesProblems("none");
+    }
+  };
+  const handleAllergiesChange = (event) => {
+    if (allergiesOption === "yes") {
+      setAllergiesProblems(event.target.value);
+    }
+  };
+
   return (
     <Box>
       <FormControl>
@@ -264,6 +279,32 @@ export const CarePlanForm = ({ isMobile }) => {
         </RadioGroup>
         {dietaryRequirementsOption === "yes" && (
           <TextField onChange={handleDietaryRequirementsChange} />
+        )}
+      </FormControl>
+
+      <h2>Do you have any allergies?</h2>
+
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="current_dietary_requirements"
+        >
+          <FormControlLabel
+            value="yes"
+            control={<Radio />}
+            label="Yes"
+            onChange={handleAllergiesOptionChange}
+          />
+          <FormControlLabel
+            value="no"
+            control={<Radio />}
+            label="No"
+            onChange={handleAllergiesOptionChange}
+          />
+        </RadioGroup>
+        {allergiesOption === "yes" && (
+          <TextField onChange={handleAllergiesChange} />
         )}
       </FormControl>
     </Box>
