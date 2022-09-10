@@ -7,7 +7,7 @@ import { PageTitle } from "../components/atoms/PageTitle";
 export const SupervisorNotificationsPage = () => {
   // const mailType = "received";
 
-  //   const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS, <TODO: insertvars>);
+  //   const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS, { variables: { mailtype } });
 
   //   if (loading) {
   //     return <h2>LOADING...</h2>;

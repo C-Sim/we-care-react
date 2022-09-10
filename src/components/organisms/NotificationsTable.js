@@ -280,21 +280,6 @@ function EnhancedTableHead(props) {
     onRequestSort(event, property);
   };
 
-  //   update read status
-  const updateRead = useMutation(UPDATE_READ);
-
-  const [updatedNotifications, setUpdatedNotifications] = useState();
-
-  const handleUpdateRead = async (notificationId, userId) => {
-    try {
-      await updateRead({ variables: { notificationId, userId } });
-
-      setUpdatedNotifications(updatedNotifications);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <TableHead>
       <TableRow>
@@ -334,54 +319,65 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
+// const EnhancedTableToolbar = (props) => {
+//   const { numSelected } = props;
 
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      <Tooltip title="Filter list">
-        <IconButton>
-          <FilterListIcon />
-          <Typography>Filter</Typography>
-        </IconButton>
-      </Tooltip>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+//   return (
+//     <Toolbar
+//       sx={{
+//         pl: { sm: 2 },
+//         pr: { xs: 1, sm: 1 },
+//         ...(numSelected > 0 && {
+//           bgcolor: (theme) =>
+//             alpha(
+//               theme.palette.primary.main,
+//               theme.palette.action.activatedOpacity
+//             ),
+//         }),
+//       }}
+//     >
+//       <Tooltip title="Filter list">
+//         <IconButton>
+//           <FilterListIcon />
+//           <Typography>Filter</Typography>
+//         </IconButton>
+//       </Tooltip>
+//     </Toolbar>
+//   );
+// };
 
 export const NotificationsTable = () => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("notificationDate");
-  const [selected, setSelected] = useState([]);
+  //   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
+  const [isReadStatus, setIsReadStatus] = useState(false);
+
+  //   update read status
+  const updateRead = useMutation(UPDATE_READ);
+
+  const handleUpdateRead = async (notificationId) => {
+    try {
+      await updateRead({ variables: { notificationId } });
+
+      setIsReadStatus(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   //   useQuery hook - here or on page??
 
   const handleClickOpen = () => {
+    // handleUpdateRead(notificationId);
+
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    // handleUpdateRead(notificationId, userId);
   };
 
   const handleRequestSort = (event, property) => {
@@ -432,7 +428,7 @@ export const NotificationsTable = () => {
 
   const handleDenial = () => {};
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  //   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -522,7 +518,7 @@ export const NotificationsTable = () => {
       </Dialog>
 
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar />
+        {/* <EnhancedTableToolbar /> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -541,17 +537,20 @@ export const NotificationsTable = () => {
               {stableSort(Notifications, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
+                  //   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
                       onClick={(event) => handleClickOpen(event, row.id)}
-                      aria-checked={isItemSelected}
+                      //   aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
-                      selected={isItemSelected}
+                      sx={{
+                        backgroundColor: isReadStatus ? "#eef5dbff" : "white",
+                      }}
+                      //   selected={isItemSelected}
                     >
                       <TableCell
                         component="th"
