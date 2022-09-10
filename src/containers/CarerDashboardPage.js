@@ -9,6 +9,7 @@ import {
 } from "@react-google-maps/api";
 import { useState, useRef, useCallback } from "react";
 import { NextVisitForCarer } from "../components/organisms/NextVisit";
+import { CarerTimeline } from "../components/molecules/CarerTimeline";
 
 export const CarerDashboardPage = () => {
   const center = { lat: 52.489471, lng: -1.898575 };
@@ -70,10 +71,42 @@ export const CarerDashboardPage = () => {
     <>
       <Box sx={{ height: 800 }}>
         {/* <NextVisitForCarer /> */}
+        <Box
+          zIndex="modal"
+          sx={{ backgroundColor: "#DFE2E2", width: 250, height: 400, p: 1 }}
+        >
+          {" "}
+          <CarerTimeline
+            date="Monday 8th August"
+            patients={[
+              {
+                time: "08:00",
+                timeFrame: "past",
+                patientName: "Charlie Dean",
+                patientGender: "male",
+                patientAddress: "Dale Rd B29 6AG",
+              },
+              {
+                time: "10:00",
+                timeFrame: "current",
+                patientName: "Carol Davies",
+                patientGender: "female",
+                patientAddress: "Paganel Rd B29 5TG",
+              },
+              {
+                time: "14:00",
+                timeFrame: "future",
+                patientName: "Abe Zephaniah",
+                patientGender: "male",
+                patientAddress: "Ambassador Ave B31 2GZ",
+              },
+            ]}
+          />
+        </Box>
 
         <Box
           zIndex="modal"
-          sx={{ backgroundColor: "#47B0FF", width: 250, height: 250, p: 2 }}
+          sx={{ backgroundColor: "#9AC7C7", width: 250, height: 250, p: 2 }}
         >
           <div className="row">
             <div className="col-md-6 col-lg-4">
