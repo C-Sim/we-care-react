@@ -203,10 +203,19 @@ query ReceivedNotificationsByUserId($userId: ID!, $mailType: String!) {
   notificationsByUserId(userId: $userId, mailType: $mailType) {
     id
     notificationDate
-    senderId
+    accountType
+    senderId {
+      _id
+      firstName
+      lastName
+      accountType
+      email
+    }
     receiverId
     notificationText
     isRead
+    appointmentId
+    appointmentDate
   }
 }
 ```

@@ -54,8 +54,10 @@ const createData = (rowTitle, rowValue) => {
   return { rowTitle, rowValue };
 };
 
+// const ModalRows
+
 //template modal data for now
-const rows = [
+const ModalRows = [
   createData("Carer:", "Alice Bond"),
   createData("Patient:", "Charlie Dean"),
   createData("Submitted:", "18/08/22"),
@@ -79,27 +81,29 @@ const rows = [
 
 const createNotification = (
   id,
-  type,
-  carer,
-  patient,
+  notificationType,
+  accountType,
+  senderId,
   notificationDate,
-  visitDate,
-  visitTime,
+  notificationText,
+  appointmentId,
+  appointmentDate,
   isRead
 ) => {
   return {
     id,
-    type,
-    carer,
-    patient,
+    notificationType,
+    accountType,
+    senderId,
     notificationDate,
-    visitDate,
-    visitTime,
+    notificationText,
+    appointmentId,
+    appointmentDate,
     isRead,
   };
 };
 
-const notifications = [
+const Notifications = [
   createNotification(
     "1",
     "Shift Change",
@@ -363,6 +367,7 @@ export const NotificationsTable = () => {
 
   const handleClose = () => {
     setOpen(false);
+    // handleUpdateRead(notificationId, userId);
   };
 
   const handleRequestSort = (event, property) => {
@@ -417,7 +422,7 @@ export const NotificationsTable = () => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - notifications.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Notifications.length) : 0;
 
   return (
     <Box sx={{ width: "100%", padding: 4 }}>
@@ -441,7 +446,7 @@ export const NotificationsTable = () => {
             aria-label="simple table"
           >
             <TableBody>
-              {rows.map((row) => (
+              {ModalRows.map((row) => (
                 <TableRow
                   key={row.rowTitle}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -514,12 +519,12 @@ export const NotificationsTable = () => {
               orderBy={orderBy}
               //   onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={notifications.length}
+              rowCount={Notifications.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 notifications.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(notifications, getComparator(order, orderBy))
+                 Notifications.slice().sort(getComparator(order, orderBy)) */}
+              {stableSort(Notifications, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -586,7 +591,7 @@ export const NotificationsTable = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={notifications.length}
+          count={Notifications.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
