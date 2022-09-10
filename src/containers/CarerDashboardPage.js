@@ -81,8 +81,6 @@ export const CarerDashboardPage = () => {
     // if (originRef.current.value === "" || destinationRef.current.value === "") {
     //   return;
     // }
-    // console.log(originRef.current.value);
-    // console.log(destinationRef.current.value);
 
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
@@ -113,10 +111,11 @@ export const CarerDashboardPage = () => {
   }
 
   return (
-    /* map goes here */
     <>
       <Box sx={{ height: 800 }}>
-        {/* <NextVisitForCarer /> */}
+        <NextVisitForCarer />
+
+        {/* carer timeline box container */}
         <Box
           zIndex="modal"
           sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
@@ -125,6 +124,7 @@ export const CarerDashboardPage = () => {
           <CarerTimeline date="Monday 8th August" patients={patientAddress} />
         </Box>
 
+        {/* Appointments' directions box container */}
         <Box
           zIndex="modal"
           sx={{ backgroundColor: "#9AC7C7", width: 300, height: 300, p: 2 }}
@@ -181,6 +181,7 @@ export const CarerDashboardPage = () => {
           </div>
         </Box>
 
+        {/* map goes here  */}
         <Box>
           {" "}
           <GoogleMap
