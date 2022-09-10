@@ -44,3 +44,12 @@ export const PATIENT_INFO = gql`
     }
   }
 `;
+
+export const USER_INFO = gql`
+  mutation UpdateUserInfo($updateInput: UserInfoInput) {
+    updateUserInfo(updateInput: $updateInput) {
+      success
+      userId
+    }
+  }
+`;

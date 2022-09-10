@@ -22,6 +22,10 @@ export const USER_ID = gql`
       email
       phoneNumber
       accountType
+      postcode
+      address {
+        fullAddress
+      }
     }
   }
 `;
