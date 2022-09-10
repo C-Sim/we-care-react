@@ -1,6 +1,8 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
+import { useMutation, useQuery } from "@apollo/client";
 import { alpha } from "@mui/material/styles";
+import PropTypes from "prop-types";
+
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -20,9 +22,29 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { visuallyHidden } from "@mui/utils";
+import visuallyHidden from "@mui/utils/visuallyHidden";
 
-function createData(type, carer, patient, dateSubmitted, visitDate, visitTime) {
+import { RECEIVED_NOTIFICATIONS } from "../../graphql/queries";
+import { UPDATE_READ } from "../../graphql/mutations";
+
+const Notifications = () => {
+  const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS);
+
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
+
+  return data;
+};
+
+const createData = (
+  type,
+  carer,
+  patient,
+  dateSubmitted,
+  visitDate,
+  visitTime
+) => {
   return {
     type,
     carer,
@@ -31,36 +53,37 @@ function createData(type, carer, patient, dateSubmitted, visitDate, visitTime) {
     visitDate,
     visitTime,
   };
-}
+};
 
 const rows = [
-  createData(
-    "Shift Change",
-    "Alice Bond",
-    "Charlie Dean",
-    "18/08/22",
-    "25/08/22",
-    "12:00"
-  ),
-  createData("New Patient", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
-  createData(
-    "Shift Change",
-    "Alice Bond",
-    "Charlie Dean",
-    "18/08/22",
-    "25/08/22",
-    "12:00"
-  ),
-  createData("New Patient", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
-  createData(
-    "Shift Change",
-    "Alice Bond",
-    "Charlie Dean",
-    "18/08/22",
-    "25/08/22",
-    "12:00"
-  ),
-  createData("Patient Amend", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
+  data,
+  //   createData(
+  //     "Shift Change",
+  //     "Alice Bond",
+  //     "Charlie Dean",
+  //     "18/08/22",
+  //     "25/08/22",
+  //     "12:00"
+  //   ),
+  //   createData("New Patient", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
+  //   createData(
+  //     "Shift Change",
+  //     "Alice Bond",
+  //     "Charlie Dean",
+  //     "18/08/22",
+  //     "25/08/22",
+  //     "12:00"
+  //   ),
+  //   createData("New Patient", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
+  //   createData(
+  //     "Shift Change",
+  //     "Alice Bond",
+  //     "Charlie Dean",
+  //     "18/08/22",
+  //     "25/08/22",
+  //     "12:00"
+  //   ),
+  //   createData("Patient Amend", "N/A", "Abe Zephaniah", "18/08/22", "N/A", "N/A"),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -151,6 +174,21 @@ function EnhancedTableHead(props) {
 
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
+  };
+
+  //   update read status
+  const updateRead = useMutation(UPDATE_READ);
+
+  const [updatedNotifications, setUpdatedNotifications] = useState();
+
+  const handleUpdateRead = async (notificationId, userId) => {
+    try {
+      await updateRead({ variables: { notificationId, userId } });
+
+      setUpdatedNotifications(updatedNotifications);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
