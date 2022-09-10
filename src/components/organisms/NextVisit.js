@@ -65,7 +65,10 @@ const BtnPatientProfile = () => {
 
 export const NextVisitForCarer = () => {
   return (
-    <Paper sx={{ p: 3, width: "30%", height: 800 }} elevation={6}>
+    <Paper
+      sx={{ p: 3, width: "30%", height: 800, position: "absolute", right: 1 }}
+      elevation={6}
+    >
       <div>
         <h2>Next Appointment Patient Detail</h2>
         <h4>Name of the Patient | Address of the Patient</h4>
