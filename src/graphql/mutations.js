@@ -22,6 +22,11 @@ export const LOGIN = gql`
         lastName
         email
         accountType
+        phoneNumber
+        postcode
+        address {
+          fullAddress
+        }
       }
     }
   }

@@ -1,8 +1,9 @@
-import { useEffect, useState, useMutation } from "react";
+import { useEffect, useState, useContext } from "react";
+
 import { useForm } from "react-hook-form";
 import { useRef } from "react";
 //import { useNavigate } from "react-router-dom";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -46,45 +47,16 @@ import { ButtonBright } from "../atoms/ButtonBright";
 
 import { USER_INFO } from "../../graphql/mutations";
 
-import { AppProvider, useAuth } from "../../context/AppProvider";
+import { AppContext } from "../../context/AppProvider";
 
 export const PatientProfileForm = () => {
-  //userInfo
+  //mutations
   const [updateUserInfo] = useMutation(USER_INFO);
-  const context = AppProvider.context;
-  console.log(context);
-  //dropdown menu
-  const [genderCare, setGenderCare] = useState("");
+  //get context
+  const context = useContext(AppContext);
+  const userId = context.user.id;
 
-  //phone number update
-  const [phoneState, setPhoneState] = useState(false);
-  debugger;
-  const handlePhoneUpdate = async (formData) => {
-    const userId = "";
-    const updateInput = {
-      phoneNumber: formData.phoneNumber,
-    };
-    const updatedPhoneNumber = await updateUserInfo({
-      variables: {
-        updateInput,
-      },
-    });
-  };
-
-  //days of the week checkbox
-  const [day, setDay] = useState([]);
-
-  const [
-    addressLookup,
-    {
-      data: addressLookupData,
-      // loading: addressLookupLoading,
-      // error: addressLookupError,
-    },
-  ] = useLazyQuery(ADDRESS_LOOKUP, {
-    fetchPolicy: "network-only",
-  });
-
+  //form definitions
   const {
     register,
     formState: { errors },
@@ -95,69 +67,50 @@ export const PatientProfileForm = () => {
   } = useForm({
     mode: "onBlur",
   });
-  const [showPassword, setShowPassword] = useState(false);
-  //const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
+
+  //phone number update
+  const [phoneState, setPhoneState] = useState(false);
+  const handlePhoneUpdate = async (formData) => {
+    debugger;
+    const updateInput = {
+      phoneNumber: formData.phoneNumber,
+    };
+    const updatedPhoneNumber = await updateUserInfo({
+      variables: {
+        userId,
+        updateInput,
+      },
+    });
+  };
+
+  //days of the week checkbox
+  const [day, setDay] = useState([]);
+
+  const handleDayValue = (e) => {
+    let data = day.indexOf(e.target.value);
+    if (data === -1) {
+      setDay([...day, e.target.value]);
+    } else {
+      setDay(day.filter((data) => data !== e.target.value));
+    }
+  };
+
+  //address lookup
+  const [addressLookup, { data: addressLookupData }] = useLazyQuery(
+    ADDRESS_LOOKUP,
+    {
+      fetchPolicy: "network-only",
+    }
+  );
   const [open, setOpen] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState();
   const [selectedAddress, setSelectedAddress] = useState();
-  //const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (data?.patientSignup?.success) {
-  //     navigate("/patient-dashboard", { replace: true });
-  //   }
-  // }, [data, navigate]);
 
   useEffect(() => {
     if (addressLookupData?.addressLookup) {
       handleOpenModal();
     }
   }, [addressLookupData]);
-
-  const onSubmit = (formData) => {
-    if (formData.password !== formData.confirmPassword) {
-      setError("confirmPassword", {
-        type: "manual",
-        message: "Passwords do not match.",
-      });
-    } else if (!selectedAddressId) {
-      setError("postcode", {
-        type: "manual",
-        message: "Please select an address",
-      });
-    } else {
-      const signupInput = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        phoneNumber: formData.phoneNumber,
-        email: formData.email,
-        password: formData.password,
-        postcode: formData.postcode,
-        address: selectedAddressId,
-      };
-
-      console.log(signupInput);
-      const patientInput = {
-        genderPreference: genderCare,
-        days: day,
-      };
-      console.log(patientInput);
-      // signup({
-      //   variables: {
-      //     signupInput,
-      //     patientInput,
-      //   },
-      // });
-    }
-  };
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  // const toggleShowConfirmedPassword = () => {
-  //   setShowConfirmedPassword(!showConfirmedPassword);
-  // };
 
   const handleAddressLookup = () => {
     console.log("searching...");
@@ -187,20 +140,16 @@ export const PatientProfileForm = () => {
     handleCloseModal();
   };
 
+  //do we still need the navigate option somewhere?
+  // const navigate = useNavigate();
+
+  //gender Preference update
+  const [genderCare, setGenderCare] = useState("");
   const handleChangeGenderCare = (event) => {
     setGenderCare(event.target.value);
   };
 
-  const handleDayValue = (e) => {
-    let data = day.indexOf(e.target.value);
-    if (data === -1) {
-      setDay([...day, e.target.value]);
-    } else {
-      setDay(day.filter((data) => data !== e.target.value));
-    }
-  };
-
-  console.log(addressLookupData);
+  //display on the page
   return (
     <Paper
       sx={{
@@ -249,25 +198,19 @@ export const PatientProfileForm = () => {
 
       <Grid container marginTop={5} marginLeft={4}>
         <Grid item marginRight={4}>
-          {" "}
           <ProfileAvatar />
         </Grid>
         <Grid item>
           <ButtonBright label="Update image" type="submit" />
         </Grid>
       </Grid>
-      <Stack
-        component="form"
-        sx={{ p: 3 }}
-        spacing={4}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        {/* user account details - needed for signupInput*/}
+      <Stack spacing={4}>
+        {/* user account details*/}
         <Stack spacing={2}>
-          <Typography component="h2" variant="button" align="left">
+          <Typography component="h2" align="left">
             Account Details
           </Typography>
-          <Typography>Email address</Typography>
+          <Typography>Email address: {context.user.email}</Typography>
           <TextField
             required
             error={!!errors.email}
@@ -280,26 +223,38 @@ export const PatientProfileForm = () => {
             sx={{ backgroundColor: "#FFFFFF" }}
           />
           <Typography component="h2" variant="button" align="left">
-            My phone number (static)
+            Phone number: {context.user.phoneNumber}
           </Typography>
           <EditIcon fontSize="small" />
-          <FormControl onSubmit={handlePhoneUpdate}>
-            <TextField
-              name="phone"
-              required
-              error={!!errors.phoneNumber}
-              label="Phone Number"
-              variant="outlined"
-              helperText={
-                !!errors.phoneNumber ? "Please enter your phone number." : ""
-              }
-              {...register("phoneNumber", {
-                required: true,
-              })}
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-            <ButtonBright label="Update phone number" type="submit" />
-          </FormControl>
+          <ButtonBright
+            label="Edit"
+            type="button"
+            onClick={() => setPhoneState(true)}
+          />
+          <Stack
+            component="form"
+            sx={{ p: 3 }}
+            spacing={4}
+            onSubmit={handlePhoneUpdate}
+          >
+            <FormControl>
+              <TextField
+                name="phone"
+                required
+                error={!!errors.phoneNumber}
+                label="Phone Number"
+                variant="outlined"
+                helperText={
+                  !!errors.phoneNumber ? "Please enter your phone number." : ""
+                }
+                {...register("phoneNumber", {
+                  required: true,
+                })}
+                sx={{ backgroundColor: "#FFFFFF" }}
+              />
+              <ButtonBright label="Update phone number" type="submit" />
+            </FormControl>
+          </Stack>
 
           <Grid container sx={{ flexDirection: "row", flexWrap: "wrap" }}>
             <Grid item></Grid>
