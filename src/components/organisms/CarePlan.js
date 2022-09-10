@@ -65,6 +65,36 @@ export const CarePlanForm = ({ isMobile }) => {
     }
   };
 
+  // handle personal care option
+  const [personalCareOption, setPersonalCareOption] = useState("no");
+  const [personalCareProblems, setPersonalCareProblems] = useState("none");
+  const handlePersonalCareOptionChange = (event) => {
+    setPersonalCareOption(event.target.value);
+    if (event.target.value === "no") {
+      setPersonalCareProblems("none");
+    }
+  };
+  const handlePersonalCareChange = (event) => {
+    if (mobilityOption === "yes") {
+      setPersonalCareProblems(event.target.value);
+    }
+  };
+
+  // handle mental health option
+  const [mentalHealthCareOption, setMentalHealthOption] = useState("no");
+  const [personalCareProblems, setPersonalCareProblems] = useState("none");
+  const handlePersonalCareOptionChange = (event) => {
+    setPersonalCareOption(event.target.value);
+    if (event.target.value === "no") {
+      setPersonalCareProblems("none");
+    }
+  };
+  const handlePersonalCareChange = (event) => {
+    if (mobilityOption === "yes") {
+      setPersonalCareProblems(event.target.value);
+    }
+  };
+
   return (
     <Box>
       <FormControl>
@@ -119,7 +149,7 @@ export const CarePlanForm = ({ isMobile }) => {
         )}
       </FormControl>
 
-      <h2>How would you best describe your current ability to communicate?</h2>
+      <h2>Do you currently have any communication problems?</h2>
       <FormControl>
         <RadioGroup
           row
@@ -144,10 +174,7 @@ export const CarePlanForm = ({ isMobile }) => {
         )}
       </FormControl>
 
-      <h2>
-        How would you best describe your current ability to maintain your
-        personal care?
-      </h2>
+      <h2>Do you have any Personal Care issues?</h2>
       <FormControl>
         <RadioGroup
           row
@@ -158,15 +185,18 @@ export const CarePlanForm = ({ isMobile }) => {
             value="yes"
             control={<Radio />}
             label="Yes"
-            //onChange={handleOptions}
+            onChange={handlePersonalCareOptionChange}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            //onChange={handleOptions}
+            onChange={handlePersonalCareOptionChange}
           />
         </RadioGroup>
+        {personalCareOption === "yes" && (
+          <TextField onChange={handlePersonalCareChange} />
+        )}
       </FormControl>
 
       <h2>How would you best describe your current mental health?</h2>
