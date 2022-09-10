@@ -73,7 +73,7 @@ export const CarerDashboardPage = () => {
 
         <Box
           zIndex="modal"
-          sx={{ backgroundColor: "#AFE0CE", width: 250, height: 250, p: 2 }}
+          sx={{ backgroundColor: "#47B0FF", width: 250, height: 250, p: 2 }}
         >
           <div className="row">
             <div className="col-md-6 col-lg-4">
