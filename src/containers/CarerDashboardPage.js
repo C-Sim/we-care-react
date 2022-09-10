@@ -97,9 +97,12 @@ export const CarerDashboardPage = () => {
     setDuration(results.routes[0].legs[0].duration.text);
   };
 
-  const handleChange = (event) => {
+  const handleOriginClick = (event) => {
     setOrigin(event.target.value);
-    setDestination("hockley social club");
+  };
+
+  const handleDestinationClick = (event) => {
+    setDestination(event.target.value);
   };
 
   console.log(origin);
@@ -134,7 +137,7 @@ export const CarerDashboardPage = () => {
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
               value={origin}
-              onChange={handleChange}
+              onChange={handleOriginClick}
             >
               {patientAddress.map((address, index) => (
                 <MenuItem value={address.patientAddress} key={index}>
@@ -150,8 +153,8 @@ export const CarerDashboardPage = () => {
             <Select
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
-              value={origin}
-              onChange={handleChange}
+              value={destination}
+              onChange={handleDestinationClick}
             >
               {patientAddress.map((address, index) => (
                 <MenuItem value={address.patientAddress} key={index}>
