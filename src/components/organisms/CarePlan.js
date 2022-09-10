@@ -5,157 +5,168 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
-
-import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { useEffect, useState } from "react";
 import { Input } from "../atoms/Input";
+import InputDisabled from "../atoms/InputDisabled";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+//import { createCarePlan } from "../../graphql/mutations";
 
-import { userId } from "../../graphql/mutations";
+export const CarePlanForm = ({ isMobile }) => {
+  //care plan check boxes
+  const [AddInput, getInputBox] = useState([]);
 
-import { ButtonDark } from "../atoms/ButtonDark";
-
-= ({ isMobile }) => {
-  const [userId, { data, loading, error }] = useMutation(createCarePlan);
-
-  //state for y/n checkboxes
-  const [option, setOption] = useState([]);
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    setError,
-    clearErrors,
-    getValues,
-  } = useForm({
-    mode: "onBlur",
-  });
-
-  const [successStatus, setSuccessStatus] = useState(false);
-  const [formKey, setFormKey] = useState(new Date());
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (data?.carePlanForm?.success) {
-      setSuccessStatus(!successStatus);
+  const handleOptions = (e) => {
+    let data = AddInput.indexOf(e.target.value);
+    if (data === -1) {
+      getInputBox([...AddInput, e.target.value]);
+    } else {
+      getInputBox(AddInput.filter((data) => data !== e.target.value));
+      console.log(data);
     }
-  }, [data, navigate]);
-
-  const handleYesNoOption = (value) => {
-    console.log(value);
-    if (value === "yes") {
-      setCheckBoxChecked((checked) => !checked);
-    }
-    if (value === "no") {
-      setCheckBoxChecked((checked) => !checked);
-    }
-  };
-
-  const resetForm = () => {
-    setFormKey(new Date());
-    setSuccessStatus(!successStatus);
-    //TODO: it brings back the form but it's populated with the previous data
   };
 
   return (
     <Box>
-      <h2>Do you have any disabilities?</h2>
-      <FormControlLabel
-        value="disabilities"
-        control={<Checkbox />}
-        label="Yes"
-        labelPlacement="start"
-      />
-      <FormControlLabel
-        value="disabilities"
-        control={<Checkbox />}
-        label="No"
-        labelPlacement="start"
-      />
+      <FormControl>
+        <FormLabel component="legend">Do you have any disabilities?</FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel
+            value="yes"
+            control={<Radio />}
+            label="Yes"
+            onChange={handleOptions}
+          />
+          <FormControlLabel
+            value="no"
+            control={<Radio />}
+            label="No"
+            onChange={handleOptions}
+          />
+        </RadioGroup>
+      </FormControl>
 
-      <Input></Input>
       <h2>How would you best describe your current mobility?</h2>
-      <FormControlLabel
-        value="mobility"
-        control={<Checkbox />}
-        label="Yes"
-        labelPlacement="start"
-      />
-      <FormControlLabel
-        value="mobility"
-        control={<Checkbox />}
-        label="No"
-        labelPlacement="start"
-      />
-      <Input></Input>
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel
+            value="yes"
+            control={<Radio />}
+            label="Yes"
+            onChange={handleOptions}
+          />
+          <FormControlLabel
+            value="no"
+            control={<Radio />}
+            label="No"
+            onChange={handleOptions}
+          />
+        </RadioGroup>
+      </FormControl>
 
       <h2>How would you best describe your current ability to communicate?</h2>
-      <FormControlLabel
-        value="communication"
-        control={<Checkbox />}
-        label="Yes"
-        labelPlacement="start"
-      />
-      <FormControlLabel
-        value="communication"
-        control={<Checkbox />}
-        label="No"
-        labelPlacement="start"
-      />
-      <Input></Input>
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel
+            value="yes"
+            control={<Radio />}
+            label="Yes"
+            onChange={handleOptions}
+          />
+          <FormControlLabel
+            value="no"
+            control={<Radio />}
+            label="No"
+            onChange={handleOptions}
+          />
+        </RadioGroup>
+      </FormControl>
 
       <h2>
         How would you best describe your current ability to maintain your
         personal care?
       </h2>
-      <FormControlLabel
-        value="personalCare"
-        control={<Checkbox />}
-        label="Yes"
-        labelPlacement="start"
-      />
-      <FormControlLabel
-        value="personalCare"
-        control={<Checkbox />}
-        label="No"
-        labelPlacement="start"
-      />
-      <Input></Input>
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel
+            value="yes"
+            control={<Radio />}
+            label="Yes"
+            onChange={handleOptions}
+          />
+          <FormControlLabel
+            value="no"
+            control={<Radio />}
+            label="No"
+            onChange={handleOptions}
+          />
+        </RadioGroup>
+      </FormControl>
 
       <h2>How would you best describe your current mental health?</h2>
-      <FormControlLabel
-        value="mentalHealth"
-        control={<Checkbox />}
-        label="Yes"
-        labelPlacement="start"
-      />
-      <FormControlLabel
-        value="mentalHealth"
-        control={<Checkbox />}
-        label="No"
-        labelPlacement="start"
-      />
-      <Input></Input>
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel
+            value="yes"
+            control={<Radio />}
+            label="Yes"
+            onChange={handleOptions}
+          />
+          <FormControlLabel
+            value="no"
+            control={<Radio />}
+            label="No"
+            onChange={handleOptions}
+          />
+        </RadioGroup>
+      </FormControl>
 
       <h2>Do you have any dietary requirements?</h2>
-      <FormControlLabel
-        value="allergies"
-        control={<Checkbox />}
-        label="Yes"
-        labelPlacement="start"
-      />
-      <FormControlLabel
-        value="allergies"
-        control={<Checkbox />}
-        label="No"
-        labelPlacement="start"
-      />
-      <Input></Input>
+
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel
+            value="yes"
+            control={<Radio />}
+            label="Yes"
+            onChange={handleOptions}
+          />
+          <FormControlLabel
+            value="no"
+            control={<Radio />}
+            label="No"
+            onChange={handleOptions}
+          />
+        </RadioGroup>
+      </FormControl>
     </Box>
   );
 };

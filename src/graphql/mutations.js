@@ -26,3 +26,5 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const CreateCarePlan = gql;
