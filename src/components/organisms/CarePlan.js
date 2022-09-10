@@ -20,6 +20,7 @@ import TextField from "@mui/material/TextField";
 export const CarePlanForm = ({ isMobile }) => {
   //care plan check boxes
   const [AddInput, setInputId] = useState([]);
+  // handle disability option
   const [disabilityOption, setDisabilityOption] = useState("no");
   const [disabilities, setDisabilities] = useState("none");
   const handleDisabilityOptionChange = (event) => {
@@ -31,6 +32,21 @@ export const CarePlanForm = ({ isMobile }) => {
   const handleDisabilitiesChange = (event) => {
     if (disabilityOption === "yes") {
       setDisabilities(event.target.value);
+    }
+  };
+
+  // handle mobility option
+  const [mobilityOption, setMobilityOption] = useState("no");
+  const [mobilityProblems, setMobilityProblems] = useState("none");
+  const handleMobilityOptionChange = (event) => {
+    setMobilityOption(event.target.value);
+    if (event.target.value === "no") {
+      setMobilityProblems("none");
+    }
+  };
+  const handleMobilityChange = (event) => {
+    if (mobilityOption === "yes") {
+      setMobilityProblems(event.target.value);
     }
   };
 
@@ -63,7 +79,7 @@ export const CarePlanForm = ({ isMobile }) => {
         )}
       </FormControl>
 
-      <h2>How would you best describe your current mobility?</h2>
+      <h2>Do you currently have any mobility issues?</h2>
       <FormControl>
         <RadioGroup
           row
@@ -74,15 +90,18 @@ export const CarePlanForm = ({ isMobile }) => {
             value="yes"
             control={<Radio />}
             label="Yes"
-            //onChange={handleOptions}
+            onChange={handleMobilityOptionChange}
           />
           <FormControlLabel
             value="no"
             control={<Radio />}
             label="No"
-            //onChange={handleOptions}
+            onChange={handleMobilityOptionChange}
           />
         </RadioGroup>
+        {mobilityOption === "yes" && (
+          <TextField onChange={handleMobilityChange} />
+        )}
       </FormControl>
 
       <h2>How would you best describe your current ability to communicate?</h2>
