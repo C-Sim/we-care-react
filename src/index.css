@@ -13,4 +13,7 @@
 
 body {
   margin: 0;
+  padding-bottom: 104px;
+  position: relative;
+  min-height: 100vh;
 }

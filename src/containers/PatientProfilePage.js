@@ -41,11 +41,11 @@ export const PatientsProfilePage = () => {
   return (
     <Box
       container
+      pb={15}
       xs={12}
       sm={12}
       md={6}
       sx={{
-        minHeight: "95vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -57,12 +57,12 @@ export const PatientsProfilePage = () => {
       )`,
       }}
     >
-      <Grid>
-        <ButtonBright
+      <Grid mt={5}>
+        {/* <ButtonBright
           label="Back to Dashboard"
           type="button"
           onClick={handlePageChange}
-        />
+        /> */}
         <Paper
           sx={{
             mt: 4,
