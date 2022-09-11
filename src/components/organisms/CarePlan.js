@@ -15,13 +15,70 @@ import InputDisabled from "../atoms/InputDisabled";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
+
 import { CREATE_CARE_PLAN } from "../../graphql/mutations";
 
 export const CarePlanForm = ({ isMobile }) => {
-  [createCarePlan, {}] = useMutation(CREATE_CARE_PLAN);
+  //state for update success
+  const [carePlanSuccess, setCarePlanSuccess] = useState(false);
+  const [CarePlanMessage, setCarePlanMessage] = useState(false);
+
+  //mutations
+  const [createCarePlan, { data, loading, error }] = useMutation(
+    CREATE_CARE_PLAN,
+    {
+      onCompleted: (data) => {
+        console.log(data.createCarePlan);
+        setCarePlanSuccess(true);
+      },
+    }
+  );
+
+  //form definitions
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setError,
+    clearErrors,
+    getValues,
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  // const handleCarePlanUpdate = () => {
+  //   debugger;
+  //   const updateCarePlanInput = {};
+
+  //   if (genderCare) {
+  //     updatePatientInput.genderPreference = genderCare;
+  //   }
+
+  //   if (day.length) {
+  //     updatePatientInput.days = day;
+  //   }
+
+  //   const isEmpty = (updatePatientInput) => {
+  //     return Object.keys(updatePatientInput).length === 0;
+  //   };
+
+  //   const objectStatus = isEmpty(updatePatientInput);
+
+  //   if (!objectStatus) {
+  //     updatePatientInfo({
+  //       variables: {
+  //         userId,
+  //         updatePatientInput,
+  //       },
+  //     });
+  //   } else {
+  //     setPatientMessage(true);
+  //   }
+  // };
 
   //care plan check boxes
   const [AddInput, setInputId] = useState([]);
+
   // handle disability option
   const [disabilityOption, setDisabilityOption] = useState("no");
   const [disabilities, setDisabilities] = useState("none");
@@ -130,7 +187,12 @@ export const CarePlanForm = ({ isMobile }) => {
   };
 
   return (
-    <Box>
+    <Box
+    // component="form"
+    // sx={{ p: 3 }}
+    // spacing={4}
+    // onSubmit={handleSubmit(handleCarePlanUpdate)}
+    >
       <FormControl>
         <FormLabel component="legend">Do you have any disabilities?</FormLabel>
         <RadioGroup
