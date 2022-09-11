@@ -53,7 +53,6 @@ export const NavBar = ({ navItems }) => {
         sx={{
           backgroundColor: "#3f3d56",
           color: "#eef5dbff",
-          display: "flex",
 
           flexDirection: "row",
           alignItems: "center",
@@ -61,7 +60,13 @@ export const NavBar = ({ navItems }) => {
           p: 2,
         }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -71,16 +76,15 @@ export const NavBar = ({ navItems }) => {
           >
             <MenuIcon></MenuIcon>
           </IconButton>
-
           <Box className="LogoNav">
-            <ProfileAvatar
+            <img src={logo} height="45"></img>
+            {/* <img
               image={logo}
               imageAlt="We Care logo"
               alignItems="center"
               boxSizing="border-box"
-            />
+            /> */}
           </Box>
-
           <Box
             variant="h6"
             component="div"
