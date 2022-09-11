@@ -112,7 +112,7 @@ const createNotification = (
 
 // setNotifications(notificationData);
 
-// const Notifications = notificationData.forEach((notification) => {
+// const Notifications = savedNotifications.forEach((notification) => {
 //   createNotification(
 //     { notificationId },
 //     { notificationType },
@@ -322,8 +322,9 @@ export const NotificationsTable = () => {
     }
   };
 
-  const handleClickOpen = () => {
-    // handleUpdateRead(notificationId);
+  const handleClickOpen = (event, id) => {
+    // event.preventDefault();
+    // handleUpdateRead(id);
 
     setOpen(true);
   };
@@ -441,7 +442,7 @@ export const NotificationsTable = () => {
               {stableSort(Notifications, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  //   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
@@ -455,7 +456,7 @@ export const NotificationsTable = () => {
                     >
                       <TableCell
                         component="th"
-                        id={labelId}
+                        id={row.id}
                         scope="row"
                         padding="none"
                         align="center"

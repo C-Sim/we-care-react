@@ -6,6 +6,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import { NotificationsTable } from "../components/organisms/NotificationsTable";
 import { PageTitle } from "../components/atoms/PageTitle";
+import { Error } from "../components/atoms/Error";
 
 import { AppContext } from "../context/AppProvider";
 import { RECEIVED_NOTIFICATIONS } from "../graphql/queries";
@@ -17,18 +18,25 @@ export const SupervisorNotificationsPage = () => {
 
   const mailType = "received";
 
-  const { data, loading } = useQuery(RECEIVED_NOTIFICATIONS, {
-    variables: { mailType, userId },
-  });
+  const // [getNotifications,
+    { data, loading, error } =
+      // ]
+      useQuery(RECEIVED_NOTIFICATIONS, {
+        variables: { mailType, userId },
+        onCompleted: (data) => {
+          console.log(data.getNotifications);
+        },
+      });
 
   console.log(data);
 
   return (
     <Box>
       <PageTitle title="Notifications" />
-      {/* call loading here using ifloading */}
       {loading && <LoadingButton loading variant="outlined" />};
-      {/* handle error if doesn't load */}
+      {error && (
+        <Error message="Failed to load notifications. Please try again." />
+      )}
       <NotificationsTable notifications={data} />
     </Box>
   );
