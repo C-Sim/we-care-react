@@ -12,7 +12,8 @@ import { RECEIVED_NOTIFICATIONS } from "../graphql/queries";
 
 export const SupervisorNotificationsPage = () => {
   const context = useContext(AppContext);
-  const userId = context.user.id;
+  const userId = "631dea0b4628b8e84097223c";
+  // context.user.id;
 
   const mailType = "received";
 
@@ -24,9 +25,9 @@ export const SupervisorNotificationsPage = () => {
     <Box>
       <PageTitle title="Notifications" />
       {/* call loading here using ifloading */}
-      {loading && <LoadingButton loading variant="outlined" />};
+      {/* {loading && <LoadingButton loading variant="outlined" />}; */}
       {/* handle error if doesn't load */}
-      <NotificationsTable data={data} />
+      <NotificationsTable notifications={data} />
     </Box>
   );
 };

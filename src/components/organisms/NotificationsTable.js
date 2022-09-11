@@ -3,7 +3,6 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import { AppContext } from "../../context/AppProvider";
 
-import { alpha } from "@mui/material/styles";
 import PropTypes from "prop-types";
 
 import Box from "@mui/material/Box";
@@ -15,16 +14,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import visuallyHidden from "@mui/utils/visuallyHidden";
 
 import Button from "@mui/material/Button";
@@ -54,11 +44,16 @@ const createData = (rowTitle, rowValue) => {
   return { rowTitle, rowValue };
 };
 
-// const ModalRows =  ()
+// const ModalRows = [
+//   createData("Patient:", { patientName }),
+//   createData("Submitted:", { notificationDate }),
+//   createData("Visit Date:", { visitDate }),
+//   createData("Visit Time:", { visitTime }),
+//   createData("Comment:", { notificationText }),
+// ];
 
 //template modal data for now
 const ModalRows = [
-  createData("Carer:", "Alice Bond"),
   createData("Patient:", "Charlie Dean"),
   createData("Submitted:", "18/08/22"),
   createData("Visit Date:", "18/08/22"),
@@ -71,17 +66,13 @@ const ModalRows = [
 
 // const modalData = items.map((notification) => ({
 //   notification: notification.id,
-//   notificationType: notification.notificationType ,
+//   appointmentId: notification.appointmentId || ["N/A"],
 //   accountType: notification.accountType,
-//   username: notification.senderId.firstName " " notification.senderId.lastName,
+//   patient: notification.appointmentId.patient || ["N/A"],
 //   notificationDate: notification.notificationDate,
 //   visitDate: notification.appointmentDate || ["N/A"],
 //   visitTime: notification.appointmentDate || ["N/A"],
 //   notificationText: notification.notificationText,
-//   isRead: notification.isRead,
-//   appointmentId: notification.appointmentId || ["N/A"],
-//   carer: notification.appointmentId.carer || ["N/A"],
-//   patient: notification.appointmentId.patient || ["N/A"],
 // }));
 
 const createNotification = (
@@ -109,7 +100,7 @@ const createNotification = (
 // create state for holding query data
 // const [savedNotifications, setNotifications] = useState([]);
 
-// const notificationData = items.map((notification) => ({
+// const notificationData = notifications.map((notification) => ({
 //   notificationId: notification.id,
 //   notificationType: notification.notificationType,
 //   accountType: notification.accountType,
@@ -122,8 +113,7 @@ const createNotification = (
 
 // setNotifications(notificationData);
 
-// createNotification for Each...
-// const xNotifications = notificationData.forEach((notification) => {
+// const Notifications = notificationData.forEach((notification) => {
 //   createNotification(
 //     { notificationId },
 //     { notificationType },
@@ -315,33 +305,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-// const EnhancedTableToolbar = (props) => {
-//   const { numSelected } = props;
-
-//   return (
-//     <Toolbar
-//       sx={{
-//         pl: { sm: 2 },
-//         pr: { xs: 1, sm: 1 },
-//         ...(numSelected > 0 && {
-//           bgcolor: (theme) =>
-//             alpha(
-//               theme.palette.primary.main,
-//               theme.palette.action.activatedOpacity
-//             ),
-//         }),
-//       }}
-//     >
-//       <Tooltip title="Filter list">
-//         <IconButton>
-//           <FilterListIcon />
-//           <Typography>Filter</Typography>
-//         </IconButton>
-//       </Tooltip>
-//     </Toolbar>
-//   );
-// };
-
 export const NotificationsTable = () => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("notificationDate");
@@ -381,15 +344,6 @@ export const NotificationsTable = () => {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
-  //   const handleSelectAllClick = (event) => {
-  //     if (event.target.checked) {
-  //       const newSelected = rows.map((n) => n.name);
-  //       setSelected(newSelected);
-  //       return;
-  //     }
-  //     setSelected([]);
-  //   };
 
   //   const handleClick = (event, id) => {
   //     const selectedIndex = selected.indexOf(id);
