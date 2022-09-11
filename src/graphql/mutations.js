@@ -22,20 +22,47 @@ export const LOGIN = gql`
         lastName
         email
         accountType
+        phoneNumber
+        postcode
+        address {
+          fullAddress
+        }
       }
     }
   }
 `;
 
-// //export const CreateCarePlan = gql`
-//   mutation ($notificationId: ID!, $userId: ID) {
-//     updateIsReadStatus(notificationId: $notificationId, userId: $userId) {
-//       id
-//       notificationDate
-//       senderId
-//       receiverId
-//       notificationText
-//       isRead
-//     }
-//   }
-// `;
+export const USER_PROFILE = gql`
+  mutation UpdateUserInfo($userId: ID!, $updateInput: UserInfoInput) {
+    updateUserInfo(userId: $userId, updateInput: $updateInput) {
+      success
+      user {
+        id
+        firstName
+        lastName
+        email
+        accountType
+        postcode
+        phoneNumber
+        address {
+          fullAddress
+        }
+      }
+    }
+  }
+`;
+
+export const PATIENT_PROFILE = gql`
+  mutation UpdatePatientInfo(
+    $userId: ID!
+    $updatePatientInput: PatientInfoInput
+  ) {
+    updatePatientInfo(
+      userId: $userId
+      updatePatientInput: $updatePatientInput
+    ) {
+      success
+      userId
+    }
+  }
+`;
