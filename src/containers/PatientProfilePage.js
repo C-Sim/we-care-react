@@ -45,7 +45,7 @@ import { ButtonBright } from "../components/atoms/ButtonBright";
 
 import { USER_ID } from "../graphql/queries";
 import { AppContext } from "../context/AppProvider";
-
+import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 
 import { UserInfoForm } from "../components/organisms/updateInfo/UserInfoForm";
@@ -55,6 +55,11 @@ export const PatientsProfilePage = () => {
   //get context
   const context = useContext(AppContext);
 
+  //navigate back
+  const navigate = useNavigate();
+  const handlePageChange = () => {
+    navigate("/patient-dashboard", { replace: true });
+  };
   //overall page display
   return (
     <Box
@@ -76,6 +81,11 @@ export const PatientsProfilePage = () => {
       }}
     >
       <Grid>
+        <ButtonBright
+          label="Back to Dashboard"
+          type="button"
+          onClick={handlePageChange}
+        />
         <Paper
           sx={{
             mt: 4,
