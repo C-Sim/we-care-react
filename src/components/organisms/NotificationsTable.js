@@ -259,7 +259,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, rowCount, onRequestSort } = props;
+  const { order, orderBy, onRequestSort } = props;
 
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -321,8 +321,6 @@ export const NotificationsTable = () => {
       console.error(err);
     }
   };
-
-  //   useQuery hook - here or on page??
 
   const handleClickOpen = () => {
     // handleUpdateRead(notificationId);
@@ -426,7 +424,6 @@ export const NotificationsTable = () => {
       </Dialog>
 
       <Paper sx={{ width: "100%", mb: 2 }}>
-        {/* <EnhancedTableToolbar /> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -437,11 +434,8 @@ export const NotificationsTable = () => {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={Notifications.length}
             />
             <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 Notifications.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(Notifications, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {

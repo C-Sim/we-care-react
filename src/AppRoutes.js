@@ -8,6 +8,8 @@ import { PatientDashboardPage } from "./containers/PatientDashboardPage";
 import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
 import { AssignmentsPage } from "./containers/AssignmentsPage";
+import { CarerAssignmentsPage } from "./containers/CarerAssignmentsPage";
+
 import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
@@ -55,6 +57,8 @@ export const AppRoutes = () => {
         <Route path="/care-overview" element={<CareOverviewPage />} />
         <Route path="/care-plan" element={<CarePlanPage />} />
         <Route path="/assignments" element={<AssignmentsPage />} />
+        <Route path="/carer-assignments" element={<CarerAssignmentsPage />} />
+
         <Route path="/patients" element={<PatientsPage />} />
       </>
 
