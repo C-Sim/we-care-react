@@ -74,3 +74,11 @@ export const PATIENT_PROFILE = gql`
     }
   }
 `;
+
+export const CREATE_APPOINTMENTS = gql`
+  mutation CreateAppointments($appointments: [AppointmentInput]!) {
+    createAppointments(appointments: $appointments) {
+      success
+    }
+  }
+`;
