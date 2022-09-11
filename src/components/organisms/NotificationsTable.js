@@ -27,6 +27,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { RECEIVED_NOTIFICATIONS } from "../../graphql/queries";
 import { UPDATE_READ } from "../../graphql/mutations";
+import { NotificationsNoneSharp } from "@mui/icons-material";
 
 const PaperComponent = (props) => {
   return (
@@ -422,6 +423,8 @@ export const NotificationsTable = () => {
           </DialogActions>
         </TableContainer>
       </Dialog>
+
+      {Notifications.length === 0 && "You have no notifications."}
 
       <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>

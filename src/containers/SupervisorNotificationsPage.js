@@ -21,11 +21,13 @@ export const SupervisorNotificationsPage = () => {
     variables: { mailType, userId },
   });
 
+  console.log(data);
+
   return (
     <Box>
       <PageTitle title="Notifications" />
       {/* call loading here using ifloading */}
-      {/* {loading && <LoadingButton loading variant="outlined" />}; */}
+      {loading && <LoadingButton loading variant="outlined" />};
       {/* handle error if doesn't load */}
       <NotificationsTable notifications={data} />
     </Box>
