@@ -4,7 +4,7 @@ import { useEffect, useState, useContext } from "react";
 
 import { useForm } from "react-hook-form";
 import { useRef } from "react";
-//import { useNavigate } from "react-router-dom";
+
 import { useLazyQuery, useMutation } from "@apollo/client";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -19,31 +19,8 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Divider from "@mui/material/Divider";
-//import Link from "@mui/material/Link";
-import FormHelperText from "@mui/material/FormHelperText";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Button from "@mui/material/Button";
-import SearchIcon from "@mui/icons-material/Search";
-import MenuItem from "@mui/material/MenuItem";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Select from "@mui/material/Select";
-import EditIcon from "@mui/icons-material/Edit";
-
-import { ProfileAvatar } from "../components/atoms/Avatar";
 
 import { ButtonBright } from "../components/atoms/ButtonBright";
-
-import { USER_ID } from "../graphql/queries";
 import { AppContext } from "../context/AppProvider";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
@@ -101,7 +78,7 @@ export const PatientsProfilePage = () => {
           {/* form */}
 
           <Typography component="h1" variant="h4" align="center">
-            My Account details:
+            MY USER DETAILS
           </Typography>
           <Divider />
           <UserInfoForm />
@@ -122,7 +99,7 @@ export const PatientsProfilePage = () => {
           {/* form */}
 
           <Typography component="h1" variant="h4" align="center">
-            My patient details:
+            MY CARE PREFERENCES
           </Typography>
           <Divider />
           <PatientInfoForm />
