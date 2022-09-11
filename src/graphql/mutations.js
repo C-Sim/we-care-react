@@ -53,8 +53,14 @@ export const USER_PROFILE = gql`
 `;
 
 export const PATIENT_PROFILE = gql`
-  mutation UpdatePatientInfo($userId: ID!, $updateInput: PatientInfoInput) {
-    updatePatientInfo(userId: $userId, updateInput: $updateInput) {
+  mutation UpdatePatientInfo(
+    $userId: ID!
+    $updatePatientInput: PatientInfoInput
+  ) {
+    updatePatientInfo(
+      userId: $userId
+      updatePatientInput: $updatePatientInput
+    ) {
       success
       userId
     }

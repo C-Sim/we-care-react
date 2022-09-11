@@ -48,13 +48,15 @@ import { AppContext } from "../../../context/AppProvider";
 import { LoadingButton } from "@mui/lab";
 
 export const UserInfoForm = () => {
+  //state for update success
+  const [userSuccess, setUserSuccess] = useState(false);
   //mutations
   const [updateUserInfo, { data, loading, error }] = useMutation(USER_PROFILE, {
     onCompleted: (data) => {
       console.log(data.updateUserInfo.user);
       context.setUser(data.updateUserInfo.user);
       localStorage.setItem("user", JSON.stringify(data.updateUserInfo.user));
-      //add success state change for success message
+      setUserSuccess(true);
     },
   });
   //get context
@@ -271,6 +273,16 @@ export const UserInfoForm = () => {
               align="center"
             >
               Failed to update user info. Please try again.
+            </Typography>
+          )}
+          {userSuccess && (
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: "green" }}
+              align="center"
+            >
+              User details successfully updated!
             </Typography>
           )}
         </Stack>
