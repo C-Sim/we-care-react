@@ -29,7 +29,6 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { USER_PROFILE } from "../../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../../graphql/queries";
-
 import { AppContext } from "../../../context/AppProvider";
 
 export const UserInfoForm = () => {
@@ -169,12 +168,13 @@ export const UserInfoForm = () => {
         spacing={4}
         onSubmit={handleSubmit(handleUserUpdate)}
       >
-        <Typography component="h1" variant="button" align="left">
-          You only need to make changes in the fields you want to update.
+        <Typography component="h6" variant="h6" align="center">
+          You only need to make changes in the fields you would like to update
         </Typography>
-        <Stack spacing={2}>
-          <FormControl>
+        <Stack spacing={4}>
+          <FormControl pb={40}>
             <TextField
+              pb={80}
               id="email"
               name="email"
               value={emailUpdate}
@@ -241,14 +241,14 @@ export const UserInfoForm = () => {
             )}
           </FormControl>
           {selectedAddress && (
-            <Typography component="h1" variant="button" align="left">
+            <Typography component="h1" variant="button" align="center">
               {selectedAddress}
             </Typography>
           )}
         </Stack>
-        <Stack spacing={2}>
+        <Stack spacing={4}>
           <LoadingButton variant="contained" type="submit" loading={loading}>
-            Update my info
+            Update my personal details
           </LoadingButton>
           {error && (
             <Typography
