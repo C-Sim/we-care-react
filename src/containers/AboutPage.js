@@ -26,7 +26,7 @@ import { ImageUploader } from "../components/molecules/ImageUploader";
 
 import logo from "../components/atoms/images/WeCare-dark.png";
 import { ModalForCarer } from "../components/molecules/ModalForCarer";
-import { ModalForSupervisor } from "../components/molecules/modalForSupervisor";
+import { ModalForSupervisor } from "../components/molecules/ModalForSupervisor";
 
 export const AboutPage = () => {
   const [imageUrl, setImageUrl] = useState();

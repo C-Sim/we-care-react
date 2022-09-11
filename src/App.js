@@ -46,7 +46,7 @@ export const App = () => {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <AppProvider>
-          <Stack sx={{ height: "100vh" }} spacing={0}>
+          <Stack sx={{ minHeight: "100vh" }} spacing={0}>
             <NavBar navItems={navItems} />
             <AppRoutes />
             <Footer />
