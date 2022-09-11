@@ -27,7 +27,6 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { RECEIVED_NOTIFICATIONS } from "../../graphql/queries";
 import { UPDATE_READ } from "../../graphql/mutations";
-import { NotificationsNoneSharp } from "@mui/icons-material";
 
 const PaperComponent = (props) => {
   return (
