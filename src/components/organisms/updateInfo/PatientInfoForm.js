@@ -1,8 +1,8 @@
-import { useEffect, useState, useContext } from "react";
-
+import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
-import { useLazyQuery, useMutation } from "@apollo/client";
+
+import { useMutation } from "@apollo/client";
+
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
@@ -12,16 +12,16 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Select from "@mui/material/Select";
+import { LoadingButton } from "@mui/lab";
 
 import { PATIENT_PROFILE } from "../../../graphql/mutations";
-
 import { AppContext } from "../../../context/AppProvider";
-import { LoadingButton } from "@mui/lab";
 
 export const PatientInfoForm = () => {
   //state for update success
   const [patientSuccess, setPatientSuccess] = useState(false);
   const [patientMessage, setPatientMessage] = useState(false);
+
   //mutations
   const [updatePatientInfo, { data, loading, error }] = useMutation(
     PATIENT_PROFILE,
@@ -109,85 +109,85 @@ export const PatientInfoForm = () => {
       sx={{ p: 3 }}
       spacing={4}
       onSubmit={handleSubmit(handlePatientUpdate)}
+      spacing={2}
     >
-      <Stack spacing={2}>
-        <Typography variant="caption" align="left">
-          Days Care Required
-        </Typography>
+      <Typography variant="caption" align="left">
+        Days you require care
+      </Typography>
 
-        {/* check boxes */}
-        <FormGroup
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space - between",
-          }}
+      {/* check boxes */}
+      <FormGroup
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space - between",
+        }}
+      >
+        <FormControlLabel
+          value="monday"
+          control={<Checkbox />}
+          label="Mon"
+          onChange={(e) => handleDayValue(e)}
+        />
+        <FormControlLabel
+          value="tuesday"
+          control={<Checkbox />}
+          label="Tue"
+          onChange={(e) => handleDayValue(e)}
+        />
+        <FormControlLabel
+          value="wednesday"
+          control={<Checkbox />}
+          label="Wed"
+          onChange={(e) => handleDayValue(e)}
+        />
+        <FormControlLabel
+          value="thursday"
+          control={<Checkbox />}
+          label="Thu"
+          onChange={(e) => handleDayValue(e)}
+        />
+        <FormControlLabel
+          value="friday"
+          control={<Checkbox />}
+          label="Fri"
+          onChange={(e) => handleDayValue(e)}
+        />
+        <FormControlLabel
+          value="saturday"
+          control={<Checkbox />}
+          label="Sat"
+          onChange={(e) => handleDayValue(e)}
+        />
+        <FormControlLabel
+          value="sunday"
+          control={<Checkbox />}
+          label="Sun"
+          onChange={(e) => handleDayValue(e)}
+        />
+      </FormGroup>
+      {/* preferred gender drop down */}
+      <Typography variant="caption" align="left">
+        Your Preferred Gender of Carer
+      </Typography>
+      <FormControl fullWidth>
+        <InputLabel id="gendercare">Gender</InputLabel>
+        <Select
+          labelId="gendercare"
+          id="gendercare"
+          value={genderCare}
+          label="Gender"
+          onChange={handleChangeGenderCare}
         >
-          <FormControlLabel
-            value="monday"
-            control={<Checkbox />}
-            label="Mon"
-            onChange={(e) => handleDayValue(e)}
-          />
-          <FormControlLabel
-            value="tuesday"
-            control={<Checkbox />}
-            label="Tue"
-            onChange={(e) => handleDayValue(e)}
-          />
-          <FormControlLabel
-            value="wednesday"
-            control={<Checkbox />}
-            label="Wed"
-            onChange={(e) => handleDayValue(e)}
-          />
-          <FormControlLabel
-            value="thursday"
-            control={<Checkbox />}
-            label="Thu"
-            onChange={(e) => handleDayValue(e)}
-          />
-          <FormControlLabel
-            value="friday"
-            control={<Checkbox />}
-            label="Fri"
-            onChange={(e) => handleDayValue(e)}
-          />
-          <FormControlLabel
-            value="saturday"
-            control={<Checkbox />}
-            label="Sat"
-            onChange={(e) => handleDayValue(e)}
-          />
-          <FormControlLabel
-            value="sunday"
-            control={<Checkbox />}
-            label="Sun"
-            onChange={(e) => handleDayValue(e)}
-          />
-        </FormGroup>
-        {/* preferred gender drop down */}
-        <Typography variant="caption" align="left">
-          Preferred Carer Gender
-        </Typography>
-        <FormControl fullWidth>
-          <InputLabel id="gendercare">Gender</InputLabel>
-          <Select
-            labelId="gendercare"
-            id="gendercare"
-            value={genderCare}
-            label="Gender"
-            onChange={handleChangeGenderCare}
-          >
-            <MenuItem value="none">None</MenuItem>
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-          </Select>
-        </FormControl>
-      </Stack>
-      <Stack spacing={2}>
+          <MenuItem value="none">None</MenuItem>
+          <MenuItem value="male">Male</MenuItem>
+          <MenuItem value="female">Female</MenuItem>
+        </Select>
+      </FormControl>
+
+      <Stack spacing={4}>
         <LoadingButton variant="contained" type="submit" loading={loading}>
-          Update care preferences
+          Update your care preferences
         </LoadingButton>
         {error && (
           <Typography

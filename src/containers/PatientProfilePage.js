@@ -34,9 +34,9 @@ export const PatientsProfilePage = () => {
 
   //navigate back
   const navigate = useNavigate();
-  const handlePageChange = () => {
-    navigate("/patient-dashboard", { replace: true });
-  };
+  // const handlePageChange = () => {
+  //   navigate("/patient-dashboard", { replace: true });
+  // };
   //overall page display
   return (
     <Box
@@ -57,55 +57,32 @@ export const PatientsProfilePage = () => {
       )`,
       }}
     >
-      <Grid mt={5}>
-        {/* <ButtonBright
-          label="Back to Dashboard"
-          type="button"
-          onClick={handlePageChange}
-        /> */}
-        <Paper
-          sx={{
-            mt: 4,
-            mb: 4,
-            p: 3,
-            //minWidth: isMobile ? "90%" : "80%",
-            color: "#3f3d56",
-            backgroundColor: "#00b0ff2e",
-            borderRadius: "25px",
-          }}
-          elevation={6}
-        >
-          {/* form */}
+      <Paper
+        sx={{
+          mt: 4,
+          mb: 4,
+          p: 3,
+          //minWidth: isMobile ? "90%" : "80%",
+          color: "#3f3d56",
+          backgroundColor: "#00b0ff2e",
+          borderRadius: "25px",
+        }}
+        elevation={6}
+      >
+        {/* form */}
 
-          <Typography component="h1" variant="h4" align="center">
-            MY USER DETAILS
-          </Typography>
-          <Divider />
-          <UserInfoForm />
-          <Divider />
-        </Paper>
-        <Paper
-          sx={{
-            mt: 4,
-            mb: 4,
-            p: 3,
-            //minWidth: isMobile ? "90%" : "80%",
-            color: "#3f3d56",
-            backgroundColor: "#00b0ff2e",
-            borderRadius: "25px",
-          }}
-          elevation={6}
-        >
-          {/* form */}
+        <Typography component="h4" variant="h4" align="center">
+          My Personal Details
+        </Typography>
+        <Divider />
+        <UserInfoForm />
 
-          <Typography component="h1" variant="h4" align="center">
-            MY CARE PREFERENCES
-          </Typography>
-          <Divider />
-          <PatientInfoForm />
-          <Divider />
-        </Paper>
-      </Grid>
+        <Typography component="h4" variant="h4" align="center" mt={3}>
+          My Care Preferences
+        </Typography>
+        <Divider />
+        <PatientInfoForm />
+      </Paper>
     </Box>
   );
 };
