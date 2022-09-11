@@ -204,8 +204,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -301,7 +299,7 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
 };
 
-export const NotificationsTable = () => {
+export const NotificationsTable = ({ notifications }) => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("notificationDate");
   const [page, setPage] = useState(0);
@@ -352,7 +350,6 @@ export const NotificationsTable = () => {
 
   const handleDenial = () => {};
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Notifications.length) : 0;
 

@@ -18,15 +18,12 @@ export const SupervisorNotificationsPage = () => {
 
   const mailType = "received";
 
-  const // [getNotifications,
-    { data, loading, error } =
-      // ]
-      useQuery(RECEIVED_NOTIFICATIONS, {
-        variables: { mailType, userId },
-        onCompleted: (data) => {
-          console.log(data.getNotifications);
-        },
-      });
+  const { data, loading, error } = useQuery(RECEIVED_NOTIFICATIONS, {
+    variables: { mailType, userId },
+    onCompleted: (data) => {
+      console.log(data.getNotifications);
+    },
+  });
 
   console.log(data);
 
@@ -37,7 +34,7 @@ export const SupervisorNotificationsPage = () => {
       {error && (
         <Error message="Failed to load notifications. Please try again." />
       )}
-      <NotificationsTable notifications={data} />
+      {data && <NotificationsTable notifications={data} />}
     </Box>
   );
 };
