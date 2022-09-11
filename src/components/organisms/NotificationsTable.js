@@ -22,7 +22,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Draggable from "react-draggable";
-import TextField from "@mui/material/TextField";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
@@ -44,8 +43,19 @@ const createData = (rowTitle, rowValue) => {
   return { rowTitle, rowValue };
 };
 
+// const modalData = {
+//   notification: notification.id,
+//   appointmentId: notification.appointmentId || ["N/A"],
+//   accountType: notification.accountType,
+//   patient: notification.appointmentId.patient || ["N/A"],
+//   notificationDate: notification.notificationDate,
+//   visitDate: notification.appointmentDate || ["N/A"],
+//   visitTime: notification.appointmentDate || ["N/A"],
+//   notificationText: notification.notificationText || ["N/A"],
+// };
+
 // const ModalRows = [
-//   createData("Patient:", { patientName }),
+//   createData("Patient:", { patient }),
 //   createData("Submitted:", { notificationDate }),
 //   createData("Visit Date:", { visitDate }),
 //   createData("Visit Time:", { visitTime }),
@@ -63,17 +73,6 @@ const ModalRows = [
     "It will be difficult to get across town from my last appointment in time"
   ),
 ];
-
-// const modalData = items.map((notification) => ({
-//   notification: notification.id,
-//   appointmentId: notification.appointmentId || ["N/A"],
-//   accountType: notification.accountType,
-//   patient: notification.appointmentId.patient || ["N/A"],
-//   notificationDate: notification.notificationDate,
-//   visitDate: notification.appointmentDate || ["N/A"],
-//   visitTime: notification.appointmentDate || ["N/A"],
-//   notificationText: notification.notificationText,
-// }));
 
 const createNotification = (
   notificationId,
@@ -297,18 +296,14 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 
 export const NotificationsTable = () => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("notificationDate");
-  //   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
@@ -345,26 +340,6 @@ export const NotificationsTable = () => {
     setOrderBy(property);
   };
 
-  //   const handleClick = (event, id) => {
-  //     const selectedIndex = selected.indexOf(id);
-  //     let newSelected = [];
-
-  //     if (selectedIndex === -1) {
-  //       newSelected = newSelected.concat(selected, id);
-  //     } else if (selectedIndex === 0) {
-  //       newSelected = newSelected.concat(selected.slice(1));
-  //     } else if (selectedIndex === selected.length - 1) {
-  //       newSelected = newSelected.concat(selected.slice(0, -1));
-  //     } else if (selectedIndex > 0) {
-  //       newSelected = newSelected.concat(
-  //         selected.slice(0, selectedIndex),
-  //         selected.slice(selectedIndex + 1)
-  //       );
-  //     }
-
-  //     setSelected(newSelected);
-  //   };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -377,8 +352,6 @@ export const NotificationsTable = () => {
   const handleApproval = () => {};
 
   const handleDenial = () => {};
-
-  //   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -420,6 +393,7 @@ export const NotificationsTable = () => {
             </TableBody>
           </Table>
 
+          {/* {notification.accountType === "supervisor" && ( */}
           <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
             {" "}
             <Button
@@ -441,23 +415,7 @@ export const NotificationsTable = () => {
               Deny
             </Button>
           </Box>
-
-          {/* Should only render when 'deny' is clicked */}
-          {/* <Box
-            component="form"
-            sx={{
-              "& > :not(style)": { m: 1, width: "97%" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            {" "}
-            <TextField
-              id="filled-basic"
-              label="Enter reason"
-              variant="filled"
-            />
-          </Box> */}
+          {/* )} */}
 
           <DialogActions>
             <Button autoFocus onClick={handleClose} variant="contained">
@@ -487,20 +445,17 @@ export const NotificationsTable = () => {
               {stableSort(Notifications, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  //   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
                       onClick={(event) => handleClickOpen(event, row.id)}
-                      //   aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
                       sx={{
                         backgroundColor: isReadStatus ? "#eef5dbff" : "white",
                       }}
-                      //   selected={isItemSelected}
                     >
                       <TableCell
                         component="th"
