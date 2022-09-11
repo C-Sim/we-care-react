@@ -1,18 +1,5 @@
 import { gql } from "@apollo/client";
 
-export const USERS = gql`
-  query Users {
-    users {
-      id
-      firstName
-      lastName
-      email
-      phoneNumber
-      accountType
-    }
-  }
-`;
-
 export const USER_ID = gql`
   query UserInfo($userId: ID!) {
     userInfo(userId: $userId) {
@@ -22,6 +9,10 @@ export const USER_ID = gql`
       email
       phoneNumber
       accountType
+      postcode
+      address {
+        fullAddress
+      }
     }
   }
 `;
