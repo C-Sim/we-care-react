@@ -28,7 +28,6 @@ import { LoadingButton } from "@mui/lab";
 
 import { UserInfoForm } from "../components/organisms/updateInfo/UserInfoForm";
 
-
 export const CarerProfilePage = () => {
   //get context
   const context = useContext(AppContext);
@@ -84,6 +83,26 @@ export const CarerProfilePage = () => {
           <Divider />
           <UserInfoForm />
           <Divider />
+        </Paper>
+        <Paper
+          sx={{
+            mt: 4,
+            mb: 4,
+            p: 3,
+            //minWidth: isMobile ? "90%" : "80%",
+            color: "#3f3d56",
+            backgroundColor: "#00b0ff2e",
+            borderRadius: "25px",
+          }}
+          elevation={6}
+        >
+          <Typography component="h1" variant="h4" align="center">
+            MY SHIFT DETAILS
+          </Typography>
+          <Divider />
+          <Typography component="h1" variant="button" align="center">
+            To update your shift pattern, please contact your supervisor.
+          </Typography>
         </Paper>
       </Grid>
     </Box>
