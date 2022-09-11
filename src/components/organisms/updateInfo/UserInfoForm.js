@@ -29,7 +29,6 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { USER_PROFILE } from "../../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../../graphql/queries";
-
 import { AppContext } from "../../../context/AppProvider";
 
 export const UserInfoForm = () => {

@@ -109,7 +109,6 @@ export const PatientInfoForm = () => {
       sx={{ p: 3 }}
       spacing={4}
       onSubmit={handleSubmit(handlePatientUpdate)}
-      spacing={2}
     >
       <Typography variant="caption" align="left">
         Days you require care
@@ -178,6 +177,7 @@ export const PatientInfoForm = () => {
           value={genderCare}
           label="Gender"
           onChange={handleChangeGenderCare}
+          sx={{ backgroundColor: "#FFFFFF" }}
         >
           <MenuItem value="none">None</MenuItem>
           <MenuItem value="male">Male</MenuItem>
