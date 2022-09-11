@@ -15,9 +15,11 @@ import InputDisabled from "../atoms/InputDisabled";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
-//import { createCarePlan } from "../../graphql/mutations";
+import { CREATE_CARE_PLAN } from "../../graphql/mutations";
 
 export const CarePlanForm = ({ isMobile }) => {
+  [createCarePlan, {}] = useMutation(CREATE_CARE_PLAN);
+
   //care plan check boxes
   const [AddInput, setInputId] = useState([]);
   // handle disability option

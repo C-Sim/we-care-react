@@ -66,3 +66,12 @@ export const PATIENT_PROFILE = gql`
     }
   }
 `;
+
+export const CREATE_CARE_PLAN = gql`
+  mutation CreateCarePlan($userId: ID!, $carePlanInput: CarePlanInput!) {
+    createCarePlan(userId: $userId, carePlanInput: $carePlanInput) {
+      success
+      id
+    }
+  }
+`;
