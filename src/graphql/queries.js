@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const USER_ID = gql`
-  query UserInfo($userId: ID!) {
-    userInfo(userId: $userId) {
+  query UserInfo {
+    userInfo {
       id
       firstName
       lastName
@@ -18,8 +18,8 @@ export const USER_ID = gql`
 `;
 
 export const CARER_DASHBOARD = gql`
-  query CarerDashboard($userId: ID!) {
-    carerDashboard(userId: $userId) {
+  query CarerDashboard {
+    carerDashboard {
       carer {
         userId
         postcode
@@ -48,8 +48,8 @@ export const CARER_DASHBOARD = gql`
 `;
 
 export const PATIENT_DASHBOARD = gql`
-  query PatientDashboard($userId: ID!) {
-    patientDashboard(userId: $userId) {
+  query PatientDashboard {
+    patientDashboard {
       patient {
         userId
         postcode

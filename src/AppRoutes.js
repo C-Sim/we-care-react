@@ -23,7 +23,7 @@ import { PatientsProfilePage } from "./containers/PatientProfilePage";
 import { useAuth } from "./context/AppProvider";
 
 export const AppRoutes = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
 
   return (
     <Routes>
@@ -36,14 +36,15 @@ export const AppRoutes = () => {
         </>
       )}
 
-      {/* {isLoggedIn && ( */}
+      {isLoggedIn && user.accountType === "supervisor" (
       <>
-        <Route path="/carer-dashboard" element={<CarerDashboardPage />} />
-        <Route path="/patient-dashboard" element={<PatientDashboardPage />} />
-        <Route
+              <Route
           path="/supervisor-dashboard"
           element={<SupervisorDashboardPage />}
         />
+
+        <Route path="/carer-dashboard" element={<CarerDashboardPage />} />
+        <Route path="/patient-dashboard" element={<PatientDashboardPage />} />
         <Route path="/carer-profile" element={<CarerProfilePage />} />
         <Route path="/patient-profile" element={<PatientsProfilePage />} />
         <Route
@@ -71,7 +72,7 @@ export const AppRoutes = () => {
 
       {/* Does logout button actually log the user out or just reroute them? */}
       <Route path="/" element={<LandingPage />} />
-      {/* )} */}
+      
     </Routes>
   );
 };
