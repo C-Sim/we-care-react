@@ -2,18 +2,18 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { format } from "date-fns";
+import { format, addHours, parseISO } from "date-fns";
 import { Dropdown } from "../components/molecules/Dropdown";
 import { CheckList } from "../components/molecules/CheckList";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { DatePicker } from "../components/atoms/DatePicker";
 import { ButtonDark } from "../components/atoms/ButtonDark";
-import { Alert } from "@mui/material";
+import { Alert, Paper, Typography, useMediaQuery, Box } from "@mui/material";
 import { ButtonDisabled } from "../components/atoms/ButtonDisabled";
 import { AVAILABLE_CARERS } from "../graphql/queries";
 import { AVAILABLE_PATIENTS } from "../graphql/queries";
 import { CREATE_APPOINTMENTS } from "../graphql/mutations";
-import { addHours } from "date-fns";
+import { DraftTimeline } from "../components/molecules/DraftTimeline";
 
 export const SupervisorAssignPage = () => {
   //state variables needed for overall page
@@ -31,6 +31,7 @@ export const SupervisorAssignPage = () => {
   const [patientLock, setPatientLock] = useState(false);
   const [patientList, setPatientList] = useState();
   const [simulatedAppointments, setSimulatedAppointments] = useState();
+  const isMobile = useMediaQuery("(max-width:900px)");
   //mutations
   const [
     getAvailableCarers,
@@ -93,7 +94,6 @@ export const SupervisorAssignPage = () => {
   const saveSelectedDate = () => {
     setDateLock(true);
     setSelectedDate(format(new Date(dateValue), "yyyy-MM-dd"));
-    console.log(selectedDate);
     getAvailableCarers({
       variables: {
         selectedDate: dateValue,
@@ -116,9 +116,6 @@ export const SupervisorAssignPage = () => {
     setCarerId(event.target.value);
   };
 
-  console.log("carerId :", carerId);
-  console.log("carerValue :", carerValue);
-  console.log("selected carer:", selectedCarer);
   //then locking the carer and retrieving the corresponding available patients
   const saveSelectedCarer = () => {
     setCarerLock(true);
@@ -156,9 +153,6 @@ export const SupervisorAssignPage = () => {
     }
   };
 
-  console.log("patient id list: ", patient);
-  console.log("patient names:", selectedPatients);
-
   //then locking the patients for the next step of the assigning process
   const saveSelectedPatients = () => {
     setPatientLock(true);
@@ -168,35 +162,34 @@ export const SupervisorAssignPage = () => {
     setPatientList(fullPatient);
   };
 
-  console.log("patients list:", patientList);
   //run simulation with selected data (dateValue, carerId, patient)
-
-  //function to be developed > need to retrieve postcode lat/lon or address so we can calculate the distance between each appointment being setup
+  //this version does not have distance matrix api info for distance between calls
   const runSimulation = () => {
-    console.log("running simulation...");
-    //pass the 3 info needed
+    //set the info common to all appointments
     const carerId = selectedCarer.carerId;
     const status = "upcoming";
-    let appointmentDate = new Date(selectedDate).setUTCHours(8, 0, 0);
 
-    //map over patients array to create appointments
-    const draftData = patientList.map((i) => {
-      const patientId = i.value;
-      const title = `Visit to ${i.label} by ${selectedCarer.carerName}`;
-      let start = appointmentDate;
-      let end = addHours(start, 1);
+    const draftData = [];
+    //loop over patients list
+    for (let i = 0; i < patientList.length; i += 1) {
+      const patient = patientList[i];
+      const patientId = patient.userId;
+      const title = `Visit to ${patient.username} by ${selectedCarer.carerName}`;
+      const hour = 8 + i * 2;
+      const appointmentDate = new Date(selectedDate).setUTCHours(hour, 0, 0);
+      const start = appointmentDate;
+      const end = addHours(start, 1);
       const appointment = {
         patientId,
         carerId,
         status,
-        appointmentDate,
-        start,
-        end,
+        appointmentDate: format(appointmentDate, "yyyy-MM-dd'T'HH:mm:ss"),
+        start: format(start, "yyyy-MM-dd'T'HH:mm:ss"),
+        end: format(end, "yyyy-MM-dd'T'HH:mm:ss"),
         title,
       };
-      addHours(appointmentDate, 2);
-      return appointment;
-    });
+      draftData.push(appointment);
+    }
 
     //result will be an array of objects to be used as appointmentInput
     setSimulatedAppointments(draftData);
@@ -206,6 +199,8 @@ export const SupervisorAssignPage = () => {
   const assignAppointments = () => {
     console.log("creating and assigning appointments in db...");
     //useMutation
+    debugger;
+    console.log(simulatedAppointments);
     createAppointments({
       variables: {
         appointments: simulatedAppointments,
@@ -213,12 +208,30 @@ export const SupervisorAssignPage = () => {
     });
   };
 
+  console.log(assignSuccess);
+
   return (
-    <div>
-      <h1>Welcome to the Supervisor assign page</h1>
-      <div>
-        <h1>A div for the date</h1>
-        <DatePicker handleDateChange={handleDateChange} />
+    <Box
+      sx={{
+        backgroundColor: "rgba(97, 218, 251, 0.2)",
+      }}
+    >
+      <Typography
+        component="h1"
+        variant="h4"
+        align="center"
+        sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }}
+      >
+        Assignment page
+      </Typography>
+      <Paper
+        variant="outlined"
+        sx={{ p: 3, mt: 2, minWidth: isMobile ? "90%" : "400px" }}
+      >
+        <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+          Step 1 - Pick the date to assign appointments on
+        </Typography>
+        {!dateLock && <DatePicker handleDateChange={handleDateChange} />}
         {!dateLock && (
           <ButtonDark
             label="Use this date"
@@ -227,44 +240,71 @@ export const SupervisorAssignPage = () => {
           />
         )}
         {dateLock && <ButtonDisabled label="Date saved" type="button" />}
-        <h1>Selected date: {selectedDate}</h1>
-      </div>
-      <div>
-        <h1>A div for carers selection</h1>
-
-        <Dropdown
-          label="Select Carer"
-          helperText=""
-          defaultSelection=""
-          options={formatForSelect(carersArray)}
-          handleSelect={handleCarerSelect}
-        />
-
-        {!carerLock && (
-          <ButtonDark
-            label="Use this carer"
-            type="button"
-            onClick={saveSelectedCarer}
-          />
+        {dateLock && (
+          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+            Selected date: {selectedDate}
+          </Typography>
         )}
+      </Paper>
+      <Paper
+        variant="outlined"
+        sx={{ p: 3, mt: 1, minWidth: isMobile ? "90%" : "400px" }}
+      >
+        <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+          Step 2 - Pick a carer available on that date from the list
+        </Typography>
+
+        {dateLock && !carerLock && (
+          <>
+            <Dropdown
+              label="Select Carer"
+              helperText=""
+              defaultSelection=""
+              options={formatForSelect(carersArray)}
+              handleSelect={handleCarerSelect}
+            />
+            <ButtonDark
+              label="Use this carer"
+              type="button"
+              onClick={saveSelectedCarer}
+            />
+          </>
+        )}
+
         {carerLock && <ButtonDisabled label="Carer saved" type="button" />}
-        {selectedCarer && <h1>Selected carer: {selectedCarer.carerName}</h1>}
-      </div>
-      <div>
-        <h1>A div for patients selection</h1>
-        <CheckList
-          array={formatForSelect(patientsArray)}
-          handleSelect={handlePatientSelect}
-        />
-        <ButtonDark
-          label="Use these patients"
-          type="button"
-          disabled={patientLock}
-          onClick={saveSelectedPatients}
-        />
+        {selectedCarer && (
+          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+            Selected carer: {selectedCarer.carerName}
+          </Typography>
+        )}
+      </Paper>
+      <Paper
+        variant="outlined"
+        sx={{ p: 3, mt: 1, minWidth: isMobile ? "90%" : "400px" }}
+      >
+        <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+          Step 3 - Pick the patients you would like to assign to that carer
+        </Typography>
+        {carerLock && !patientLock && (
+          <>
+            <CheckList
+              array={formatForSelect(patientsArray)}
+              handleSelect={handlePatientSelect}
+            />
+            <ButtonDark
+              label="Use these patients"
+              type="button"
+              disabled={patientLock}
+              onClick={saveSelectedPatients}
+            />
+          </>
+        )}
+        {patientLock && <ButtonDisabled label="Patients saved" type="button" />}
         {patientLock && (
           <div>
-            <h1>Selected patients:</h1>
+            <Typography component="h1" variant="h5" align="left" sx={{ mb: 2 }}>
+              Selected patients:
+            </Typography>
             <ul>
               {selectedPatients.map((result) => {
                 return (
@@ -276,34 +316,76 @@ export const SupervisorAssignPage = () => {
             </ul>
           </div>
         )}
-      </div>
+      </Paper>
+      <Paper
+        variant="outlined"
+        sx={{ p: 3, mt: 1, minWidth: isMobile ? "90%" : "400px" }}
+      >
+        <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+          Step 4 - View the appointments based on your selections
+        </Typography>
+        {patientLock && !simulatedAppointments && (
+          <ButtonDark
+            label="Build timeline"
+            type="button"
+            onClick={runSimulation}
+            sx={{ m: 4 }}
+          />
+        )}
+        {simulatedAppointments && (
+          <DraftTimeline
+            date={selectedDate}
+            appointments={simulatedAppointments}
+          />
+        )}
+      </Paper>
+      {simulatedAppointments && (
+        <Paper
+          variant="outlined"
+          sx={{ p: 3, mt: 1, minWidth: isMobile ? "90%" : "400px" }}
+        >
+          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+            If you're satisfied with this selection, click the button below to
+            assign the appointments
+          </Typography>
+          <ButtonDark
+            label="Save Appointments"
+            type="button"
+            onClick={assignAppointments}
+          />
+        </Paper>
+      )}
       <div>
-        <h1>A button</h1>
-        <ButtonDark
-          label="Build timeline"
-          type="button"
-          onClick={runSimulation}
-        />
-      </div>
-      <div>
-        <h1>A div for the potential timeline</h1>
-      </div>
-      <div>
-        <h1>A button to create the appointments</h1>
-        <ButtonDark
-          label="Save Appointments"
-          type="button"
-          onClick={assignAppointments}
-        />
-      </div>
-      <div>
-        <h1>A div for a success message</h1>
         {assignSuccess && (
           <Alert severity="success">
             The appointments have been created successfully!
           </Alert>
         )}
+        {createError && (
+          <Alert severity="warning">
+            The system failed to assign appointments. Please try again or
+            contact your administrator.
+          </Alert>
+        )}
       </div>
-    </div>
+      <div>
+        <h1>
+          Some text to have some space so the button is not covered by the
+          footer
+        </h1>
+        <h1>
+          Some text to have some space so the button is not covered by the
+          footer
+        </h1>
+        <h1>
+          Some text to have some space so the button is not covered by the
+          footer
+        </h1>
+        <h1>
+          Some text to have some space so the button is not covered by the
+          footer
+        </h1>
+      </div>
+    </Box>
   );
 };
