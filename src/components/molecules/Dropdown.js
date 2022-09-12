@@ -12,14 +12,15 @@ export const Dropdown = ({
   defaultSelection,
   options,
   required,
+  handleSelect,
 }) => {
-  const [value, setValue] = useState(defaultSelection);
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-
   const isMobile = useMediaQuery("(max-width:600px)");
+  const [displayValue, setDisplayValue] = useState(defaultSelection);
+
+  const handleChange = (e) => {
+    setDisplayValue(e.target.value);
+    handleSelect(e);
+  };
 
   return (
     <div>
@@ -28,12 +29,14 @@ export const Dropdown = ({
         <Select
           labelId="demo-simple-select-required-label"
           id="demo-simple-select-required"
-          value={value}
+          value={displayValue}
           label={label}
           onChange={handleChange}
         >
           {options.map((option) => (
-            <MenuItem value={option.value}>{option.label}</MenuItem>
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
           ))}
         </Select>
         <FormHelperText>{helperText}</FormHelperText>
