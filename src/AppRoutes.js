@@ -22,7 +22,7 @@ import { useAuth } from "./context/AppProvider";
 
 export const AppRoutes = () => {
   const { isLoggedIn } = useAuth();
-
+  console.log(isLoggedIn);
   return (
     <Routes>
       {!isLoggedIn && (
@@ -34,37 +34,33 @@ export const AppRoutes = () => {
         </>
       )}
 
-      {/* {isLoggedIn && ( */}
-      <>
-        <Route path="/carer-dashboard" element={<CarerDashboardPage />} />
-        <Route path="/patient-dashboard" element={<PatientDashboardPage />} />
-        <Route
-          path="/supervisor-dashboard"
-          element={<SupervisorDashboardPage />}
-        />
-        <Route path="/carer-profile" element={<CarerProfilePage />} />
-        <Route path="/patient-profile" element={<PatientsProfilePage />} />
-        <Route
-          path="/carer-notifications"
-          element={<CarerNotificationsPage />}
-        />
-        <Route
-          path="/supervisor-notifications"
-          element={<SupervisorNotificationsPage />}
-        />
-        <Route
-          path="/supervisor-create-carer"
-          element={<SupervisorCreateCarerPage />}
-        />
+      {isLoggedIn && (
+        <>
+          <Route path="/carer-dashboard" element={<CarerDashboardPage />} />
+          <Route path="/patient-dashboard" element={<PatientDashboardPage />} />
+          <Route
+            path="/supervisor-dashboard"
+            element={<SupervisorDashboardPage />}
+          />
+          <Route path="/carer-profile" element={<CarerProfilePage />} />
+          <Route path="/patient-profile" element={<PatientsProfilePage />} />
 
-        <Route path="/resources" element={<ResourcesPage />} />
-        <Route path="/care-overview" element={<CareOverviewPage />} />
-        <Route path="/care-plan" element={<CarePlanPage />} />
-        <Route path="/supervisor-assign" element={<SupervisorAssignPage />} />
-        <Route path="/patients" element={<PatientsPage />} />
-      </>
-      <Route path="/logout" element={<LandingPage />} />
-      {/* )} */}
+          <Route
+            path="/carer-notifications"
+            element={<CarerNotificationsPage />}
+          />
+          <Route
+            path="/supervisor-notifications"
+            element={<SupervisorNotificationsPage />}
+          />
+
+          <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/care-overview" element={<CareOverviewPage />} />
+          <Route path="/care-plan" element={<CarePlanPage />} />
+          <Route path="/assignments" element={<AssignmentsPage />} />
+          <Route path="/patients" element={<PatientsPage />} />
+        </>
+      )}
     </Routes>
   );
 };
