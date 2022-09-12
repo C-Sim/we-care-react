@@ -17,6 +17,7 @@ import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
 import { PatientsProfilePage } from "./containers/PatientProfilePage";
 import { useAuth } from "./context/AppProvider";
+import { CarerAssignmentsPage } from "./containers/CarerAssignmentsPage";
 
 export const AppRoutes = () => {
   const { isLoggedIn } = useAuth();
@@ -55,6 +56,7 @@ export const AppRoutes = () => {
         <Route path="/care-overview" element={<CareOverviewPage />} />
         <Route path="/care-plan" element={<CarePlanPage />} />
         <Route path="/assignments" element={<AssignmentsPage />} />
+        <Route path="/carer-assignments" element={<CarerAssignmentsPage />} />
         <Route path="/patients" element={<PatientsPage />} />
       </>
       <Route path="/logout" element={<LandingPage />} />
