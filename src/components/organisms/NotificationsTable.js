@@ -26,7 +26,8 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { RECEIVED_NOTIFICATIONS } from "../../graphql/queries";
-import { UPDATE_READ } from "../../graphql/mutations";
+import { UPDATE_APPOINTMENT, UPDATE_READ } from "../../graphql/mutations";
+import { PATIENT_APPROVE } from "../../graphql/mutations";
 
 const PaperComponent = (props) => {
   return (
@@ -45,6 +46,7 @@ const createData = (rowTitle, rowValue) => {
 
 // const modalData = {
 //   notification: notification.id,
+//   notificationType: notification.notificationType,
 //   appointmentId: notification.appointmentId || ["N/A"],
 //   accountType: notification.accountType,
 //   patient: notification.appointmentId.patient || ["N/A"],
@@ -95,35 +97,6 @@ const createNotification = (
     isRead,
   };
 };
-
-// create state for holding query data
-// const [savedNotifications, setNotifications] = useState([]);
-
-// const notificationData = notifications.map((notification) => ({
-//   notificationId: notification.id,
-//   notificationType: notification.notificationType,
-//   accountType: notification.accountType,
-//   username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
-//   notificationDate: notification.notificationDate,
-//   visitDate: notification.appointmentDate || ["N/A"],
-//   visitTime: notification.appointmentDate || ["N/A"],
-//   isRead: notification.isRead,
-// }));
-
-// setNotifications(notificationData);
-
-// const Notifications = savedNotifications.forEach((notification) => {
-//   createNotification(
-//     { notificationId },
-//     { notificationType },
-//     { accountType },
-//     { username },
-//     { notificationDate },
-//     { visitDate },
-//     { visitTime },
-//     { isRead }
-//   );
-// });
 
 const Notifications = [
   createNotification(
@@ -307,7 +280,44 @@ export const NotificationsTable = ({ notifications }) => {
   const [open, setOpen] = useState(false);
   const [isReadStatus, setIsReadStatus] = useState(false);
 
-  //   update read status
+  const context = useContext(AppContext);
+  //   const userAccount = context.user.accountType;
+
+  //   create state for holding query data
+  //   const [savedNotifications, setNotifications] = useState([]);
+
+  //   const notificationData = notifications.map((notification) => {
+  //     return [
+  //       {
+  //         notificationId: notification.id,
+  //         notificationType: notification.notificationType,
+  //         accountType: notification.accountType,
+  //         username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
+  //         notificationDate: notification.notificationDate,
+  //         visitDate: notification.appointmentDate || ["N/A"],
+  //         visitTime: notification.appointmentDate || ["N/A"],
+  //         isRead: notification.isRead,
+  //       },
+  //     ];
+  //   });
+
+  //   setNotifications(notificationData);
+  //   console.log(savedNotifications, notificationData);
+
+  //   const Notifications = savedNotifications.forEach((notification) => {
+  //     createNotification(
+  //       notification.id,
+  //       notification.notificationType,
+  //       notification.accountType,
+  //       notification.username,
+  //       notification.notificationDate,
+  //       notification.visitDate,
+  //       notification.visitTime,
+  //       notification.isRead
+  //     );
+  //   });
+
+  // update read status
   const updateRead = useMutation(UPDATE_READ);
 
   const handleUpdateRead = async (notificationId) => {
@@ -346,9 +356,70 @@ export const NotificationsTable = ({ notifications }) => {
     setPage(0);
   };
 
-  const handleApproval = () => {};
+  const approvePatient = useMutation(PATIENT_APPROVE);
+  const updateAppointment = useMutation(UPDATE_APPOINTMENT);
 
-  const handleDenial = () => {};
+  const handleApproval = async (
+    event,
+    notificationId,
+    notificationType,
+    senderId,
+    appointmentId
+  ) => {
+    // if notificationType === "Patient Approve"
+    try {
+      await approvePatient({ variables: { senderId } });
+
+      //   success(true);
+    } catch (err) {
+      console.error(err);
+    }
+
+    // if notificationType === "Patient Amend"
+    // Does this even trigger notification?
+
+    // if notificationType === "Shift Change"
+    const trigger = "carerChange";
+
+    try {
+      await updateAppointment({
+        variables: {
+          appointmentId,
+          trigger,
+          //   appointmentUpdateInput: { carerId, start, end },
+        },
+      });
+
+      //   success(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDenial = async (event) => {
+    // regardless of type
+    //
+    // if (senderType === "carer")
+    // send notification to inform carer that request has been denied - use sendNotification resolver
+    // send email to inform patient that request has been denied - use emailJS
+    //
+    // if (senderType === "patient") {
+    // emailjs
+    //   .sendForm(
+    //     "service_doq4yxc",
+    //     "template_3zqd709",
+    //     form.current,
+    //     "ulS302XN5UlvLfEvu"
+    //   )
+    //   .then(
+    //     (result) => {
+    //       handleOpenModal();
+    //     },
+    //     (error) => {
+    //       setEmailError(true);
+    //     }
+    //   )};
+  };
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Notifications.length) : 0;
@@ -389,7 +460,7 @@ export const NotificationsTable = ({ notifications }) => {
             </TableBody>
           </Table>
 
-          {/* {notification.accountType === "supervisor" && ( */}
+          {/* {userAccount === "supervisor" && ( */}
           <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
             {" "}
             <Button

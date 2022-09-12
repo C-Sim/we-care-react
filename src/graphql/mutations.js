@@ -79,3 +79,31 @@ export const PATIENT_PROFILE = gql`
     }
   }
 `;
+
+export const PATIENT_APPROVE = gql`
+  mutation UpdateApprovedStatus($userId: ID!) {
+    updateApprovedStatus(userId: $userId) {
+      success
+      userId
+    }
+  }
+`;
+
+export const UPDATE_APPOINTMENT = gql`
+  mutation UpdateAppointmentCarer(
+    $appointmentId: ID!
+    $trigger: String!
+    $appointmentUpdateInput: AppointmentUpdateInput
+  ) {
+    updateAppointment(
+      appointmentId: $appointmentId
+      trigger: $trigger
+      appointmentUpdateInput: $appointmentUpdateInput
+    ) {
+      success
+      appointment {
+        id
+      }
+    }
+  }
+`;
