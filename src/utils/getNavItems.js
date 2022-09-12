@@ -1,4 +1,4 @@
-export const navItems = {
+const navItems = {
   public: [
     { label: "About", path: "/about" },
 
@@ -17,8 +17,6 @@ export const navItems = {
     { label: "Assignments", path: "/assignments" },
 
     { label: "Dashboard", path: "/carer-dashboard" },
-
-    { label: "Logout", path: "/logout" },
   ],
   patient: [
     {
@@ -33,8 +31,6 @@ export const navItems = {
     { label: "Care Plan", path: "/care-plan" },
 
     { label: "Dashboard", path: "/patient-dashboard" },
-
-    { label: "Logout", path: "/logout" },
   ],
   supervisor: [
     {
@@ -45,7 +41,13 @@ export const navItems = {
     { label: "Assignments", path: "/assignments" },
 
     { label: "Dashboard", path: "/supervisor-dashboard" },
-
-    { label: "Logout", path: "/logout" },
   ],
+};
+
+export const getNavItems = (isLoggedIn, userType) => {
+  if (!isLoggedIn) {
+    return navItems.public;
+  }
+
+  return navItems[userType];
 };

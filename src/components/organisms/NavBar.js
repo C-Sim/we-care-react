@@ -13,23 +13,26 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import logo from "../atoms/images/WeCare-1_260x60.png";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { useAuth } from "../../context/AppProvider";
+import { getNavItems } from "../../utils/getNavItems";
 
-export const NavBar = ({ navItems }) => {
-  const isMobile = useMediaQuery("(max-width:600px)");
+export const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+
+  const { isLoggedIn, user } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const navItems = getNavItems(isLoggedIn, user?.accountType);
+
   const drawer = (
-    <Box>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <List>
-        {navItems.public.map((item) => (
+        {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
             <ListItemButton
               sx={{
@@ -81,12 +84,6 @@ export const NavBar = ({ navItems }) => {
           </IconButton>
           <Box className="LogoNav">
             <img src={logo} height="45"></img>
-            {/* <img
-              image={logo}
-              imageAlt="We Care logo"
-              alignItems="center"
-              boxSizing="border-box"
-            /> */}
           </Box>
           <Box
             variant="h6"
@@ -94,21 +91,20 @@ export const NavBar = ({ navItems }) => {
             sx={{
               textAlign: "center",
               fontWeight: 100,
+              display: { xs: "none", sm: "block" },
             }}
           >
-            <Grid item xs={4}>
-              {navItems.public.map((item) => (
-                <Button
-                  key={item.label}
-                  sx={{ color: "#fff" }}
-                  onClick={() => {
-                    navigate(item.path, { replace: true });
-                  }}
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </Grid>
+            {navItems.map((item) => (
+              <Button
+                key={item.label}
+                sx={{ color: "#fff" }}
+                onClick={() => {
+                  navigate(item.path, { replace: true });
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
           </Box>
         </Toolbar>
       </AppBar>
