@@ -27,6 +27,10 @@ export const NavBar = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+  };
+
   const navItems = getNavItems(isLoggedIn, user?.accountType);
 
   const drawer = (

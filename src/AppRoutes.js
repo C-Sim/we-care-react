@@ -7,7 +7,7 @@ import { CarerDashboardPage } from "./containers/CarerDashboardPage";
 import { PatientDashboardPage } from "./containers/PatientDashboardPage";
 import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
-
+import { AssignmentsPage } from "./containers/AssignmentsPage";
 import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
