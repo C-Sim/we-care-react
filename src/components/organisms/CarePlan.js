@@ -27,14 +27,11 @@ export const CarePlanForm = ({ isMobile }) => {
   const [CarePlanMessage, setCarePlanMessage] = useState(false);
 
   //mutations
-  const [createCarePlan, { data, loading, error }] = useMutation(
+  const [createCarePlan, { createData, loading, error }] = useMutation(
     CREATE_CARE_PLAN,
     {
       onCompleted: (data) => {
-        console.log(data.createCarePlan.user);
-        context.setUser(data.createCarePlan.user);
-        localStorage.setItem("user", JSON.stringify(data.createCarePlan.user));
-        setCarePlanSuccess(true);
+        data.createCarePlan.success && setCarePlanSuccess(true);
       },
     }
   );
