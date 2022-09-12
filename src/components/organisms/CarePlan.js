@@ -1,17 +1,15 @@
-import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
 
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+
 import { useMutation, useLazyQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { useEffect, useState } from "react";
-import { Input } from "../atoms/Input";
-import InputDisabled from "../atoms/InputDisabled";
+import { useEffect, useState, useContext } from "react";
+
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
@@ -79,20 +77,20 @@ export const CarePlanForm = ({ isMobile }) => {
   );
 
   const handleCreateCarePlan = (formData) => {
-    const addInput = {
+    const carePlanInput = {
       disabilities: formData.disabilities,
       mobility: formData.mobility,
-      mobility: formData.communication,
-      mobility: formData.allergies,
-      mobility: formData.personalCare,
-      mobility: formData.mentalHealth,
-      mobility: formData.dietaryRequirements,
+      communication: formData.communication,
+      allergies: formData.allergies,
+      personalCare: formData.personalCare,
+      mentalHealth: formData.mentalHealth,
+      dietaryRequirements: formData.dietaryRequirements,
     };
 
     createCarePlan({
       variables: {
         userId,
-        addInput,
+        carePlanInput,
       },
     });
   };
@@ -238,6 +236,7 @@ export const CarePlanForm = ({ isMobile }) => {
 
         {disabilityOption === "yes" && (
           <TextField
+            sx={{ display: "block" }}
             placeholder="Please best describe your disabilities"
             onChange={handleDisabilitiesChange}
           />
@@ -266,6 +265,7 @@ export const CarePlanForm = ({ isMobile }) => {
         </RadioGroup>
         {mobilityOption === "yes" && (
           <TextField
+            sx={{ display: "block" }}
             placeholder="Please best describe your mobility"
             onChange={handleMobilityChange}
           />
@@ -322,6 +322,7 @@ export const CarePlanForm = ({ isMobile }) => {
         </RadioGroup>
         {personalCareOption === "yes" && (
           <TextField
+            sx={{ display: "block" }}
             placeholder="Please best describe your Personal Care issues"
             onChange={handlePersonalCareChange}
           />
@@ -350,6 +351,7 @@ export const CarePlanForm = ({ isMobile }) => {
         </RadioGroup>
         {mentalHealthOption === "yes" && (
           <TextField
+            sx={{ display: "block" }}
             placeholder="Please best describe your current mental health"
             onChange={handleMentalHealthChange}
           />
@@ -379,6 +381,7 @@ export const CarePlanForm = ({ isMobile }) => {
         </RadioGroup>
         {dietaryRequirementsOption === "yes" && (
           <TextField
+            sx={{ display: "block" }}
             placeholder="Please enter your dietary requirements"
             onChange={handleDietaryRequirementsChange}
           />
@@ -413,10 +416,12 @@ export const CarePlanForm = ({ isMobile }) => {
           />
         )}
       </FormControl>
-      <ButtonDark onClick={handleCreateCarePlan}>Update</ButtonDark>
+      <ButtonDark onClick={handleSubmit(handleCreateCarePlan)}>
+        Update
+      </ButtonDark>
       <Stack spacing={4}>
         <LoadingButton variant="contained" type="submit" loading={loading}>
-          Update your care plan
+          Create your care plan
         </LoadingButton>
         {error && (
           <Typography
@@ -425,7 +430,7 @@ export const CarePlanForm = ({ isMobile }) => {
             sx={{ color: "red" }}
             align="center"
           >
-            Failed to update care plan. Please try again.
+            Failed to create care plan. Please try again.
           </Typography>
         )}
         {carePlanSuccess && (
@@ -435,7 +440,7 @@ export const CarePlanForm = ({ isMobile }) => {
             sx={{ color: "green" }}
             align="center"
           >
-            Care plan successfully updated!
+            Care plan successfully create!
           </Typography>
         )}
       </Stack>
