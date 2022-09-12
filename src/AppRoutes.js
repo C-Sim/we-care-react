@@ -7,11 +7,13 @@ import { CarerDashboardPage } from "./containers/CarerDashboardPage";
 import { PatientDashboardPage } from "./containers/PatientDashboardPage";
 import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
-import { AssignmentsPage } from "./containers/AssignmentsPage";
+
 import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
 import { SupervisorNotificationsPage } from "./containers/SupervisorNotificationsPage";
+import { SupervisorCreateCarerPage } from "./containers/SupervisorCreateCarerPage";
+import { SupervisorAssignPage } from "./containers/SupervisorAssignPage";
 import { PatientsPage } from "./containers/PatientsPage";
 import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
