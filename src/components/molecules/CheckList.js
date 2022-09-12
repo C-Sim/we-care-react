@@ -37,7 +37,7 @@ import Select from "@mui/material/Select";
 import { PATIENT_SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
-export const CheckList = ({ patientsArray, handleSelect }) => {
+export const CheckList = ({ array, handleSelect }) => {
   return (
     <FormGroup
       sx={{
@@ -46,7 +46,7 @@ export const CheckList = ({ patientsArray, handleSelect }) => {
         overflow: "auto",
       }}
     >
-      {patientsArray.map((option) => {
+      {array.map((option) => {
         return (
           <FormControlLabel
             key={option.value}
