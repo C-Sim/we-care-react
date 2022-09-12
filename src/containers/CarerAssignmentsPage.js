@@ -12,9 +12,6 @@ import { RECEIVED_NOTIFICATIONS } from "../graphql/queries";
 
 export const CarerAssignmentsPage = () => {
   const context = useContext(AppContext);
-  //   const userId = context.user.id;
-
-  const mailType = "received";
 
   //   const { data, loading } = useQuery(, {
   //     variables: {  },
