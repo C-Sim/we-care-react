@@ -84,6 +84,7 @@ export const SupervisorAssignPage = () => {
       setPatientsArray(patientData.availablePatientsByCarerGenderAndDay);
     }
   }, [patientData, patientLoading]);
+
   //success state changes on create success
   const [assignSuccess, setAssignSuccess] = useState(false);
 
@@ -210,14 +211,27 @@ export const SupervisorAssignPage = () => {
 
   const resetAssign = () => {
     console.log("resetting the fields for a new assign");
-    //TODO: it brings back the form but it's already populated with the previous data - need to find a way to empty the fields
+    //TODO: it puts the states back to their original state
+    setDateValue(format(new Date(), "yyyy-MM-dd"));
+    setSelectedDate();
+    setDateLock(false);
+    setCarersArray([]);
+    setCarerId();
+    setCarerValue();
+    setCarerLock(false);
+    setSelectedCarer();
+    setPatientsArray([]);
+    setPatientId([]);
+    setSelectedPatients([]);
+    setPatientLock(false);
+    setPatientList();
+    setSimulatedAppointments();
+    setAssignSuccess(false);
   };
 
   const redirectToDashboard = () => {
     navigate("/supervisor-dashboard", { replace: true });
   };
-
-  console.log(assignSuccess);
 
   return (
     <Box
