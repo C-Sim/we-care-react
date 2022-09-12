@@ -15,10 +15,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import logo from "../atoms/images/WeCare-1_260x60.png";
-import { ProfileAvatar } from "../atoms/Avatar";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export const NavBar = ({ navItems }) => {
-  console.log(navItems);
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -32,7 +32,10 @@ export const NavBar = ({ navItems }) => {
         {navItems.public.map((item) => (
           <ListItem key={item.label} disablePadding>
             <ListItemButton
-              sx={{ textAlign: "centre" }}
+              sx={{
+                textAlign: "centre",
+                backgroundColor: "#d0cde1",
+              }}
               onClick={() => {
                 navigate(item.path, { replace: true });
               }}
