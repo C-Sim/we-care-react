@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
 import { AppContext } from "../../context/AppProvider";
@@ -48,7 +48,7 @@ const createData = (rowTitle, rowValue) => {
 
 // const modalData = {
 //   notification: notification.id,
-//   notificationType: notification.notificationType,
+//   notificationType: notification.__typename,
 //   appointmentId: notification.appointmentId || ["N/A"],
 //   accountType: notification.accountType,
 //   patient: notification.appointmentId.patient || ["N/A"],
@@ -100,68 +100,69 @@ const createNotification = (
   };
 };
 
-const Notifications = [
-  createNotification(
-    "1",
-    "Shift Change",
-    "Carer",
-    "Alice Bond",
-    "18/08/22",
-    "25/08/22",
-    "12:00",
-    "true"
-  ),
-  createNotification(
-    "2",
-    "New Patient",
-    "Patient",
-    "Abe Zephaniah",
-    "18/08/22",
-    "N/A",
-    "N/A",
-    "true"
-  ),
-  createNotification(
-    "3",
-    "Shift Change",
-    "Carer",
-    "Alan Bates",
-    "18/08/22",
-    "25/08/22",
-    "15:00",
-    "false"
-  ),
-  createNotification(
-    "4",
-    "New Patient",
-    "Patient",
-    "Abe Zephaniah",
-    "19/08/22",
-    "N/A",
-    "N/A",
-    "true"
-  ),
-  createNotification(
-    "5",
-    "Shift Change",
-    "Carer",
-    "Alice Bond",
-    "18/08/22",
-    "25/08/22",
-    "18:00",
-    "false"
-  ),
-  createNotification(
-    "6",
-    "Patient Amend",
-    "Patient",
-    "Abe Zephaniah",
-    "20/08/22",
-    "N/A",
-    "N/A",
-    "true"
-  ),
-];
+// Dummy data to show what table should look like
+// const Notifications = [
+//   createNotification(
+//     "1",
+//     "Shift Change",
+//     "Carer",
+//     "Alice Bond",
+//     "18/08/22",
+//     "25/08/22",
+//     "12:00",
+//     "true"
+//   ),
+//   createNotification(
+//     "2",
+//     "New Patient",
+//     "Patient",
+//     "Abe Zephaniah",
+//     "18/08/22",
+//     "N/A",
+//     "N/A",
+//     "true"
+//   ),
+//   createNotification(
+//     "3",
+//     "Shift Change",
+//     "Carer",
+//     "Alan Bates",
+//     "18/08/22",
+//     "25/08/22",
+//     "15:00",
+//     "false"
+//   ),
+//   createNotification(
+//     "4",
+//     "New Patient",
+//     "Patient",
+//     "Abe Zephaniah",
+//     "19/08/22",
+//     "N/A",
+//     "N/A",
+//     "true"
+//   ),
+//   createNotification(
+//     "5",
+//     "Shift Change",
+//     "Carer",
+//     "Alice Bond",
+//     "18/08/22",
+//     "25/08/22",
+//     "18:00",
+//     "false"
+//   ),
+//   createNotification(
+//     "6",
+//     "Patient Amend",
+//     "Patient",
+//     "Abe Zephaniah",
+//     "20/08/22",
+//     "N/A",
+//     "N/A",
+//     "true"
+//   ),
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -283,41 +284,48 @@ export const NotificationsTable = ({ notifications }) => {
   const [isReadStatus, setIsReadStatus] = useState(false);
 
   const context = useContext(AppContext);
-  //   const userAccount = context.user.accountType;
+  const userAccount = context.user.accountType;
 
-  //   create state for holding query data
-  //   const [savedNotifications, setNotifications] = useState([]);
+  // create state for holding query data
+  const [savedNotifications, setNotifications] = useState([]);
 
-  //   const notificationData = notifications.map((notification) => {
-  //     return [
-  //       {
-  //         notificationId: notification.id,
-  //         notificationType: notification.notificationType,
-  //         accountType: notification.accountType,
-  //         username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
-  //         notificationDate: notification.notificationDate,
-  //         visitDate: notification.appointmentDate || ["N/A"],
-  //         visitTime: notification.appointmentDate || ["N/A"],
-  //         isRead: notification.isRead,
-  //       },
-  //     ];
-  //   });
+  console.log(notifications);
 
-  //   setNotifications(notificationData);
-  //   console.log(savedNotifications, notificationData);
+  const notificationData = notifications.notificationsByUserId.map(
+    (notification) => {
+      return [
+        {
+          notificationId: notification.id,
+          notificationType: notification.__typename,
+          accountType: notification.accountType,
+          username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
+          notificationDate: notification.notificationDate,
+          visitDate: notification.appointmentDate || ["N/A"],
+          visitTime: notification.appointmentDate || ["N/A"],
+          isRead: notification.isRead,
+        },
+      ];
+    }
+  );
 
-  //   const Notifications = savedNotifications.forEach((notification) => {
-  //     createNotification(
-  //       notification.id,
-  //       notification.notificationType,
-  //       notification.accountType,
-  //       notification.username,
-  //       notification.notificationDate,
-  //       notification.visitDate,
-  //       notification.visitTime,
-  //       notification.isRead
-  //     );
-  //   });
+  //   useEffect to listen for data and .success, setNotifications
+  setNotifications(notificationData);
+  //   = useEffect();
+
+  const Notifications = savedNotifications.forEach((notification) => {
+    createNotification(
+      notification.notificationId,
+      notification.__typename,
+      notification.accountType,
+      notification.username,
+      notification.notificationDate,
+      notification.visitDate,
+      notification.visitTime,
+      notification.isRead
+    );
+  });
+  console.log(savedNotifications, notificationData);
+  console.log(Notifications);
 
   // update read status
   const updateRead = useMutation(UPDATE_READ);

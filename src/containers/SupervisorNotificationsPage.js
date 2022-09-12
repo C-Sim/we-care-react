@@ -16,11 +16,9 @@ export const SupervisorNotificationsPage = () => {
 
   const { data, loading, error } = useQuery(RECEIVED_NOTIFICATIONS, {
     onCompleted: (data) => {
-      console.log(data.getNotifications);
+      console.log(data);
     },
   });
-
-  console.log(data);
 
   return (
     <Box>
