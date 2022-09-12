@@ -41,8 +41,8 @@ export const LOGIN = gql`
 `;
 
 export const UPDATE_READ = gql`
-  mutation UpdateIsReadStatus($notificationId: ID!, $userId: ID) {
-    updateIsReadStatus(notificationId: $notificationId, userId: $userId) {
+  mutation UpdateIsReadStatus($notificationId: ID!) {
+    updateIsReadStatus(notificationId: $notificationId) {
       id
       notificationDate
       senderId
@@ -54,8 +54,8 @@ export const UPDATE_READ = gql`
 `;
 
 export const USER_PROFILE = gql`
-  mutation UpdateUserInfo($userId: ID!, $updateInput: UserInfoInput) {
-    updateUserInfo(userId: $userId, updateInput: $updateInput) {
+  mutation UpdateUserInfo($updateInput: UserInfoInput) {
+    updateUserInfo(updateInput: $updateInput) {
       success
       user {
         id
@@ -74,20 +74,15 @@ export const USER_PROFILE = gql`
 `;
 
 export const PATIENT_PROFILE = gql`
-  mutation UpdatePatientInfo(
-    $userId: ID!
-    $updatePatientInput: PatientInfoInput
-  ) {
-    updatePatientInfo(
-      userId: $userId
-      updatePatientInput: $updatePatientInput
-    ) {
+  mutation UpdatePatientInfo($updatePatientInput: PatientInfoInput) {
+    updatePatientInfo(updatePatientInput: $updatePatientInput) {
       success
       userId
     }
   }
 `;
 
+// userId of patient - correctly referenced here?
 export const PATIENT_APPROVE = gql`
   mutation UpdateApprovedStatus($userId: ID!) {
     updateApprovedStatus(userId: $userId) {
