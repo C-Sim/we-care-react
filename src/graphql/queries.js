@@ -143,3 +143,36 @@ export const ADDRESS_LOOKUP = gql`
     }
   }
 `;
+
+export const AVAILABLE_CARERS = gql`
+  query AvailableCarers($selectedDate: String!) {
+    availableCarersByDate(selectedDate: $selectedDate) {
+      userId
+      username
+      gender
+      appointments {
+        appointmentDate
+        title
+      }
+    }
+  }
+`;
+
+export const AVAILABLE_PATIENTS = gql`
+  query AvailablePatients($userId: ID!, $selectedDate: String!) {
+    availablePatientsByCarerGenderAndDay(
+      userId: $userId
+      selectedDate: $selectedDate
+    ) {
+      userId
+      username
+      gender
+      appointments {
+        appointmentDate
+        title
+      }
+    }
+  }
+`;
+
+

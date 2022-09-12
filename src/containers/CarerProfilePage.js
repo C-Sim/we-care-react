@@ -54,7 +54,7 @@ export const CarerProfilePage = () => {
           p: 3,
           //minWidth: isMobile ? "90%" : "80%",
           color: "#3f3d56",
-          backgroundColor: "#00b0ff2e",
+          backgroundColor: "#0b0f2e",
           borderRadius: "25px",
         }}
         elevation={6}
