@@ -25,9 +25,11 @@ import Draggable from "react-draggable";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-import { RECEIVED_NOTIFICATIONS } from "../../graphql/queries";
-import { UPDATE_APPOINTMENT, UPDATE_READ } from "../../graphql/mutations";
-import { PATIENT_APPROVE } from "../../graphql/mutations";
+import {
+  UPDATE_APPOINTMENT,
+  UPDATE_READ,
+  PATIENT_APPROVE,
+} from "../../graphql/mutations";
 
 const PaperComponent = (props) => {
   return (

@@ -30,7 +30,7 @@ export const SupervisorNotificationsPage = () => {
   return (
     <Box>
       <PageTitle title="Notifications" />
-      {loading && <LoadingButton loading variant="outlined" />};
+      {loading && <LoadingButton loading align="center" variant="outlined" />}
       {error && (
         <Error message="Failed to load notifications. Please try again." />
       )}
