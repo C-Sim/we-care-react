@@ -1,24 +1,29 @@
 // For carers to see their assignments by date
 
-import { useContext, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useContext, useState, useEffect } from "react";
+import { useLazyQuery } from "@apollo/client";
 
 import Box from "@mui/material/Box";
 import { CalendarSmall } from "../components/molecules/CalendarSmall";
 import { PageTitle } from "../components/atoms/PageTitle";
-
+import { CarerTimeline } from "../components/molecules/CarerTimeline";
+import { ButtonBright } from "../components/atoms/ButtonBright";
 import { AppContext } from "../context/AppProvider";
-import { RECEIVED_NOTIFICATIONS } from "../graphql/queries";
+import { APPOINTMENTS_BY_ID } from "../graphql/queries";
+
+import "react-calendar/dist/Calendar.css";
+import { Typography } from "@mui/material";
 
 export const CarerAssignmentsPage = () => {
-  const context = useContext(AppContext);
-  //   const userId = context.user.id;
+  //const context = useContext(AppContext);
 
-  const mailType = "received";
+  //const userId = context.user.id;
 
-  //   const { data, loading } = useQuery(, {
-  //     variables: {  },
-  //   });
+  //query
+  const { data, loading, error } = useLazyQuery({
+    APPOINTMENTS_BY_ID,
+    fetchPolicy: "network-only",
+  });
 
   return (
     <Box>

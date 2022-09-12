@@ -143,3 +143,26 @@ export const ADDRESS_LOOKUP = gql`
     }
   }
 `;
+
+export const APPOINTMENTS_BY_ID = gql`
+  query AppointmentsByUserId($userId: ID!) {
+    appointmentsByUserId(userId: $userId) {
+      id
+      appointmentDate
+      patientId {
+        id
+        firstName
+        lastName
+        postcode
+      }
+      carerId {
+        id
+        firstName
+        lastName
+      }
+      start
+      end
+      status
+    }
+  }
+`;
