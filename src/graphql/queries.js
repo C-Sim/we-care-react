@@ -145,8 +145,8 @@ export const ADDRESS_LOOKUP = gql`
 `;
 
 export const RECEIVED_NOTIFICATIONS = gql`
-  query ReceivedNotificationsByUserId($userId: ID!, $mailType: String!) {
-    notificationsByUserId(userId: $userId, mailType: $mailType) {
+  query ReceivedNotificationsByUserId {
+    notificationsByUserId {
       id
       notificationDate
       senderId

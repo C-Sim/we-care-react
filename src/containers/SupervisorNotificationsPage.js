@@ -13,13 +13,8 @@ import { RECEIVED_NOTIFICATIONS } from "../graphql/queries";
 
 export const SupervisorNotificationsPage = () => {
   const context = useContext(AppContext);
-  const userId = "631dea0b4628b8e84097223c";
-  // context.user.id;
-
-  const mailType = "received";
 
   const { data, loading, error } = useQuery(RECEIVED_NOTIFICATIONS, {
-    variables: { mailType, userId },
     onCompleted: (data) => {
       console.log(data.getNotifications);
     },

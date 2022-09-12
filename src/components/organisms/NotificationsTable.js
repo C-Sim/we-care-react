@@ -377,9 +377,6 @@ export const NotificationsTable = ({ notifications }) => {
       console.error(err);
     }
 
-    // if notificationType === "Patient Amend"
-    // Does this even trigger notification?
-
     // if notificationType === "Shift Change"
     const trigger = "carerChange";
 
