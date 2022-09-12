@@ -1,5 +1,6 @@
 // For each user type to view top level information most relevant to them - may need to split into 3, but use first created as template for others
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { format, addHours, parseISO } from "date-fns";
@@ -32,6 +33,7 @@ export const SupervisorAssignPage = () => {
   const [patientList, setPatientList] = useState();
   const [simulatedAppointments, setSimulatedAppointments] = useState();
   const isMobile = useMediaQuery("(max-width:900px)");
+  const navigate = useNavigate();
   //mutations
   const [
     getAvailableCarers,
@@ -72,7 +74,7 @@ export const SupervisorAssignPage = () => {
       )[0].username;
       setCarerValue(correspondingName);
     }
-  }, [carerId]);
+  }, [carerId, carersArray]);
   useEffect(() => {
     if (
       patientData &&
@@ -167,7 +169,6 @@ export const SupervisorAssignPage = () => {
   const runSimulation = () => {
     //set the info common to all appointments
     const carerId = selectedCarer.carerId;
-    const status = "upcoming";
 
     const draftData = [];
     //loop over patients list
@@ -182,7 +183,6 @@ export const SupervisorAssignPage = () => {
       const appointment = {
         patientId,
         carerId,
-        status,
         appointmentDate: format(appointmentDate, "yyyy-MM-dd'T'HH:mm:ss"),
         start: format(start, "yyyy-MM-dd'T'HH:mm:ss"),
         end: format(end, "yyyy-MM-dd'T'HH:mm:ss"),
@@ -206,6 +206,15 @@ export const SupervisorAssignPage = () => {
         appointments: simulatedAppointments,
       },
     });
+  };
+
+  const resetAssign = () => {
+    console.log("resetting the fields for a new assign");
+    //TODO: it brings back the form but it's already populated with the previous data - need to find a way to empty the fields
+  };
+
+  const redirectToDashboard = () => {
+    navigate("/supervisor-dashboard", { replace: true });
   };
 
   console.log(assignSuccess);
@@ -357,9 +366,21 @@ export const SupervisorAssignPage = () => {
       )}
       <div>
         {assignSuccess && (
-          <Alert severity="success">
-            The appointments have been created successfully!
-          </Alert>
+          <>
+            <Alert severity="success">
+              The appointments have been created successfully!
+            </Alert>
+            <ButtonDark
+              label="Assign again"
+              type="button"
+              onClick={resetAssign}
+            />
+            <ButtonDark
+              label="Back to Dashboard"
+              type="button"
+              onClick={redirectToDashboard}
+            />
+          </>
         )}
         {createError && (
           <Alert severity="warning">
