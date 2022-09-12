@@ -113,6 +113,7 @@ export const CarerDashboardPage = () => {
   return (
     <>
       <Box sx={{ height: 800 }}>
+        {/* next appointment detail */}
         <NextVisitForCarer />
 
         {/* carer timeline box container */}

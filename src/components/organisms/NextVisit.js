@@ -7,6 +7,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CheckInAndOut = () => {
   const [alignment, setAlignment] = useState("");
@@ -45,6 +46,7 @@ const BtnPastNotes = () => {
   const viewPastVisitNotes = () => {
     console.log("viewPastVisitNotes");
   };
+
   return (
     <Button variant="contained" onClick={viewPastVisitNotes}>
       View past visit notes
@@ -53,8 +55,10 @@ const BtnPastNotes = () => {
 };
 
 const BtnPatientProfile = () => {
+  const navigate = useNavigate();
+
   const ViewPatientProfile = () => {
-    console.log("ViewPatientProfile");
+    navigate("/patient-profile", { replace: true });
   };
   return (
     <Button variant="Contained" onClick={ViewPatientProfile}>
