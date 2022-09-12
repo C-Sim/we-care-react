@@ -15,8 +15,13 @@ import InputDisabled from "../atoms/InputDisabled";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import { LoadingButton } from "@mui/lab";
+import { ButtonDark } from "../atoms/ButtonDark";
 
 import { CREATE_CARE_PLAN } from "../../graphql/mutations";
+import { AppContext } from "../../context/AppProvider";
 
 export const CarePlanForm = ({ isMobile }) => {
   //state for update success
@@ -28,11 +33,17 @@ export const CarePlanForm = ({ isMobile }) => {
     CREATE_CARE_PLAN,
     {
       onCompleted: (data) => {
-        console.log(data.createCarePlan);
+        console.log(data.createCarePlan.user);
+        context.setUser(data.createCarePlan.user);
+        localStorage.setItem("user", JSON.stringify(data.createCarePlan.user));
         setCarePlanSuccess(true);
       },
     }
   );
+
+  //get context
+  const context = useContext(AppContext);
+  const userId = context.user.id;
 
   //form definitions
   const {
@@ -46,35 +57,45 @@ export const CarePlanForm = ({ isMobile }) => {
     mode: "onBlur",
   });
 
-  // const handleCarePlanUpdate = () => {
-  //   debugger;
-  //   const updateCarePlanInput = {};
+  //variables for update
+  const [disabilitiesUpdate, setDisabilitiesUpdate] = useState(
+    context.user.disabilities
+  );
+  const [mobilityUpdate, setMobilityUpdate] = useState(context.user.mobility);
+  const [communicationUpdate, setCommunicationUpdate] = useState(
+    context.user.communication
+  );
+  const [allergiesUpdate, setAllergiesUpdate] = useState(
+    context.user.allergies
+  );
+  const [personalCareUpdate, setPersonalCareUpdate] = useState(
+    context.user.personalCare
+  );
+  const [mentalHealthUpdate, setMentalHealthUpdate] = useState(
+    context.user.mentalHealth
+  );
+  const [dietaryRequirementsUpdate, setDietaryRequirementsUpdate] = useState(
+    context.user.dietaryRequirements
+  );
 
-  //   if (genderCare) {
-  //     updatePatientInput.genderPreference = genderCare;
-  //   }
+  const handleCreateCarePlan = (formData) => {
+    const addInput = {
+      disabilities: formData.disabilities,
+      mobility: formData.mobility,
+      mobility: formData.communication,
+      mobility: formData.allergies,
+      mobility: formData.personalCare,
+      mobility: formData.mentalHealth,
+      mobility: formData.dietaryRequirements,
+    };
 
-  //   if (day.length) {
-  //     updatePatientInput.days = day;
-  //   }
-
-  //   const isEmpty = (updatePatientInput) => {
-  //     return Object.keys(updatePatientInput).length === 0;
-  //   };
-
-  //   const objectStatus = isEmpty(updatePatientInput);
-
-  //   if (!objectStatus) {
-  //     updatePatientInfo({
-  //       variables: {
-  //         userId,
-  //         updatePatientInput,
-  //       },
-  //     });
-  //   } else {
-  //     setPatientMessage(true);
-  //   }
-  // };
+    createCarePlan({
+      variables: {
+        userId,
+        addInput,
+      },
+    });
+  };
 
   //care plan check boxes
   const [AddInput, setInputId] = useState([]);
@@ -392,6 +413,32 @@ export const CarePlanForm = ({ isMobile }) => {
           />
         )}
       </FormControl>
+      <ButtonDark onClick={handleCreateCarePlan}>Update</ButtonDark>
+      <Stack spacing={4}>
+        <LoadingButton variant="contained" type="submit" loading={loading}>
+          Update your care plan
+        </LoadingButton>
+        {error && (
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: "red" }}
+            align="center"
+          >
+            Failed to update care plan. Please try again.
+          </Typography>
+        )}
+        {carePlanSuccess && (
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: "green" }}
+            align="center"
+          >
+            Care plan successfully updated!
+          </Typography>
+        )}
+      </Stack>
     </Box>
   );
 };
