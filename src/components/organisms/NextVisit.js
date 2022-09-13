@@ -21,29 +21,68 @@ const patientVisitNotesArray = [
   { patientNotes: "please bring some botton, thank you" },
 ];
 
-export const NextVisitForCarer = ({ appointmentDetail }) => {
+export const NextVisitForCarer = ({
+  appointmentDetail,
+  updateCheckin,
+  checkedIn,
+}) => {
   console.log(appointmentDetail);
 
   const [pastVisitNotesBtn, setPastVisitNoteBtn] = useState(false);
 
   const CheckInAndOut = () => {
-    const [alignment, setAlignment] = useState("");
+    const checkin = (event) => {
+      console.log(event.target.id);
+      const trigger = "checkin";
+      updateCheckin({
+        variables: {
+          appointmentId: event.target.id,
+          trigger,
+        },
+      });
+    };
 
-    const handleChange = (event, newAlignment) => {
-      setAlignment(newAlignment);
+    const checkout = (event) => {
+      console.log(event.target.id);
     };
 
     return (
-      <ToggleButtonGroup
-        color="primary"
-        value={alignment}
-        exclusive
-        onChange={handleChange}
-        aria-label="Platform"
-      >
-        <ToggleButton value="web">Check In</ToggleButton>
-        <ToggleButton value="android">Check Out</ToggleButton>
-      </ToggleButtonGroup>
+      <>
+        {!checkedIn && (
+          <Button
+            className="button"
+            variant="contained"
+            sx={{
+              fontWeight: 100,
+              backgroundColor: "#00b0ff",
+              color: "#eef5dbff",
+              "&:hover": { backgroundColor: "#f7b801" },
+              borderRadius: "18px",
+            }}
+            id={appointmentDetail.id}
+            onClick={checkin}
+          >
+            Check In
+          </Button>
+        )}
+        {checkedIn && (
+          <Button
+            className="button"
+            variant="contained"
+            sx={{
+              fontWeight: 100,
+              backgroundColor: "#00b0ff",
+              color: "#eef5dbff",
+              "&:hover": { backgroundColor: "#f7b801" },
+              borderRadius: "18px",
+            }}
+            id={appointmentDetail.id}
+            onClick={checkout}
+          >
+            Check Out
+          </Button>
+        )}
+      </>
     );
   };
 
