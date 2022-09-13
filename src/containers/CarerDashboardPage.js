@@ -28,7 +28,6 @@ export const CarerDashboardPage = () => {
   const viewAppointment = (event) => {
     console.log(event.target);
     const appointment = appointments.filter((i) => i.id === event.target.id)[0];
-    console.log(appointment);
     setAppointmentDetail(appointment);
   };
 
@@ -52,7 +51,7 @@ export const CarerDashboardPage = () => {
     },
     {
       id: "484252",
-      start: "08:00",
+      start: "09:00",
       status: "ongoing",
       patientId: {
         firstName: "alice",
@@ -69,7 +68,7 @@ export const CarerDashboardPage = () => {
     },
     {
       id: "484253",
-      start: "08:00",
+      start: "10:00",
       status: "upcoming",
       patientId: {
         firstName: "chris",
@@ -143,8 +142,9 @@ export const CarerDashboardPage = () => {
     <>
       <Box sx={{ height: 800 }}>
         {/* next appointment detail */}
-        <NextVisitForCarer />
-
+        {appointmentDetail && (
+          <NextVisitForCarer appointmentDetail={appointmentDetail} />
+        )}
         {/* carer timeline box container */}
         <Box
           zIndex="modal"
@@ -157,7 +157,6 @@ export const CarerDashboardPage = () => {
             viewAppointment={viewAppointment}
           />
         </Box>
-
         {/* Appointments' directions box container */}
         <Box
           zIndex="modal"
@@ -220,7 +219,6 @@ export const CarerDashboardPage = () => {
             </button>
           </div>
         </Box>
-
         {/* map goes here  */}
         <Box>
           {" "}

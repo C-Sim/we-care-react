@@ -21,7 +21,9 @@ const patientVisitNotesArray = [
   { patientNotes: "please bring some botton, thank you" },
 ];
 
-export const NextVisitForCarer = () => {
+export const NextVisitForCarer = ({ appointmentDetail }) => {
+  console.log(appointmentDetail);
+
   const [pastVisitNotesBtn, setPastVisitNoteBtn] = useState(false);
 
   const CheckInAndOut = () => {
@@ -38,7 +40,6 @@ export const NextVisitForCarer = () => {
         exclusive
         onChange={handleChange}
         aria-label="Platform"
-        sx={{ p: 2 }}
       >
         <ToggleButton value="web">Check In</ToggleButton>
         <ToggleButton value="android">Check Out</ToggleButton>
@@ -107,12 +108,17 @@ export const NextVisitForCarer = () => {
       elevation={6}
     >
       <div>
-        <h2>Next Appointment Patient Detail</h2>
-        <h4>Name of the Patient | Address of the Patient</h4>
+        <h2>Your Next Appointment - Patient Detail</h2>
+        <h4>
+          {appointmentDetail.patientId.patientProfileId.username} |
+          {appointmentDetail.patientId.patientProfileId.gender} |
+          {appointmentDetail.patientId.postcode}
+        </h4>
+        <h4>Start Time: {appointmentDetail.start}</h4>
       </div>
       <CheckInAndOut />
       <TextField
-        sx={{ width: "500px" }}
+        sx={{ width: "500px", mt: 2 }}
         id="outlined-textarea"
         label="Your Special Care Requirement"
         multiline
@@ -122,8 +128,8 @@ export const NextVisitForCarer = () => {
       <Stack
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}
-        spacing={2}
-        sx={{ p: 3 }}
+        spacing={1}
+        sx={{ p: 2 }}
       >
         <BtnUpdateNotes />
         <Button variant="contained" onClick={handlePastVisitNotes}>
