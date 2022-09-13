@@ -20,20 +20,20 @@ import { getNavItems } from "../../utils/getNavItems";
 export const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const { isLoggedIn, user, setIsLoggedIn } = useAuth();
 
   const logOut = () => {
     localStorage.clear();
+    setIsLoggedIn(false);
     navigate("/login");
   };
-
-  const { isLoggedIn, user } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const navItems = getNavItems(isLoggedIn, user?.accountType);
-
+  console.log(isLoggedIn);
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <List>
@@ -110,10 +110,11 @@ export const NavBar = () => {
                 {item.label}
               </Button>
             ))}
-
-            <Button sx={{ color: "#fff" }} onClick={logOut}>
-              Logout
-            </Button>
+            {isLoggedIn && (
+              <Button sx={{ color: "#fff" }} onClick={logOut}>
+                Logout
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
