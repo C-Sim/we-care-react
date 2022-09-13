@@ -1,4 +1,4 @@
-// For patients to view their own careplan
+// For patients to view their own care plan
 
 import { CarePlanForm } from "../components/organisms/CarePlan";
 import { PageTitle } from "../components/atoms/PageTitle";
@@ -9,6 +9,11 @@ export const CarePlanPage = () => {
 
   return (
     <Box
+      marginTop={2}
+      marginBottom={2}
+      marginLeft={2}
+      marginRight={2}
+      borderRadius={25}
       sx={{
         backgroundColor: "rgba(97, 218, 251, 0.2)",
       }}

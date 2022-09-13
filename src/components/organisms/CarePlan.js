@@ -213,8 +213,9 @@ export const CarePlanForm = ({ isMobile }) => {
             {disabilityOption === "yes" && (
               <TextField
                 sx={{ width: 500, maxWidth: "100%" }}
-                fullWidth
-                placeholder="Please best describe your disabilities"
+                id="outlined-multiline-flexible"
+                label="Please best describe your disabilities"
+                multiline
                 onChange={handleDisabilitiesChange}
                 {...register("disabilities", {
                   required: true,
@@ -223,8 +224,10 @@ export const CarePlanForm = ({ isMobile }) => {
             )}
           </FormControl>
 
-          <h2>Do you currently have any mobility issues?</h2>
           <FormControl>
+            <FormLabel component="legend">
+              Do you currently have any mobility issues?
+            </FormLabel>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -245,8 +248,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {mobilityOption === "yes" && (
               <TextField
-                sx={{ display: "block" }}
-                placeholder="Please best describe your mobility"
+                sx={{ width: 500, maxWidth: "100%" }}
+                id="outlined-multiline-flexible"
+                label="Please best describe your mobility"
+                multiline
                 onChange={handleMobilityChange}
                 {...register("mobility", {
                   required: true,
@@ -255,8 +260,10 @@ export const CarePlanForm = ({ isMobile }) => {
             )}
           </FormControl>
 
-          <h2>Do you currently have any communication problems?</h2>
           <FormControl>
+            <FormLabel component="legend">
+              Do you currently have any communication problems?
+            </FormLabel>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -277,7 +284,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {communicationOption === "yes" && (
               <TextField
-                placeholder="Please best describe your communication problems"
+                sx={{ width: 500, maxWidth: "100%" }}
+                id="outlined-multiline-flexible"
+                label="Do you currently have any communication problems?"
+                multiline
                 onChange={handleCommunicationChange}
                 {...register("communication", {
                   required: true,
@@ -286,8 +296,10 @@ export const CarePlanForm = ({ isMobile }) => {
             )}
           </FormControl>
 
-          <h2>Do you have any Personal Care issues?</h2>
           <FormControl>
+            <FormLabel component="legend">
+              Do you have any Personal Care issues?
+            </FormLabel>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -308,8 +320,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {personalCareOption === "yes" && (
               <TextField
-                sx={{ display: "block" }}
-                placeholder="Please best describe your Personal Care issues"
+                sx={{ width: 500, maxWidth: "100%" }}
+                id="outlined-multiline-flexible"
+                label="Do you have any Personal Care issues?"
+                multiline
                 onChange={handlePersonalCareChange}
                 {...register("personalCare", {
                   required: true,
@@ -318,8 +332,10 @@ export const CarePlanForm = ({ isMobile }) => {
             )}
           </FormControl>
 
-          <h2>How would you best describe your current mental health?</h2>
           <FormControl>
+            <FormLabel component="legend">
+              How would you best describe your current mental health?
+            </FormLabel>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -340,8 +356,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {mentalHealthOption === "yes" && (
               <TextField
-                sx={{ display: "block" }}
-                placeholder="Please best describe your current mental health"
+                sx={{ width: 500, maxWidth: "100%" }}
+                id="outlined-multiline-flexible"
+                label="How would you best describe your current mental health?"
+                multiline
                 onChange={handleMentalHealthChange}
                 {...register("mentalHealth", {
                   required: true,
@@ -350,9 +368,10 @@ export const CarePlanForm = ({ isMobile }) => {
             )}
           </FormControl>
 
-          <h2>Do you have any dietary requirements?</h2>
-
           <FormControl>
+            <FormLabel component="legend">
+              Do you have any dietary requirements?
+            </FormLabel>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -373,8 +392,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {dietaryRequirementsOption === "yes" && (
               <TextField
-                sx={{ display: "block" }}
-                placeholder="Please enter your dietary requirements"
+                sx={{ width: 500, maxWidth: "100%" }}
+                id="outlined-multiline-flexible"
+                label="Do you have any dietary requirements?"
+                multiline
                 onChange={handleDietaryRequirementsChange}
                 {...register("dietaryRequirements", {
                   required: true,
@@ -383,9 +404,8 @@ export const CarePlanForm = ({ isMobile }) => {
             )}
           </FormControl>
 
-          <h2>Do you have any allergies?</h2>
-
           <FormControl>
+            <FormLabel component="legend">Do you have any allergies?</FormLabel>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -406,7 +426,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {allergiesOption === "yes" && (
               <TextField
-                placeholder="Please enter your allergies"
+                sx={{ width: 500, maxWidth: "100%" }}
+                id="outlined-multiline-flexible"
+                label="Do you have any allergies?"
+                multiline
                 onChange={handleAllergiesChange}
                 {...register("allergies", {
                   required: true,
@@ -446,7 +469,7 @@ export const CarePlanForm = ({ isMobile }) => {
             sx={{ color: "green" }}
             align="center"
           >
-            Care plan successfully create!
+            !
           </Typography>
           <Typography
             variant="caption"
@@ -454,7 +477,7 @@ export const CarePlanForm = ({ isMobile }) => {
             sx={{ color: "green" }}
             align="center"
           >
-            Care plan successfully create!
+            !
           </Typography>
           <Typography
             variant="caption"
@@ -462,7 +485,7 @@ export const CarePlanForm = ({ isMobile }) => {
             sx={{ color: "green" }}
             align="center"
           >
-            Care plan successfully create!
+            !
           </Typography>
         </Stack>
       </Stack>
