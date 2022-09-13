@@ -233,7 +233,8 @@ export const CarePlanForm = ({ isMobile }) => {
 
         {disabilityOption === "yes" && (
           <TextField
-            sx={{ display: "block" }}
+            sx={{ width: 500, maxWidth: "100%" }}
+            fullWidth
             placeholder="Please best describe your disabilities"
             onChange={handleDisabilitiesChange}
           />
