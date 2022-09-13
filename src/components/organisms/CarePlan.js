@@ -27,18 +27,15 @@ export const CarePlanForm = ({ isMobile }) => {
   const [CarePlanMessage, setCarePlanMessage] = useState(false);
 
   //mutations
-  const [createCarePlan, { createData, loading, error }] = useMutation(
+  const [createCarePlan, { data: createData, loading, error }] = useMutation(
     CREATE_CARE_PLAN,
     {
-      onCompleted: (data) => {
-        data.createCarePlan.success && setCarePlanSuccess(true);
+      onCompleted: (createData) => {
+        createData.createCarePlan.success && setCarePlanSuccess(true);
       },
     }
   );
-
-  //get context
-  const context = useContext(AppContext);
-  const userId = context.user.id;
+  console.log(createData);
 
   //form definitions
   const {
@@ -52,27 +49,6 @@ export const CarePlanForm = ({ isMobile }) => {
     mode: "onBlur",
   });
 
-  //variables for update
-  const [disabilitiesUpdate, setDisabilitiesUpdate] = useState(
-    context.user.disabilities
-  );
-  const [mobilityUpdate, setMobilityUpdate] = useState(context.user.mobility);
-  const [communicationUpdate, setCommunicationUpdate] = useState(
-    context.user.communication
-  );
-  const [allergiesUpdate, setAllergiesUpdate] = useState(
-    context.user.allergies
-  );
-  const [personalCareUpdate, setPersonalCareUpdate] = useState(
-    context.user.personalCare
-  );
-  const [mentalHealthUpdate, setMentalHealthUpdate] = useState(
-    context.user.mentalHealth
-  );
-  const [dietaryRequirementsUpdate, setDietaryRequirementsUpdate] = useState(
-    context.user.dietaryRequirements
-  );
-
   const handleCreateCarePlan = (formData) => {
     const carePlanInput = {
       disabilities: formData.disabilities,
@@ -83,17 +59,16 @@ export const CarePlanForm = ({ isMobile }) => {
       mentalHealth: formData.mentalHealth,
       dietaryRequirements: formData.dietaryRequirements,
     };
-
+    console.log(carePlanInput);
     createCarePlan({
       variables: {
-        userId,
         carePlanInput,
       },
     });
   };
 
-  //care plan check boxes
-  const [AddInput, setInputId] = useState([]);
+  // //care plan check boxes
+  // const [AddInput, setInputId] = useState([]);
 
   // handle disability option
   const [disabilityOption, setDisabilityOption] = useState("no");
@@ -203,235 +178,268 @@ export const CarePlanForm = ({ isMobile }) => {
   };
 
   return (
-    <Box
-    // component="form"
-    // sx={{ p: 3 }}
-    // spacing={4}
-    // onSubmit={handleSubmit(handleCarePlanUpdate)}
-    >
-      <FormControl>
-        <FormLabel component="legend">Do you have any disabilities?</FormLabel>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="disabilities"
-        >
-          <FormControlLabel
-            value="yes"
-            control={<Radio />}
-            label="Yes"
-            onChange={handleDisabilityOptionChange}
-          />
+    <Box>
+      <Stack
+        component="form"
+        sx={{ p: 3 }}
+        spacing={4}
+        onSubmit={handleSubmit(handleCreateCarePlan)}
+      >
+        <Stack>
+          <FormControl>
+            <FormLabel component="legend">
+              Do you have any disabilities?
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="disabilities"
+            >
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="Yes"
+                onChange={handleDisabilityOptionChange}
+              />
 
-          <FormControlLabel
-            value="no"
-            control={<Radio />}
-            label="No"
-            onChange={handleDisabilityOptionChange}
-          />
-        </RadioGroup>
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="No"
+                onChange={handleDisabilityOptionChange}
+              />
+            </RadioGroup>
 
-        {disabilityOption === "yes" && (
-          <TextField
-            sx={{ width: 500, maxWidth: "100%" }}
-            fullWidth
-            placeholder="Please best describe your disabilities"
-            onChange={handleDisabilitiesChange}
-          />
-        )}
-      </FormControl>
+            {disabilityOption === "yes" && (
+              <TextField
+                sx={{ width: 500, maxWidth: "100%" }}
+                fullWidth
+                placeholder="Please best describe your disabilities"
+                onChange={handleDisabilitiesChange}
+                {...register("disabilities", {
+                  required: true,
+                })}
+              />
+            )}
+          </FormControl>
 
-      <h2>Do you currently have any mobility issues?</h2>
-      <FormControl>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="current_mobility"
-        >
-          <FormControlLabel
-            value="yes"
-            control={<Radio />}
-            label="Yes"
-            onChange={handleMobilityOptionChange}
-          />
-          <FormControlLabel
-            value="no"
-            control={<Radio />}
-            label="No"
-            onChange={handleMobilityOptionChange}
-          />
-        </RadioGroup>
-        {mobilityOption === "yes" && (
-          <TextField
-            sx={{ display: "block" }}
-            placeholder="Please best describe your mobility"
-            onChange={handleMobilityChange}
-          />
-        )}
-      </FormControl>
+          <h2>Do you currently have any mobility issues?</h2>
+          <FormControl>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="current_mobility"
+            >
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="Yes"
+                onChange={handleMobilityOptionChange}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="No"
+                onChange={handleMobilityOptionChange}
+              />
+            </RadioGroup>
+            {mobilityOption === "yes" && (
+              <TextField
+                sx={{ display: "block" }}
+                placeholder="Please best describe your mobility"
+                onChange={handleMobilityChange}
+                {...register("mobility", {
+                  required: true,
+                })}
+              />
+            )}
+          </FormControl>
 
-      <h2>Do you currently have any communication problems?</h2>
-      <FormControl>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="current_communication_level"
-        >
-          <FormControlLabel
-            value="yes"
-            control={<Radio />}
-            label="Yes"
-            onChange={handleCommunicationOptionChange}
-          />
-          <FormControlLabel
-            value="no"
-            control={<Radio />}
-            label="No"
-            onChange={handleCommunicationOptionChange}
-          />
-        </RadioGroup>
-        {communicationOption === "yes" && (
-          <TextField
-            placeholder="Please best describe your communication problems"
-            onChange={handleCommunicationChange}
-          />
-        )}
-      </FormControl>
+          <h2>Do you currently have any communication problems?</h2>
+          <FormControl>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="current_communication_level"
+            >
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="Yes"
+                onChange={handleCommunicationOptionChange}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="No"
+                onChange={handleCommunicationOptionChange}
+              />
+            </RadioGroup>
+            {communicationOption === "yes" && (
+              <TextField
+                placeholder="Please best describe your communication problems"
+                onChange={handleCommunicationChange}
+                {...register("communication", {
+                  required: true,
+                })}
+              />
+            )}
+          </FormControl>
 
-      <h2>Do you have any Personal Care issues?</h2>
-      <FormControl>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="current_personal_care"
-        >
-          <FormControlLabel
-            value="yes"
-            control={<Radio />}
-            label="Yes"
-            onChange={handlePersonalCareOptionChange}
-          />
-          <FormControlLabel
-            value="no"
-            control={<Radio />}
-            label="No"
-            onChange={handlePersonalCareOptionChange}
-          />
-        </RadioGroup>
-        {personalCareOption === "yes" && (
-          <TextField
-            sx={{ display: "block" }}
-            placeholder="Please best describe your Personal Care issues"
-            onChange={handlePersonalCareChange}
-          />
-        )}
-      </FormControl>
+          <h2>Do you have any Personal Care issues?</h2>
+          <FormControl>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="current_personal_care"
+            >
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="Yes"
+                onChange={handlePersonalCareOptionChange}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="No"
+                onChange={handlePersonalCareOptionChange}
+              />
+            </RadioGroup>
+            {personalCareOption === "yes" && (
+              <TextField
+                sx={{ display: "block" }}
+                placeholder="Please best describe your Personal Care issues"
+                onChange={handlePersonalCareChange}
+                {...register("personalCare", {
+                  required: true,
+                })}
+              />
+            )}
+          </FormControl>
 
-      <h2>How would you best describe your current mental health?</h2>
-      <FormControl>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="current_mental_health"
-        >
-          <FormControlLabel
-            value="yes"
-            control={<Radio />}
-            label="Yes"
-            onChange={handleMentalHealthOptionChange}
-          />
-          <FormControlLabel
-            value="no"
-            control={<Radio />}
-            label="No"
-            onChange={handleMentalHealthOptionChange}
-          />
-        </RadioGroup>
-        {mentalHealthOption === "yes" && (
-          <TextField
-            sx={{ display: "block" }}
-            placeholder="Please best describe your current mental health"
-            onChange={handleMentalHealthChange}
-          />
-        )}
-      </FormControl>
+          <h2>How would you best describe your current mental health?</h2>
+          <FormControl>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="current_mental_health"
+            >
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="Yes"
+                onChange={handleMentalHealthOptionChange}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="No"
+                onChange={handleMentalHealthOptionChange}
+              />
+            </RadioGroup>
+            {mentalHealthOption === "yes" && (
+              <TextField
+                sx={{ display: "block" }}
+                placeholder="Please best describe your current mental health"
+                onChange={handleMentalHealthChange}
+                {...register("mentalHealth", {
+                  required: true,
+                })}
+              />
+            )}
+          </FormControl>
 
-      <h2>Do you have any dietary requirements?</h2>
+          <h2>Do you have any dietary requirements?</h2>
 
-      <FormControl>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="current_dietary_requirements"
-        >
-          <FormControlLabel
-            value="yes"
-            control={<Radio />}
-            label="Yes"
-            onChange={handleDietaryRequirementsOptionChange}
-          />
-          <FormControlLabel
-            value="no"
-            control={<Radio />}
-            label="No"
-            onChange={handleDietaryRequirementsOptionChange}
-          />
-        </RadioGroup>
-        {dietaryRequirementsOption === "yes" && (
-          <TextField
-            sx={{ display: "block" }}
-            placeholder="Please enter your dietary requirements"
-            onChange={handleDietaryRequirementsChange}
-          />
-        )}
-      </FormControl>
+          <FormControl>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="current_dietary_requirements"
+            >
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="Yes"
+                onChange={handleDietaryRequirementsOptionChange}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="No"
+                onChange={handleDietaryRequirementsOptionChange}
+              />
+            </RadioGroup>
+            {dietaryRequirementsOption === "yes" && (
+              <TextField
+                sx={{ display: "block" }}
+                placeholder="Please enter your dietary requirements"
+                onChange={handleDietaryRequirementsChange}
+                {...register("dietaryRequirements", {
+                  required: true,
+                })}
+              />
+            )}
+          </FormControl>
 
-      <h2>Do you have any allergies?</h2>
+          <h2>Do you have any allergies?</h2>
 
-      <FormControl>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="current_dietary_requirements"
-        >
-          <FormControlLabel
-            value="yes"
-            control={<Radio />}
-            label="Yes"
-            onChange={handleAllergiesOptionChange}
-          />
-          <FormControlLabel
-            value="no"
-            control={<Radio />}
-            label="No"
-            onChange={handleAllergiesOptionChange}
-          />
-        </RadioGroup>
-        {allergiesOption === "yes" && (
-          <TextField
-            placeholder="Please enter your allergies"
-            onChange={handleAllergiesChange}
-          />
-        )}
-      </FormControl>
-      <ButtonDark onClick={handleSubmit(handleCreateCarePlan)}>
-        Update
-      </ButtonDark>
-      <Stack spacing={4}>
-        <LoadingButton variant="contained" type="submit" loading={loading}>
-          Create your care plan
-        </LoadingButton>
-        {error && (
-          <Typography
-            variant="caption"
-            component="div"
-            sx={{ color: "red" }}
-            align="center"
-          >
-            Failed to create care plan. Please try again.
-          </Typography>
-        )}
-        {carePlanSuccess && (
+          <FormControl>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="allergies"
+            >
+              <FormControlLabel
+                value="yes"
+                control={<Radio />}
+                label="Yes"
+                onChange={handleAllergiesOptionChange}
+              />
+              <FormControlLabel
+                value="no"
+                control={<Radio />}
+                label="No"
+                onChange={handleAllergiesOptionChange}
+              />
+            </RadioGroup>
+            {allergiesOption === "yes" && (
+              <TextField
+                placeholder="Please enter your allergies"
+                onChange={handleAllergiesChange}
+                {...register("allergies", {
+                  required: true,
+                })}
+              />
+            )}
+          </FormControl>
+        </Stack>
+        <Stack spacing={4}>
+          <LoadingButton variant="contained" type="submit" loading={loading}>
+            Create your care plan
+          </LoadingButton>
+          {error && (
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: "red" }}
+              align="center"
+            >
+              Failed to create care plan. Please try again.
+            </Typography>
+          )}
+          {carePlanSuccess && (
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: "green" }}
+              align="center"
+            >
+              Care plan successfully create!
+            </Typography>
+          )}
+
           <Typography
             variant="caption"
             component="div"
@@ -440,7 +448,23 @@ export const CarePlanForm = ({ isMobile }) => {
           >
             Care plan successfully create!
           </Typography>
-        )}
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: "green" }}
+            align="center"
+          >
+            Care plan successfully create!
+          </Typography>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: "green" }}
+            align="center"
+          >
+            Care plan successfully create!
+          </Typography>
+        </Stack>
       </Stack>
     </Box>
   );

@@ -174,5 +174,3 @@ export const AVAILABLE_PATIENTS = gql`
     }
   }
 `;
-
-
