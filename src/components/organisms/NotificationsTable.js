@@ -286,35 +286,26 @@ export const NotificationsTable = ({ notifications }) => {
   const context = useContext(AppContext);
   const userAccount = context.user.accountType;
 
+  const notificationData = notifications.notificationsByUserId.map(
+    (notification) => ({
+      notificationId: notification.id,
+      notificationType: notification.__typename,
+      accountType: notification.accountType,
+      username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
+      notificationDate: notification.notificationDate,
+      visitDate: notification.appointmentDate || ["N/A"],
+      visitTime: notification.appointmentDate || ["N/A"],
+      isRead: notification.isRead,
+    })
+  );
+
   // create state for holding query data
-  const [savedNotifications, setNotifications] = useState([]);
+  const [savedNotifications, setNotifications] = useState(notificationData);
 
   console.log(notifications);
 
-  const notificationData = notifications.notificationsByUserId.map(
-    (notification) => {
-      return [
-        {
-          notificationId: notification.id,
-          notificationType: notification.__typename,
-          accountType: notification.accountType,
-          username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
-          notificationDate: notification.notificationDate,
-          visitDate: notification.appointmentDate || ["N/A"],
-          visitTime: notification.appointmentDate || ["N/A"],
-          isRead: notification.isRead,
-        },
-      ];
-    }
-  );
-
-  //   useEffect to listen for data and .success, setNotifications
-  useEffect(() => {
-    setNotifications(notificationData);
-  }, []);
-
-  const Notifications = savedNotifications.forEach((notification) => {
-    createNotification(
+  const Notifications = savedNotifications.map((notification) => {
+    return createNotification(
       notification.notificationId,
       notification.__typename,
       notification.accountType,
