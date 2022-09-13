@@ -110,6 +110,7 @@ export const NavBar = () => {
                 {item.label}
               </Button>
             ))}
+
             <Button sx={{ color: "#fff" }} onClick={logOut}>
               Logout
             </Button>
