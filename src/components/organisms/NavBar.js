@@ -21,14 +21,15 @@ export const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
 
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   const { isLoggedIn, user } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
   };
 
   const navItems = getNavItems(isLoggedIn, user?.accountType);
@@ -109,6 +110,9 @@ export const NavBar = () => {
                 {item.label}
               </Button>
             ))}
+            <Button sx={{ color: "#fff" }} onClick={logOut}>
+              Logout
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
