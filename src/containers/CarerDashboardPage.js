@@ -11,11 +11,34 @@ import {
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { NextVisitForCarer } from "../components/organisms/NextVisit";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
+import { useMutation, useQuery } from "@apollo/client";
+import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
+import { UPDATE_CHECKIN } from "../graphql/mutations";
 
 export const CarerDashboardPage = () => {
+  const [checkedIn, setCheckedIn] = useState(false);
+  const [
+    updateCheckin,
+    { data: checkinData, loading: checkinLoading, error: checkinError },
+  ] = useMutation(UPDATE_CHECKIN, {
+    onCompleted: () => {
+      setAppointmentDetail(checkinData.appointment);
+      setCheckedIn(true);
+    },
+  });
+
+  const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
+  const [timelineData, setTimelineData] = useState([]);
+  useEffect(() => {
+    if (data) {
+      setTimelineData(data.appointmentsForNextWorkingDay);
+    }
+  }, [data]);
+  console.log(timelineData);
+
   const [appointmentDetail, setAppointmentDetail] = useState();
 
   const center = { lat: 52.489471, lng: -1.898575 };
@@ -27,7 +50,7 @@ export const CarerDashboardPage = () => {
 
   const viewAppointment = (event) => {
     console.log(event.target);
-    const appointment = appointments.filter((i) => i.id === event.target.id)[0];
+    const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
     setAppointmentDetail(appointment);
   };
 
@@ -143,7 +166,11 @@ export const CarerDashboardPage = () => {
       <Box sx={{ height: 800 }}>
         {/* next appointment detail */}
         {appointmentDetail && (
-          <NextVisitForCarer appointmentDetail={appointmentDetail} />
+          <NextVisitForCarer
+            appointmentDetail={appointmentDetail}
+            updateCheckin={updateCheckin}
+            checkedIn={checkedIn}
+          />
         )}
         {/* carer timeline box container */}
         <Box
@@ -153,7 +180,7 @@ export const CarerDashboardPage = () => {
           {" "}
           <CarerTimeline
             date="Monday 8th August"
-            appointments={appointments}
+            appointments={timelineData}
             viewAppointment={viewAppointment}
           />
         </Box>
