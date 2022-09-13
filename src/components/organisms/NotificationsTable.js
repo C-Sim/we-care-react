@@ -309,8 +309,9 @@ export const NotificationsTable = ({ notifications }) => {
   );
 
   //   useEffect to listen for data and .success, setNotifications
-  setNotifications(notificationData);
-  //   = useEffect();
+  useEffect(() => {
+    setNotifications(notificationData);
+  }, []);
 
   const Notifications = savedNotifications.forEach((notification) => {
     createNotification(
