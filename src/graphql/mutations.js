@@ -66,3 +66,41 @@ export const PATIENT_PROFILE = gql`
     }
   }
 `;
+
+export const UPDATE_CHECKIN = gql`
+  mutation UpdateAppointmentCheckin(
+    $appointmentId: ID!
+    $trigger: String!
+    $appointmentUpdateInput: AppointmentUpdateInput
+  ) {
+    updateAppointment(
+      appointmentId: $appointmentId
+      trigger: $trigger
+      appointmentUpdateInput: $appointmentUpdateInput
+    ) {
+      success
+      appointment {
+        id
+        appointmentDate
+        patientId {
+          id
+          firstName
+          lastName
+          postcode
+          address {
+            line_1
+            fullAddress
+          }
+          patientProfileId {
+            username
+            gender
+          }
+        }
+        start
+        end
+        actualStart
+        status
+      }
+    }
+  }
+`;
