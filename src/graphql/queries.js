@@ -150,9 +150,23 @@ export const RECEIVED_NOTIFICATIONS = gql`
       id
       notificationDate
       senderId
+      # {
+      # accountType
+      # firstName
+      # lastName
+      # email
+      # }
       receiverId
       notificationText
       isRead
+      notificationType
+      # appointmentId {
+      #   appointmentDate
+      #   patientId {
+      #     firstName
+      #     lastName
+      #   }
+      # }
     }
   }
 `;

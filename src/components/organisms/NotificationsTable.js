@@ -58,14 +58,6 @@ const createData = (rowTitle, rowValue) => {
 //   notificationText: notification.notificationText || ["N/A"],
 // };
 
-// const ModalRows = [
-//   createData("Patient:", { patient }),
-//   createData("Submitted:", { notificationDate }),
-//   createData("Visit Date:", { visitDate }),
-//   createData("Visit Time:", { visitTime }),
-//   createData("Comment:", { notificationText }),
-// ];
-
 //template modal data for now
 const ModalRows = [
   createData("Patient:", "Charlie Dean"),
@@ -296,6 +288,10 @@ export const NotificationsTable = ({ notifications }) => {
       visitDate: notification.appointmentDate || ["N/A"],
       visitTime: notification.appointmentDate || ["N/A"],
       isRead: notification.isRead,
+      //   senderId: notification.senderId,
+      //   appointmentId: notification.appointmentId || ["N/A"],
+      //   patient: notification.appointmentId.patient || ["N/A"],
+      //   notificationText: notification.notificationText || ["N/A"],
     })
   );
 
@@ -316,6 +312,7 @@ export const NotificationsTable = ({ notifications }) => {
       notification.isRead
     );
   });
+
   console.log(savedNotifications, notificationData);
   console.log(Notifications);
 
@@ -335,6 +332,14 @@ export const NotificationsTable = ({ notifications }) => {
   const handleClickOpen = (event, id) => {
     // event.preventDefault();
     // handleUpdateRead(id);
+
+    // const ModalRows = [
+    //   createData("Patient:", { patient }),
+    //   createData("Submitted:", { notificationDate }),
+    //   createData("Visit Date:", { visitDate }),
+    //   createData("Visit Time:", { visitTime }),
+    //   createData("Comment:", { notificationText }),
+    // ];
 
     setOpen(true);
   };
