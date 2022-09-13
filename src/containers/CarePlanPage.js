@@ -4,13 +4,14 @@ import { CarePlanForm } from "../components/organisms/CarePlan";
 import { PageTitle } from "../components/atoms/PageTitle";
 import { Box } from "@mui/system";
 import { useMediaQuery } from "@mui/material";
+import { Divider } from "@mui/material";
 export const CarePlanPage = () => {
   const isMobile = useMediaQuery("(max-width:900px)");
 
   return (
     <Box
       marginTop={2}
-      marginBottom={2}
+      marginBottom={1}
       marginLeft={2}
       marginRight={2}
       borderRadius={25}
@@ -19,7 +20,8 @@ export const CarePlanPage = () => {
       }}
     >
       <PageTitle title="Your Care Plan" />
-      <CarePlanForm />;
+      <Divider variant="middle" />
+      <CarePlanForm />
     </Box>
   );
 };

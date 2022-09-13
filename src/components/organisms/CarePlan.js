@@ -66,7 +66,6 @@ export const CarePlanForm = ({ isMobile }) => {
       }
     });
 
-
     createCarePlan({
       variables: {
         carePlanInput,
@@ -219,7 +218,8 @@ export const CarePlanForm = ({ isMobile }) => {
 
             {disabilityOption === "yes" && (
               <TextField
-                sx={{ width: 500, maxWidth: "100%" }}
+                fullWidth
+                sx={{ m: 1 }}
                 id="outlined-multiline-flexible"
                 label="Please best describe your disabilities"
                 multiline
@@ -255,7 +255,8 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {mobilityOption === "yes" && (
               <TextField
-                sx={{ width: 500, maxWidth: "100%" }}
+                fullWidth
+                sx={{ m: 1 }}
                 id="outlined-multiline-flexible"
                 label="Please best describe your mobility"
                 multiline
@@ -291,9 +292,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {communicationOption === "yes" && (
               <TextField
-                sx={{ width: 500, maxWidth: "100%" }}
+                fullWidth
+                sx={{ m: 1 }}
                 id="outlined-multiline-flexible"
-                label="Do you currently have any communication problems?"
+                label="Please enter any communication problems?"
                 multiline
                 onChange={handleCommunicationChange}
                 {...register("communication", {
@@ -327,9 +329,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {personalCareOption === "yes" && (
               <TextField
-                sx={{ width: 500, maxWidth: "100%" }}
+                fullWidth
+                sx={{ m: 1 }}
                 id="outlined-multiline-flexible"
-                label="Do you have any Personal Care issues?"
+                label="Please enter any Personal Care issues?"
                 multiline
                 onChange={handlePersonalCareChange}
                 {...register("personalCare", {
@@ -341,7 +344,7 @@ export const CarePlanForm = ({ isMobile }) => {
 
           <FormControl>
             <FormLabel component="legend">
-              How would you best describe your current mental health?
+              Do you have any mental health issues?
             </FormLabel>
             <RadioGroup
               row
@@ -363,9 +366,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {mentalHealthOption === "yes" && (
               <TextField
-                sx={{ width: 500, maxWidth: "100%" }}
+                fullWidth
+                sx={{ m: 1 }}
                 id="outlined-multiline-flexible"
-                label="How would you best describe your current mental health?"
+                label="Please enter any mental health issues?"
                 multiline
                 onChange={handleMentalHealthChange}
                 {...register("mentalHealth", {
@@ -399,9 +403,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {dietaryRequirementsOption === "yes" && (
               <TextField
-                sx={{ width: 500, maxWidth: "100%" }}
+                fullWidth
+                sx={{ m: 1 }}
                 id="outlined-multiline-flexible"
-                label="Do you have any dietary requirements?"
+                label="Please enter your dietary requirements?"
                 multiline
                 onChange={handleDietaryRequirementsChange}
                 {...register("dietaryRequirements", {
@@ -433,9 +438,10 @@ export const CarePlanForm = ({ isMobile }) => {
             </RadioGroup>
             {allergiesOption === "yes" && (
               <TextField
-                sx={{ width: 500, maxWidth: "100%" }}
+                fullWidth
+                sx={{ m: 1 }}
                 id="outlined-multiline-flexible"
-                label="Do you have any allergies?"
+                label="Please enter your allergies?"
                 multiline
                 onChange={handleAllergiesChange}
                 {...register("allergies", {
