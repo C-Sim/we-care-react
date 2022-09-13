@@ -274,6 +274,7 @@ export const NotificationsTable = ({ notifications }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
   const [isReadStatus, setIsReadStatus] = useState(false);
+  const [selectedNotificationId, setNotificationId] = useState("");
 
   const context = useContext(AppContext);
   const userAccount = context.user.accountType;
@@ -281,7 +282,7 @@ export const NotificationsTable = ({ notifications }) => {
   const notificationData = notifications.notificationsByUserId.map(
     (notification) => ({
       notificationId: notification.id,
-      notificationType: notification.__typename,
+      notificationType: notification.notificationType,
       accountType: notification.accountType,
       username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
       notificationDate: notification.notificationDate,
@@ -303,7 +304,7 @@ export const NotificationsTable = ({ notifications }) => {
   const Notifications = savedNotifications.map((notification) => {
     return createNotification(
       notification.notificationId,
-      notification.__typename,
+      notification.notificationType,
       notification.accountType,
       notification.username,
       notification.notificationDate,
@@ -319,9 +320,9 @@ export const NotificationsTable = ({ notifications }) => {
   // update read status
   const updateRead = useMutation(UPDATE_READ);
 
-  const handleUpdateRead = async (notificationId) => {
+  const handleUpdateRead = async (selectedNotificationId) => {
     try {
-      await updateRead({ variables: { notificationId } });
+      await updateRead({ variables: { selectedNotificationId } });
 
       setIsReadStatus(true);
     } catch (err) {
@@ -330,8 +331,14 @@ export const NotificationsTable = ({ notifications }) => {
   };
 
   const handleClickOpen = (event, id) => {
-    // event.preventDefault();
-    // handleUpdateRead(id);
+    event.preventDefault();
+
+    setNotificationId(id);
+
+    console.log(selectedNotificationId);
+    console.log(id);
+
+    // handleUpdateRead(selectedNotificationId);
 
     // const ModalRows = [
     //   createData("Patient:", { patient }),
@@ -519,9 +526,12 @@ export const NotificationsTable = ({ notifications }) => {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClickOpen(event, row.id)}
+                      onClick={(event) =>
+                        handleClickOpen(event, row.notificationId)
+                      }
                       tabIndex={-1}
-                      key={row.id}
+                      key={row.notificationId}
+                      value={row.notificationId}
                       sx={{
                         backgroundColor: isReadStatus ? "#eef5dbff" : "white",
                       }}
