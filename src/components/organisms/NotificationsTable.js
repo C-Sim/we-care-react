@@ -59,16 +59,16 @@ const createData = (rowTitle, rowValue) => {
 // };
 
 //template modal data for now
-const ModalRows = [
-  createData("Patient:", "Charlie Dean"),
-  createData("Submitted:", "18/08/22"),
-  createData("Visit Date:", "18/08/22"),
-  createData("Visit Time:", "12:00"),
-  createData(
-    "Comment:",
-    "It will be difficult to get across town from my last appointment in time"
-  ),
-];
+// const modalRows = [
+//   createData("Patient:", "Charlie Dean"),
+//   createData("Submitted:", "18/08/22"),
+//   createData("Visit Date:", "18/08/22"),
+//   createData("Visit Time:", "12:00"),
+//   createData(
+//     "Comment:",
+//     "It will be difficult to get across town from my last appointment in time"
+//   ),
+// ];
 
 const createNotification = (
   notificationId,
@@ -275,28 +275,31 @@ export const NotificationsTable = ({ notifications }) => {
   const [open, setOpen] = useState(false);
   const [isReadStatus, setIsReadStatus] = useState(false);
   const [selectedNotificationId, setNotificationId] = useState("");
+  // create state for holding query data
+
+  const [updateRead] = useMutation(UPDATE_READ);
+  //   useEffect(() => {
+  //     console.log(notifications);
+  //   }, [notifications]);
 
   const context = useContext(AppContext);
   const userAccount = context.user.accountType;
 
-  const notificationData = notifications.notificationsByUserId.map(
-    (notification) => ({
-      notificationId: notification.id,
-      notificationType: notification.notificationType,
-      accountType: notification.accountType,
-      username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
-      notificationDate: notification.notificationDate,
-      visitDate: notification.appointmentDate || ["N/A"],
-      visitTime: notification.appointmentDate || ["N/A"],
-      isRead: notification.isRead,
-      //   senderId: notification.senderId,
-      //   appointmentId: notification.appointmentId || ["N/A"],
-      //   patient: notification.appointmentId.patient || ["N/A"],
-      //   notificationText: notification.notificationText || ["N/A"],
-    })
-  );
+  const notificationData = notifications.map((notification) => ({
+    notificationId: notification.id,
+    notificationType: notification.notificationType,
+    accountType: notification.accountType,
+    username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
+    notificationDate: notification.notificationDate,
+    visitDate: notification.appointmentDate || ["N/A"],
+    visitTime: notification.appointmentDate || ["N/A"],
+    isRead: notification.isRead,
+    //   senderId: notification.senderId,
+    //   appointmentId: notification.appointmentId || ["N/A"],
+    //   patient: notification.appointmentId.patient || ["N/A"],
+    //   notificationText: notification.notificationText || ["N/A"],
+  }));
 
-  // create state for holding query data
   const [savedNotifications, setNotifications] = useState(notificationData);
 
   console.log(notifications);
@@ -317,14 +320,39 @@ export const NotificationsTable = ({ notifications }) => {
   console.log(savedNotifications, notificationData);
   console.log(Notifications);
 
-  // update read status
-  const updateRead = useMutation(UPDATE_READ);
+  const modalRowData = notificationData.find(
+    (notification) => notification.notificationId === selectedNotificationId
+  );
 
-  const handleUpdateRead = async (selectedNotificationId) => {
+  const modalRows = [
+    // createData("Patient:", modalRowData.patient),
+    createData("Submitted:", modalRowData?.notificationDate),
+    createData("Visit Date:", modalRowData?.visitDate),
+    createData("Visit Time:", modalRowData?.visitTime),
+    createData("Comment:", modalRowData?.notificationText),
+  ];
+
+  // update read status
+
+  const handleUpdateRead = async (id) => {
     try {
-      await updateRead({ variables: { selectedNotificationId } });
+      await updateRead({
+        variables: { notificationId: id },
+      });
+
+      console.log(id);
+      notifications = notifications.map((notification) => {
+        if (notification.id === id) {
+          return { ...notification, isRead: true };
+        }
+        console.log(notification);
+
+        return notification;
+      });
 
       setIsReadStatus(true);
+
+      console.log(notifications);
     } catch (err) {
       console.error(err);
     }
@@ -338,15 +366,7 @@ export const NotificationsTable = ({ notifications }) => {
     console.log(selectedNotificationId);
     console.log(id);
 
-    // handleUpdateRead(selectedNotificationId);
-
-    // const ModalRows = [
-    //   createData("Patient:", { patient }),
-    //   createData("Submitted:", { notificationDate }),
-    //   createData("Visit Date:", { visitDate }),
-    //   createData("Visit Time:", { visitTime }),
-    //   createData("Comment:", { notificationText }),
-    // ];
+    handleUpdateRead(id);
 
     setOpen(true);
   };
@@ -380,7 +400,7 @@ export const NotificationsTable = ({ notifications }) => {
     senderId,
     appointmentId
   ) => {
-    // if notificationType === "Patient Approve"
+    // if notificationType === "New patient review"
     try {
       await approvePatient({ variables: { senderId } });
 
@@ -389,7 +409,7 @@ export const NotificationsTable = ({ notifications }) => {
       console.error(err);
     }
 
-    // if notificationType === "Shift Change"
+    // if notificationType === "Carer change"
     const trigger = "carerChange";
 
     try {
@@ -410,11 +430,11 @@ export const NotificationsTable = ({ notifications }) => {
   const handleDenial = async (event) => {
     // regardless of type
     //
-    // if (senderType === "carer")
+    // if (senderId.accountType === "carer")
     // send notification to inform carer that request has been denied - use sendNotification resolver
     // send email to inform patient that request has been denied - use emailJS
     //
-    // if (senderType === "patient") {
+    // if (senderId.accountType === "patient") {
     // emailjs
     //   .sendForm(
     //     "service_doq4yxc",
@@ -457,7 +477,7 @@ export const NotificationsTable = ({ notifications }) => {
             aria-label="simple table"
           >
             <TableBody>
-              {ModalRows.map((row) => (
+              {modalRows.map((row) => (
                 <TableRow
                   key={row.rowTitle}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -471,29 +491,29 @@ export const NotificationsTable = ({ notifications }) => {
             </TableBody>
           </Table>
 
-          {/* {userAccount === "supervisor" && ( */}
-          <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
-            {" "}
-            <Button
-              variant="contained"
-              color="success"
-              type="submit"
-              endIcon={<CheckCircleIcon />}
-              onClick={handleApproval}
-            >
-              Approve
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              type="submit"
-              endIcon={<HighlightOffIcon />}
-              onClick={handleDenial}
-            >
-              Deny
-            </Button>
-          </Box>
-          {/* )} */}
+          {userAccount === "supervisor" && (
+            <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
+              {" "}
+              <Button
+                variant="contained"
+                color="success"
+                type="submit"
+                endIcon={<CheckCircleIcon />}
+                onClick={handleApproval}
+              >
+                Approve
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                type="submit"
+                endIcon={<HighlightOffIcon />}
+                onClick={handleDenial}
+              >
+                Deny
+              </Button>
+            </Box>
+          )}
 
           <DialogActions>
             <Button autoFocus onClick={handleClose} variant="contained">
@@ -533,7 +553,7 @@ export const NotificationsTable = ({ notifications }) => {
                       key={row.notificationId}
                       value={row.notificationId}
                       sx={{
-                        backgroundColor: isReadStatus ? "#eef5dbff" : "white",
+                        backgroundColor: row.isRead ? "#eef5dbff" : "white",
                       }}
                     >
                       <TableCell

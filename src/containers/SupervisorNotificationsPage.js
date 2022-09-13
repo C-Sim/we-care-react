@@ -27,7 +27,9 @@ export const SupervisorNotificationsPage = () => {
       {error && (
         <Error message="Failed to load notifications. Please try again." />
       )}
-      {data && <NotificationsTable notifications={data} />}
+      {data && (
+        <NotificationsTable notifications={data.notificationsByUserId} />
+      )}
     </Box>
   );
 };
