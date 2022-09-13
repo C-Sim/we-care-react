@@ -87,7 +87,6 @@ export const CREATE_CARE_PLAN = gql`
   mutation CreateCarePlan($carePlanInput: CarePlanInput!) {
     createCarePlan(carePlanInput: $carePlanInput) {
       success
-      id
     }
   }
 `;

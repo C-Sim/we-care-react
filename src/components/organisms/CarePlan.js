@@ -50,7 +50,7 @@ export const CarePlanForm = ({ isMobile }) => {
   });
 
   const handleCreateCarePlan = (formData) => {
-    const carePlanInput = {
+    const carePlanFields = {
       disabilities: formData.disabilities,
       mobility: formData.mobility,
       communication: formData.communication,
@@ -59,7 +59,14 @@ export const CarePlanForm = ({ isMobile }) => {
       mentalHealth: formData.mentalHealth,
       dietaryRequirements: formData.dietaryRequirements,
     };
-    console.log(carePlanInput);
+    let carePlanInput = {};
+    Object.entries(carePlanFields).forEach(([key, value]) => {
+      if (value) {
+        carePlanInput[key] = value;
+      }
+    });
+
+
     createCarePlan({
       variables: {
         carePlanInput,
