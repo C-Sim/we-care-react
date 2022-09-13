@@ -11,6 +11,14 @@ export const PATIENT_SIGNUP = gql`
   }
 `;
 
+export const CARER_SIGNUP = gql`
+  mutation CarerSignup($signupInput: SignupInput!, $carerInput: CarerInput!) {
+    carerSignup(signupInput: $signupInput, carerInput: $carerInput) {
+      success
+    }
+  }
+`;
+
 export const LOGIN = gql`
   mutation Login($loginInput: LoginInput!) {
     login(loginInput: $loginInput) {
@@ -101,6 +109,14 @@ export const UPDATE_CHECKIN = gql`
         actualStart
         status
       }
+    }
+  }
+`;
+
+export const CREATE_APPOINTMENTS = gql`
+  mutation CreateAppointments($appointments: [AppointmentInput]!) {
+    createAppointments(appointments: $appointments) {
+      success
     }
   }
 `;
