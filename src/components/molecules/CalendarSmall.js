@@ -10,28 +10,28 @@ export const CalendarSmall = ({ userResults }) => {
   const [resultArr, setResultArr] = useState([]);
 
   // render each appointment - this will be replaced by a timeline item - and the div in the main return section will be replaced by a "timeline" type component
-  //   const ResultList = ({ result }) => {
-  //     const dateFormat = new Date(result.appointmentDate);
+  const ResultList = ({ result }) => {
+    const dateFormat = new Date(result.appointmentDate);
 
-  //     const startFormat = new Date(result.start);
+    const startFormat = new Date(result.start);
 
-  //     return (
-  //       <div>
-  //         <h2>{dateFormat.toLocaleString()}</h2>
-  //         <ul>
-  //           <li>{startFormat.toString()}</li>
-  //           <li>{result.title}</li>
-  //           <li>
-  //             {result.carerId.firstName} {result.carerId.lastName}
-  //           </li>
-  //           <li>
-  //             {result.patientId.firstName} {result.patientId.lastName}
-  //           </li>
-  //           <li>{result.patientId.patientProfileId.postcode}</li>
-  //         </ul>
-  //       </div>
-  //     );
-  //   };
+    return (
+      <div>
+        <h2>{dateFormat.toLocaleString()}</h2>
+        <ul>
+          <li>{startFormat.toString()}</li>
+          <li>{result.title}</li>
+          <li>
+            {result.carerId.firstName} {result.carerId.lastName}
+          </li>
+          <li>
+            {result.patientId.firstName} {result.patientId.lastName}
+          </li>
+          <li>{result.patientId.patientProfileId.postcode}</li>
+        </ul>
+      </div>
+    );
+  };
 
   const EmptyList = () => {
     return (
@@ -47,15 +47,15 @@ export const CalendarSmall = ({ userResults }) => {
     setCalDate(calDate);
 
     //get filtered results
-    // const filteredResults = userResults.filter((result) => {
-    //   const newResultFormat = new Date(result.appointmentDate)
-    //     .toLocaleString()
-    //     .split(",")[0];
-    //   const newCalDateFormat = calDate.toLocaleString().split(",")[0];
-    //   return newResultFormat === newCalDateFormat;
-    // });
+    const filteredResults = userResults.filter((result) => {
+      const newResultFormat = new Date(result.appointmentDate)
+        .toLocaleString()
+        .split(",")[0];
+      const newCalDateFormat = calDate.toLocaleString().split(",")[0];
+      return newResultFormat === newCalDateFormat;
+    });
 
-    // setResultArr(filteredResults);
+    setResultArr(filteredResults);
   };
 
   return (
@@ -64,7 +64,7 @@ export const CalendarSmall = ({ userResults }) => {
         <Calendar onChange={onChange} value={calDate} />
       </div>
       {/* to be replaced by a timeline component */}
-      {/* <div className="weekView-timeline">
+      <div className="weekView-timeline">
         {resultArr.length ? (
           resultArr.map((result) => (
             <ResultList result={result} key={result.id} />
@@ -72,7 +72,7 @@ export const CalendarSmall = ({ userResults }) => {
         ) : (
           <EmptyList />
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

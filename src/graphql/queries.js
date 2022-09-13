@@ -145,8 +145,8 @@ export const ADDRESS_LOOKUP = gql`
 `;
 
 export const APPOINTMENTS_BY_ID = gql`
-  query AppointmentsByUserId($userId: ID!) {
-    appointmentsByUserId(userId: $userId) {
+  query AppointmentsByUserId {
+    appointmentsByUserId {
       id
       appointmentDate
       patientId {
@@ -154,11 +154,22 @@ export const APPOINTMENTS_BY_ID = gql`
         firstName
         lastName
         postcode
+        address {
+          fullAddress
+        }
+        patientProfileId {
+          username
+          gender
+        }
       }
       carerId {
         id
         firstName
         lastName
+        carerProfileId {
+          username
+          gender
+        }
       }
       start
       end

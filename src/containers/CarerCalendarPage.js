@@ -16,22 +16,29 @@ import { Typography } from "@mui/material";
 import { Data } from "@react-google-maps/api";
 
 export const CarerCalendarPage = () => {
-  // const { data, loading, error } = useQuery({
-  //   APPOINTMENTS_BY_ID,
-  //   fetchPolicy: "network-only",
-  // });
+  const { data, loading, error } = useQuery(APPOINTMENTS_BY_ID, {
+    fetchPolicy: "network-only",
+  });
 
-  const userResults = [
-    {
-      appointmentDate: "2022-09-01",
-      start: "2022-09-01",
-    },
-    { appointmentDate: "2022-09-01", start: "2022-09-01" },
-  ];
+  const [userResults, setUserResults] = useState();
+
+  useEffect(() => {
+    if (data && data.appointmentsByUserId) {
+      setUserResults(data.appointmentsByUserId);
+    }
+  }, [data]);
+
+  // const userResults = [
+  //   {
+  //     appointmentDate: "2022-09-01",
+  //     start: "2022-09-01",
+  //   },
+  //   { appointmentDate: "2022-09-01", start: "2022-09-01" },
+  // ];
   return (
     <Box>
       <PageTitle title="Assignments By Date" />
-      <CalendarSmall userResults={userResults} />
+      {userResults && <CalendarSmall userResults={userResults} />}
     </Box>
   );
 };
