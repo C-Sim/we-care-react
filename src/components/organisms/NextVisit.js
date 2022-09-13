@@ -10,6 +10,10 @@ import Box from "@mui/material/Box";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
+import { ButtonDisabled } from "../atoms/ButtonDisabled";
+import { UPDATE_CHECKIN } from "../../graphql/mutations";
+import { UPDATE_CHECKOUT } from "../../graphql/mutations";
 
 // example past patient notes
 const patientVisitNotesArray = [
@@ -21,17 +25,34 @@ const patientVisitNotesArray = [
   { patientNotes: "please bring some botton, thank you" },
 ];
 
-export const NextVisitForCarer = ({
-  appointmentDetail,
-  updateCheckin,
-  checkedIn,
-}) => {
+export const NextVisitForCarer = ({ appointmentDetail }) => {
   console.log(appointmentDetail);
+  const [checkedIn, setCheckedIn] = useState(false);
+  const [checkedOut, setCheckedOut] = useState(false);
+  const [
+    updateCheckin,
+    { data: checkinData, loading: checkinLoading, error: checkinError },
+  ] = useMutation(UPDATE_CHECKIN, {
+    onCompleted: () => {
+      setCheckedIn(true);
+    },
+  });
+  const [
+    updateCheckout,
+    { data: checkoutData, loading: checkoutLoading, error: checkoutError },
+  ] = useMutation(UPDATE_CHECKOUT, {
+    onCompleted: () => {
+      setCheckedOut(true);
+    },
+  });
+
+  const status = appointmentDetail.status;
 
   const [pastVisitNotesBtn, setPastVisitNoteBtn] = useState(false);
 
   const CheckInAndOut = () => {
     const checkin = (event) => {
+      debugger;
       console.log(event.target.id);
       const trigger = "checkin";
       updateCheckin({
@@ -44,11 +65,18 @@ export const NextVisitForCarer = ({
 
     const checkout = (event) => {
       console.log(event.target.id);
+      const trigger = "checkout";
+      updateCheckout({
+        variables: {
+          appointmentId: event.target.id,
+          trigger,
+        },
+      });
     };
 
     return (
       <>
-        {!checkedIn && (
+        {status === "upcoming" && !checkedIn && (
           <Button
             className="button"
             variant="contained"
@@ -65,7 +93,7 @@ export const NextVisitForCarer = ({
             Check In
           </Button>
         )}
-        {checkedIn && (
+        {status === "ongoing" && !checkedOut && (
           <Button
             className="button"
             variant="contained"
@@ -81,6 +109,12 @@ export const NextVisitForCarer = ({
           >
             Check Out
           </Button>
+        )}
+        {status === "ongoing" && checkedOut && (
+          <ButtonDisabled label="completed" type="button" />
+        )}
+        {status === "completed" && (
+          <ButtonDisabled label="completed" type="button" />
         )}
       </>
     );

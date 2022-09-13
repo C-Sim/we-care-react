@@ -87,28 +87,22 @@ export const UPDATE_CHECKIN = gql`
       appointmentUpdateInput: $appointmentUpdateInput
     ) {
       success
-      appointment {
-        id
-        appointmentDate
-        patientId {
-          id
-          firstName
-          lastName
-          postcode
-          address {
-            line_1
-            fullAddress
-          }
-          patientProfileId {
-            username
-            gender
-          }
-        }
-        start
-        end
-        actualStart
-        status
-      }
+    }
+  }
+`;
+
+export const UPDATE_CHECKOUT = gql`
+  mutation UpdateAppointmentCheckout(
+    $appointmentId: ID!
+    $trigger: String!
+    $appointmentUpdateInput: AppointmentUpdateInput
+  ) {
+    updateAppointment(
+      appointmentId: $appointmentId
+      trigger: $trigger
+      appointmentUpdateInput: $appointmentUpdateInput
+    ) {
+      success
     }
   }
 `;

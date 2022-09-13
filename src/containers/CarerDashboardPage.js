@@ -16,20 +16,8 @@ import { NextVisitForCarer } from "../components/organisms/NextVisit";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { useMutation, useQuery } from "@apollo/client";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
-import { UPDATE_CHECKIN } from "../graphql/mutations";
 
 export const CarerDashboardPage = () => {
-  const [checkedIn, setCheckedIn] = useState(false);
-  const [
-    updateCheckin,
-    { data: checkinData, loading: checkinLoading, error: checkinError },
-  ] = useMutation(UPDATE_CHECKIN, {
-    onCompleted: () => {
-      setAppointmentDetail(checkinData.appointment);
-      setCheckedIn(true);
-    },
-  });
-
   const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
   const [timelineData, setTimelineData] = useState([]);
   useEffect(() => {
@@ -54,59 +42,59 @@ export const CarerDashboardPage = () => {
     setAppointmentDetail(appointment);
   };
 
-  const appointments = [
-    {
-      id: "484251",
-      start: "08:00",
-      status: "completed",
-      patientId: {
-        firstName: "Bob",
-        lastName: "Smith",
-        patientProfileId: {
-          username: "Bob Smith",
-          gender: "male",
-        },
-        postcode: "B29 6AG",
-        address: {
-          fullAddress: "Dale Rd B29 6AG",
-        },
-      },
-    },
-    {
-      id: "484252",
-      start: "09:00",
-      status: "ongoing",
-      patientId: {
-        firstName: "alice",
-        lastName: "Smith",
-        patientProfileId: {
-          username: "Alice Smith",
-          gender: "female",
-        },
-        postcode: "B29 6AG",
-        address: {
-          fullAddress: "Dale Rd B29 6AG",
-        },
-      },
-    },
-    {
-      id: "484253",
-      start: "10:00",
-      status: "upcoming",
-      patientId: {
-        firstName: "chris",
-        lastName: "Smith",
-        patientProfileId: {
-          username: "chris Smith",
-          gender: "male",
-        },
-        postcode: "B29 6AG",
-        address: {
-          fullAddress: "Dale Rd B29 6AG",
-        },
-      },
-    },
-  ];
+  // const appointments = [
+  //   {
+  //     id: "484251",
+  //     start: "08:00",
+  //     status: "completed",
+  //     patientId: {
+  //       firstName: "Bob",
+  //       lastName: "Smith",
+  //       patientProfileId: {
+  //         username: "Bob Smith",
+  //         gender: "male",
+  //       },
+  //       postcode: "B29 6AG",
+  //       address: {
+  //         fullAddress: "Dale Rd B29 6AG",
+  //       },
+  //     },
+  //   },
+  //   {
+  //     id: "484252",
+  //     start: "09:00",
+  //     status: "ongoing",
+  //     patientId: {
+  //       firstName: "alice",
+  //       lastName: "Smith",
+  //       patientProfileId: {
+  //         username: "Alice Smith",
+  //         gender: "female",
+  //       },
+  //       postcode: "B29 6AG",
+  //       address: {
+  //         fullAddress: "Dale Rd B29 6AG",
+  //       },
+  //     },
+  //   },
+  //   {
+  //     id: "484253",
+  //     start: "10:00",
+  //     status: "upcoming",
+  //     patientId: {
+  //       firstName: "chris",
+  //       lastName: "Smith",
+  //       patientProfileId: {
+  //         username: "chris Smith",
+  //         gender: "male",
+  //       },
+  //       postcode: "B29 6AG",
+  //       address: {
+  //         fullAddress: "Dale Rd B29 6AG",
+  //       },
+  //     },
+  //   },
+  // ];
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionResponse, setDirectionResponse] = useState(null);
@@ -166,11 +154,7 @@ export const CarerDashboardPage = () => {
       <Box sx={{ height: 800 }}>
         {/* next appointment detail */}
         {appointmentDetail && (
-          <NextVisitForCarer
-            appointmentDetail={appointmentDetail}
-            updateCheckin={updateCheckin}
-            checkedIn={checkedIn}
-          />
+          <NextVisitForCarer appointmentDetail={appointmentDetail} />
         )}
         {/* carer timeline box container */}
         <Box
@@ -199,7 +183,7 @@ export const CarerDashboardPage = () => {
               value={origin}
               onChange={handleOriginClick}
             >
-              {appointments.map((appointment, index) => (
+              {timelineData.map((appointment, index) => (
                 <MenuItem
                   value={appointment.patientId.address.fullAddress}
                   key={index}
@@ -219,7 +203,7 @@ export const CarerDashboardPage = () => {
               value={destination}
               onChange={handleDestinationClick}
             >
-              {appointments.map((appointment, index) => (
+              {timelineData.map((appointment, index) => (
                 <MenuItem
                   value={appointment.patientId.address.fullAddress}
                   key={index}

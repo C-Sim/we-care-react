@@ -20,7 +20,7 @@ export const CarerTimeline = ({ date, appointments, viewAppointment }) => {
 
       <Timeline sx={{ color: "#3f3d56" }}>
         {appointments.map((appointments) => (
-          <TimelineItem>
+          <TimelineItem key={appointments.id}>
             <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2">
               {appointments.start}
             </TimelineOppositeContent>
