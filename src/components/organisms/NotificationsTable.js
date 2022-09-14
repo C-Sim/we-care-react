@@ -279,6 +279,7 @@ export const NotificationsTable = ({ notifications }) => {
   // create state for holding query data
 
   const [updateRead] = useMutation(UPDATE_READ);
+
   //   useEffect(() => {
   //     console.log(notifications);
   //   }, [notifications]);
@@ -289,16 +290,18 @@ export const NotificationsTable = ({ notifications }) => {
   const notificationData = notifications.map((notification) => ({
     notificationId: notification.id,
     notificationType: notification.notificationType,
-    accountType: notification.accountType,
-    username: `${notification.senderId.firstName} " " ${notification.senderId.lastName}`,
+    accountType: notification.senderId.accountType,
+    username: `${notification.senderId.firstName} ${notification.senderId.lastName}`,
     notificationDate: notification.notificationDate,
     visitDate: notification.appointmentDate || ["N/A"],
     visitTime: notification.appointmentDate || ["N/A"],
     isRead: notification.isRead,
-    //   senderId: notification.senderId,
-    //   appointmentId: notification.appointmentId || ["N/A"],
-    //   patient: notification.appointmentId.patient || ["N/A"],
-    //   notificationText: notification.notificationText || ["N/A"],
+    senderId: notification.senderId.id,
+    senderEmail: notification.senderId.email,
+    receiverId: notification.receiverId,
+    appointmentId: notification.appointmentId || ["N/A"],
+    patient: notification.patientUsername || ["N/A"],
+    notificationText: notification.notificationText || ["N/A"],
   }));
 
   const [savedNotifications, setNotifications] = useState(notificationData);
@@ -326,7 +329,7 @@ export const NotificationsTable = ({ notifications }) => {
   );
 
   const modalRows = [
-    // createData("Patient:", modalRowData.patient),
+    createData("Patient:", modalRowData?.patient),
     createData("Submitted:", modalRowData?.notificationDate),
     createData("Visit Date:", modalRowData?.visitDate),
     createData("Visit Time:", modalRowData?.visitTime),
