@@ -7,37 +7,30 @@ import { APPOINTMENTS_BY_ID } from "../graphql/queries";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
 
 export const PatientDashboardPage = () => {
-  const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
+  const { data, loading, error } = useQuery(APPOINTMENTS_BY_ID, {
+    fetchPolicy: "network-only",
+  });
   const [timelineData, setTimelineData] = useState([]);
+  const [appointmentDetail, setAppointmentDetail] = useState();
+
   useEffect(() => {
     if (data) {
-      setTimelineData(data.appointmentsForNextWorkingDay);
+      setTimelineData(data.appointmentsByUserId);
     }
   }, [data]);
   console.log(timelineData);
 
+  const viewAppointment = (event) => {
+    console.log(event.target);
+    const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
+    setAppointmentDetail(appointment);
+  };
+
   return (
     <>
       <h1 align="center">Welcome, UserName</h1>
-      <PatientTimeline
-        visits={[
-          {
-            id: "1234",
-            date: "Monday 8th August",
-            time: "08:00",
-            carerName: "Alice Bond",
-            carerGender: "female",
-          },
-          {
-            id: "12345",
-            date: "Thursday 11th August",
-            time: "08:00",
-            carerName: "Alan Bates",
-            carerGender: "male",
-          },
-        ]}
-      />
-      <NextVisitPatient />
+      {timelineData && <PatientTimeline visits={timelineData} />}
+      {appointmentDetail && <NextVisitPatient />}
     </>
   );
 };

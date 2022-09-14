@@ -30,11 +30,7 @@ export const NextVisitPatient = () => {
             carer first name and last name, gender
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
-          <Typography variant="body2">
-            total appointment count
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
+          <Typography variant="body2">total appointment count</Typography>
         </CardContent>
         <CardContent sx={{ maxWidth: 200 }}>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -50,11 +46,7 @@ export const NextVisitPatient = () => {
             carer first name and last name, gender
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
-          <Typography variant="body2">
-            total appointment count
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
+          <Typography variant="body2">total appointment count</Typography>
         </CardContent>
       </Card>
     );
@@ -94,7 +86,9 @@ export const NextVisitPatient = () => {
           divider={<Divider orientation="vertical" flexItem />}
           sx={{ pt: 1, pl: 1 }}
         >
-          <Button variant="contained">Submit Requirements</Button>
+          <Button size="small" variant="contained">
+            Submit Requirements
+          </Button>
         </Stack>
       </Box>
     </Paper>

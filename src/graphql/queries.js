@@ -175,28 +175,34 @@ export const NEXT_WORKING_DAY_APPOINTMENTS = gql`
   }
 `;
 
-// export const APPOINTMENTS_BY_ID = gql`
-//   query AppointmentsByUserId {
-//     appointmentsByUserId {
-//       id
-//       appointmentDate
-//       patientId {
-//         id
-//         firstName
-//         lastName
-//         postcode
-//       }
-//       carerId {
-//         id
-//         firstName
-//         lastName
-//       }
-//       start
-//       end
-//       status
-//     }
-//   }
-// `;
+export const APPOINTMENTS_BY_ID = gql`
+  query AppointmentsByUserId {
+    appointmentsByUserId {
+      id
+      appointmentDate
+      patientId {
+        id
+        firstName
+        lastName
+      }
+      carerId {
+        id
+        firstName
+        lastName
+        imageUrl
+        phoneNumber
+        carerProfileId {
+          username
+          gender
+          appointmentCount
+        }
+      }
+      start
+      end
+      status
+    }
+  }
+`;
 
 export const AVAILABLE_CARERS = gql`
   query AvailableCarers($selectedDate: String!) {
