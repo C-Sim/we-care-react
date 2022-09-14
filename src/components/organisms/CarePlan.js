@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { useMutation, useLazyQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
-import FormGroup from "@mui/material/FormGroup";
+
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
@@ -16,10 +16,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { LoadingButton } from "@mui/lab";
-import { ButtonDark } from "../atoms/ButtonDark";
 
 import { CREATE_CARE_PLAN } from "../../graphql/mutations";
-import { AppContext } from "../../context/AppProvider";
 
 export const CarePlanForm = ({ isMobile }) => {
   //state for update success
