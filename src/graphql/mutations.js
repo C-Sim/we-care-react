@@ -82,3 +82,11 @@ export const CREATE_APPOINTMENTS = gql`
     }
   }
 `;
+
+export const CREATE_CARE_PLAN = gql`
+  mutation CreateCarePlan($carePlanInput: CarePlanInput!) {
+    createCarePlan(carePlanInput: $carePlanInput) {
+      success
+    }
+  }
+`;
