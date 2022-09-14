@@ -15,11 +15,11 @@ export const PatientTimeline = ({ visits }) => {
   return (
     <Paper
       sx={{
-        p: 3,
-        width: "30%",
-        height: 800,
+        p: 6,
+        width: "40%",
+        height: "60%",
         position: "absolute",
-        top: 100,
+        top: 150,
       }}
     >
       <Typography align="center" color="#00b0ff" fontWeight={200}>

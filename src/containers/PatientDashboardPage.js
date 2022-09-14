@@ -1,8 +1,10 @@
 import { PatientTimeline } from "../components/molecules/PatientTimeline";
+import { NextVisitPatient } from "../components/organisms/NextVisitPatient";
 
 export const PatientDashboardPage = () => {
   return (
     <>
+      <h1>Welcome, UserName</h1>
       <PatientTimeline
         visits={[
           {
@@ -19,6 +21,7 @@ export const PatientDashboardPage = () => {
           },
         ]}
       />
+      <NextVisitPatient />
     </>
   );
 };
