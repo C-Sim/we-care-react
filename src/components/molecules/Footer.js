@@ -26,63 +26,57 @@ export const Footer = () => {
         position: "fixed",
       }}
     >
-      <Grid item xs={4} sm={1} md={1}>
+      <Grid
+        item
+        xs={6}
+        md={8}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <ProfileAvatar image={hands} imageAlt="WeCare logo" />
-      </Grid>
-
-      <Grid container xs={8} sm={11} md={11}>
-        <Grid
-          item
-          xs={10}
-          sm={6}
-          md={6}
+        <Typography
           sx={{
-            display: "flex",
-            alignItems: "center",
+            textAlign: "center",
+            fontWeight: 100,
+            pl: isMobile ? 0 : 2,
           }}
         >
+          WeCare &copy; 2022
+        </Typography>
+      </Grid>
+
+      <Grid item xs={6} md={4}>
+        <Stack spacing={0.5}>
           <Typography
             sx={{
-              textAlign: "center",
+              fontSize: "0.6rem",
+              textAlign: isMobile ? "left" : "right",
               fontWeight: 100,
-              pl: isMobile ? 0 : 2,
             }}
           >
-            WeCare &copy; 2022
+            University of Birmingham B29 6AG
           </Typography>
-        </Grid>
-
-        <Grid item xs={10} sm={6} md={6}>
-          <Stack spacing={0.5}>
-            <Typography
-              sx={{
-                fontSize: "0.6rem",
-                textAlign: isMobile ? "left" : "right",
-                fontWeight: 100,
-              }}
-            >
-              University of Birmingham B29 6AG
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: "0.6rem",
-                textAlign: isMobile ? "left" : "right",
-                fontWeight: 100,
-              }}
-            >
-              Info@WeCare.com
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: "0.6rem",
-                textAlign: isMobile ? "left" : "right",
-                fontWeight: 100,
-              }}
-            >
-              0121 444 8888
-            </Typography>
-          </Stack>
-        </Grid>
+          <Typography
+            sx={{
+              fontSize: "0.6rem",
+              textAlign: isMobile ? "left" : "right",
+              fontWeight: 100,
+            }}
+          >
+            Info@WeCare.com
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "0.6rem",
+              textAlign: isMobile ? "left" : "right",
+              fontWeight: 100,
+            }}
+          >
+            0121 444 8888
+          </Typography>
+        </Stack>
       </Grid>
     </Grid>
   );
