@@ -11,7 +11,7 @@ import { Error } from "../components/atoms/Error";
 import { AppContext } from "../context/AppProvider";
 import { RECEIVED_NOTIFICATIONS } from "../graphql/queries";
 
-export const SupervisorNotificationsPage = () => {
+export const NotificationsPage = () => {
   const context = useContext(AppContext);
 
   const { data, loading, error } = useQuery(RECEIVED_NOTIFICATIONS, {

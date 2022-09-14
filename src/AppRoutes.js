@@ -13,7 +13,7 @@ import { CarerAssignmentsPage } from "./containers/CarerAssignmentsPage";
 import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
-import { SupervisorNotificationsPage } from "./containers/SupervisorNotificationsPage";
+import { NotificationsPage } from "./containers/NotificationsPage";
 import { SupervisorCreateCarerPage } from "./containers/SupervisorCreateCarerPage";
 import { SupervisorAssignPage } from "./containers/SupervisorAssignPage";
 import { PatientsPage } from "./containers/PatientsPage";
@@ -51,10 +51,7 @@ export const AppRoutes = () => {
             path="/carer-notifications"
             element={<CarerNotificationsPage />}
           />
-          <Route
-            path="/supervisor-notifications"
-            element={<SupervisorNotificationsPage />}
-          />
+          <Route path="/notifications" element={<NotificationsPage />} />
 
           <Route path="/carer-assignments" element={<CarerAssignmentsPage />} />
 
