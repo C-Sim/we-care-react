@@ -48,15 +48,12 @@ export const PatientTimeline = ({ visits, viewAppointment }) => {
               <TimelineConnector sx={{ bgcolor: "#00b0ff" }} />
             </TimelineSeparator>
             <TimelineContent>
-              <Typography fontSize="0.64rem">Carer</Typography>
               <Button
-                size="small"
                 variant="Contained"
                 onClick={viewAppointment}
                 id={visits.id}
               >
-                {visit.carerId.carerProfileId.username}
-                {visit.carerId.carerProfileId.gender}
+                Carer: {visit.carerId.carerProfileId.username}
               </Button>
             </TimelineContent>
           </TimelineItem>

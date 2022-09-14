@@ -24,12 +24,16 @@ export const PatientDashboardPage = () => {
     console.log(event.target);
     const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
     setAppointmentDetail(appointment);
+    console.log(appointment);
   };
 
   return (
     <>
       <h1 align="center">Welcome, UserName</h1>
-      {timelineData && <PatientTimeline visits={timelineData} />}
+      <PatientTimeline
+        visits={timelineData}
+        viewAppointment={viewAppointment}
+      />
       {appointmentDetail && <NextVisitPatient />}
     </>
   );

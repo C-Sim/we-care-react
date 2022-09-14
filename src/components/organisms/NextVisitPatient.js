@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import Box from "@mui/material/Box";
 
-export const NextVisitPatient = () => {
+export const NextVisitPatient = (appointmentDetail) => {
   const CarerCard = () => {
     {
       /* can add carer info: firstName lastName, gender, appointmentCount */
