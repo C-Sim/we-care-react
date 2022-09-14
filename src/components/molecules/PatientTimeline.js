@@ -9,10 +9,19 @@ import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import Typography from "@mui/material/Typography";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
+import { Paper } from "@mui/material";
 
 export const PatientTimeline = ({ visits }) => {
   return (
-    <React.Fragment>
+    <Paper
+      sx={{
+        p: 3,
+        width: "30%",
+        height: 800,
+        position: "absolute",
+        top: 100,
+      }}
+    >
       <Typography align="center" color="#00b0ff" fontWeight={200}>
         Your Upcoming Visits
       </Typography>
@@ -37,6 +46,6 @@ export const PatientTimeline = ({ visits }) => {
           </TimelineItem>
         ))}
       </Timeline>
-    </React.Fragment>
+    </Paper>
   );
 };

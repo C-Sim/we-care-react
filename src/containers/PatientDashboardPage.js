@@ -1,5 +1,24 @@
-// For each user type to view top level information most relevant to them - may need to split into 3, but use first created as template for others
+import { PatientTimeline } from "../components/molecules/PatientTimeline";
 
 export const PatientDashboardPage = () => {
-  return <h1>PatientDashboardPage</h1>;
+  return (
+    <>
+      <PatientTimeline
+        visits={[
+          {
+            date: "Monday 8th August",
+            time: "08:00",
+            carerName: "Alice Bond",
+            carerGender: "female",
+          },
+          {
+            date: "Thursday 11th August",
+            time: "08:00",
+            carerName: "Alan Bates",
+            carerGender: "male",
+          },
+        ]}
+      />
+    </>
+  );
 };
