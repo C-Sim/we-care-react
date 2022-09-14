@@ -126,7 +126,15 @@ export const NextVisitForCarer = ({
   const BtnUpdateNotes = () => {
     const updateCareNotes = () => {
       console.log("updateCareNotes");
+      const trigger = "carerNote";
+      updateCarerNote({
+        variables: {
+          appointmentId: event.target.id,
+          trigger,
+        },
+      });
     };
+
     return (
       <Button variant="Contained" onClick={updateCareNotes}>
         Update care notes
