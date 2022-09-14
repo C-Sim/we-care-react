@@ -14,21 +14,45 @@ import {
 import { useState, useRef, useCallback, useEffect } from "react";
 import { NextVisitForCarer } from "../components/organisms/NextVisit";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
 
 export const CarerDashboardPage = () => {
   const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
+  const [
+    getUpdatedData,
+    { data: dayData, loading: dayLoading, error: dayError },
+  ] = useLazyQuery(NEXT_WORKING_DAY_APPOINTMENTS, {
+    fetchPolicy: "network-only",
+  });
   const [timelineData, setTimelineData] = useState([]);
+  const [statusChanged, setStatusChanged] = useState();
   useEffect(() => {
     if (data) {
       setTimelineData(data.appointmentsForNextWorkingDay);
     }
   }, [data]);
-  console.log(timelineData);
+
+  useEffect(() => {
+    getUpdatedData();
+  }, [statusChanged]);
+
+  useEffect(() => {
+    if (dayData) {
+      setTimelineData(dayData.appointmentsForNextWorkingDay);
+    }
+  }, [dayData]);
 
   const [appointmentDetail, setAppointmentDetail] = useState();
 
+  //getting status change from nextVisit component
+  const handleStatusChange = (e) => {
+    console.log("status changed");
+    console.log(e);
+    setStatusChanged(e);
+  };
+
+  //google map and directions
   const center = { lat: 52.489471, lng: -1.898575 };
 
   const { isLoaded } = useJsApiLoader({
@@ -37,64 +61,10 @@ export const CarerDashboardPage = () => {
   });
 
   const viewAppointment = (event) => {
-    console.log(event.target);
+    console.log(event.target.id);
     const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
     setAppointmentDetail(appointment);
   };
-
-  // const appointments = [
-  //   {
-  //     id: "484251",
-  //     start: "08:00",
-  //     status: "completed",
-  //     patientId: {
-  //       firstName: "Bob",
-  //       lastName: "Smith",
-  //       patientProfileId: {
-  //         username: "Bob Smith",
-  //         gender: "male",
-  //       },
-  //       postcode: "B29 6AG",
-  //       address: {
-  //         fullAddress: "Dale Rd B29 6AG",
-  //       },
-  //     },
-  //   },
-  //   {
-  //     id: "484252",
-  //     start: "09:00",
-  //     status: "ongoing",
-  //     patientId: {
-  //       firstName: "alice",
-  //       lastName: "Smith",
-  //       patientProfileId: {
-  //         username: "Alice Smith",
-  //         gender: "female",
-  //       },
-  //       postcode: "B29 6AG",
-  //       address: {
-  //         fullAddress: "Dale Rd B29 6AG",
-  //       },
-  //     },
-  //   },
-  //   {
-  //     id: "484253",
-  //     start: "10:00",
-  //     status: "upcoming",
-  //     patientId: {
-  //       firstName: "chris",
-  //       lastName: "Smith",
-  //       patientProfileId: {
-  //         username: "chris Smith",
-  //         gender: "male",
-  //       },
-  //       postcode: "B29 6AG",
-  //       address: {
-  //         fullAddress: "Dale Rd B29 6AG",
-  //       },
-  //     },
-  //   },
-  // ];
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionResponse, setDirectionResponse] = useState(null);
@@ -154,7 +124,10 @@ export const CarerDashboardPage = () => {
       <Box sx={{ height: 800 }}>
         {/* next appointment detail */}
         {appointmentDetail && (
-          <NextVisitForCarer appointmentDetail={appointmentDetail} />
+          <NextVisitForCarer
+            appointmentDetail={appointmentDetail}
+            handleStatusChange={handleStatusChange}
+          />
         )}
         {/* carer timeline box container */}
         <Box

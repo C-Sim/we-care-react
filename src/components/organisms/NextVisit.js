@@ -25,8 +25,10 @@ const patientVisitNotesArray = [
   { patientNotes: "please bring some botton, thank you" },
 ];
 
-export const NextVisitForCarer = ({ appointmentDetail }) => {
-  console.log(appointmentDetail);
+export const NextVisitForCarer = ({
+  appointmentDetail,
+  handleStatusChange,
+}) => {
   const [checkedIn, setCheckedIn] = useState(false);
   const [checkedOut, setCheckedOut] = useState(false);
   const [
@@ -35,6 +37,7 @@ export const NextVisitForCarer = ({ appointmentDetail }) => {
   ] = useMutation(UPDATE_CHECKIN, {
     onCompleted: () => {
       setCheckedIn(true);
+      handleStatusChange("checkin");
     },
   });
   const [
@@ -43,6 +46,7 @@ export const NextVisitForCarer = ({ appointmentDetail }) => {
   ] = useMutation(UPDATE_CHECKOUT, {
     onCompleted: () => {
       setCheckedOut(true);
+      handleStatusChange("checkout");
     },
   });
 
@@ -52,7 +56,6 @@ export const NextVisitForCarer = ({ appointmentDetail }) => {
 
   const CheckInAndOut = () => {
     const checkin = (event) => {
-      debugger;
       console.log(event.target.id);
       const trigger = "checkin";
       updateCheckin({
