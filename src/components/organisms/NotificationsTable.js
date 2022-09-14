@@ -276,7 +276,6 @@ export const NotificationsTable = ({ notifications }) => {
   const [open, setOpen] = useState(false);
   const [isReadStatus, setIsReadStatus] = useState(false);
   const [selectedNotificationId, setNotificationId] = useState("");
-  // create state for holding query data
 
   const [updateRead] = useMutation(UPDATE_READ);
 
@@ -328,6 +327,8 @@ export const NotificationsTable = ({ notifications }) => {
     (notification) => notification.notificationId === selectedNotificationId
   );
 
+  console.log(modalRowData);
+
   const modalRows = [
     createData("Patient:", modalRowData?.patient),
     createData("Submitted:", modalRowData?.notificationDate),
@@ -367,7 +368,6 @@ export const NotificationsTable = ({ notifications }) => {
 
     setNotificationId(id);
 
-    console.log(selectedNotificationId);
     console.log(id);
 
     handleUpdateRead(id);
@@ -394,8 +394,19 @@ export const NotificationsTable = ({ notifications }) => {
     setPage(0);
   };
 
-  const approvePatient = useMutation(PATIENT_APPROVE);
-  const updateAppointment = useMutation(UPDATE_APPOINTMENT);
+  const //   [
+    //
+    approvePatient =
+      // { data: approvalData, loading: approvalLoading, error: approvalError },
+      //   ]
+      useMutation(PATIENT_APPROVE);
+
+  const //   [
+    updateAppointment =
+      // ,
+      //     { data: updateData, loading: updateLoading, error: updateError },
+      //   ]
+      useMutation(UPDATE_APPOINTMENT);
 
   const handleApproval = async (
     event,
@@ -409,6 +420,8 @@ export const NotificationsTable = ({ notifications }) => {
       await approvePatient({ variables: { senderId } });
 
       //   success(true);
+      //   setOpen(false)
+      //   delete notification
     } catch (err) {
       console.error(err);
     }
@@ -503,7 +516,9 @@ export const NotificationsTable = ({ notifications }) => {
                 color="success"
                 type="submit"
                 endIcon={<CheckCircleIcon />}
-                onClick={handleApproval}
+                onClick={(event) =>
+                  handleApproval(event, modalRowData.notificationId)
+                }
               >
                 Approve
               </Button>
@@ -512,7 +527,9 @@ export const NotificationsTable = ({ notifications }) => {
                 color="error"
                 type="submit"
                 endIcon={<HighlightOffIcon />}
-                onClick={handleDenial}
+                onClick={(event) =>
+                  handleDenial(event, modalRowData.notificationId)
+                }
               >
                 Deny
               </Button>
