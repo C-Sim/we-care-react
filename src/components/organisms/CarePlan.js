@@ -20,9 +20,11 @@ import { LoadingButton } from "@mui/lab";
 import { CREATE_CARE_PLAN } from "../../graphql/mutations";
 
 export const CarePlanForm = ({ isMobile }) => {
-  //state for update success
+  //state for create care plan success
   const [carePlanSuccess, setCarePlanSuccess] = useState(false);
-  const [CarePlanMessage, setCarePlanMessage] = useState(false);
+
+  //state for care plan created
+  //const [carePlanCreatedMessage, setCarePlanCreatedMessage] = useState(false);
 
   //mutations
   const [createCarePlan, { data: createData, loading, error }] = useMutation(
@@ -33,7 +35,6 @@ export const CarePlanForm = ({ isMobile }) => {
       },
     }
   );
-  console.log(createData);
 
   //form definitions
   const {
@@ -190,6 +191,18 @@ export const CarePlanForm = ({ isMobile }) => {
         onSubmit={handleSubmit(handleCreateCarePlan)}
       >
         <Stack>
+          {carePlanSuccess && (
+            <Box>
+              <Typography
+                variant="caption"
+                component="div"
+                align="center"
+                marginTop={1}
+              >
+                Your Care Plan has already been created
+              </Typography>
+            </Box>
+          )}
           <FormControl>
             <FormLabel component="legend">
               Do you have any disabilities?
@@ -464,14 +477,16 @@ export const CarePlanForm = ({ isMobile }) => {
             </Typography>
           )}
           {carePlanSuccess && (
-            <Typography
-              variant="caption"
-              component="div"
-              sx={{ color: "green" }}
-              align="center"
-            >
-              Care plan successfully create!
-            </Typography>
+            <Box>
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{ color: "green" }}
+                align="center"
+              >
+                Care plan successfully created!
+              </Typography>
+            </Box>
           )}
 
           <Typography
