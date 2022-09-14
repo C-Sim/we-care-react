@@ -20,24 +20,31 @@ import { getNavItems } from "../../utils/getNavItems";
 export const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const { isLoggedIn, user, setIsLoggedIn } = useAuth();
 
-  const { isLoggedIn, user } = useAuth();
+  const logOut = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const navItems = getNavItems(isLoggedIn, user?.accountType);
-
+  console.log(isLoggedIn);
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{ textAlign: "center", backgroundColor: "#d0cde1" }}
+    >
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
             <ListItemButton
               sx={{
                 textAlign: "centre",
-                backgroundColor: "#d0cde1",
               }}
               onClick={() => {
                 navigate(item.path, { replace: true });
@@ -105,6 +112,11 @@ export const NavBar = () => {
                 {item.label}
               </Button>
             ))}
+            {isLoggedIn && (
+              <Button sx={{ color: "#fff" }} onClick={logOut}>
+                Logout
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
@@ -124,6 +136,18 @@ export const NavBar = () => {
           }}
           anchor="top"
         >
+          {isLoggedIn && (
+            <ListItemButton
+              className="Logout-btn-drawer"
+              sx={{
+                backgroundColor: "#d0cde1",
+                color: "#212121",
+              }}
+              onClick={logOut}
+            >
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          )}
           {drawer}
         </Drawer>
       </Box>
