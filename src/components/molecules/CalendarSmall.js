@@ -1,6 +1,9 @@
+import { Typography } from "@mui/material";
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { ButtonBright } from "../atoms/ButtonBright";
+import { CarerTimeline } from "./CarerTimeline";
 
 export const CalendarSmall = ({ userResults }) => {
   //this component contains the calendar item and will need to contain the timeline inside it too, so the required states can be set here and not at parent component level
@@ -8,39 +11,7 @@ export const CalendarSmall = ({ userResults }) => {
   // set states of calendar date
   const [calDate, setCalDate] = useState(new Date());
   const [resultArr, setResultArr] = useState([]);
-
-  // render each appointment - this will be replaced by a timeline item - and the div in the main return section will be replaced by a "timeline" type component
-  const ResultList = ({ result }) => {
-    const dateFormat = new Date(result.appointmentDate);
-
-    const startFormat = new Date(result.start);
-
-    return (
-      <div>
-        <h2>{dateFormat.toLocaleString()}</h2>
-        <ul>
-          <li>{startFormat.toString()}</li>
-          <li>{result.title}</li>
-          <li>
-            {result.carerId.firstName} {result.carerId.lastName}
-          </li>
-          <li>
-            {result.patientId.firstName} {result.patientId.lastName}
-          </li>
-          <li>{result.patientId.patientProfileId.postcode}</li>
-        </ul>
-      </div>
-    );
-  };
-
-  const EmptyList = () => {
-    return (
-      <div className="result-timeline">
-        <h3>Your day</h3>
-        <h3>No date selected yet or no appointment on that day.</h3>
-      </div>
-    );
-  };
+  const [appointmentDetail, setAppointmentDetail] = useState();
 
   const onChange = (calDate) => {
     // change results based on calendar date click
@@ -58,6 +29,20 @@ export const CalendarSmall = ({ userResults }) => {
     setResultArr(filteredResults);
   };
 
+  const viewReallocateButton = (e) => {
+    console.log("reallocating");
+    console.log(e.target.id);
+    setAppointmentDetail(e.target.id);
+  };
+
+  const askForReallocation = (e) => {
+    console.log("asking supervisor");
+    console.log(e.target.id);
+  };
+
+  console.log(resultArr);
+  console.log(calDate);
+
   return (
     <div className="weekView-wrapper">
       <div className="weekView-calendar">
@@ -65,12 +50,32 @@ export const CalendarSmall = ({ userResults }) => {
       </div>
       {/* to be replaced by a timeline component */}
       <div className="weekView-timeline">
-        {resultArr.length ? (
+        {/* {resultArr.length ? (
           resultArr.map((result) => (
             <ResultList result={result} key={result.id} />
           ))
         ) : (
           <EmptyList />
+        )} */}
+        {resultArr.length && (
+          <CarerTimeline
+            date="2022-09-13"
+            appointments={resultArr}
+            viewAppointment={viewReallocateButton}
+          />
+        )}
+        {appointmentDetail && (
+          <div>
+            <Typography align="center" color="#00b0ff" fontWeight={200}>
+              Do you need to ask for a rescheduling?
+            </Typography>
+            <ButtonBright
+              id={appointmentDetail}
+              label="Ask for reallocation"
+              type="button"
+              onClick={askForReallocation}
+            />
+          </div>
         )}
       </div>
     </div>

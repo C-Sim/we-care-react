@@ -28,13 +28,6 @@ export const CarerCalendarPage = () => {
     }
   }, [data]);
 
-  // const userResults = [
-  //   {
-  //     appointmentDate: "2022-09-01",
-  //     start: "2022-09-01",
-  //   },
-  //   { appointmentDate: "2022-09-01", start: "2022-09-01" },
-  // ];
   return (
     <Box>
       <PageTitle title="Assignments By Date" />
