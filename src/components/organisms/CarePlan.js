@@ -9,7 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { useEffect, useState } from "react";
-import { ButtonBright } from "../atoms/ButtonBright";
+
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
@@ -455,7 +455,14 @@ export const CarePlanForm = ({ isMobile }) => {
           </FormControl>
         </Stack>
         <Stack spacing={4}>
-          <ButtonBright label="Create your care plan" />
+          <LoadingButton
+            variant="contained"
+            type="submit"
+            loading={loading}
+            sx={{ marginRight: 3, marginLeft: 3 }}
+          >
+            Create your care plan
+          </LoadingButton>
 
           {error && (
             <Typography
@@ -466,18 +473,6 @@ export const CarePlanForm = ({ isMobile }) => {
             >
               Failed to create care plan. Please try again.
             </Typography>
-          )}
-          {carePlanSuccess && (
-            <Box>
-              <Typography
-                variant="caption"
-                component="div"
-                sx={{ color: "green" }}
-                align="center"
-              >
-                Care plan successfully created!
-              </Typography>
-            </Box>
           )}
         </Stack>
       </Stack>
