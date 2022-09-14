@@ -6,11 +6,11 @@ import Box from "@mui/material/Box";
 import { PageTitle } from "../components/atoms/PageTitle";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { ButtonBright } from "../components/atoms/ButtonBright";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { APPOINTMENTS_BY_ID } from "../graphql/queries";
 import "react-calendar/dist/Calendar.css";
-import { Typography } from "@mui/material";
-
+import { Grid, Typography } from "@mui/material";
+import { Paper } from "@mui/material";
 import { useLazyQuery, useQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -20,7 +20,7 @@ export const CarerCalendarPage = () => {
   const { data, loading, error } = useQuery(APPOINTMENTS_BY_ID, {
     fetchPolicy: "network-only",
   });
-
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [userResults, setUserResults] = useState();
 
   useEffect(() => {
@@ -83,65 +83,73 @@ export const CarerCalendarPage = () => {
 
   return (
     <Box>
-      <PageTitle title="Assignments By Date" />
-      <div className="weekView-wrapper">
-        <div className="weekView-calendar">
-          <Calendar onChange={onChange} value={calDate} />
-        </div>
-        {/* to be replaced by a timeline component */}
-        <div className="weekView-timeline">
-          {resultArr.length && (
-            <CarerTimeline
-              date="2022-09-13"
-              appointments={resultArr}
-              viewAppointment={viewReallocateButton}
-            />
-          )}
-          {appointmentId && !askReallocationSuccess && (
-            <div>
-              <Typography align="center" color="#00b0ff" fontWeight={200}>
-                Do you need to ask for a rescheduling?
-              </Typography>
-              <ButtonBright
-                id={appointmentId}
-                label="Ask for reallocation"
-                type="button"
-                onClick={handleReallocationDemand}
+      <Paper
+        sx={{
+          mt: 4,
+          mb: 4,
+          p: 3,
+          minWidth: isMobile ? "90%" : "80%",
+          color: "#3f3d56",
+          backgroundColor: "#0b0f2e",
+          borderRadius: "25px",
+        }}
+        elevation={6}
+      >
+        <PageTitle title="Assignments By Date" />
+
+        <Grid
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          paddingLeft={3}
+          paddingRight={3}
+        >
+          <Grid item xs={8}>
+            <Calendar onChange={onChange} value={calDate} />
+          </Grid>
+          <Grid item xs={4}>
+            {/* <div className="weekView-wrapper">
+              <div className="weekView-calendar"></div>
+              {/* to be replaced by a timeline component */}
+
+            {resultArr.length && (
+              <CarerTimeline
+                date="2022-09-13"
+                appointments={resultArr}
+                viewAppointment={viewReallocateButton}
               />
-            </div>
-          )}
-          {appointmentId && !askReallocationSuccess && (
-            <div>
-              <Typography align="center" color="#00b0ff" fontWeight={200}>
-                You cannot ask for another reschedule yet (only 2 demand at a
-                time).
-              </Typography>
-            </div>
-          )}
-          {appointmentId && askReallocationSuccess && (
-            <div>
-              <Typography align="center" color="#00b0ff" fontWeight={200}>
-                Successfully notified your supervisor. Wait for approval.
-              </Typography>
-            </div>
-          )}
-          <div>
-            <Typography align="center" color="#00b0ff" fontWeight={200}>
-              xxxxxxxxxxxxxxxxxxxxxxx
-            </Typography>
-          </div>
-          <div>
-            <Typography align="center" color="#00b0ff" fontWeight={200}>
-              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            </Typography>
-          </div>
-          <div>
-            <Typography align="center" color="#00b0ff" fontWeight={200}>
-              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            </Typography>
-          </div>
-        </div>
-      </div>
+            )}
+            {appointmentId && !askReallocationSuccess && (
+              <div>
+                <Typography align="center" color="#00b0ff" fontWeight={200}>
+                  Do you need to ask for a rescheduling?
+                </Typography>
+                <ButtonBright
+                  id={appointmentId}
+                  label="Ask for reallocation"
+                  type="button"
+                  onClick={handleReallocationDemand}
+                />
+              </div>
+            )}
+            {appointmentId && !askReallocationSuccess && (
+              <div>
+                <Typography align="center" color="#00b0ff" fontWeight={200}>
+                  You cannot ask for another reschedule yet (only 2 demand at a
+                  time).
+                </Typography>
+              </div>
+            )}
+            {appointmentId && askReallocationSuccess && (
+              <div>
+                <Typography align="center" color="#00b0ff" fontWeight={200}>
+                  Successfully notified your supervisor. Wait for approval.
+                </Typography>
+              </div>
+            )}
+          </Grid>
+        </Grid>
+      </Paper>
     </Box>
   );
 };

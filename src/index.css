@@ -17,3 +17,14 @@ body {
   position: relative;
   min-height: 100vh;
 }
+
+.react-calendar {
+  width: 350px;
+  max-width: 100%;
+  background: white;
+  border: 1px solid #3f3d56;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+  border-radius: 25px;
+  color: #3f3d56;
+}
