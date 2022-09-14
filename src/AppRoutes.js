@@ -7,7 +7,7 @@ import { CarerDashboardPage } from "./containers/CarerDashboardPage";
 import { PatientDashboardPage } from "./containers/PatientDashboardPage";
 import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
-
+import { AssignmentsPage } from "./containers/AssignmentsPage";
 import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
@@ -57,7 +57,9 @@ export const AppRoutes = () => {
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/care-overview" element={<CareOverviewPage />} />
           <Route path="/care-plan" element={<CarePlanPage />} />
+          <Route path="/assignments" element={<SupervisorAssignPage />} />
           <Route path="/patients" element={<PatientsPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </>
       )}
     </Routes>
