@@ -187,7 +187,12 @@ export const CreateCarerForm = ({ isMobile }) => {
 
   return (
     <Paper
-      sx={{ paddingBottom: 60, p: 3, minWidth: isMobile ? "90%" : "400px" }}
+      sx={{
+        marginBottom: 20,
+        marginTop: 5,
+        p: 3,
+        minWidth: isMobile ? "90%" : "400px",
+      }}
       elevation={6}
     >
       {/* //address lookup modal */}
