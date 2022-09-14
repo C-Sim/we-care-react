@@ -186,7 +186,10 @@ export const CreateCarerForm = ({ isMobile }) => {
   };
 
   return (
-    <Paper sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }} elevation={6}>
+    <Paper
+      sx={{ paddingBottom: 60, p: 3, minWidth: isMobile ? "90%" : "400px" }}
+      elevation={6}
+    >
       {/* //address lookup modal */}
       <Dialog open={open} onClose={handleCloseModal}>
         <DialogTitle>Select Address</DialogTitle>
