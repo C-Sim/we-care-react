@@ -18,13 +18,11 @@ import Stack from "@mui/material/Stack";
 import { LoadingButton } from "@mui/lab";
 
 import { CREATE_CARE_PLAN } from "../../graphql/mutations";
+import { useNavigate } from "react-router-dom";
 
 export const CarePlanForm = ({ isMobile }) => {
   //state for create care plan success
   const [carePlanSuccess, setCarePlanSuccess] = useState(false);
-
-  //state for care plan created
-  //const [carePlanCreatedMessage, setCarePlanCreatedMessage] = useState(false);
 
   //mutations
   const [createCarePlan, { data: createData, loading, error }] = useMutation(
@@ -47,8 +45,15 @@ export const CarePlanForm = ({ isMobile }) => {
   } = useForm({
     mode: "onBlur",
   });
+  const navigate = useNavigate();
 
-  const handleCreateCarePlan = (formData) => {
+  useEffect(() => {
+    if (createData?.createCarePlan?.success) {
+      navigate("/patient-dashboard", { replace: true });
+    }
+  }, [createData]);
+
+  const handleCreateCarePlan = async (formData) => {
     const carePlanFields = {
       disabilities: formData.disabilities,
       mobility: formData.mobility,
@@ -65,7 +70,7 @@ export const CarePlanForm = ({ isMobile }) => {
       }
     });
 
-    createCarePlan({
+    await createCarePlan({
       variables: {
         carePlanInput,
       },
@@ -191,18 +196,6 @@ export const CarePlanForm = ({ isMobile }) => {
         onSubmit={handleSubmit(handleCreateCarePlan)}
       >
         <Stack>
-          {carePlanSuccess && (
-            <Box>
-              <Typography
-                variant="caption"
-                component="div"
-                align="center"
-                marginTop={1}
-              >
-                Your Care Plan has already been created
-              </Typography>
-            </Box>
-          )}
           <FormControl>
             <FormLabel component="legend">
               Do you have any disabilities?
@@ -466,6 +459,7 @@ export const CarePlanForm = ({ isMobile }) => {
           <LoadingButton variant="contained" type="submit" loading={loading}>
             Create your care plan
           </LoadingButton>
+
           {error && (
             <Typography
               variant="caption"
