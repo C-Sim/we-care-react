@@ -90,3 +90,11 @@ export const CREATE_CARE_PLAN = gql`
     }
   }
 `;
+
+export const ASK_FOR_REALLOCATION = gql`
+  mutation askForReallocation($appointmentId: ID!) {
+    askForReallocation(appointmentId: $appointmentId) {
+      success
+    }
+  }
+`;
