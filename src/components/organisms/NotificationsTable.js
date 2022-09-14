@@ -30,6 +30,7 @@ import {
   UPDATE_APPOINTMENT,
   UPDATE_READ,
   PATIENT_APPROVE,
+  PROCESS_NOTIFICATION,
 } from "../../graphql/mutations";
 
 const PaperComponent = (props) => {
@@ -401,6 +402,15 @@ export const NotificationsTable = ({ notifications }) => {
       //   ]
       useMutation(PATIENT_APPROVE);
 
+  const [
+    processNotification,
+    {
+      data: processNotificationData,
+      loading: processNotificationLoading,
+      error: processNotificationError,
+    },
+  ] = useMutation(PROCESS_NOTIFICATION);
+
   const //   [
     updateAppointment =
       // ,
@@ -408,66 +418,69 @@ export const NotificationsTable = ({ notifications }) => {
       //   ]
       useMutation(UPDATE_APPOINTMENT);
 
-  const handleApproval = async (
-    event,
-    notificationId,
-    notificationType,
-    senderId,
-    appointmentId
-  ) => {
-    // if notificationType === "New patient review"
-    try {
-      await approvePatient({ variables: { senderId } });
-
-      //   success(true);
-      //   setOpen(false)
-      //   delete notification
-    } catch (err) {
-      console.error(err);
-    }
-
-    // if notificationType === "Carer change"
-    const trigger = "carerChange";
-
-    try {
-      await updateAppointment({
-        variables: {
-          appointmentId,
-          trigger,
-          //   appointmentUpdateInput: { carerId, start, end },
+  const handleProcessNotification = async (notification, action) => {
+    await processNotification({
+      variables: {
+        processNotificationInput: {
+          notificationId: notification.notificationId,
+          notificationType: notification.notificationType,
+          action,
         },
-      });
+      },
+    });
+    // if notificationType === "New patient review"
+    // try {
+    //   await approvePatient({ variables: { senderId } });
 
-      //   success(true);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    //   //   success(true);
+    //   //   setOpen(false)
+    //   //   delete notification
+    // } catch (err) {
+    //   console.error(err);
+    // }
 
-  const handleDenial = async (event) => {
-    // regardless of type
-    //
-    // if (senderId.accountType === "carer")
-    // send notification to inform carer that request has been denied - use sendNotification resolver
-    // send email to inform patient that request has been denied - use emailJS
-    //
-    // if (senderId.accountType === "patient") {
-    // emailjs
-    //   .sendForm(
-    //     "service_doq4yxc",
-    //     "template_3zqd709",
-    //     form.current,
-    //     "ulS302XN5UlvLfEvu"
-    //   )
-    //   .then(
-    //     (result) => {
-    //       handleOpenModal();
+    // // if notificationType === "Carer change"
+    // const trigger = "carerChange";
+
+    // try {
+    //   await updateAppointment({
+    //     variables: {
+    //       appointmentId,
+    //       trigger,
+    //       //   appointmentUpdateInput: { carerId, start, end },
     //     },
-    //     (error) => {
-    //       setEmailError(true);
-    //     }
-    //   )};
+    //   });
+
+    //   //   success(true);
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
+
+  // const handleDenial = async (event) => {
+  // regardless of type
+  //
+  // if (senderId.accountType === "carer")
+  // send notification to inform carer that request has been denied - use sendNotification resolver
+  // send email to inform patient that request has been denied - use emailJS
+  //
+  // if (senderId.accountType === "patient") {
+  // emailjs
+  //   .sendForm(
+  //     "service_doq4yxc",
+  //     "template_3zqd709",
+  //     form.current,
+  //     "ulS302XN5UlvLfEvu"
+  //   )
+  //   .then(
+  //     (result) => {
+  //       handleOpenModal();
+  //     },
+  //     (error) => {
+  //       setEmailError(true);
+  //     }
+  //   )};
+  // };
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Notifications.length) : 0;
@@ -516,9 +529,9 @@ export const NotificationsTable = ({ notifications }) => {
                 color="success"
                 type="submit"
                 endIcon={<CheckCircleIcon />}
-                onClick={(event) =>
-                  handleApproval(event, modalRowData.notificationId)
-                }
+                onClick={() => {
+                  handleProcessNotification(modalRowData, "APPROVE");
+                }}
               >
                 Approve
               </Button>
@@ -527,9 +540,9 @@ export const NotificationsTable = ({ notifications }) => {
                 color="error"
                 type="submit"
                 endIcon={<HighlightOffIcon />}
-                onClick={(event) =>
-                  handleDenial(event, modalRowData.notificationId)
-                }
+                onClick={() => {
+                  handleProcessNotification(modalRowData, "DENY");
+                }}
               >
                 Deny
               </Button>

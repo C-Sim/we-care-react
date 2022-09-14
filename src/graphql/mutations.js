@@ -118,3 +118,26 @@ export const CREATE_APPOINTMENTS = gql`
     }
   }
 `;
+
+export const PROCESS_NOTIFICATION = gql`
+  mutation Mutation($processNotificationInput: ProcessNotificationInput!) {
+    processNotification(processNotificationInput: $processNotificationInput) {
+      id
+      notificationDate
+      notificationType
+      notificationText
+      senderId {
+        id
+        firstName
+        lastName
+        accountType
+        email
+      }
+      receiverId
+      isRead
+      appointmentId
+      appointmentDate
+      patientUsername
+    }
+  }
+`;
