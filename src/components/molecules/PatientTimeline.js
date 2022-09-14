@@ -28,7 +28,7 @@ export const PatientTimeline = ({ visits }) => {
 
       <Timeline sx={{ color: "#3f3d56" }}>
         {visits.map((visit) => (
-          <TimelineItem>
+          <TimelineItem key={visit.id}>
             <TimelineOppositeContent>
               <Typography fontSize="0.64rem">{visit.date}</Typography>
               <Typography variant="body2">{visit.time}</Typography>

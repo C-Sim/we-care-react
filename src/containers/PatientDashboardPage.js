@@ -8,12 +8,14 @@ export const PatientDashboardPage = () => {
       <PatientTimeline
         visits={[
           {
+            id: "1234",
             date: "Monday 8th August",
             time: "08:00",
             carerName: "Alice Bond",
             carerGender: "female",
           },
           {
+            id: "12345",
             date: "Thursday 11th August",
             time: "08:00",
             carerName: "Alan Bates",
