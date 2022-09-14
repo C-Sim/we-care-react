@@ -14,6 +14,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
+import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import visuallyHidden from "@mui/utils/visuallyHidden";
 
@@ -523,7 +524,11 @@ export const NotificationsTable = ({ notifications }) => {
         </TableContainer>
       </Dialog>
 
-      {Notifications.length === 0 && "You have no notifications."}
+      {Notifications.length === 0 && (
+        <Typography align="center" sx={{ pb: 2, color: "#00b0ff" }}>
+          You have no notifications.
+        </Typography>
+      )}
 
       <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>
