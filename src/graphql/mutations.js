@@ -107,6 +107,22 @@ export const UPDATE_CHECKOUT = gql`
   }
 `;
 
+export const UPDATE_CARER_NOTES = gql`
+  mutation UpdateCarerNotes(
+    $appointmentId: ID!
+    $trigger: String!
+    $appointmentUpdateInput: AppointmentUpdateInput
+  ) {
+    updateAppointment(
+      appointmentId: $appointmentId
+      trigger: $trigger
+      appointmentUpdateInput: $appointmentUpdateInput
+    ) {
+      success
+    }
+  }
+`;
+
 export const CREATE_APPOINTMENTS = gql`
   mutation CreateAppointments($appointments: [AppointmentInput]!) {
     createAppointments(appointments: $appointments) {

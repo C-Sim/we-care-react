@@ -18,6 +18,7 @@ import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
 
 export const CarerDashboardPage = () => {
+  //mutations
   const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
   const [
     getUpdatedData,
@@ -25,8 +26,13 @@ export const CarerDashboardPage = () => {
   ] = useLazyQuery(NEXT_WORKING_DAY_APPOINTMENTS, {
     fetchPolicy: "network-only",
   });
+
+  //state variables
   const [timelineData, setTimelineData] = useState([]);
   const [statusChanged, setStatusChanged] = useState();
+  const [appointmentDetail, setAppointmentDetail] = useState();
+
+  //useEffect for update of the page
   useEffect(() => {
     if (data) {
       setTimelineData(data.appointmentsForNextWorkingDay);
@@ -43,13 +49,16 @@ export const CarerDashboardPage = () => {
     }
   }, [dayData]);
 
-  const [appointmentDetail, setAppointmentDetail] = useState();
-
   //getting status change from nextVisit component
   const handleStatusChange = (e) => {
-    console.log("status changed");
-    console.log(e);
     setStatusChanged(e);
+  };
+
+  //function to display selected appointment into right hand side panel
+  const viewAppointment = (event) => {
+    console.log(event.target.id);
+    const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
+    setAppointmentDetail(appointment);
   };
 
   //google map and directions
@@ -59,12 +68,6 @@ export const CarerDashboardPage = () => {
     googleMapsApiKey: "AIzaSyDUUFeATzTUoPA37N2JF00Qzfz-2E_v09w",
     libraries: ["places"],
   });
-
-  const viewAppointment = (event) => {
-    console.log(event.target.id);
-    const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
-    setAppointmentDetail(appointment);
-  };
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionResponse, setDirectionResponse] = useState(null);

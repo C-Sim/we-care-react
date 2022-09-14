@@ -205,3 +205,12 @@ export const AVAILABLE_PATIENTS = gql`
     }
   }
 `;
+
+export const PAST_NOTES = gql`
+  query AppointmentNotesByUserId($userId: ID!) {
+    appointmentsByUserId(userId: $userId) {
+      start
+      carerNotes
+    }
+  }
+`;

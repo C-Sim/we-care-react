@@ -8,6 +8,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CheckIcon from "@mui/icons-material/Check";
+import { format } from "date-fns";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,23 +16,40 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ButtonDisabled } from "../atoms/ButtonDisabled";
 import { UPDATE_CHECKIN } from "../../graphql/mutations";
 import { UPDATE_CHECKOUT } from "../../graphql/mutations";
+import { UPDATE_CARER_NOTES } from "../../graphql/mutations";
+import { PAST_NOTES } from "../../graphql/queries";
 
 // example past patient notes
-const patientVisitNotesArray = [
-  { patientNotes: "please bring some water, thank you" },
-  { patientNotes: "please bring some towel, thank you" },
-  { patientNotes: "please bring some medicine, thank you" },
-  { patientNotes: "please bring some pill, thank you" },
-  { patientNotes: "please bring some botton, thank you" },
-  { patientNotes: "please bring some botton, thank you" },
+const carerNotesArray = [
+  {
+    start: "2022-09-01",
+    carerNotes: ["no significant change", "patient is in good spirit"],
+  },
+  {
+    start: "2022-09-01",
+    carerNotes: ["no significant change", "patient is in good spirit"],
+  },
+  {
+    start: "2022-09-01",
+    carerNotes: ["no significant change", "patient is in good spirit"],
+  },
+  {
+    start: "2022-09-01",
+    carerNotes: ["no significant change", "patient is in good spirit"],
+  },
 ];
 
 export const NextVisitForCarer = ({
   appointmentDetail,
   handleStatusChange,
 }) => {
+  //state variables for each button
   const [checkedIn, setCheckedIn] = useState(false);
   const [checkedOut, setCheckedOut] = useState(false);
+  const [noteSuccess, setNoteSuccess] = useState(false);
+  const inputRef = useRef(null);
+
+  //mutations for each button
   const [
     updateCheckin,
     { data: checkinData, loading: checkinLoading, error: checkinError },
@@ -49,6 +67,24 @@ export const NextVisitForCarer = ({
       setCheckedOut(true);
       handleStatusChange("checkout");
     },
+  });
+  const [
+    updateCarerNotes,
+    {
+      data: carerNotesData,
+      loading: carerNotesLoading,
+      error: carerNotesError,
+    },
+  ] = useMutation(UPDATE_CARER_NOTES, {
+    onCompleted: () => {
+      setNoteSuccess(true);
+    },
+  });
+  const [
+    getPastNotes,
+    { data: notesData, loading: notesLoading, error: notesError },
+  ] = useLazyQuery(PAST_NOTES, {
+    fetchPolicy: "network-only",
   });
 
   const status = appointmentDetail.status;
@@ -123,66 +159,151 @@ export const NextVisitForCarer = ({
     );
   };
 
-  const BtnUpdateNotes = () => {
-    const updateCareNotes = () => {
-      console.log("updateCareNotes");
+  const UpdateNotes = () => {
+    const handleUpdateNotes = (event, formData) => {
+      console.log("update carer notes");
+      console.log(event.target.id);
       const trigger = "carerNote";
-      updateCarerNote({
+      const note = formData.carerNote;
+      updateCarerNotes({
         variables: {
-          appointmentId: event.target.id,
+          appointmentId: appointmentDetail.id,
           trigger,
+          appointmentUpdateInput: {
+            note: note.trim(),
+          },
         },
       });
     };
 
     return (
-      <Button variant="Contained" onClick={updateCareNotes}>
-        Update care notes
-      </Button>
+      <Stack
+        component="form"
+        sx={{ p: 3 }}
+        spacing={4}
+        onSubmit={handleSubmit(handleUpdateNotes)}
+      >
+        <TextField
+          sx={{ width: "500px", mt: 2 }}
+          required
+          id="carer-note"
+          label="Carer's notes"
+          multiline
+          row={4}
+          variant="filled"
+          helperText={!!errors.carerNote ? "Please enter your note " : ""}
+          {...register("carerNote", {
+            required: true,
+          })}
+        />
+        <Button
+          id={appointmentDetail.id}
+          variant="Contained"
+          type="submit"
+          loading={loading}
+        >
+          Update carer notes
+        </Button>
+        {noteSuccess && (
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: "green" }}
+            align="center"
+          >
+            Notes successfully updated.
+          </Typography>
+        )}
+        {carerNotesError && (
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: "red" }}
+            align="center"
+          >
+            Failed to sign up. Please try again.
+          </Typography>
+        )}
+      </Stack>
     );
   };
 
   const BtnPatientProfile = () => {
-    const navigate = useNavigate();
-
-    const ViewPatientProfile = () => {
-      navigate("/patient-profile", { replace: true });
+    const viewPatientProfile = (event) => {
+      console.log("showing patient profile");
     };
     return (
-      <Button variant="Contained" onClick={ViewPatientProfile}>
+      <Button variant="Contained" onClick={viewPatientProfile}>
         View Patient Profile
       </Button>
     );
   };
 
-  const handlePastVisitNotes = () => {
-    setPastVisitNoteBtn(true);
+  const BtnPastVisitNotes = () => {
+    const viewPastNotes = () => {
+      console.log("showing past notes");
+      setPastVisitNoteBtn(true);
+      getPastNotes({
+        variables: {
+          userId: appointmentDetail.patientId,
+        },
+      });
+    };
+
+    const hidePastNotes = () => {
+      setPastVisitNoteBtn(false);
+    };
+
+    return (
+      <>
+        {!pastVisitNotesBtn && (
+          <Button variant="Contained" onClick={viewPastNotes}>
+            View past notes
+          </Button>
+        )}
+        {pastVisitNotesBtn && (
+          <Button variant="contained" onClick={hidePastNotes}>
+            Hide Notes
+          </Button>
+        )}
+      </>
+    );
   };
 
   const PastVisitNotesBtn = () => {
     if (pastVisitNotesBtn) {
-      const handleClearNotes = () => {
-        setPastVisitNoteBtn(false);
-      };
-      return (
-        <>
-          {patientVisitNotesArray.slice(0, 5).map((note, index) => (
+      if (notesData) {
+        return (
+          <>
+            {notesData.map((note, index) => (
+              <Typography
+                key={index}
+                component="h1"
+                variant="h6"
+                align="left"
+                sx={{ mb: 2 }}
+              >
+                {format(note.start, "yyyy-MM-dd")} :{" "}
+                {note.carerNotes.join(" - ")}
+              </Typography>
+            ))}
+          </>
+        );
+      } else {
+        return (
+          <>
             <Typography
-              value={note.patientNotes}
-              key={index}
+              key="no-notes"
               component="h1"
               variant="h6"
               align="left"
               sx={{ mb: 2 }}
             >
-              {note.patientNotes}
+              No Carer notes for this patient yet.
             </Typography>
-          ))}
-          <Button variant="contained" onClick={handleClearNotes}>
-            Clear all Past Notes
-          </Button>
-        </>
-      );
+          </>
+        );
+      }
     }
   };
 
@@ -192,33 +313,25 @@ export const NextVisitForCarer = ({
       elevation={6}
     >
       <div>
-        <h2>Your Next Appointment - Patient Detail</h2>
+        <h2>Your Appointment Details</h2>
+        <h4>{appointmentDetail.title}</h4>
         <h4>
           {appointmentDetail.patientId.patientProfileId.username} |
           {appointmentDetail.patientId.patientProfileId.gender} |
           {appointmentDetail.patientId.postcode}
         </h4>
         <h4>Start Time: {appointmentDetail.start}</h4>
+        <h4>End Time: {appointmentDetail.end}</h4>
       </div>
       <CheckInAndOut />
-      <TextField
-        sx={{ width: "500px", mt: 2 }}
-        id="outlined-textarea"
-        label="Your Special Care Requirement"
-        multiline
-        row={4}
-        variant="filled"
-      />
+      <UpdateNotes />
       <Stack
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}
         spacing={1}
         sx={{ p: 2 }}
       >
-        <BtnUpdateNotes />
-        <Button variant="contained" onClick={handlePastVisitNotes}>
-          View past visit notes
-        </Button>
+        <BtnPastVisitNotes />
         <BtnPatientProfile />
       </Stack>
       <PastVisitNotesBtn />
