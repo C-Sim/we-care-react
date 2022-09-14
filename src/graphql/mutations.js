@@ -82,3 +82,11 @@ export const CREATE_APPOINTMENTS = gql`
     }
   }
 `;
+
+export const ASK_FOR_REALLOCATION = gql`
+  mutation askForReallocation($appointmentId: ID!) {
+    askForReallocation(appointmentId: $appointmentId) {
+      success
+    }
+  }
+`;

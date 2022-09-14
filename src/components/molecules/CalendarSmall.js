@@ -1,7 +1,9 @@
 import { Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { ASK_FOR_REALLOCATION } from "../../graphql/mutations";
 import { ButtonBright } from "../atoms/ButtonBright";
 import { CarerTimeline } from "./CarerTimeline";
 
@@ -11,8 +13,25 @@ export const CalendarSmall = ({ userResults }) => {
   // set states of calendar date
   const [calDate, setCalDate] = useState(new Date());
   const [resultArr, setResultArr] = useState([]);
-  const [appointmentDetail, setAppointmentDetail] = useState();
+  const [appointmentId, setAppointmentId] = useState();
+  const [askReallocationSuccess, setAskReallocationSuccess] = useState(false);
 
+  //mutation
+  const [
+    askForReallocation,
+    {
+      data: reallocationData,
+      loading: reallocationLoading,
+      error: reallocationError,
+    },
+  ] = useMutation(ASK_FOR_REALLOCATION, {
+    onCompleted: (reallocationData) => {
+      reallocationData.askForReallocation.success &&
+        setAskReallocationSuccess(true);
+    },
+  });
+
+  //onChange of date selection inside small calendar
   const onChange = (calDate) => {
     // change results based on calendar date click
     setCalDate(calDate);
@@ -32,12 +51,17 @@ export const CalendarSmall = ({ userResults }) => {
   const viewReallocateButton = (e) => {
     console.log("reallocating");
     console.log(e.target.id);
-    setAppointmentDetail(e.target.id);
+    setAppointmentId(e.target.id);
   };
 
-  const askForReallocation = (e) => {
+  const handleReallocationDemand = (e) => {
     console.log("asking supervisor");
     console.log(e.target.id);
+    askForReallocation({
+      variables: {
+        appointmentId,
+      },
+    });
   };
 
   console.log(resultArr);
@@ -50,13 +74,6 @@ export const CalendarSmall = ({ userResults }) => {
       </div>
       {/* to be replaced by a timeline component */}
       <div className="weekView-timeline">
-        {/* {resultArr.length ? (
-          resultArr.map((result) => (
-            <ResultList result={result} key={result.id} />
-          ))
-        ) : (
-          <EmptyList />
-        )} */}
         {resultArr.length && (
           <CarerTimeline
             date="2022-09-13"
@@ -64,19 +81,49 @@ export const CalendarSmall = ({ userResults }) => {
             viewAppointment={viewReallocateButton}
           />
         )}
-        {appointmentDetail && (
+        {appointmentId && !askReallocationSuccess && (
           <div>
             <Typography align="center" color="#00b0ff" fontWeight={200}>
               Do you need to ask for a rescheduling?
             </Typography>
             <ButtonBright
-              id={appointmentDetail}
+              id={appointmentId}
               label="Ask for reallocation"
               type="button"
-              onClick={askForReallocation}
+              onClick={handleReallocationDemand}
             />
           </div>
         )}
+        {appointmentId && !askReallocationSuccess && (
+          <div>
+            <Typography align="center" color="#00b0ff" fontWeight={200}>
+              You cannot ask for another reschedule yet (only 2 demand at a
+              time).
+            </Typography>
+          </div>
+        )}
+        {appointmentId && askReallocationSuccess && (
+          <div>
+            <Typography align="center" color="#00b0ff" fontWeight={200}>
+              Successfully notified your supervisor. Wait for approval.
+            </Typography>
+          </div>
+        )}
+        <div>
+          <Typography align="center" color="#00b0ff" fontWeight={200}>
+            xxxxxxxxxxxxxxxxxxxxxxx
+          </Typography>
+        </div>
+        <div>
+          <Typography align="center" color="#00b0ff" fontWeight={200}>
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          </Typography>
+        </div>
+        <div>
+          <Typography align="center" color="#00b0ff" fontWeight={200}>
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          </Typography>
+        </div>
       </div>
     </div>
   );
