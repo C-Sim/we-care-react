@@ -2,13 +2,13 @@ import * as React from "react";
 
 import { useForm } from "react-hook-form";
 
-import { useMutation, useLazyQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
 
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -77,8 +77,7 @@ export const CarePlanForm = ({ isMobile }) => {
     });
   };
 
-  // //care plan check boxes
-  // const [AddInput, setInputId] = useState([]);
+  //care plan check boxes
 
   // handle disability option
   const [disabilityOption, setDisabilityOption] = useState("no");
