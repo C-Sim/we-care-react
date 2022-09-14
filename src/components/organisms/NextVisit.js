@@ -7,6 +7,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import CheckIcon from "@mui/icons-material/Check";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -96,6 +97,7 @@ export const NextVisitForCarer = ({
             Check In
           </Button>
         )}
+        {status === "upcoming" && checkedIn && <CheckIcon />}
         {status === "ongoing" && !checkedOut && (
           <Button
             className="button"
@@ -113,9 +115,7 @@ export const NextVisitForCarer = ({
             Check Out
           </Button>
         )}
-        {status === "ongoing" && checkedOut && (
-          <ButtonDisabled label="completed" type="button" />
-        )}
+        {status === "ongoing" && checkedOut && <CheckIcon />}
         {status === "completed" && (
           <ButtonDisabled label="completed" type="button" />
         )}
