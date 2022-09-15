@@ -1,22 +1,9 @@
 // For each user type to view top level information most relevant to them - may need to split into 3, but use first created as template for others
 import * as React from "react";
-import * as V from "victory";
-import { useNavigate } from "react-router-dom";
 import { VictoryBar, VictoryChart, VictoryPie, VictoryTheme } from "victory";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
 import { Typography } from "@mui/material";
-import { ButtonDark } from "../components/atoms/ButtonDark";
 
 const genderPreference = [
   { x: "female", y: 35 },
@@ -36,8 +23,6 @@ const carerDays = [
 ];
 
 export const SupervisorDashboardPage = () => {
-  const navigate = useNavigate();
-
   return (
     <div>
       <Typography component="h1" variant="h4" align="center" sx={{ p: 3 }}>
