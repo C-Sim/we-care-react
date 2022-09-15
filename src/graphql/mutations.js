@@ -148,3 +148,19 @@ export const PROCESS_NOTIFICATION = gql`
     }
   }
 `;
+
+export const CREATE_CARE_PLAN = gql`
+  mutation CreateCarePlan($carePlanInput: CarePlanInput!) {
+    createCarePlan(carePlanInput: $carePlanInput) {
+      success
+    }
+  }
+`;
+
+export const ASK_FOR_REALLOCATION = gql`
+  mutation askForReallocation($appointmentId: ID!) {
+    askForReallocation(appointmentId: $appointmentId) {
+      success
+    }
+  }
+`;
