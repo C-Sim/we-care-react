@@ -67,7 +67,11 @@ export const ModalForSupervisor = () => {
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
       >
-        <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
+        <DialogTitle
+          style={{ cursor: "move" }}
+          textAlign="center"
+          id="draggable-dialog-title"
+        >
           Request Detail
         </DialogTitle>
         <TableContainer component={Paper}>
@@ -101,7 +105,7 @@ export const ModalForSupervisor = () => {
             </Button>
             <Button
               variant="contained"
-              color="secondary"
+              color="error"
               endIcon={<HighlightOffIcon />}
             >
               Deny

@@ -40,9 +40,28 @@ export const LOGIN = gql`
   }
 `;
 
+export const UPDATE_READ = gql`
+  mutation UpdateIsReadStatus($notificationId: ID!) {
+    updateIsReadStatus(notificationId: $notificationId) {
+      id
+      notificationDate
+      senderId {
+        id
+        firstName
+        lastName
+        accountType
+        email
+      }
+      receiverId
+      notificationText
+      isRead
+    }
+  }
+`;
+
 export const USER_PROFILE = gql`
-  mutation UpdateUserInfo($userId: ID!, $updateInput: UserInfoInput) {
-    updateUserInfo(userId: $userId, updateInput: $updateInput) {
+  mutation UpdateUserInfo($updateInput: UserInfoInput) {
+    updateUserInfo(updateInput: $updateInput) {
       success
       user {
         id
@@ -61,14 +80,8 @@ export const USER_PROFILE = gql`
 `;
 
 export const PATIENT_PROFILE = gql`
-  mutation UpdatePatientInfo(
-    $userId: ID!
-    $updatePatientInput: PatientInfoInput
-  ) {
-    updatePatientInfo(
-      userId: $userId
-      updatePatientInput: $updatePatientInput
-    ) {
+  mutation UpdatePatientInfo($updatePatientInput: PatientInfoInput) {
+    updatePatientInfo(updatePatientInput: $updatePatientInput) {
       success
       userId
     }
@@ -123,10 +136,63 @@ export const UPDATE_CARER_NOTES = gql`
   }
 `;
 
+// userId of patient - correctly referenced here?
+export const PATIENT_APPROVE = gql`
+  mutation UpdateApprovedStatus($userId: ID!) {
+    updateApprovedStatus(userId: $userId) {
+      success
+      userId
+    }
+  }
+`;
+
+export const UPDATE_APPOINTMENT = gql`
+  mutation UpdateAppointmentCarer(
+    $appointmentId: ID!
+    $trigger: String!
+    $appointmentUpdateInput: AppointmentUpdateInput
+  ) {
+    updateAppointment(
+      appointmentId: $appointmentId
+      trigger: $trigger
+      appointmentUpdateInput: $appointmentUpdateInput
+    ) {
+      success
+      appointment {
+        id
+      }
+    }
+  }
+`;
+
 export const CREATE_APPOINTMENTS = gql`
   mutation CreateAppointments($appointments: [AppointmentInput]!) {
     createAppointments(appointments: $appointments) {
       success
+    }
+  }
+`;
+
+export const PROCESS_NOTIFICATION = gql`
+  mutation Mutation($processNotificationInput: ProcessNotificationInput!) {
+    processNotification(processNotificationInput: $processNotificationInput) {
+      id
+      notificationDate
+      notificationType
+      notificationText
+      senderId {
+        id
+        firstName
+        lastName
+        accountType
+        email
+      }
+      receiverId
+      isRead
+      isProcessed
+      appointmentId
+      appointmentDate
+      patientUsername
     }
   }
 `;
