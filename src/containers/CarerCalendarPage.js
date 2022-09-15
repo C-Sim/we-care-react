@@ -9,8 +9,8 @@ import { ButtonBright } from "../components/atoms/ButtonBright";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { APPOINTMENTS_BY_ID } from "../graphql/queries";
 import "react-calendar/dist/Calendar.css";
-import { Grid, Typography } from "@mui/material";
-import { Paper } from "@mui/material";
+import { Grid, Typography, Stack } from "@mui/material";
+import { Paper, Divider } from "@mui/material";
 import { useQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -22,6 +22,7 @@ export const CarerCalendarPage = () => {
   });
   const isMobile = useMediaQuery("(max-width:600px)");
   const [userResults, setUserResults] = useState();
+  const [introText, setIntroText] = useState(true);
 
   useEffect(() => {
     if (data && data.appointmentsByUserId) {
@@ -87,6 +88,7 @@ export const CarerCalendarPage = () => {
       sx={{
         width: "100%",
         justifyContent: "center",
+        height: "100vh",
       }}
     >
       <Paper
@@ -97,66 +99,75 @@ export const CarerCalendarPage = () => {
           color: "#00b0ff2e",
           backgroundColor: "#D1F1FF",
           borderRadius: "25px",
+          mb: 20,
         }}
         elevation={6}
       >
         <PageTitle title="View Your Appointment Calendar" />
-
+        <Typography color="#3f3d56" pt={4} pl={6} variant="h6">
+          Please select a date to view the appointments for that day
+        </Typography>
         <Grid
           container
-          rowSpacing={1}
+          rowSpacing={0}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          paddingLeft={3}
-          paddingRight={3}
+          mt={3}
+          paddingLeft={15}
+          paddingRight={7}
           alignItems="top"
           sx={{ display: "flex", flexWrap: "wrap" }}
         >
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Calendar onChange={onChange} value={calDate} />
           </Grid>
-          <Grid item xs={9}>
-            {/* <div className="weekView-wrapper">
-              <div className="weekView-calendar"></div>
-              {/* to be replaced by a timeline component */}
 
-            {resultArr.length && (
+          {/* <Grid item xs={8}> */}
+
+          {resultArr.length && (
+            <div>
+              <Divider orientation="vertical" flexItem />
               <CarerTimeline
                 date="2022-09-13"
                 appointments={resultArr}
                 viewAppointment={viewReallocateButton}
               />
-            )}
-            {appointmentId && !askReallocationSuccess && (
-              <div>
-                <Typography align="center" color="#00b0ff" fontWeight={200}>
-                  Do you need to ask for a rescheduling?
-                </Typography>
-                <ButtonBright
-                  id={appointmentId}
-                  label="Ask for reallocation"
-                  type="button"
-                  onClick={handleReallocationDemand}
-                />
-              </div>
-            )}
-            {appointmentId && !askReallocationSuccess && (
+              <Typography align="center" color="#00b0ff" fontWeight={200}>
+                If you would like to change one of your appointmentss, please
+                click on the patient name and then the send request button.
+              </Typography>
+            </div>
+          )}
+          {appointmentId && !askReallocationSuccess && (
+            <div>
+              <ButtonBright
+                id={appointmentId}
+                label="Send Request"
+                type="button"
+                onClick={handleReallocationDemand}
+              />
+            </div>
+          )}
+
+          {/* {appointmentId && !askReallocationSuccess && (
               <div>
                 <Typography align="center" color="#00b0ff" fontWeight={200}>
                   You cannot ask for another reschedule yet (only 2 demand at a
                   time).
                 </Typography>
               </div>
-            )}
-            {appointmentId && askReallocationSuccess && (
-              <div>
-                <Typography align="center" color="#00b0ff" fontWeight={200}>
-                  Successfully notified your supervisor. Wait for approval.
-                </Typography>
-              </div>
-            )}
-          </Grid>
+            )} */}
+          {appointmentId && askReallocationSuccess && (
+            <div>
+              <Typography align="center" color="#00b0ff" fontWeight={200}>
+                Successfully notified your supervisor. Wait for approval.
+              </Typography>
+            </div>
+          )}
         </Grid>
+        )}
       </Paper>
+
+      <Typography> Extra text</Typography>
     </Box>
   );
 };
