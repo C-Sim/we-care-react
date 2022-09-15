@@ -66,7 +66,7 @@ export const CarerDashboardPage = () => {
   const center = { lat: 52.489471, lng: -1.898575 };
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDUUFeATzTUoPA37N2JF00Qzfz-2E_v09w",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API,
     libraries: ["places"],
   });
 
