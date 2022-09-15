@@ -245,8 +245,10 @@ export const SupervisorAssignPage = () => {
 
   return (
     <Box
+      marginBottom={20}
       sx={{
         backgroundColor: "rgba(97, 218, 251, 0.2)",
+        marginBottom: 10,
       }}
     >
       <PageTitle
@@ -390,9 +392,16 @@ export const SupervisorAssignPage = () => {
           )}
           {patientLock && (
             <Box
-              backgroundColor="#eef5dbff"
-              sx={{ marginLeft: 5, marginTop: 2 }}
-              borderRadius="25"
+              backgroundColor="#d0cde1"
+              sx={{
+                marginTop: 3,
+                maxWidth: 700,
+                borderRadius: 10,
+                display: "bock",
+                width: "fit-content",
+                margin: "auto",
+                padding: 1,
+              }}
             >
               <Typography
                 component="h1"
@@ -402,10 +411,13 @@ export const SupervisorAssignPage = () => {
                 id="basic-list-demo"
                 level="body3"
                 textAlign="center"
+                marginTop={2}
               >
                 Selected patients:
               </Typography>
-              <List aria-labelledby="basic-list-demo">
+              <Divider />
+
+              <List aria-labelledby="basic-list-demo" display="inline-block">
                 {selectedPatients.map((result) => {
                   return (
                     <ListItem key={result} value={result}>
@@ -498,24 +510,6 @@ export const SupervisorAssignPage = () => {
             contact your administrator.
           </Alert>
         )}
-      </div>
-      <div>
-        <h1>
-          Some text to have some space so the button is not covered by the
-          footer
-        </h1>
-        <h1>
-          Some text to have some space so the button is not covered by the
-          footer
-        </h1>
-        <h1>
-          Some text to have some space so the button is not covered by the
-          footer
-        </h1>
-        <h1>
-          Some text to have some space so the button is not covered by the
-          footer
-        </h1>
       </div>
     </Box>
   );
