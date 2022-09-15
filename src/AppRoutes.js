@@ -22,10 +22,11 @@ import { CarerProfilePage } from "./containers/CarerProfilePage";
 import { PatientsProfilePage } from "./containers/PatientProfilePage";
 
 import { useAuth } from "./context/AppProvider";
+import { CarerCalendarPage } from "./containers/CarerCalendarPage";
 
 export const AppRoutes = () => {
   const { isLoggedIn } = useAuth();
-  console.log(isLoggedIn);
+
   return (
     <Routes>
       {!isLoggedIn && (
@@ -62,6 +63,7 @@ export const AppRoutes = () => {
           <Route path="/care-overview" element={<CareOverviewPage />} />
           <Route path="/care-plan" element={<CarePlanPage />} />
           <Route path="/assignments" element={<SupervisorAssignPage />} />
+          <Route path="/carer-calendar" element={<CarerCalendarPage />} />
           <Route path="/patients" element={<PatientsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/create-carer" element={<SupervisorCreateCarerPage />} />
