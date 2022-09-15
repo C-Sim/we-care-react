@@ -33,7 +33,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Select from "@mui/material/Select";
+
 import { PATIENT_SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
 
@@ -41,7 +41,7 @@ export const CheckList = ({ array, handleSelect }) => {
   return (
     <FormGroup
       sx={{
-        maxWidth: 800,
+        maxWidth: 4000,
         maxHeight: 300,
         overflow: "auto",
       }}
