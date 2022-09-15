@@ -175,9 +175,9 @@ export const NEXT_WORKING_DAY_APPOINTMENTS = gql`
   }
 `;
 
-export const APPOINTMENTS_BY_ID = gql`
-  query AppointmentsByUserId {
-    appointmentsByUserId {
+export const NEXT_WEEK_APPOINTMENTS = gql`
+  query AppointmentsForNextWeek {
+    appointmentsForNextWeek {
       id
       appointmentDate
       patientId {
@@ -191,10 +191,10 @@ export const APPOINTMENTS_BY_ID = gql`
         lastName
         imageUrl
         email
+        phoneNumber
         carerProfileId {
           username
           gender
-          appointmentCount
         }
       }
       start

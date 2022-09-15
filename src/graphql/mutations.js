@@ -193,3 +193,20 @@ export const ASK_FOR_REALLOCATION = gql`
     }
   }
 `;
+
+//updating patient notes - used on patient dashboard
+export const UPDATE_PATIENT_NOTES = gql`
+  mutation UpdatePatientNotes(
+    $appointmentId: ID!
+    $trigger: String!
+    $appointmentUpdateInput: AppointmentUpdateInput
+  ) {
+    updateAppointment(
+      appointmentId: $appointmentId
+      trigger: $trigger
+      appointmentUpdateInput: $appointmentUpdateInput
+    ) {
+      success
+    }
+  }
+`;

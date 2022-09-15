@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 
 import { PatientTimeline } from "../components/molecules/PatientTimeline";
 import { NextVisitPatient } from "../components/organisms/NextVisitPatient";
-import { APPOINTMENTS_BY_ID } from "../graphql/queries";
-import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
+
+import { NEXT_WEEK_APPOINTMENTS } from "../graphql/queries";
 
 export const PatientDashboardPage = () => {
-  const { data, loading, error } = useQuery(APPOINTMENTS_BY_ID, {
+  const { data, loading, error } = useQuery(NEXT_WEEK_APPOINTMENTS, {
     fetchPolicy: "network-only",
   });
   const [timelineData, setTimelineData] = useState([]);
@@ -15,10 +15,10 @@ export const PatientDashboardPage = () => {
 
   useEffect(() => {
     if (data) {
-      setTimelineData(data.appointmentsByUserId);
+      setTimelineData(data.appointmentsForNextWeek);
     }
   }, [data]);
-  // console.log(timelineData);
+  console.log(timelineData);
 
   const viewAppointment = (event) => {
     // console.log(event.target);
@@ -33,7 +33,7 @@ export const PatientDashboardPage = () => {
         {appointmentDetail && appointmentDetail.patientId.lastName}
       </h1>
       <PatientTimeline
-        visits={timelineData}
+        appointments={timelineData}
         viewAppointment={viewAppointment}
       />
       {appointmentDetail && (
