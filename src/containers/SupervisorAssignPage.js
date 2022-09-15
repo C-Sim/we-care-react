@@ -257,15 +257,6 @@ export const SupervisorAssignPage = () => {
         sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }}
       ></PageTitle>
 
-      <Divider
-        sx={{
-          marginLeft: 9,
-          marginRight: 9,
-          marginBottom: 1,
-        }}
-        variant="middle"
-      />
-
       <Paper
         variant="outlined"
         sx={{
@@ -436,7 +427,7 @@ export const SupervisorAssignPage = () => {
       </Paper>
       <Paper
         variant="outlined"
-        sx={{ p: 3, mt: 1, minWidth: isMobile ? "90%" : "400px" }}
+        sx={{ p: 3, mt: 1, mb: 24, minWidth: isMobile ? "90%" : "400px" }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
           Step 4 - View the appointments based on your selections
