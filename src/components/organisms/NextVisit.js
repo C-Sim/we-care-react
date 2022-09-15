@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import CheckIcon from "@mui/icons-material/Check";
 import { format } from "date-fns";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { get, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
@@ -18,27 +18,7 @@ import { ButtonDisabled } from "../atoms/ButtonDisabled";
 import { UPDATE_CHECKIN } from "../../graphql/mutations";
 import { UPDATE_CHECKOUT } from "../../graphql/mutations";
 import { UPDATE_CARER_NOTES } from "../../graphql/mutations";
-import { PAST_NOTES } from "../../graphql/queries";
-
-// example past patient notes
-const carerNotesArray = [
-  {
-    start: "2022-09-01",
-    carerNotes: ["no significant change", "patient is in good spirit"],
-  },
-  {
-    start: "2022-09-01",
-    carerNotes: ["no significant change", "patient is in good spirit"],
-  },
-  {
-    start: "2022-09-01",
-    carerNotes: ["no significant change", "patient is in good spirit"],
-  },
-  {
-    start: "2022-09-01",
-    carerNotes: ["no significant change", "patient is in good spirit"],
-  },
-];
+import { PAST_NOTES, VIEW_PATIENT_PROFILE } from "../../graphql/queries";
 
 export const NextVisitForCarer = ({
   appointmentDetail,
@@ -87,6 +67,12 @@ export const NextVisitForCarer = ({
   ] = useLazyQuery(PAST_NOTES, {
     fetchPolicy: "network-only",
   });
+  const [
+    getPatientProfile,
+    { data: patientData, loading: patientLoading, error: patientError },
+  ] = useLazyQuery(VIEW_PATIENT_PROFILE, {
+    fetchPolicy: "network-only",
+  });
 
   const {
     register,
@@ -100,9 +86,17 @@ export const NextVisitForCarer = ({
   });
 
   const status = appointmentDetail.status;
+  const patient = useState(appointmentDetail.patientId.id);
 
   const [pastVisitNotesBtn, setPastVisitNoteBtn] = useState(false);
+  const [patientProfileBtn, setPatientProfileBtn] = useState(false);
 
+  //useEffects hooks to monitors changes
+  // useEffect(() => {
+  //   setPatientProfileBtn(false);
+  // }, [patient]);
+
+  //function to check in/ check out of appointment
   const CheckInAndOut = () => {
     const checkin = (event) => {
       console.log(event.target.id);
@@ -257,13 +251,122 @@ export const NextVisitForCarer = ({
 
   const BtnPatientProfile = () => {
     const viewPatientProfile = (event) => {
-      console.log("showing patient profile");
+      const patientId = event.target.id;
+
+      setPatientProfileBtn(true);
+      getPatientProfile({
+        variables: {
+          userId: patientId,
+        },
+      });
     };
+
+    const hidePatientProfile = () => {
+      setPatientProfileBtn(false);
+    };
+
     return (
-      <Button variant="Contained" onClick={viewPatientProfile}>
-        View Patient Profile
-      </Button>
+      <>
+        {!patientProfileBtn && (
+          <Button
+            variant="Contained"
+            onClick={viewPatientProfile}
+            id={appointmentDetail.patientId.id}
+          >
+            View Patient Profile
+          </Button>
+        )}
+        {patientProfileBtn && (
+          <Button
+            variant="Contained"
+            onClick={hidePatientProfile}
+            id={appointmentDetail.patientId.id}
+          >
+            Hide Patient Profile
+          </Button>
+        )}
+      </>
     );
+  };
+
+  const PatientProfileBtn = () => {
+    if (patientProfileBtn) {
+      if (patientData) {
+        return (
+          <>
+            <Typography
+              key="username"
+              component="h3"
+              variant="caption"
+              align="left"
+              sx={{ mb: 2 }}
+            >
+              Patient name: {patientData.patientInfo.username}
+            </Typography>
+            <Typography
+              key="email"
+              component="h3"
+              variant="caption"
+              align="left"
+              sx={{ mb: 2 }}
+            >
+              Email: {patientData.patientInfo.userId.email}
+            </Typography>
+            <Typography
+              key="phoneNumber"
+              component="h3"
+              variant="caption"
+              align="left"
+              sx={{ mb: 2 }}
+            >
+              Phone number: {patientData.patientInfo.userId.phoneNumber}
+            </Typography>
+            <Typography
+              key="gender"
+              component="h3"
+              variant="caption"
+              align="left"
+              sx={{ mb: 2 }}
+            >
+              Gender : {patientData.patientInfo.gender}
+            </Typography>
+            <Typography
+              key="genderPreference"
+              component="h3"
+              variant="caption"
+              align="left"
+              sx={{ mb: 2 }}
+            >
+              Gender preference (for carer gender):{" "}
+              {patientData.patientInfo.genderPreference}
+            </Typography>
+            <Typography
+              key="genderPreference"
+              component="h3"
+              variant="caption"
+              align="left"
+              sx={{ mb: 2 }}
+            >
+              Days when care needed: {patientData.patientInfo.days.join("-")}
+            </Typography>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <Typography
+              key="no-notes"
+              component="h1"
+              variant="h6"
+              align="left"
+              sx={{ mb: 2 }}
+            >
+              No Carer notes for this patient yet.
+            </Typography>
+          </>
+        );
+      }
+    }
   };
 
   const BtnPastVisitNotes = () => {
@@ -347,11 +450,16 @@ export const NextVisitForCarer = ({
         <h4>{appointmentDetail.title}</h4>
         <h4>
           {appointmentDetail.patientId.patientProfileId.username} |
-          {appointmentDetail.patientId.patientProfileId.gender} |
+          {appointmentDetail.patientId.patientProfileId.gender}
+        </h4>
+        <h4>
+          {appointmentDetail.patientId.address.fullAddress} |{" "}
           {appointmentDetail.patientId.postcode}
         </h4>
-        <h4>Start Time: {appointmentDetail.start}</h4>
-        <h4>End Time: {appointmentDetail.end}</h4>
+        <h4>
+          Start Time: {format(new Date(appointmentDetail.start), "HH:mm")}
+        </h4>
+        <h4>End Time: {format(new Date(appointmentDetail.end), "HH:mm")}</h4>
       </div>
       <CheckInAndOut />
       <UpdateNotes />
@@ -365,6 +473,7 @@ export const NextVisitForCarer = ({
         <BtnPatientProfile />
       </Stack>
       <PastVisitNotesBtn />
+      <PatientProfileBtn />
     </Paper>
   );
 };

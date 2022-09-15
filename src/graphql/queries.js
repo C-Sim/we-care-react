@@ -236,3 +236,20 @@ export const PAST_NOTES = gql`
     }
   }
 `;
+
+export const VIEW_PATIENT_PROFILE = gql`
+  query PatientInfo($userId: ID!) {
+    patientInfo(userId: $userId) {
+      userId {
+        id
+        email
+        phoneNumber
+        imageUrl
+      }
+      username
+      gender
+      genderPreference
+      days
+    }
+  }
+`;
