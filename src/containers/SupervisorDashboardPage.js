@@ -1,8 +1,10 @@
 // For each user type to view top level information most relevant to them - may need to split into 3, but use first created as template for others
 import * as React from "react";
 import * as V from "victory";
+import { useNavigate } from "react-router-dom";
 import { VictoryBar, VictoryChart, VictoryPie, VictoryTheme } from "victory";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +16,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { Typography } from "@mui/material";
+import { ButtonDark } from "../components/atoms/ButtonDark";
 
 const genderPreference = [
   { x: "female", y: 35 },
@@ -33,85 +36,65 @@ const carerDays = [
 ];
 
 export const SupervisorDashboardPage = () => {
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Spread per day - Bar Chart",
-      },
-    },
-  };
-
-  const labels = [
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-    "sunday",
-  ];
-
-  const patientsPerDay = [10, 15, 20, 15, 20, 15, 15];
-  const carersPerDay = [15, 25, 30, 30, 30, 20, 15];
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: patientsPerDay,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: "Dataset 2",
-        data: carersPerDay,
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-    ],
-  };
+  const navigate = useNavigate();
 
   return (
     <div>
       <Box sx={{ backgroundColor: "#61dafb" }}>
         <h1>Welcome to the Supervisor dashboard</h1>
       </Box>
+      <Stack>
+        <ButtonDark
+          label="Add carers to the team"
+          type="button"
+          onClick={() => {
+            navigate("./create-carer", { replace: true });
+          }}
+        />
+        <ButtonDark
+          label="Assign Patients to Carers"
+          type="button"
+          onClick={() => {
+            navigate("./assignments", { replace: true });
+          }}
+        />
+        <ButtonDark
+          label="Get Started"
+          type="button"
+          onClick={() => {
+            navigate("./login", { replace: true });
+          }}
+        />
+      </Stack>
 
-      <Box sx={{ height: 600 }}>
-        <VictoryPie colorScale={["pink", "#61dafb"]} data={genderPreference} />
-      </Box>
-      <Box sx={{ height: 600 }}>
-        <VictoryPie colorScale={["pink", "#61dafb", "grey"]} data={gender} />
-      </Box>
-      <Box sx={{ height: 600 }}>
-        <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
-          <VictoryBar style={{ data: { fill: "#c43a31" } }} data={carerDays} />
-        </VictoryChart>
-      </Box>
-      <Box sx={{ height: 600 }}>
-        <Bar options={(options, { maintainAspectRatio: false })} data={data} />
-      </Box>
-      <Typography component="h4" variant="h4" align="center">
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-      </Typography>
-      <Typography component="h4" variant="h4" align="center">
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-      </Typography>
-      <Typography component="h4" variant="h4" align="center">
-        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      </Typography>
+      <Stack direction="row">
+        <Box sx={{ height: 400 }}>
+          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+            Overall gender preferences distribution
+          </Typography>
+          <VictoryPie
+            colorScale={["pink", "#61dafb", "grey"]}
+            data={genderPreference}
+          />
+        </Box>
+        <Box sx={{ height: 400 }}>
+          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+            Overall gender distribution
+          </Typography>
+          <VictoryPie colorScale={["pink", "#61dafb", "grey"]} data={gender} />
+        </Box>
+        <Box sx={{ height: 400 }}>
+          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
+            Carers availability - Distribution over weekdays
+          </Typography>
+          <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
+            <VictoryBar
+              style={{ data: { fill: "#c43a31" } }}
+              data={carerDays}
+            />
+          </VictoryChart>
+        </Box>
+      </Stack>
     </div>
   );
 };
