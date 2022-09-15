@@ -144,6 +144,66 @@ export const ADDRESS_LOOKUP = gql`
   }
 `;
 
+export const NEXT_WORKING_DAY_APPOINTMENTS = gql`
+  query AppointmentsForNextWorkingDay {
+    appointmentsForNextWorkingDay {
+      id
+      appointmentDate
+      start
+      end
+      status
+      patientId {
+        id
+        firstName
+        lastName
+        postcode
+        address {
+          line_1
+          fullAddress
+        }
+        patientProfileId {
+          username
+          gender
+        }
+      }
+      carerId {
+        id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const NEXT_WEEK_APPOINTMENTS = gql`
+  query AppointmentsForNextWeek {
+    appointmentsForNextWeek {
+      id
+      appointmentDate
+      patientId {
+        id
+        firstName
+        lastName
+      }
+      carerId {
+        id
+        firstName
+        lastName
+        imageUrl
+        email
+        phoneNumber
+        carerProfileId {
+          username
+          gender
+        }
+      }
+      start
+      end
+      status
+    }
+  }
+`;
+
 export const RECEIVED_NOTIFICATIONS = gql`
   query ReceivedNotificationsByUserId {
     notificationsByUserId {
