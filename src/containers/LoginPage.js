@@ -1,38 +1,36 @@
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { LoginForm } from "../components/organisms/LoginForm";
-import loginImage from "../components/atoms/images/sign-up.svg";
+import loginImage from "../components/atoms/images/sign-up.png";
 
 export const LoginPage = () => {
   const isMobile = useMediaQuery("(max-width:900px)");
 
   return (
-    <Grid container sx={{ minHeight: "95vh" }}>
+    <Box
+      sx={{
+        minHeight: "95vh",
+        margin: 4,
+      }}
+    >
+      <LoginForm isMobile={isMobile} />
       {!isMobile && (
-        <Grid item md={6}>
-          <img src={loginImage} />
-        </Grid>
+        <Box
+          sx={{
+            position: "relative",
+            marginTop: "-20%",
+            marginLeft: "64%",
+            zIndex: 20,
+            color: "#fff",
+            fontWeight: "bold",
+          }}
+        >
+          <img src={loginImage} height="500vh" />
+        </Box>
       )}
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={6}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          background: `linear-gradient(
-            to top,
-            rgba(20, 20, 20, 0.2),
-            rgba(133, 133, 133, 0.2)
-          )`,
-        }}
-      >
-        <LoginForm isMobile={isMobile} />
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
