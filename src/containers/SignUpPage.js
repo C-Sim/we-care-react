@@ -11,7 +11,7 @@ export const SignUpPage = () => {
     <Grid container sx={{ minHeight: "95vh" }}>
       {!isMobile && (
         <Grid item md={6}>
-          <img src={signUpImage} />
+          <img src={signUpImage} alt="sign up" />
         </Grid>
       )}
       <Grid

@@ -11,6 +11,7 @@ export const Dropdown = ({
   helperText,
   defaultSelection,
   options,
+  required,
   handleSelect,
 }) => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -23,7 +24,7 @@ export const Dropdown = ({
 
   return (
     <div>
-      <FormControl required sx={{ width: isMobile ? "90%" : "80%" }}>
+      <FormControl required={required} sx={{ width: isMobile ? "90%" : "80%" }}>
         <InputLabel id="demo-simple-select-required-label">{label}</InputLabel>
         <Select
           labelId="demo-simple-select-required-label"

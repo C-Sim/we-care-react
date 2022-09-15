@@ -32,7 +32,7 @@ export const HowItWorks = () => {
           justifyContent: "center",
         }}
       >
-        <img src={signUpImage} width="50%" />
+        <img src={signUpImage} width="50%" alt="sign up" />
         <Typography
           sx={{
             fontSize: isMobile ? "0.8rem" : isTablet ? "0.64rem" : "0.84rem",
@@ -58,7 +58,7 @@ export const HowItWorks = () => {
           justifyContent: "center",
         }}
       >
-        <img src={carePlanImage} width="80%" />
+        <img src={carePlanImage} width="80%" alt="care plan" />
         <Typography
           sx={{
             fontSize: isMobile ? "0.8rem" : isTablet ? "0.64rem" : "0.84rem",
@@ -68,7 +68,7 @@ export const HowItWorks = () => {
           marginBottom={3}
           fontWeight={100}
         >
-          2. Create your Personalised Care Plan
+          2. Create your personalised Care Plan
         </Typography>
       </Grid>
       <Grid
@@ -84,7 +84,7 @@ export const HowItWorks = () => {
           justifyContent: "center",
         }}
       >
-        <img src={visitImage} width="60%" />
+        <img src={visitImage} width="60%" alt="visit" />
         <Typography
           sx={{
             fontSize: isMobile ? "0.8rem" : isTablet ? "0.64rem" : "0.84rem",
