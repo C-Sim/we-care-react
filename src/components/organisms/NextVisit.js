@@ -270,9 +270,10 @@ export const NextVisitForCarer = ({
     const viewPastNotes = () => {
       console.log("showing past notes");
       setPastVisitNoteBtn(true);
+      console.log(appointmentDetail.patientId.id);
       getPastNotes({
         variables: {
-          userId: appointmentDetail.patientId,
+          userId: appointmentDetail.patientId.id,
         },
       });
     };
@@ -302,7 +303,7 @@ export const NextVisitForCarer = ({
       if (notesData) {
         return (
           <>
-            {notesData.map((note, index) => (
+            {notesData.appointmentNotesByUserId.map((note, index) => (
               <Typography
                 key={index}
                 component="h1"
@@ -310,7 +311,7 @@ export const NextVisitForCarer = ({
                 align="left"
                 sx={{ mb: 2 }}
               >
-                {format(note.start, "yyyy-MM-dd")} :{" "}
+                {format(new Date(note.start), "yyyy-MM-dd")} :{" "}
                 {note.carerNotes.join(" - ")}
               </Typography>
             ))}
