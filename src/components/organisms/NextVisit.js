@@ -3,16 +3,17 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+
 import Typography from "@mui/material/Typography";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import CheckIcon from "@mui/icons-material/Check";
 import { format } from "date-fns";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { get, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { ButtonDisabled } from "../atoms/ButtonDisabled";
 import { UPDATE_CHECKIN } from "../../graphql/mutations";
 import { UPDATE_CHECKOUT } from "../../graphql/mutations";
@@ -85,6 +86,17 @@ export const NextVisitForCarer = ({
     { data: notesData, loading: notesLoading, error: notesError },
   ] = useLazyQuery(PAST_NOTES, {
     fetchPolicy: "network-only",
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setError,
+    clearErrors,
+    getValues,
+  } = useForm({
+    mode: "all",
   });
 
   const status = appointmentDetail.status;
@@ -160,11 +172,13 @@ export const NextVisitForCarer = ({
   };
 
   const UpdateNotes = () => {
-    const handleUpdateNotes = (event, formData) => {
+    const handleUpdateNotes = (formData) => {
       console.log("update carer notes");
-      console.log(event.target.id);
+
       const trigger = "carerNote";
       const note = formData.carerNote;
+      console.log(note);
+      console.log(appointmentDetail.id);
       updateCarerNotes({
         variables: {
           appointmentId: appointmentDetail.id,
@@ -179,51 +193,64 @@ export const NextVisitForCarer = ({
     return (
       <Stack
         component="form"
-        sx={{ p: 3 }}
+        sx={{ pt: 3 }}
         spacing={4}
         onSubmit={handleSubmit(handleUpdateNotes)}
       >
-        <TextField
-          sx={{ width: "500px", mt: 2 }}
-          required
-          id="carer-note"
-          label="Carer's notes"
-          multiline
-          row={4}
-          variant="filled"
-          helperText={!!errors.carerNote ? "Please enter your note " : ""}
-          {...register("carerNote", {
-            required: true,
-          })}
-        />
-        <Button
-          id={appointmentDetail.id}
-          variant="Contained"
-          type="submit"
-          loading={loading}
-        >
-          Update carer notes
-        </Button>
-        {noteSuccess && (
-          <Typography
-            variant="caption"
-            component="div"
-            sx={{ color: "green" }}
-            align="center"
+        <Stack>
+          <TextField
+            sx={{ width: "500px", mt: 2 }}
+            required
+            id="carerNote"
+            label="Carer's note"
+            multiline
+            row={4}
+            variant="filled"
+            helperText={
+              !!errors.carerNote ? "Please enter your note here " : ""
+            }
+            {...register("carerNote", {
+              required: true,
+            })}
+          />
+        </Stack>
+        <Stack>
+          <LoadingButton
+            id={appointmentDetail.id}
+            variant="Contained"
+            type="submit"
+            loading={carerNotesLoading}
+            sx={{
+              fontWeight: 100,
+              backgroundColor: "#3f3d56",
+              color: "#eef5dbff",
+              "&:hover": { backgroundColor: "#f7b801" },
+              borderRadius: "18px",
+            }}
           >
-            Notes successfully updated.
-          </Typography>
-        )}
-        {carerNotesError && (
-          <Typography
-            variant="caption"
-            component="div"
-            sx={{ color: "red" }}
-            align="center"
-          >
-            Failed to sign up. Please try again.
-          </Typography>
-        )}
+            Update carer notes
+          </LoadingButton>
+          {noteSuccess && (
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: "green" }}
+              align="center"
+            >
+              Notes successfully updated.
+            </Typography>
+          )}
+          {carerNotesError && (
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: "red" }}
+              align="center"
+            >
+              Failed to sign up. Please try again.
+            </Typography>
+          )}
+        </Stack>
       </Stack>
     );
   };
@@ -313,7 +340,9 @@ export const NextVisitForCarer = ({
       elevation={6}
     >
       <div>
-        <h2>Your Appointment Details</h2>
+        <Typography component="h1" variant="h6" align="left" sx={{ mb: 2 }}>
+          Your appointment details
+        </Typography>
         <h4>{appointmentDetail.title}</h4>
         <h4>
           {appointmentDetail.patientId.patientProfileId.username} |

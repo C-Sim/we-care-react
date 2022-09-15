@@ -28,6 +28,7 @@ export const CarerDashboardPage = () => {
   });
 
   //state variables
+  const [timelineDate, setTimelineDate] = useState(new Date());
   const [timelineData, setTimelineData] = useState([]);
   const [statusChanged, setStatusChanged] = useState();
   const [appointmentDetail, setAppointmentDetail] = useState();
@@ -36,6 +37,7 @@ export const CarerDashboardPage = () => {
   useEffect(() => {
     if (data) {
       setTimelineData(data.appointmentsForNextWorkingDay);
+      setTimelineDate(data.appointmentsForNextWorkingDay[0].start);
     }
   }, [data]);
 
@@ -133,17 +135,18 @@ export const CarerDashboardPage = () => {
           />
         )}
         {/* carer timeline box container */}
-        <Box
-          zIndex="modal"
-          sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
-        >
-          {" "}
-          <CarerTimeline
-            date="Monday 8th August"
-            appointments={timelineData}
-            viewAppointment={viewAppointment}
-          />
-        </Box>
+        {timelineData && (
+          <Box
+            zIndex="modal"
+            sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
+          >
+            <CarerTimeline
+              date={timelineDate}
+              appointments={timelineData}
+              viewAppointment={viewAppointment}
+            />
+          </Box>
+        )}
         {/* Appointments' directions box container */}
         <Box
           zIndex="modal"
