@@ -88,7 +88,7 @@ export const NavBar = () => {
             <MenuIcon></MenuIcon>
           </IconButton>
           <Box className="LogoNav">
-            <img src={logo} height="45"></img>
+            <img src={logo} height="40"></img>
           </Box>
           <Box
             variant="h6"

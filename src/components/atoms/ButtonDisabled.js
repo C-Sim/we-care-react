@@ -12,6 +12,7 @@ export const ButtonDisabled = ({ label, type }) => {
         color: "#3f3d56",
         borderRadius: "18px",
         "&:hover": { backgroundColor: "#00b0ff2e" },
+        marginBottom: 1.5,
       }}
     >
       {label}

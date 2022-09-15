@@ -37,7 +37,7 @@ const navItems = {
       label: "Notifications",
       path: "/notifications",
     },
-    { label: "Add Carer", path: "/supervisor-create-carer" },
+    { label: "Add Carer", path: "/create-carer" },
 
     { label: "Assignments", path: "/supervisor-assign" },
 

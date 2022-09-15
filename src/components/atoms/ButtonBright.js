@@ -1,11 +1,12 @@
 import Button from "@mui/material/Button";
 
-export const ButtonBright = ({ label, type, onClick }) => {
+export const ButtonBright = ({ id, label, type, onClick }) => {
   return (
     <Button
       className="button"
       variant="contained"
       type={type}
+      id={id}
       sx={{
         fontWeight: 100,
         backgroundColor: "#00b0ff",

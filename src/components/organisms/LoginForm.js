@@ -64,7 +64,21 @@ export const LoginForm = ({ isMobile }) => {
   };
 
   return (
-    <Paper sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }} elevation={6}>
+    <Paper
+      sx={{
+        p: 3,
+        minWidth: isMobile ? "90%" : "400px",
+        margin: "auto",
+        zIndex: 10,
+        position: "relative",
+        background: `linear-gradient(
+      to top,
+      rgba(238, 245, 219, 0.2),
+      rgba(0, 176, 255, 0.18)
+    )`,
+      }}
+      elevation={6}
+    >
       <Typography component="h1" variant="h4" align="center">
         Login
       </Typography>
