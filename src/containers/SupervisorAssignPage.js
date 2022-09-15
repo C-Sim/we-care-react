@@ -208,10 +208,9 @@ export const SupervisorAssignPage = () => {
 
   //creates appointments with a useMutation and a loop over the array of draft appointments
   const assignAppointments = () => {
-    console.log("creating and assigning appointments in db...");
+
     //useMutation
-    debugger;
-    console.log(simulatedAppointments);
+
     createAppointments({
       variables: {
         appointments: simulatedAppointments,
@@ -220,7 +219,7 @@ export const SupervisorAssignPage = () => {
   };
 
   const resetAssign = () => {
-    console.log("resetting the fields for a new assign");
+
     //TODO: it puts the states back to their original state
     setDateValue(format(new Date(), "yyyy-MM-dd"));
     setSelectedDate();

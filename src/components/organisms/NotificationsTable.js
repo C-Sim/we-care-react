@@ -233,7 +233,7 @@ export const NotificationsTable = ({ notifications }) => {
     },
   ] = useMutation(UPDATE_CARER, {
     onCompleted: () => {
-      console.log("reallocated carer");
+
       setReallocateSuccess(true);
     },
   });
@@ -295,10 +295,10 @@ export const NotificationsTable = ({ notifications }) => {
     event.preventDefault();
 
     setNotificationId(id);
-    console.log(id);
+
 
     setNotificationType(type);
-    console.log(type);
+
 
     handleUpdateRead(id);
 
@@ -336,13 +336,13 @@ export const NotificationsTable = ({ notifications }) => {
     }
     if (notification.notificationType === "Schedule change") {
       const carersArrayToFilter = allCarersData.carers;
-      console.log(carersArrayToFilter);
+
       const possibleCarers = carersArrayToFilter.filter(
         (i) => i.userId.id !== notification.senderId
       );
-      console.log(possibleCarers);
+
       const carerId = possibleCarers[0].userId.id;
-      console.log(carerId);
+
       updateCarer({
         variables: {
           appointmentId: notification.appointmentId,

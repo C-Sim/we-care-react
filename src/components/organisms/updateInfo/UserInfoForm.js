@@ -37,7 +37,6 @@ export const UserInfoForm = () => {
   //mutations
   const [updateUserInfo, { data, loading, error }] = useMutation(USER_PROFILE, {
     onCompleted: (data) => {
-      console.log(data.updateUserInfo.user);
       context.setUser(data.updateUserInfo.user);
       localStorage.setItem("user", JSON.stringify(data.updateUserInfo.user));
       setUserSuccess(true);
@@ -106,8 +105,6 @@ export const UserInfoForm = () => {
   }, [addressLookupData]);
 
   const handleAddressLookup = () => {
-    console.log("searching...");
-    console.log(getValues("postcode"));
     addressLookup({
       variables: {
         postcode: getValues("postcode"),

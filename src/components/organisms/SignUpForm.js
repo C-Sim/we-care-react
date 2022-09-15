@@ -89,7 +89,6 @@ export const SignUpForm = ({ isMobile }) => {
   }, [addressLookupData]);
 
   const onSubmit = (formData) => {
-    console.log(formData);
     if (formData.password !== formData.confirmPassword) {
       setError("confirmPassword", {
         type: "manual",
@@ -111,13 +110,12 @@ export const SignUpForm = ({ isMobile }) => {
         address: selectedAddressId,
       };
 
-      console.log(signupInput);
       const patientInput = {
         gender: gender,
         genderPreference: genderCare,
         days: day,
       };
-      console.log(patientInput);
+
       signup({
         variables: {
           signupInput,
@@ -136,8 +134,6 @@ export const SignUpForm = ({ isMobile }) => {
   };
 
   const handleAddressLookup = () => {
-    console.log("searching...");
-    console.log(getValues("postcode"));
     addressLookup({
       variables: {
         postcode: getValues("postcode"),
@@ -179,9 +175,6 @@ export const SignUpForm = ({ isMobile }) => {
       setDay(day.filter((data) => data !== e.target.value));
     }
   };
-
-  console.log(addressLookupData);
-  console.log(getValues());
 
   return (
     <Paper

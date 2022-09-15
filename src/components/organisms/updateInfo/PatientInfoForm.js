@@ -27,7 +27,6 @@ export const PatientInfoForm = () => {
     PATIENT_PROFILE,
     {
       onCompleted: (data) => {
-        console.log(data.updatePatientInfo);
         setPatientSuccess(true);
       },
     }
@@ -73,7 +72,6 @@ export const PatientInfoForm = () => {
   };
 
   const handlePatientUpdate = () => {
-    debugger;
     const updatePatientInput = {};
 
     if (genderCare) {
