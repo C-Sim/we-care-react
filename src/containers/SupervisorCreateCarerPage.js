@@ -1,6 +1,6 @@
 // For the supervisor only - to be able to create a new carer in the database
 import Grid from "@mui/material/Grid";
-import landingImage from "../components/atoms/images/landing.png";
+import carer from "../components/atoms/images/carer.png";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { CreateCarerForm } from "../components/organisms/CreateCarer";
 
@@ -11,7 +11,7 @@ export const SupervisorCreateCarerPage = () => {
     <Grid container sx={{ minHeight: "95vh" }}>
       {!isMobile && (
         <Grid item md={3}>
-          <img src={landingImage} alt="sign-up-image" />
+          <img src={carer} alt="carers" />
         </Grid>
       )}
       <Grid

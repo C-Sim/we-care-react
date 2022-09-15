@@ -20,6 +20,7 @@ import { PatientsPage } from "./containers/PatientsPage";
 import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
 import { PatientsProfilePage } from "./containers/PatientProfilePage";
+
 import { useAuth } from "./context/AppProvider";
 
 export const AppRoutes = () => {
@@ -63,6 +64,7 @@ export const AppRoutes = () => {
           <Route path="/assignments" element={<SupervisorAssignPage />} />
           <Route path="/patients" element={<PatientsPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/create-carer" element={<SupervisorCreateCarerPage />} />
         </>
       )}
     </Routes>
