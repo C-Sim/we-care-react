@@ -9,8 +9,9 @@ import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import Typography from "@mui/material/Typography";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
+import Button from "@mui/material/Button";
 
-export const CarerTimeline = ({ date, patients }) => {
+export const CarerTimeline = ({ date, appointments, viewAppointment }) => {
   return (
     <React.Fragment>
       <Typography align="center" color="#00b0ff" fontWeight={200}>
@@ -18,32 +19,43 @@ export const CarerTimeline = ({ date, patients }) => {
       </Typography>
 
       <Timeline sx={{ color: "#3f3d56" }}>
-        {patients.map((patient) => (
-          <TimelineItem>
+        {appointments.map((appointments) => (
+          <TimelineItem key={appointments.id}>
             <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2">
-              {patient.time}
+              {appointments.start}
             </TimelineOppositeContent>
             <TimelineSeparator sx={{ color: "#00b0ff" }}>
               <TimelineDot
                 sx={{
                   bgcolor:
-                    patient.timeFrame === "past"
+                    appointments.status === "completed"
                       ? "#00b0ff2e"
-                      : patient.timeFrame === "current"
+                      : appointments.status === "ongoing"
                       ? "#f7b801"
                       : "#00b0ff",
                 }}
               >
-                {patient.patientGender === "male" ? <ManIcon /> : <WomanIcon />}
+                {appointments.patientId.patientProfileId.gender === "male" ? (
+                  <ManIcon />
+                ) : (
+                  <WomanIcon />
+                )}
               </TimelineDot>
 
               <TimelineConnector sx={{ bgcolor: "#00b0ff" }} />
             </TimelineSeparator>
             <TimelineContent sx={{ m: "auto 0" }} variant="body2">
-              <Typography fontSize="0.8rem">{patient.patientName}</Typography>
-              <Typography fontSize="0.5rem">
-                {patient.patientAddress}
-              </Typography>
+              <Button
+                size="small"
+                variant="Contained"
+                onClick={viewAppointment}
+                id={appointments.id}
+                address={appointments.patientId.address.fullAddress}
+              >
+                {appointments.patientId.patientProfileId.username}
+                {appointments.patientId.patientProfileId.gender}
+                {appointments.patientId.postcode}
+              </Button>
             </TimelineContent>
           </TimelineItem>
         ))}

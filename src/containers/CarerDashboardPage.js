@@ -11,11 +11,24 @@ import {
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { NextVisitForCarer } from "../components/organisms/NextVisit";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
+import { useMutation, useQuery } from "@apollo/client";
+import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
 
 export const CarerDashboardPage = () => {
+  const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
+  const [timelineData, setTimelineData] = useState([]);
+  useEffect(() => {
+    if (data) {
+      setTimelineData(data.appointmentsForNextWorkingDay);
+    }
+  }, [data]);
+  console.log(timelineData);
+
+  const [appointmentDetail, setAppointmentDetail] = useState();
+
   const center = { lat: 52.489471, lng: -1.898575 };
 
   const { isLoaded } = useJsApiLoader({
@@ -23,36 +36,65 @@ export const CarerDashboardPage = () => {
     libraries: ["places"],
   });
 
-  const patientAddress = [
-    {
-      time: "08:00",
-      timeFrame: "past",
-      patientName: "Charlie Dean",
-      patientGender: "male",
-      patientAddress: "Dale Rd B29 6AG",
-    },
-    {
-      time: "10:00",
-      timeFrame: "current",
-      patientName: "Carol Davies",
-      patientGender: "female",
-      patientAddress: "Paganel Rd B29 5TG",
-    },
-    {
-      time: "14:00",
-      timeFrame: "future",
-      patientName: "Abe Zephaniah",
-      patientGender: "male",
-      patientAddress: "Ambassador Ave B31 2GZ",
-    },
-    {
-      time: "15:00",
-      timeFrame: "future",
-      patientName: "Abe Zephaniah",
-      patientGender: "male",
-      patientAddress: "Ambassador Ave B31 2GZ",
-    },
-  ];
+  const viewAppointment = (event) => {
+    console.log(event.target);
+    const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
+    setAppointmentDetail(appointment);
+  };
+
+  // const appointments = [
+  //   {
+  //     id: "484251",
+  //     start: "08:00",
+  //     status: "completed",
+  //     patientId: {
+  //       firstName: "Bob",
+  //       lastName: "Smith",
+  //       patientProfileId: {
+  //         username: "Bob Smith",
+  //         gender: "male",
+  //       },
+  //       postcode: "B29 6AG",
+  //       address: {
+  //         fullAddress: "Dale Rd B29 6AG",
+  //       },
+  //     },
+  //   },
+  //   {
+  //     id: "484252",
+  //     start: "09:00",
+  //     status: "ongoing",
+  //     patientId: {
+  //       firstName: "alice",
+  //       lastName: "Smith",
+  //       patientProfileId: {
+  //         username: "Alice Smith",
+  //         gender: "female",
+  //       },
+  //       postcode: "B29 6AG",
+  //       address: {
+  //         fullAddress: "Dale Rd B29 6AG",
+  //       },
+  //     },
+  //   },
+  //   {
+  //     id: "484253",
+  //     start: "10:00",
+  //     status: "upcoming",
+  //     patientId: {
+  //       firstName: "chris",
+  //       lastName: "Smith",
+  //       patientProfileId: {
+  //         username: "chris Smith",
+  //         gender: "male",
+  //       },
+  //       postcode: "B29 6AG",
+  //       address: {
+  //         fullAddress: "Dale Rd B29 6AG",
+  //       },
+  //     },
+  //   },
+  // ];
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionResponse, setDirectionResponse] = useState(null);
@@ -103,9 +145,6 @@ export const CarerDashboardPage = () => {
     setDestination(event.target.value);
   };
 
-  console.log(origin);
-  console.log(destination);
-
   if (!isLoaded) {
     return <h1>map is not loading</h1>;
   }
@@ -113,17 +152,22 @@ export const CarerDashboardPage = () => {
   return (
     <>
       <Box sx={{ height: 800 }}>
-        <NextVisitForCarer />
-
+        {/* next appointment detail */}
+        {appointmentDetail && (
+          <NextVisitForCarer appointmentDetail={appointmentDetail} />
+        )}
         {/* carer timeline box container */}
         <Box
           zIndex="modal"
           sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
         >
           {" "}
-          <CarerTimeline date="Monday 8th August" patients={patientAddress} />
+          <CarerTimeline
+            date="Monday 8th August"
+            appointments={timelineData}
+            viewAppointment={viewAppointment}
+          />
         </Box>
-
         {/* Appointments' directions box container */}
         <Box
           zIndex="modal"
@@ -139,9 +183,12 @@ export const CarerDashboardPage = () => {
               value={origin}
               onChange={handleOriginClick}
             >
-              {patientAddress.map((address, index) => (
-                <MenuItem value={address.patientAddress} key={index}>
-                  {address.patientAddress}
+              {timelineData.map((appointment, index) => (
+                <MenuItem
+                  value={appointment.patientId.address.fullAddress}
+                  key={index}
+                >
+                  {appointment.patientId.address.fullAddress}
                 </MenuItem>
               ))}
             </Select>
@@ -156,9 +203,12 @@ export const CarerDashboardPage = () => {
               value={destination}
               onChange={handleDestinationClick}
             >
-              {patientAddress.map((address, index) => (
-                <MenuItem value={address.patientAddress} key={index}>
-                  {address.patientAddress}
+              {timelineData.map((appointment, index) => (
+                <MenuItem
+                  value={appointment.patientId.address.fullAddress}
+                  key={index}
+                >
+                  {appointment.patientId.address.fullAddress}
                 </MenuItem>
               ))}
             </Select>
@@ -180,7 +230,6 @@ export const CarerDashboardPage = () => {
             </button>
           </div>
         </Box>
-
         {/* map goes here  */}
         <Box>
           {" "}
