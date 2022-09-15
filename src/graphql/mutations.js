@@ -110,9 +110,6 @@ export const UPDATE_APPOINTMENT = gql`
       appointmentUpdateInput: $appointmentUpdateInput
     ) {
       success
-      appointment {
-        id
-      }
     }
   }
 `;
