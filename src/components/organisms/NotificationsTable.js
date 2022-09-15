@@ -196,10 +196,6 @@ export const NotificationsTable = ({ notifications }) => {
 
   const [updateRead] = useMutation(UPDATE_READ);
 
-  //   useEffect(() => {
-  //     console.log(notifications);
-  //   }, [notifications]);
-
   const context = useContext(AppContext);
   const userAccount = context.user.accountType;
 
@@ -222,8 +218,6 @@ export const NotificationsTable = ({ notifications }) => {
 
   const [savedNotifications, setNotifications] = useState(notificationData);
 
-  console.log(notifications);
-
   const Notifications = savedNotifications.map((notification) => {
     return createNotification(
       notification.notificationId,
@@ -237,14 +231,9 @@ export const NotificationsTable = ({ notifications }) => {
     );
   });
 
-  console.log(savedNotifications, notificationData);
-  console.log(Notifications);
-
   const modalRowData = notificationData.find(
     (notification) => notification.notificationId === selectedNotificationId
   );
-
-  console.log(modalRowData);
 
   const modalRows = [
     createData("Patient:", modalRowData?.patient),
@@ -262,19 +251,15 @@ export const NotificationsTable = ({ notifications }) => {
         variables: { notificationId: id },
       });
 
-      console.log(id);
       notifications = notifications.map((notification) => {
         if (notification.id === id) {
           return { ...notification, isRead: true };
         }
-        console.log(notification);
 
         return notification;
       });
 
       setIsReadStatus(true);
-
-      console.log(notifications);
     } catch (err) {
       console.error(err);
     }
@@ -284,8 +269,6 @@ export const NotificationsTable = ({ notifications }) => {
     event.preventDefault();
 
     setNotificationId(id);
-
-    console.log(id);
 
     handleUpdateRead(id);
 
@@ -320,15 +303,6 @@ export const NotificationsTable = ({ notifications }) => {
     },
   ] = useMutation(PROCESS_NOTIFICATION);
 
-  //   const [
-  //     updateAppointment,
-  //     {
-  //       data: updateAppointmentData,
-  //       loading: updateAppointmentLoading,
-  //       error: updateAppointmentError,
-  //     },
-  //   ] = useMutation(UPDATE_APPOINTMENT);
-
   useEffect(() => {
     if (
       processNotificationData &&
@@ -341,7 +315,6 @@ export const NotificationsTable = ({ notifications }) => {
 
   const handleProcessNotification = async (notification, action) => {
     try {
-      console.log(notification, action);
       const updatedNotifications = await processNotification({
         variables: {
           processNotificationInput: {
@@ -371,8 +344,6 @@ export const NotificationsTable = ({ notifications }) => {
       console.error(err);
     }
   };
-
-  console.log(updatedReceivedArray);
 
   //   const handleDenial = async (notification) => {
   //     // regardless of type
@@ -417,7 +388,6 @@ export const NotificationsTable = ({ notifications }) => {
 
   return (
     <Box sx={{ width: "100%", padding: 4 }}>
-      {/* Modal */}
       <Dialog
         open={open}
         onClose={handleClose}

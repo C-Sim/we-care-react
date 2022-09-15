@@ -14,11 +14,7 @@ import { RECEIVED_NOTIFICATIONS } from "../graphql/queries";
 export const NotificationsPage = () => {
   const context = useContext(AppContext);
 
-  const { data, loading, error } = useQuery(RECEIVED_NOTIFICATIONS, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
-  });
+  const { data, loading, error } = useQuery(RECEIVED_NOTIFICATIONS);
 
   return (
     <Box>
