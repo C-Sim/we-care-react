@@ -262,6 +262,7 @@ export const SupervisorAssignPage = () => {
         sx={{
           marginLeft: 9,
           marginRight: 9,
+          marginBottom: 1,
         }}
         variant="middle"
       />
