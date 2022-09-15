@@ -51,7 +51,7 @@ export const PatientTimeline = ({ visits, viewAppointment }) => {
               <Button
                 variant="Contained"
                 onClick={viewAppointment}
-                id={visits.id}
+                id={visit.id}
               >
                 Carer: {visit.carerId.carerProfileId.username}
               </Button>

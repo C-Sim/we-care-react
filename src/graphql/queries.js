@@ -190,7 +190,7 @@ export const APPOINTMENTS_BY_ID = gql`
         firstName
         lastName
         imageUrl
-        phoneNumber
+        email
         carerProfileId {
           username
           gender

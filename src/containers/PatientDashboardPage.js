@@ -18,13 +18,13 @@ export const PatientDashboardPage = () => {
       setTimelineData(data.appointmentsByUserId);
     }
   }, [data]);
-  console.log(timelineData);
+  // console.log(timelineData);
 
   const viewAppointment = (event) => {
-    console.log(event.target);
+    // console.log(event.target);
     const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
     setAppointmentDetail(appointment);
-    console.log(appointment);
+    console.log(appointmentDetail);
   };
 
   return (
@@ -34,7 +34,9 @@ export const PatientDashboardPage = () => {
         visits={timelineData}
         viewAppointment={viewAppointment}
       />
-      {appointmentDetail && <NextVisitPatient />}
+      {appointmentDetail && (
+        <NextVisitPatient appointmentDetail={appointmentDetail} />
+      )}
     </>
   );
 };

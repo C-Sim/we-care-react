@@ -8,12 +8,13 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import Box from "@mui/material/Box";
+import CardActions from "@mui/material/CardActions";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
-export const NextVisitPatient = (appointmentDetail) => {
+export const NextVisitPatient = ({ appointmentDetail }) => {
+  console.log(appointmentDetail);
+
   const CarerCard = () => {
-    {
-      /* can add carer info: firstName lastName, gender, appointmentCount */
-    }
     return (
       <Card sx={{ display: "flex", flexDirection: "row" }}>
         <CardContent sx={{ maxWidth: 200 }}>
@@ -23,30 +24,19 @@ export const NextVisitPatient = (appointmentDetail) => {
           <CardMedia
             component="img"
             height="100"
-            image="https://loremflickr.com/640/480/people?23650"
-            alt="green iguana"
+            image={appointmentDetail.carerId.imageUrl}
+            alt="Carer image"
           />
           <Typography variant="h7" component="div">
-            carer first name and last name, gender
+            {appointmentDetail.carerId.carerProfileId.username}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
-          <Typography variant="body2">total appointment count</Typography>
-        </CardContent>
-        <CardContent sx={{ maxWidth: 200 }}>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Carers:
+          <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary">
+            {appointmentDetail.carerId.email}
           </Typography>
-          <CardMedia
-            component="img"
-            height="100"
-            image="https://loremflickr.com/640/480/people?23650"
-            alt="green iguana"
-          />
-          <Typography variant="h7" component="div">
-            carer first name and last name, gender
+          <Typography variant="body2">
+            Total Appointment Completed：
+            {appointmentDetail.carerId.carerProfileId.appointmentCount}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
-          <Typography variant="body2">total appointment count</Typography>
         </CardContent>
       </Card>
     );
