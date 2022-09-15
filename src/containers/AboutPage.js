@@ -1,34 +1,16 @@
 // overview of how the service works
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 
 import { PageTitle } from "../components/atoms/PageTitle";
-import { ProfileAvatar } from "../components/atoms/Avatar";
-import { ButtonBright } from "../components/atoms/ButtonBright";
 import { ButtonDark } from "../components/atoms/ButtonDark";
-import { ButtonDisabled } from "../components/atoms/ButtonDisabled";
-import { Input } from "../components/atoms/Input";
-import { InputDisabled } from "../components/atoms/InputDisabled";
-import { Error } from "../components/atoms/Error";
-
-import { NotificationBadge } from "../components/molecules/NotificationBadge";
-import { PatientTimeline } from "../components/molecules/PatientTimeline";
-import { CarerTimeline } from "../components/molecules/CarerTimeline";
-import { ReviewEditable } from "../components/molecules/ReviewEditable";
 import { ReviewFixed } from "../components/molecules/ReviewFixed";
-import { Dropdown } from "../components/molecules/Dropdown";
-import { CalendarSmall } from "../components/molecules/CalendarSmall";
 import { HowItWorks } from "../components/molecules/HowItWorks";
-import { ImageUploader } from "../components/molecules/ImageUploader";
 
 import logo from "../components/atoms/images/WeCare-dark.png";
-import { ModalForCarer } from "../components/molecules/ModalForCarer";
-import { ModalForSupervisor } from "../components/molecules/ModalForSupervisor";
 
 export const AboutPage = () => {
   const navigate = useNavigate();
