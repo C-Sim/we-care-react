@@ -245,7 +245,6 @@ export const SupervisorAssignPage = () => {
 
   return (
     <Box
-      marginBottom={20}
       sx={{
         backgroundColor: "rgba(97, 218, 251, 0.2)",
         marginBottom: 10,
@@ -258,6 +257,7 @@ export const SupervisorAssignPage = () => {
         align="center"
         sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }}
       ></PageTitle>
+
       <Divider
         sx={{
           marginLeft: 9,
@@ -265,6 +265,7 @@ export const SupervisorAssignPage = () => {
         }}
         variant="middle"
       />
+
       <Paper
         variant="outlined"
         sx={{
