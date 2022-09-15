@@ -3,6 +3,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 export const CalendarSmall = ({ userResults }) => {
+  //this component contains the calendar item and will need to contain the timeline inside it too, so the required states can be set here and not at parent component level
+
   // set states of calendar date
   const [calDate, setCalDate] = useState(new Date());
   const [resultArr, setResultArr] = useState([]);

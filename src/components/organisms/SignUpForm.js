@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import Typography from "@mui/material/Typography";
@@ -66,13 +66,14 @@ export const SignUpForm = ({ isMobile }) => {
     clearErrors,
     getValues,
   } = useForm({
-    mode: "onBlur",
+    mode: "all",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState();
   const [selectedAddress, setSelectedAddress] = useState();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -88,6 +89,7 @@ export const SignUpForm = ({ isMobile }) => {
   }, [addressLookupData]);
 
   const onSubmit = (formData) => {
+    console.log(formData);
     if (formData.password !== formData.confirmPassword) {
       setError("confirmPassword", {
         type: "manual",
@@ -179,9 +181,13 @@ export const SignUpForm = ({ isMobile }) => {
   };
 
   console.log(addressLookupData);
+  console.log(getValues());
 
   return (
-    <Paper sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }} elevation={6}>
+    <Paper
+      sx={{ p: 3, minWidth: isMobile ? "90%" : "400px", paddingBottom: 12 }}
+      elevation={6}
+    >
       {/* //address lookup modal */}
       <Dialog open={open} onClose={handleCloseModal}>
         <DialogTitle>Select Address</DialogTitle>
@@ -232,21 +238,34 @@ export const SignUpForm = ({ isMobile }) => {
             label="First name"
             variant="outlined"
             helperText={
-              !!errors.firstName ? "Please enter your first name." : ""
+              getValues("firstName")?.length < 2
+                ? "Please enter at least 2 characters"
+                : !!errors.firstName
+                ? "Please enter your first name."
+                : ""
             }
             {...register("firstName", {
               required: true,
+              minLength: 2,
             })}
           />
+          {errors.firstName && (
+            <FormHelperText error={errors.firstName}>
+              {errors.firstName?.message || ""}
+            </FormHelperText>
+          )}
           <TextField
             required
             error={!!errors.lastName}
             label="Last name"
             variant="outlined"
-            helperText={!!errors.lastName ? "Please enter your last name." : ""}
-            {...register("lastName", {
-              required: true,
-            })}
+            helperText={
+              getValues("firstName")?.length < 2
+                ? "Please enter at least 2 characters"
+                : !!errors.lastName
+                ? "Please enter your first name."
+                : ""
+            }
           />
           <TextField
             required

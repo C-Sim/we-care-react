@@ -23,7 +23,6 @@ export const Footer = () => {
         alignItems: "center",
         m: 0,
         p: 2,
-        position: "fixed",
       }}
     >
       <Grid item xs={4} sm={1} md={1}>
