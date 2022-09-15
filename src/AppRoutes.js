@@ -8,10 +8,12 @@ import { PatientDashboardPage } from "./containers/PatientDashboardPage";
 import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
 import { AssignmentsPage } from "./containers/AssignmentsPage";
+import { CarerAssignmentsPage } from "./containers/CarerAssignmentsPage";
+
 import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
-import { SupervisorNotificationsPage } from "./containers/SupervisorNotificationsPage";
+import { NotificationsPage } from "./containers/NotificationsPage";
 import { SupervisorCreateCarerPage } from "./containers/SupervisorCreateCarerPage";
 import { SupervisorAssignPage } from "./containers/SupervisorAssignPage";
 import { PatientsPage } from "./containers/PatientsPage";
@@ -19,7 +21,6 @@ import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
 import { PatientsProfilePage } from "./containers/PatientProfilePage";
 import { useAuth } from "./context/AppProvider";
-import { CarerCalendarPage } from "./containers/CarerCalendarPage";
 
 export const AppRoutes = () => {
   const { isLoggedIn } = useAuth();
@@ -50,10 +51,11 @@ export const AppRoutes = () => {
             path="/carer-notifications"
             element={<CarerNotificationsPage />}
           />
-          <Route
-            path="/supervisor-notifications"
-            element={<SupervisorNotificationsPage />}
-          />
+          <Route path="/notifications" element={<NotificationsPage />} />
+
+          <Route path="/carer-assignments" element={<CarerAssignmentsPage />} />
+
+          <Route path="/supervisor-assign" element={<SupervisorAssignPage />} />
 
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/care-overview" element={<CareOverviewPage />} />
