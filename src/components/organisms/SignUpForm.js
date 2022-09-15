@@ -185,7 +185,20 @@ export const SignUpForm = ({ isMobile }) => {
 
   return (
     <Paper
-      sx={{ p: 3, minWidth: isMobile ? "90%" : "400px", paddingBottom: 12 }}
+      sx={{
+        p: 3,
+        minWidth: isMobile ? "90%" : "400px",
+        marginLeft: isMobile ? 0 : 18,
+        marginRight: isMobile ? 0 : 18,
+
+        zIndex: 10,
+        position: "relative",
+        background: `linear-gradient(
+    to top,
+    rgba(238, 245, 219, 0.2),
+    rgba(0, 176, 255, 0.18)
+  )`,
+      }}
       elevation={6}
     >
       {/* //address lookup modal */}
@@ -476,7 +489,7 @@ export const SignUpForm = ({ isMobile }) => {
               labelId="gendercare"
               id="gendercare"
               value={genderCare}
-              label="Gender"
+              label="None"
               onChange={handleChangeGenderCare}
             >
               <MenuItem value="none">None</MenuItem>
