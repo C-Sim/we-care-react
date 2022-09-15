@@ -120,6 +120,22 @@ export const UPDATE_CHECKOUT = gql`
   }
 `;
 
+export const UPDATE_CARER_NOTES = gql`
+  mutation UpdateCarerNotes(
+    $appointmentId: ID!
+    $trigger: String!
+    $appointmentUpdateInput: AppointmentUpdateInput
+  ) {
+    updateAppointment(
+      appointmentId: $appointmentId
+      trigger: $trigger
+      appointmentUpdateInput: $appointmentUpdateInput
+    ) {
+      success
+    }
+  }
+`;
+
 // userId of patient - correctly referenced here
 export const PATIENT_APPROVE = gql`
   mutation UpdateApprovedStatus($userId: ID!) {
