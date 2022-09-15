@@ -45,11 +45,6 @@ export const NextVisitPatient = ({ appointmentDetail }) => {
     mode: "all",
   });
 
-  const carer = appointmentDetail.carerId.id;
-  const [noteText, setNoteText] = useState();
-
-  const [nextVisitRefresh, setNextVisitRefresh] = useState(0);
-
   const CarerCard = () => {
     return (
       <Card sx={{ display: "flex", flexDirection: "row" }}>
