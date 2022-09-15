@@ -16,14 +16,20 @@ export const CarerTimeline = ({ date, appointments, viewAppointment }) => {
   return (
     <React.Fragment>
       <Typography align="center" color="#00b0ff" fontWeight={200}>
-        Your Visits for the day: {appointments[0].appointmentDate}
+        Timeline for your next working day
+      </Typography>
+      <Typography align="center" color="#00b0ff" fontWeight={200}>
+        {format(new Date(date), "yyyy-MM-dd")}
       </Typography>
 
       <Timeline sx={{ color: "#3f3d56" }}>
         {appointments.map((appointments) => (
           <TimelineItem key={appointments.id}>
-            <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2">
-              {format(new Date(appointments.start), "HH:mm")}
+            <TimelineOppositeContent
+              sx={{ m: "auto 0", p: "0", textAlign: "left" }}
+              variant="body2"
+            >
+              {format(new Date(appointments.start), "HH:mm:ss")}
             </TimelineOppositeContent>
             <TimelineSeparator sx={{ color: "#00b0ff" }}>
               <TimelineDot
@@ -53,8 +59,7 @@ export const CarerTimeline = ({ date, appointments, viewAppointment }) => {
                 id={appointments.id}
                 address={appointments.patientId.address.fullAddress}
               >
-                {appointments.patientId.patientProfileId.username}
-                {appointments.patientId.patientProfileId.gender}
+                {appointments.patientId.patientProfileId.username} -
                 {appointments.patientId.postcode}
               </Button>
             </TimelineContent>

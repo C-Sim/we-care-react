@@ -178,6 +178,66 @@ export const APPOINTMENTS_BY_ID = gql`
   }
 `;
 
+export const NEXT_WORKING_DAY_APPOINTMENTS = gql`
+  query AppointmentsForNextWorkingDay {
+    appointmentsForNextWorkingDay {
+      id
+      appointmentDate
+      start
+      end
+      status
+      patientId {
+        id
+        firstName
+        lastName
+        postcode
+        address {
+          line_1
+          fullAddress
+        }
+        patientProfileId {
+          username
+          gender
+        }
+      }
+      carerId {
+        id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const NEXT_WEEK_APPOINTMENTS = gql`
+  query AppointmentsForNextWeek {
+    appointmentsForNextWeek {
+      id
+      appointmentDate
+      patientId {
+        id
+        firstName
+        lastName
+      }
+      carerId {
+        id
+        firstName
+        lastName
+        imageUrl
+        email
+        phoneNumber
+        carerProfileId {
+          username
+          gender
+        }
+      }
+      start
+      end
+      status
+    }
+  }
+`;
+
 export const RECEIVED_NOTIFICATIONS = gql`
   query ReceivedNotificationsByUserId {
     notificationsByUserId {
@@ -227,6 +287,32 @@ export const AVAILABLE_PATIENTS = gql`
         appointmentDate
         title
       }
+    }
+  }
+`;
+
+export const PAST_NOTES = gql`
+  query AppointmentNotesByUserId($userId: ID!) {
+    appointmentNotesByUserId(userId: $userId) {
+      start
+      carerNotes
+    }
+  }
+`;
+
+export const VIEW_PATIENT_PROFILE = gql`
+  query PatientInfo($userId: ID!) {
+    patientInfo(userId: $userId) {
+      userId {
+        id
+        email
+        phoneNumber
+        imageUrl
+      }
+      username
+      gender
+      genderPreference
+      days
     }
   }
 `;
