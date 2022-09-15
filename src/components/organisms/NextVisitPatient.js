@@ -10,10 +10,9 @@ import CardMedia from "@mui/material/CardMedia";
 import Box from "@mui/material/Box";
 import CardActions from "@mui/material/CardActions";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import { format } from "date-fns";
 
 export const NextVisitPatient = ({ appointmentDetail }) => {
-  console.log(appointmentDetail);
-
   const CarerCard = () => {
     return (
       <Card sx={{ display: "flex", flexDirection: "row" }}>
@@ -55,8 +54,17 @@ export const NextVisitPatient = ({ appointmentDetail }) => {
       elevation={6}
     >
       <div>
-        <h2>Your Appointment on Date:(date) - Patient Detail</h2>
-        <h4>Start Time: </h4>
+        <h2>
+          Your Appointment on Date:{" "}
+          {
+            new Date(appointmentDetail.appointmentDate)
+              .toLocaleString()
+              .split(",")[0]
+          }
+        </h2>
+        <h4>
+          Start Time: {format(new Date(appointmentDetail.start), "HH:mm")}
+        </h4>
         <div>
           <CarerCard />
         </div>
