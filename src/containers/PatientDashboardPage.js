@@ -29,7 +29,10 @@ export const PatientDashboardPage = () => {
 
   return (
     <>
-      <h1 align="center">Welcome, UserName</h1>
+      <h1 align="center">
+        Welcome, {appointmentDetail && appointmentDetail.patientId.firstName}{" "}
+        {appointmentDetail && appointmentDetail.patientId.lastName}
+      </h1>
       <PatientTimeline
         visits={timelineData}
         viewAppointment={viewAppointment}
