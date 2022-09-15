@@ -250,7 +250,7 @@ export const SupervisorAssignPage = () => {
       }}
     >
       <PageTitle
-        title="Assignment page"
+        title="Assignments"
         component="h1"
         variant="h4"
         align="center"
@@ -389,12 +389,19 @@ export const SupervisorAssignPage = () => {
             <ButtonDisabled label="Patients saved" type="button" />
           )}
           {patientLock && (
-            <Box>
+            <Box
+              backgroundColor="#eef5dbff"
+              sx={{ marginLeft: 5, marginTop: 2 }}
+              borderRadius="25"
+            >
               <Typography
                 component="h1"
                 variant="h5"
                 align="left"
                 sx={{ mb: 2 }}
+                id="basic-list-demo"
+                level="body3"
+                textAlign="center"
               >
                 Selected patients:
               </Typography>
@@ -418,14 +425,23 @@ export const SupervisorAssignPage = () => {
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
           Step 4 - View the appointments based on your selections
         </Typography>
-        {patientLock && !simulatedAppointments && (
-          <ButtonDark
-            label="Build timeline"
-            type="button"
-            onClick={runSimulation}
-            sx={{ m: 4 }}
-          />
-        )}
+        <Box
+          sx={{
+            textAlign: "center",
+            justifyContent: "space-between",
+            fontWeight: 100,
+            display: { sm: "block" },
+          }}
+        >
+          {patientLock && !simulatedAppointments && (
+            <ButtonDark
+              label="Build timeline"
+              type="button"
+              onClick={runSimulation}
+              sx={{ m: 4 }}
+            />
+          )}
+        </Box>
         {simulatedAppointments && (
           <DraftTimeline
             date={selectedDate}
@@ -442,11 +458,20 @@ export const SupervisorAssignPage = () => {
             If you're satisfied with this selection, click the button below to
             assign the appointments
           </Typography>
-          <ButtonDark
-            label="Save Appointments"
-            type="button"
-            onClick={assignAppointments}
-          />
+          <Box
+            sx={{
+              textAlign: "center",
+              justifyContent: "space-between",
+              fontWeight: 100,
+              display: { sm: "block" },
+            }}
+          >
+            <ButtonDark
+              label="Save Appointments"
+              type="button"
+              onClick={assignAppointments}
+            />
+          </Box>
         </Paper>
       )}
       <div>
