@@ -40,34 +40,11 @@ export const SupervisorDashboardPage = () => {
 
   return (
     <div>
-      <Box sx={{ backgroundColor: "#61dafb" }}>
-        <h1>Welcome to the Supervisor dashboard</h1>
-      </Box>
-      <Stack>
-        <ButtonDark
-          label="Add carers to the team"
-          type="button"
-          onClick={() => {
-            navigate("./create-carer", { replace: true });
-          }}
-        />
-        <ButtonDark
-          label="Assign Patients to Carers"
-          type="button"
-          onClick={() => {
-            navigate("./assignments", { replace: true });
-          }}
-        />
-        <ButtonDark
-          label="Get Started"
-          type="button"
-          onClick={() => {
-            navigate("./login", { replace: true });
-          }}
-        />
-      </Stack>
+      <Typography component="h1" variant="h4" align="center" sx={{ p: 3 }}>
+        My Team
+      </Typography>
 
-      <Stack direction="row">
+      <Stack direction="row" justifyContent="center" alignItems="center">
         <Box sx={{ height: 400 }}>
           <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
             Overall gender preferences distribution
