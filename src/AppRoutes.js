@@ -7,24 +7,20 @@ import { CarerDashboardPage } from "./containers/CarerDashboardPage";
 import { PatientDashboardPage } from "./containers/PatientDashboardPage";
 import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
-import { AssignmentsPage } from "./containers/AssignmentsPage";
-import { CarerAssignmentsPage } from "./containers/CarerAssignmentsPage";
 
-import { CareOverviewPage } from "./containers/CareOverviewPage";
 import { CarePlanPage } from "./containers/CarePlanPage";
-import { CarerNotificationsPage } from "./containers/CarerNotificationsPage";
 import { NotificationsPage } from "./containers/NotificationsPage";
 import { SupervisorCreateCarerPage } from "./containers/SupervisorCreateCarerPage";
 import { SupervisorAssignPage } from "./containers/SupervisorAssignPage";
-import { PatientsPage } from "./containers/PatientsPage";
-import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
 import { PatientsProfilePage } from "./containers/PatientProfilePage";
+
 import { useAuth } from "./context/AppProvider";
+import { CarerCalendarPage } from "./containers/CarerCalendarPage";
 
 export const AppRoutes = () => {
   const { isLoggedIn } = useAuth();
-  console.log(isLoggedIn);
+
   return (
     <Routes>
       {!isLoggedIn && (
@@ -47,22 +43,15 @@ export const AppRoutes = () => {
           <Route path="/carer-profile" element={<CarerProfilePage />} />
           <Route path="/patient-profile" element={<PatientsProfilePage />} />
 
-          <Route
-            path="/carer-notifications"
-            element={<CarerNotificationsPage />}
-          />
           <Route path="/notifications" element={<NotificationsPage />} />
-
-          <Route path="/carer-assignments" element={<CarerAssignmentsPage />} />
 
           <Route path="/supervisor-assign" element={<SupervisorAssignPage />} />
 
-          <Route path="/resources" element={<ResourcesPage />} />
-          <Route path="/care-overview" element={<CareOverviewPage />} />
           <Route path="/care-plan" element={<CarePlanPage />} />
           <Route path="/assignments" element={<SupervisorAssignPage />} />
-          <Route path="/patients" element={<PatientsPage />} />
+          <Route path="/carer-calendar" element={<CarerCalendarPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/create-carer" element={<SupervisorCreateCarerPage />} />
         </>
       )}
     </Routes>
