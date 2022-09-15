@@ -45,7 +45,13 @@ export const UPDATE_READ = gql`
     updateIsReadStatus(notificationId: $notificationId) {
       id
       notificationDate
-      senderId
+      senderId {
+        id
+        firstName
+        lastName
+        accountType
+        email
+      }
       receiverId
       notificationText
       isRead
@@ -135,6 +141,7 @@ export const PROCESS_NOTIFICATION = gql`
       }
       receiverId
       isRead
+      isProcessed
       appointmentId
       appointmentDate
       patientUsername

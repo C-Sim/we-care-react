@@ -26,6 +26,8 @@ import Draggable from "react-draggable";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
+import emailjs from "@emailjs/browser";
+
 import {
   UPDATE_APPOINTMENT,
   UPDATE_READ,
@@ -48,30 +50,6 @@ const createData = (rowTitle, rowValue) => {
   return { rowTitle, rowValue };
 };
 
-// const modalData = {
-//   notification: notification.id,
-//   notificationType: notification.__typename,
-//   appointmentId: notification.appointmentId || ["N/A"],
-//   accountType: notification.accountType,
-//   patient: notification.appointmentId.patient || ["N/A"],
-//   notificationDate: notification.notificationDate,
-//   visitDate: notification.appointmentDate || ["N/A"],
-//   visitTime: notification.appointmentDate || ["N/A"],
-//   notificationText: notification.notificationText || ["N/A"],
-// };
-
-//template modal data for now
-// const modalRows = [
-//   createData("Patient:", "Charlie Dean"),
-//   createData("Submitted:", "18/08/22"),
-//   createData("Visit Date:", "18/08/22"),
-//   createData("Visit Time:", "12:00"),
-//   createData(
-//     "Comment:",
-//     "It will be difficult to get across town from my last appointment in time"
-//   ),
-// ];
-
 const createNotification = (
   notificationId,
   notificationType,
@@ -93,70 +71,6 @@ const createNotification = (
     isRead,
   };
 };
-
-// Dummy data to show what table should look like
-// const Notifications = [
-//   createNotification(
-//     "1",
-//     "Shift Change",
-//     "Carer",
-//     "Alice Bond",
-//     "18/08/22",
-//     "25/08/22",
-//     "12:00",
-//     "true"
-//   ),
-//   createNotification(
-//     "2",
-//     "New Patient",
-//     "Patient",
-//     "Abe Zephaniah",
-//     "18/08/22",
-//     "N/A",
-//     "N/A",
-//     "true"
-//   ),
-//   createNotification(
-//     "3",
-//     "Shift Change",
-//     "Carer",
-//     "Alan Bates",
-//     "18/08/22",
-//     "25/08/22",
-//     "15:00",
-//     "false"
-//   ),
-//   createNotification(
-//     "4",
-//     "New Patient",
-//     "Patient",
-//     "Abe Zephaniah",
-//     "19/08/22",
-//     "N/A",
-//     "N/A",
-//     "true"
-//   ),
-//   createNotification(
-//     "5",
-//     "Shift Change",
-//     "Carer",
-//     "Alice Bond",
-//     "18/08/22",
-//     "25/08/22",
-//     "18:00",
-//     "false"
-//   ),
-//   createNotification(
-//     "6",
-//     "Patient Amend",
-//     "Patient",
-//     "Abe Zephaniah",
-//     "20/08/22",
-//     "N/A",
-//     "N/A",
-//     "true"
-//   ),
-// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -277,6 +191,8 @@ export const NotificationsTable = ({ notifications }) => {
   const [open, setOpen] = useState(false);
   const [isReadStatus, setIsReadStatus] = useState(false);
   const [selectedNotificationId, setNotificationId] = useState("");
+  const [updatedReceivedArray, setUpdatedReceivedArray] = useState();
+  const [emailError, setEmailError] = useState();
 
   const [updateRead] = useMutation(UPDATE_READ);
 
@@ -395,13 +311,6 @@ export const NotificationsTable = ({ notifications }) => {
     setPage(0);
   };
 
-  const //   [
-    //
-    approvePatient =
-      // { data: approvalData, loading: approvalLoading, error: approvalError },
-      //   ]
-      useMutation(PATIENT_APPROVE);
-
   const [
     processNotification,
     {
@@ -411,76 +320,97 @@ export const NotificationsTable = ({ notifications }) => {
     },
   ] = useMutation(PROCESS_NOTIFICATION);
 
-  const //   [
-    updateAppointment =
-      // ,
-      //     { data: updateData, loading: updateLoading, error: updateError },
-      //   ]
-      useMutation(UPDATE_APPOINTMENT);
+  //   const [
+  //     updateAppointment,
+  //     {
+  //       data: updateAppointmentData,
+  //       loading: updateAppointmentLoading,
+  //       error: updateAppointmentError,
+  //     },
+  //   ] = useMutation(UPDATE_APPOINTMENT);
+
+  useEffect(() => {
+    if (
+      processNotificationData &&
+      processNotificationData.processNotification &&
+      !processNotificationLoading
+    ) {
+      setUpdatedReceivedArray(processNotificationData.processNotification);
+    }
+  }, [processNotificationData, processNotificationLoading]);
 
   const handleProcessNotification = async (notification, action) => {
-    await processNotification({
-      variables: {
-        processNotificationInput: {
-          notificationId: notification.notificationId,
-          notificationType: notification.notificationType,
-          action,
+    try {
+      console.log(notification, action);
+      const updatedNotifications = await processNotification({
+        variables: {
+          processNotificationInput: {
+            notificationId: notification.notificationId,
+            notificationType: notification.notificationType,
+            action,
+          },
         },
-      },
-    });
-    // if notificationType === "New patient review"
-    // try {
-    //   await approvePatient({ variables: { senderId } });
+      });
 
-    //   //   success(true);
-    //   //   setOpen(false)
-    //   //   delete notification
-    // } catch (err) {
-    //   console.error(err);
-    // }
+      //   if (notification.notificationType === "Schedule change") {
+      //     const trigger = "carerChange";
 
-    // // if notificationType === "Carer change"
-    // const trigger = "carerChange";
+      //     await updateAppointment({
+      //       variables: {
+      //         appointmentId: notification.appointmentId,
+      //         trigger,
+      //         appointmentUpdateInput: { carerId, start, end },
+      //       },
+      //     });
+      //   setUpdatedReceivedArray(updatedNotifications);
+      //   }
+      setUpdatedReceivedArray(updatedNotifications);
 
-    // try {
-    //   await updateAppointment({
-    //     variables: {
-    //       appointmentId,
-    //       trigger,
-    //       //   appointmentUpdateInput: { carerId, start, end },
-    //     },
-    //   });
-
-    //   //   success(true);
-    // } catch (err) {
-    //   console.error(err);
-    // }
+      handleClose();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  // const handleDenial = async (event) => {
-  // regardless of type
-  //
-  // if (senderId.accountType === "carer")
-  // send notification to inform carer that request has been denied - use sendNotification resolver
-  // send email to inform patient that request has been denied - use emailJS
-  //
-  // if (senderId.accountType === "patient") {
-  // emailjs
-  //   .sendForm(
-  //     "service_doq4yxc",
-  //     "template_3zqd709",
-  //     form.current,
-  //     "ulS302XN5UlvLfEvu"
-  //   )
-  //   .then(
-  //     (result) => {
-  //       handleOpenModal();
-  //     },
-  //     (error) => {
-  //       setEmailError(true);
+  console.log(updatedReceivedArray);
+
+  //   const handleDenial = async (notification) => {
+  //     // regardless of type
+  //     //
+  //     try {
+  //       // if (notification.accountType === "carer")
+  //       // send notification to inform carer that request has been denied - use sendNotification resolver
+  //       // send email to inform patient that request has been denied - use emailJS
+  //       //
+  //       if (notification.accountType === "patient") {
+  //         const to_name = notification.username;
+  //         //   const to_email = notification.senderEmail;
+  //         // for demo
+  //         const to_email = "cls8880@gmail.com";
+
+  //         emailjs
+  //           .sendForm(
+  //             "service_doq4yxc",
+  //             "template_xgr8t43",
+  //             //   form.current,
+  //             to_name,
+  //             to_email,
+  //             "ulS302XN5UlvLfEvu"
+  //           )
+  //           .then(
+  //             //   (result) => {
+  //             //     handleOpenModal();
+  //             //   },
+  //             (error) => {
+  //               setEmailError(true);
+  //             }
+  //           );
+  //       }
+  //       handleClose();
+  //     } catch (err) {
+  //       console.error(err);
   //     }
-  //   )};
-  // };
+  //   };
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Notifications.length) : 0;
