@@ -144,6 +144,40 @@ export const ADDRESS_LOOKUP = gql`
   }
 `;
 
+export const APPOINTMENTS_BY_ID = gql`
+  query AppointmentsByUserId {
+    appointmentsByUserId {
+      id
+      appointmentDate
+      patientId {
+        id
+        firstName
+        lastName
+        postcode
+        address {
+          fullAddress
+        }
+        patientProfileId {
+          username
+          gender
+        }
+      }
+      carerId {
+        id
+        firstName
+        lastName
+        carerProfileId {
+          username
+          gender
+        }
+      }
+      start
+      end
+      status
+    }
+  }
+`;
+
 export const NEXT_WORKING_DAY_APPOINTMENTS = gql`
   query AppointmentsForNextWorkingDay {
     appointmentsForNextWorkingDay {

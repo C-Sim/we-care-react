@@ -1,6 +1,11 @@
+import { Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { ASK_FOR_REALLOCATION } from "../../graphql/mutations";
+import { ButtonBright } from "../atoms/ButtonBright";
+import { CarerTimeline } from "./CarerTimeline";
 
 export const CalendarSmall = ({ userResults }) => {
   //this component contains the calendar item and will need to contain the timeline inside it too, so the required states can be set here and not at parent component level
@@ -8,40 +13,11 @@ export const CalendarSmall = ({ userResults }) => {
   // set states of calendar date
   const [calDate, setCalDate] = useState(new Date());
   const [resultArr, setResultArr] = useState([]);
+  const [appointmentId, setAppointmentId] = useState();
 
-  // render each appointment - this will be replaced by a timeline item - and the div in the main return section will be replaced by a "timeline" type component
-  const ResultList = ({ result }) => {
-    const dateFormat = new Date(result.appointmentDate);
+  //mutation
 
-    const startFormat = new Date(result.start);
-
-    return (
-      <div>
-        <h2>{dateFormat.toLocaleString()}</h2>
-        <ul>
-          <li>{startFormat.toString()}</li>
-          <li>{result.title}</li>
-          <li>
-            {result.carerId.firstName} {result.carerId.lastName}
-          </li>
-          <li>
-            {result.patientId.firstName} {result.patientId.lastName}
-          </li>
-          <li>{result.patientId.patientProfileId.postcode}</li>
-        </ul>
-      </div>
-    );
-  };
-
-  const EmptyList = () => {
-    return (
-      <div className="result-timeline">
-        <h3>Your day</h3>
-        <h3>No date selected yet or no appointment on that day.</h3>
-      </div>
-    );
-  };
-
+  //onChange of date selection inside small calendar
   const onChange = (calDate) => {
     // change results based on calendar date click
     setCalDate(calDate);
@@ -58,6 +34,10 @@ export const CalendarSmall = ({ userResults }) => {
     setResultArr(filteredResults);
   };
 
+  const viewReallocateButton = (e) => {
+    console.log(e.target.id);
+  };
+
   return (
     <div className="weekView-wrapper">
       <div className="weekView-calendar">
@@ -65,12 +45,12 @@ export const CalendarSmall = ({ userResults }) => {
       </div>
       {/* to be replaced by a timeline component */}
       <div className="weekView-timeline">
-        {resultArr.length ? (
-          resultArr.map((result) => (
-            <ResultList result={result} key={result.id} />
-          ))
-        ) : (
-          <EmptyList />
+        {resultArr.length && (
+          <CarerTimeline
+            date="2022-09-13"
+            appointments={resultArr}
+            viewAppointment={viewReallocateButton}
+          />
         )}
       </div>
     </div>

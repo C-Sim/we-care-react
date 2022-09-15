@@ -42,7 +42,7 @@ export const Footer = () => {
             pl: isMobile ? 0 : 2,
           }}
         >
-          WeCare &copy; 2022
+          WeCare &copy; {new Date().getFullYear()}
         </Typography>
       </Grid>
 
