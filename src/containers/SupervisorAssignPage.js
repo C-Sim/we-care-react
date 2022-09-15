@@ -247,7 +247,6 @@ export const SupervisorAssignPage = () => {
     <Box
       sx={{
         backgroundColor: "rgba(97, 218, 251, 0.2)",
-        marginBottom: 10,
       }}
     >
       <PageTitle
