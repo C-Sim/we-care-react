@@ -21,7 +21,6 @@ import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
 import { PatientsProfilePage } from "./containers/PatientProfilePage";
 import { useAuth } from "./context/AppProvider";
-import { AssignmentsPage } from "./containers/AssignmentsPage";
 
 export const AppRoutes = () => {
   const { isLoggedIn } = useAuth();
