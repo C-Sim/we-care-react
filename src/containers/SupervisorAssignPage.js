@@ -487,31 +487,40 @@ export const SupervisorAssignPage = () => {
           </Box>
         </Paper>
       )}
-      <div>
-        {assignSuccess && (
-          <>
-            <Alert severity="success">
-              The appointments have been created successfully!
+      <Box
+        sx={{
+          textAlign: "center",
+          justifyContent: "space-between",
+          fontWeight: 100,
+          display: { sm: "block" },
+        }}
+      >
+        <div>
+          {assignSuccess && (
+            <>
+              <Alert severity="success">
+                The appointments have been created successfully!
+              </Alert>
+              <ButtonDark
+                label="Assign again"
+                type="button"
+                onClick={resetAssign}
+              />
+              <ButtonDark
+                label="Back to Dashboard"
+                type="button"
+                onClick={redirectToDashboard}
+              />
+            </>
+          )}
+          {createError && (
+            <Alert severity="warning">
+              The system failed to assign appointments. Please try again or
+              contact your administrator.
             </Alert>
-            <ButtonDark
-              label="Assign again"
-              type="button"
-              onClick={resetAssign}
-            />
-            <ButtonDark
-              label="Back to Dashboard"
-              type="button"
-              onClick={redirectToDashboard}
-            />
-          </>
-        )}
-        {createError && (
-          <Alert severity="warning">
-            The system failed to assign appointments. Please try again or
-            contact your administrator.
-          </Alert>
-        )}
-      </div>
+          )}
+        </div>
+      </Box>
     </Box>
   );
 };
