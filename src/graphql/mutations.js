@@ -136,7 +136,7 @@ export const UPDATE_CARER_NOTES = gql`
   }
 `;
 
-// userId of patient - correctly referenced here?
+// userId of patient - correctly referenced here
 export const PATIENT_APPROVE = gql`
   mutation UpdateApprovedStatus($userId: ID!) {
     updateApprovedStatus(userId: $userId) {
@@ -205,6 +205,23 @@ export const CREATE_CARE_PLAN = gql`
 export const ASK_FOR_REALLOCATION = gql`
   mutation askForReallocation($appointmentId: ID!) {
     askForReallocation(appointmentId: $appointmentId) {
+      success
+    }
+  }
+`;
+
+//updating patient notes - used on patient dashboard
+export const UPDATE_PATIENT_NOTES = gql`
+  mutation UpdatePatientNotes(
+    $appointmentId: ID!
+    $trigger: String!
+    $appointmentUpdateInput: AppointmentUpdateInput
+  ) {
+    updateAppointment(
+      appointmentId: $appointmentId
+      trigger: $trigger
+      appointmentUpdateInput: $appointmentUpdateInput
+    ) {
       success
     }
   }

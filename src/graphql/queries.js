@@ -175,6 +175,35 @@ export const NEXT_WORKING_DAY_APPOINTMENTS = gql`
   }
 `;
 
+export const NEXT_WEEK_APPOINTMENTS = gql`
+  query AppointmentsForNextWeek {
+    appointmentsForNextWeek {
+      id
+      appointmentDate
+      patientId {
+        id
+        firstName
+        lastName
+      }
+      carerId {
+        id
+        firstName
+        lastName
+        imageUrl
+        email
+        phoneNumber
+        carerProfileId {
+          username
+          gender
+        }
+      }
+      start
+      end
+      status
+    }
+  }
+`;
+
 export const RECEIVED_NOTIFICATIONS = gql`
   query ReceivedNotificationsByUserId {
     notificationsByUserId {
