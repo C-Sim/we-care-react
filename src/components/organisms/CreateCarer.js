@@ -247,7 +247,11 @@ export const CreateCarerForm = ({ isMobile }) => {
               label="First name"
               variant="outlined"
               helperText={
-                !!errors.firstName ? "Please enter your first name." : ""
+                getValues("firstName")?.length < 2
+                  ? "Please enter at least 2 characters"
+                  : !!errors.firstName
+                  ? "Please enter your first name."
+                  : ""
               }
               {...register("firstName", {
                 required: true,
