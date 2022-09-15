@@ -16,6 +16,8 @@ import {
   useMediaQuery,
   Box,
   Divider,
+  List,
+  ListItem,
 } from "@mui/material";
 import { ButtonDisabled } from "../components/atoms/ButtonDisabled";
 import { PageTitle } from "../components/atoms/PageTitle";
@@ -267,6 +269,7 @@ export const SupervisorAssignPage = () => {
           p: 3,
           mt: 2,
           minWidth: isMobile ? "90%" : "400px",
+          align: "center",
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
@@ -275,8 +278,9 @@ export const SupervisorAssignPage = () => {
         <Box
           sx={{
             textAlign: "center",
+            justifyContent: "space-between",
             fontWeight: 100,
-            display: { xs: "none", sm: "block" },
+            display: { sm: "block" },
           }}
         >
           {!dateLock && <DatePicker handleDateChange={handleDateChange} />}
@@ -300,37 +304,56 @@ export const SupervisorAssignPage = () => {
           )}
         </Box>
       </Paper>
+
       <Paper
         variant="outlined"
-        sx={{ p: 3, mt: 1, minWidth: isMobile ? "90%" : "400px" }}
+        sx={{
+          p: 3,
+          mt: 2,
+          minWidth: isMobile ? "90%" : "400px",
+          align: "center",
+        }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
           Step 2 - Pick a carer available on that date from the list
         </Typography>
+        <Box
+          sx={{
+            textAlign: "center",
+            justifyContent: "space-between",
+            fontWeight: 100,
+            display: { sm: "block" },
+          }}
+        >
+          {dateLock && !carerLock && (
+            <>
+              <Dropdown
+                label="Select Carer"
+                helperText=""
+                defaultSelection=""
+                options={formatForSelect(carersArray)}
+                handleSelect={handleCarerSelect}
+              />
+              <ButtonDark
+                label="Use this carer"
+                type="button"
+                onClick={saveSelectedCarer}
+              />
+            </>
+          )}
 
-        {dateLock && !carerLock && (
-          <>
-            <Dropdown
-              label="Select Carer"
-              helperText=""
-              defaultSelection=""
-              options={formatForSelect(carersArray)}
-              handleSelect={handleCarerSelect}
-            />
-            <ButtonDark
-              label="Use this carer"
-              type="button"
-              onClick={saveSelectedCarer}
-            />
-          </>
-        )}
-
-        {carerLock && <ButtonDisabled label="Carer saved" type="button" />}
-        {selectedCarer && (
-          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
-            Selected carer: {selectedCarer.carerName}
-          </Typography>
-        )}
+          {carerLock && <ButtonDisabled label="Carer saved" type="button" />}
+          {selectedCarer && (
+            <Typography
+              component="h1"
+              variant="h5"
+              align="center"
+              sx={{ mb: 2 }}
+            >
+              Selected carer: {selectedCarer.carerName}
+            </Typography>
+          )}
+        </Box>
       </Paper>
       <Paper
         variant="outlined"
@@ -339,37 +362,54 @@ export const SupervisorAssignPage = () => {
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
           Step 3 - Pick the patients you would like to assign to that carer
         </Typography>
-        {carerLock && !patientLock && (
-          <>
-            <CheckList
-              array={formatForSelect(patientsArray)}
-              handleSelect={handlePatientSelect}
-            />
-            <ButtonDark
-              label="Use these patients"
-              type="button"
-              disabled={patientLock}
-              onClick={saveSelectedPatients}
-            />
-          </>
-        )}
-        {patientLock && <ButtonDisabled label="Patients saved" type="button" />}
-        {patientLock && (
-          <div>
-            <Typography component="h1" variant="h5" align="left" sx={{ mb: 2 }}>
-              Selected patients:
-            </Typography>
-            <ul>
-              {selectedPatients.map((result) => {
-                return (
-                  <li key={result} value={result}>
-                    {result}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        )}
+        <Box
+          sx={{
+            textAlign: "center",
+            justifyContent: "space-between",
+            fontWeight: 100,
+            display: { sm: "block" },
+          }}
+        >
+          {carerLock && !patientLock && (
+            <>
+              <CheckList
+                overlay
+                array={formatForSelect(patientsArray)}
+                handleSelect={handlePatientSelect}
+              />
+              <ButtonDark
+                label="Use these patients"
+                type="button"
+                disabled={patientLock}
+                onClick={saveSelectedPatients}
+              />
+            </>
+          )}
+          {patientLock && (
+            <ButtonDisabled label="Patients saved" type="button" />
+          )}
+          {patientLock && (
+            <Box>
+              <Typography
+                component="h1"
+                variant="h5"
+                align="left"
+                sx={{ mb: 2 }}
+              >
+                Selected patients:
+              </Typography>
+              <List aria-labelledby="basic-list-demo">
+                {selectedPatients.map((result) => {
+                  return (
+                    <ListItem key={result} value={result}>
+                      {result}
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </Box>
+          )}
+        </Box>
       </Paper>
       <Paper
         variant="outlined"
