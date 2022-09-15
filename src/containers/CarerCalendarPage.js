@@ -15,6 +15,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ASK_FOR_REALLOCATION } from "../graphql/mutations";
+import signUpImage from "../components/atoms/images/sign-up.svg";
 
 export const CarerCalendarPage = () => {
   const { data, loading, error } = useQuery(APPOINTMENTS_BY_ID, {
@@ -22,7 +23,7 @@ export const CarerCalendarPage = () => {
   });
   const isMobile = useMediaQuery("(max-width:600px)");
   const [userResults, setUserResults] = useState();
-  const [introText, setIntroText] = useState(true);
+  const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
     if (data && data.appointmentsByUserId) {
@@ -37,6 +38,7 @@ export const CarerCalendarPage = () => {
   const [resultArr, setResultArr] = useState([]);
   const [appointmentId, setAppointmentId] = useState();
   const [askReallocationSuccess, setAskReallocationSuccess] = useState(false);
+  const [noAppointment, setNoAppointment] = useState(false);
 
   //mutation
   const [
@@ -81,6 +83,8 @@ export const CarerCalendarPage = () => {
       },
     });
   };
+
+  const handleText = (e) => {};
 
   return (
     <Box
@@ -127,20 +131,45 @@ export const CarerCalendarPage = () => {
           sx={{ display: "flex", flexWrap: "wrap" }}
         >
           <Grid item xs={12} s={12} md={4}>
-            <Calendar onChange={onChange} value={calDate} />
+            <Calendar
+              onChange={onChange}
+              onClick={() => setHidden((s) => !s)}
+              value={calDate}
+            />
           </Grid>
-
+          {!resultArr.length && (
+            <Grid item xs={12} s={12} md={6} pt={8}>
+              <Typography color="#3f3d56" fontWeight={200}>
+                You have no appointments on the selected date. Please chose
+                another date.
+              </Typography>
+            </Grid>
+          )}
+          {!isMobile && !resultArr.length && (
+            <Box
+              sx={{
+                position: "relative",
+                marginTop: "-18%",
+                marginLeft: "auto",
+                zIndex: 20,
+                color: "#fff",
+                fontWeight: "bold",
+              }}
+            >
+              <img src={signUpImage} height="500vh" />
+            </Box>
+          )}
           {resultArr.length && (
             <Grid item xs={12} s={12} md={6}>
               <CarerTimeline
-                date=""
+                value={calDate}
                 appointments={resultArr}
                 viewAppointment={viewReallocateButton}
               />
               <Box item xs={12} s={12} md={2} sx={{ justifyContent: "center" }}>
                 <Typography align="center" color="#00b0ff" fontWeight={200}>
                   Want to make a request to change an appointment? Click on
-                  patient name to highlight and change.
+                  patient name to change.
                 </Typography>
               </Box>
             </Grid>

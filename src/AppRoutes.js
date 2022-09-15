@@ -21,6 +21,7 @@ import { ResourcesPage } from "./containers/ResourcesPage";
 import { CarerProfilePage } from "./containers/CarerProfilePage";
 import { PatientsProfilePage } from "./containers/PatientProfilePage";
 import { useAuth } from "./context/AppProvider";
+import { CarerCalendarPage } from "./containers/CarerCalendarPage";
 
 export const AppRoutes = () => {
   const { isLoggedIn } = useAuth();
