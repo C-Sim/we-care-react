@@ -15,7 +15,6 @@ export const NotificationsPage = () => {
   const context = useContext(AppContext);
 
   const { data, loading, error } = useQuery(RECEIVED_NOTIFICATIONS);
-  console.log(data?.notificationsByUserId);
 
   return (
     <Box>

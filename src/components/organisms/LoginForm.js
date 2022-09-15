@@ -44,7 +44,7 @@ export const LoginForm = ({ isMobile }) => {
       setUser(user);
       setIsLoggedIn(true);
 
-      navigate("/dashboard", { replace: true });
+      navigate(`/${user.accountType}-dashboard`, { replace: true });
     }
   }, [data, navigate, setUser, setIsLoggedIn]);
 

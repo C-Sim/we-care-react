@@ -25,15 +25,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Draggable from "react-draggable";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-
+import {
+  PATIENT_APPROVE,
+  UPDATE_CARER,
+} from "../../graphql/supervisorMutations";
+import { CARERS } from "../../graphql/supervisorQueries";
 import emailjs from "@emailjs/browser";
 
-import {
-  UPDATE_APPOINTMENT,
-  UPDATE_READ,
-  PATIENT_APPROVE,
-  PROCESS_NOTIFICATION,
-} from "../../graphql/mutations";
+import { UPDATE_APPOINTMENT, UPDATE_READ } from "../../graphql/mutations";
 
 const PaperComponent = (props) => {
   return (
@@ -195,12 +194,47 @@ export const NotificationsTable = ({ notifications }) => {
   const [updatedReceivedArray, setUpdatedReceivedArray] = useState();
   const [emailError, setEmailError] = useState();
 
+  const [notifData, setNotifData] = useState(notifications);
+  const [approveSuccess, setApproveSuccess] = useState(false);
+  const [reallocateSuccess, setReallocateSuccess] = useState(false);
+
+  //query for carers
+  const {
+    data: allCarersData,
+    loading: allCarersLoading,
+    error: allCarersError,
+  } = useQuery(CARERS);
+  //mutations
   const [
     updateRead,
     { data: readData, loading: readLoading, error: readError },
   ] = useMutation(UPDATE_READ, {
     onCompleted: () => {
       setIsReadStatus(true);
+      setNotifData(readData.updateIsReadStatus);
+    },
+  });
+
+  const [
+    updateApprovedStatus,
+    { data: approveData, loading: approveLoading, error: approveError },
+  ] = useMutation(PATIENT_APPROVE, {
+    onCompleted: () => {
+      setApproveSuccess(true);
+    },
+  });
+
+  const [
+    updateCarer,
+    {
+      data: updateCarerData,
+      loading: updateCarerLoading,
+      error: updateCarerError,
+    },
+  ] = useMutation(UPDATE_CARER, {
+    onCompleted: () => {
+      console.log("reallocated carer");
+      setReallocateSuccess(true);
     },
   });
 
@@ -272,6 +306,8 @@ export const NotificationsTable = ({ notifications }) => {
   };
 
   const handleClose = () => {
+    setApproveSuccess(false);
+    setReallocateSuccess(false);
     setOpen(false);
   };
 
@@ -290,96 +326,34 @@ export const NotificationsTable = ({ notifications }) => {
     setPage(0);
   };
 
-  const [
-    processNotification,
-    {
-      data: processNotificationData,
-      loading: processNotificationLoading,
-      error: processNotificationError,
-    },
-  ] = useMutation(PROCESS_NOTIFICATION);
-
-  useEffect(() => {
-    if (
-      processNotificationData &&
-      processNotificationData.processNotification &&
-      !processNotificationLoading
-    ) {
-      setUpdatedReceivedArray(processNotificationData.processNotification);
-    }
-  }, [processNotificationData, processNotificationLoading]);
-
   const handleProcessNotification = async (notification, action) => {
-    try {
-      const updatedNotifications = await processNotification({
+    if (notification.notificationType === "New patient review") {
+      updateApprovedStatus({
         variables: {
-          processNotificationInput: {
-            notificationId: notification.notificationId,
-            notificationType: notification.notificationType,
-            action,
+          userId: notification.senderId,
+        },
+      });
+    }
+    if (notification.notificationType === "Schedule change") {
+      const carersArrayToFilter = allCarersData.carers;
+      console.log(carersArrayToFilter);
+      const possibleCarers = carersArrayToFilter.filter(
+        (i) => i.userId.id !== notification.senderId
+      );
+      console.log(possibleCarers);
+      const carerId = possibleCarers[0].userId.id;
+      console.log(carerId);
+      updateCarer({
+        variables: {
+          appointmentId: notification.appointmentId,
+          trigger: "carerChange",
+          appointmentUpdateInput: {
+            carerId: carerId,
           },
         },
       });
-
-      //   if (notification.notificationType === "Schedule change") {
-      //     const trigger = "carerChange";
-
-      //     await updateAppointment({
-      //       variables: {
-      //         appointmentId: notification.appointmentId,
-      //         trigger,
-      //         appointmentUpdateInput: { carerId, start, end },
-      //       },
-      //     });
-      //   setUpdatedReceivedArray(updatedNotifications);
-      //   }
-      setUpdatedReceivedArray(updatedNotifications);
-
-      handleClose();
-    } catch (err) {
-      console.error(err);
     }
   };
-
-  console.log(selectedNotificationType);
-
-  //   const handleDenial = async (notification) => {
-  //     // regardless of type
-  //     //
-  //     try {
-  //       // if (notification.accountType === "carer")
-  //       // send notification to inform carer that request has been denied - use sendNotification resolver
-  //       // send email to inform patient that request has been denied - use emailJS
-  //       //
-  //       if (notification.accountType === "patient") {
-  //         const to_name = notification.username;
-  //         //   const to_email = notification.senderEmail;
-  //         // for demo
-  //         const to_email = "cls8880@gmail.com";
-
-  //         emailjs
-  //           .sendForm(
-  //             "service_doq4yxc",
-  //             "template_xgr8t43",
-  //             //   form.current,
-  //             to_name,
-  //             to_email,
-  //             "ulS302XN5UlvLfEvu"
-  //           )
-  //           .then(
-  //             //   (result) => {
-  //             //     handleOpenModal();
-  //             //   },
-  //             (error) => {
-  //               setEmailError(true);
-  //             }
-  //           );
-  //       }
-  //       handleClose();
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Notifications.length) : 0;
@@ -419,8 +393,8 @@ export const NotificationsTable = ({ notifications }) => {
             </TableBody>
           </Table>
 
-          {userAccount === "supervisor" &&
-            selectedNotificationType === "New patient" && (
+          {!approveSuccess &&
+            selectedNotificationType === "New patient review" && (
               <Box
                 sx={{ m: 1, display: "flex", justifyContent: "space-around" }}
               >
@@ -436,19 +410,70 @@ export const NotificationsTable = ({ notifications }) => {
                 >
                   Approve
                 </Button>
-                {/* <Button
-                variant="contained"
-                color="error"
-                type="submit"
-                endIcon={<HighlightOffIcon />}
-                onClick={() => {
-                  handleProcessNotification(modalRowData, "DENY");
-                }}
-              >
-                Deny
-              </Button> */}
+                <Button
+                  variant="contained"
+                  color="error"
+                  type="submit"
+                  endIcon={<HighlightOffIcon />}
+                  onClick={() => {
+                    handleProcessNotification(modalRowData, "DENY");
+                  }}
+                >
+                  Deny
+                </Button>
               </Box>
             )}
+          {approveSuccess && (
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: "green" }}
+              align="center"
+            >
+              Patient approved!
+            </Typography>
+          )}
+
+          {!reallocateSuccess &&
+            selectedNotificationType === "Schedule change" && (
+              <Box
+                sx={{ m: 1, display: "flex", justifyContent: "space-around" }}
+              >
+                {" "}
+                <Button
+                  variant="contained"
+                  color="success"
+                  type="submit"
+                  endIcon={<CheckCircleIcon />}
+                  onClick={() => {
+                    handleProcessNotification(modalRowData, "APPROVE");
+                  }}
+                >
+                  Reallocate
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  type="submit"
+                  endIcon={<HighlightOffIcon />}
+                  onClick={() => {
+                    handleProcessNotification(modalRowData, "DENY");
+                  }}
+                >
+                  Deny
+                </Button>
+              </Box>
+            )}
+          {reallocateSuccess && (
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: "green" }}
+              align="center"
+            >
+              Appointment successfully reallocated!
+            </Typography>
+          )}
 
           <DialogActions>
             <Button autoFocus onClick={handleClose} variant="contained">
