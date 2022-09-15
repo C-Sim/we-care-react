@@ -89,63 +89,73 @@ export const CarerCalendarPage = () => {
         width: "100%",
         justifyContent: "center",
         height: "100vh",
+        display: "flex",
+        flexWrap: "wrap",
       }}
     >
       <Paper
         sx={{
-          m: 4,
+          //m: 4,
           p: 3,
-          minWidth: isMobile ? "90%" : "80%",
+          pb: 15,
+          minWidth: "100%",
           color: "#00b0ff2e",
           backgroundColor: "#D1F1FF",
-          borderRadius: "25px",
-          mb: 20,
+          //borderRadius: "25px",
+          //mb: 20,
         }}
         elevation={6}
       >
         <PageTitle title="View Your Appointment Calendar" />
-        <Typography color="#3f3d56" pt={4} pl={6} variant="h6">
-          Please select a date to view the appointments for that day
+        <Typography
+          color="#3f3d56"
+          pt={4}
+          pl={4}
+          variant="h6"
+          sx={{ textAlign: isMobile ? "center" : "left" }}
+        >
+          Please select a date to view appointments
         </Typography>
         <Grid
           container
           rowSpacing={0}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
           mt={3}
-          paddingLeft={15}
-          paddingRight={7}
+          paddingLeft={5}
+          paddingRight={2}
           alignItems="top"
           sx={{ display: "flex", flexWrap: "wrap" }}
         >
-          <Grid item xs={4}>
+          <Grid item xs={12} s={12} md={4}>
             <Calendar onChange={onChange} value={calDate} />
           </Grid>
 
-          {/* <Grid item xs={8}> */}
-
           {resultArr.length && (
-            <div>
-              <Divider orientation="vertical" flexItem />
+            <Grid item xs={12} s={12} md={6}>
               <CarerTimeline
-                date="2022-09-13"
+                date=""
                 appointments={resultArr}
                 viewAppointment={viewReallocateButton}
               />
-              <Typography align="center" color="#00b0ff" fontWeight={200}>
-                If you would like to change one of your appointmentss, please
-                click on the patient name and then the send request button.
-              </Typography>
-            </div>
+              <Box item xs={12} s={12} md={2} sx={{ justifyContent: "center" }}>
+                <Typography align="center" color="#00b0ff" fontWeight={200}>
+                  Want to make a request to change an appointment? Click on
+                  patient name to highlight and change.
+                </Typography>
+              </Box>
+            </Grid>
           )}
+
           {appointmentId && !askReallocationSuccess && (
-            <div>
+            <Box sx={{ justifyItems: "center", paddingTop: isMobile ? 2 : 20 }}>
               <ButtonBright
                 id={appointmentId}
                 label="Send Request"
                 type="button"
                 onClick={handleReallocationDemand}
+                sx={{ paddingTop: isMobile ? 2 : 20 }}
               />
-            </div>
+            </Box>
           )}
 
           {/* {appointmentId && !askReallocationSuccess && (
@@ -156,18 +166,21 @@ export const CarerCalendarPage = () => {
                 </Typography>
               </div>
             )} */}
+
           {appointmentId && askReallocationSuccess && (
-            <div>
-              <Typography align="center" color="#00b0ff" fontWeight={200}>
-                Successfully notified your supervisor. Wait for approval.
-              </Typography>
-            </div>
+            <Typography
+              align="center"
+              backgroundColor="#b1ffb1"
+              color="#3f3d56"
+              fontWeight={200}
+              border="1px solid #b1ffb1"
+              p={2}
+            >
+              Successfully notified your supervisor. Please wait for approval.
+            </Typography>
           )}
         </Grid>
-        )}
       </Paper>
-
-      <Typography> Extra text</Typography>
     </Box>
   );
 };
