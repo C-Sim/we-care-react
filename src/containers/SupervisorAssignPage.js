@@ -9,8 +9,16 @@ import { CheckList } from "../components/molecules/CheckList";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { DatePicker } from "../components/atoms/DatePicker";
 import { ButtonDark } from "../components/atoms/ButtonDark";
-import { Alert, Paper, Typography, useMediaQuery, Box } from "@mui/material";
+import {
+  Alert,
+  Paper,
+  Typography,
+  useMediaQuery,
+  Box,
+  Divider,
+} from "@mui/material";
 import { ButtonDisabled } from "../components/atoms/ButtonDisabled";
+import { PageTitle } from "../components/atoms/PageTitle";
 import { AVAILABLE_CARERS } from "../graphql/queries";
 import { AVAILABLE_PATIENTS } from "../graphql/queries";
 import { CREATE_APPOINTMENTS } from "../graphql/mutations";
@@ -239,35 +247,58 @@ export const SupervisorAssignPage = () => {
         backgroundColor: "rgba(97, 218, 251, 0.2)",
       }}
     >
-      <Typography
+      <PageTitle
+        title="Assignment page"
         component="h1"
         variant="h4"
         align="center"
         sx={{ p: 3, minWidth: isMobile ? "90%" : "400px" }}
-      >
-        Assignment page
-      </Typography>
+      ></PageTitle>
+      <Divider
+        sx={{
+          marginLeft: 9,
+          marginRight: 9,
+        }}
+        variant="middle"
+      />
       <Paper
         variant="outlined"
-        sx={{ p: 3, mt: 2, minWidth: isMobile ? "90%" : "400px" }}
+        sx={{
+          p: 3,
+          mt: 2,
+          minWidth: isMobile ? "90%" : "400px",
+        }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
           Step 1 - Pick the date to assign appointments on
         </Typography>
-        {!dateLock && <DatePicker handleDateChange={handleDateChange} />}
-        {!dateLock && (
-          <ButtonDark
-            label="Use this date"
-            type="button"
-            onClick={saveSelectedDate}
-          />
-        )}
-        {dateLock && <ButtonDisabled label="Date saved" type="button" />}
-        {dateLock && (
-          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
-            Selected date: {selectedDate}
-          </Typography>
-        )}
+        <Box
+          sx={{
+            textAlign: "center",
+            fontWeight: 100,
+            display: { xs: "none", sm: "block" },
+          }}
+        >
+          {!dateLock && <DatePicker handleDateChange={handleDateChange} />}
+          {!dateLock && (
+            <ButtonDark
+              label="Use this date"
+              type="button"
+              onClick={saveSelectedDate}
+            />
+          )}
+          {dateLock && <ButtonDisabled label="Date saved" type="button" />}
+          {dateLock && (
+            <Typography
+              component="h1"
+              variant="h5"
+              align="center"
+              sx={{ mb: 2 }}
+            >
+              Selected date: {selectedDate}
+            </Typography>
+          )}
+        </Box>
       </Paper>
       <Paper
         variant="outlined"
