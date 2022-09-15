@@ -191,6 +191,7 @@ export const NotificationsTable = ({ notifications }) => {
   const [open, setOpen] = useState(false);
   const [isReadStatus, setIsReadStatus] = useState(false);
   const [selectedNotificationId, setNotificationId] = useState("");
+  const [selectedNotificationType, setNotificationType] = useState("");
   const [updatedReceivedArray, setUpdatedReceivedArray] = useState();
   const [emailError, setEmailError] = useState();
 
@@ -263,10 +264,12 @@ export const NotificationsTable = ({ notifications }) => {
     }
   };
 
-  const handleClickOpen = (event, id) => {
+  const handleClickOpen = (event, id, type) => {
     event.preventDefault();
 
     setNotificationId(id);
+
+    setNotificationType(type);
 
     handleUpdateRead(id);
 
@@ -342,6 +345,8 @@ export const NotificationsTable = ({ notifications }) => {
       console.error(err);
     }
   };
+
+  console.log(selectedNotificationType);
 
   //   const handleDenial = async (notification) => {
   //     // regardless of type
@@ -419,21 +424,24 @@ export const NotificationsTable = ({ notifications }) => {
             </TableBody>
           </Table>
 
-          {userAccount === "supervisor" && (
-            <Box sx={{ m: 1, display: "flex", justifyContent: "space-around" }}>
-              {" "}
-              <Button
-                variant="contained"
-                color="success"
-                type="submit"
-                endIcon={<CheckCircleIcon />}
-                onClick={() => {
-                  handleProcessNotification(modalRowData, "APPROVE");
-                }}
+          {userAccount === "supervisor" &&
+            selectedNotificationType === "New patient" && (
+              <Box
+                sx={{ m: 1, display: "flex", justifyContent: "space-around" }}
               >
-                Approve
-              </Button>
-              <Button
+                {" "}
+                <Button
+                  variant="contained"
+                  color="success"
+                  type="submit"
+                  endIcon={<CheckCircleIcon />}
+                  onClick={() => {
+                    handleProcessNotification(modalRowData, "APPROVE");
+                  }}
+                >
+                  Approve
+                </Button>
+                {/* <Button
                 variant="contained"
                 color="error"
                 type="submit"
@@ -443,9 +451,9 @@ export const NotificationsTable = ({ notifications }) => {
                 }}
               >
                 Deny
-              </Button>
-            </Box>
-          )}
+              </Button> */}
+              </Box>
+            )}
 
           <DialogActions>
             <Button autoFocus onClick={handleClose} variant="contained">
@@ -483,7 +491,11 @@ export const NotificationsTable = ({ notifications }) => {
                     <TableRow
                       hover
                       onClick={(event) =>
-                        handleClickOpen(event, row.notificationId)
+                        handleClickOpen(
+                          event,
+                          row.notificationId,
+                          row.notificationType
+                        )
                       }
                       tabIndex={-1}
                       key={row.notificationId}
