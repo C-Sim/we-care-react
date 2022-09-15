@@ -243,8 +243,6 @@ export const NotificationsTable = ({ notifications }) => {
     createData("Comment:", modalRowData?.notificationText),
   ];
 
-  // update read status
-
   const handleUpdateRead = async (id) => {
     try {
       await updateRead({
