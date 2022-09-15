@@ -18,10 +18,8 @@ export const PatientDashboardPage = () => {
       setTimelineData(data.appointmentsForNextWeek);
     }
   }, [data]);
-  console.log(timelineData);
 
   const viewAppointment = (event) => {
-    // console.log(event.target);
     const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
     setAppointmentDetail(appointment);
   };
