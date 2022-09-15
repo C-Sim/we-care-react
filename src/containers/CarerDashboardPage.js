@@ -14,87 +14,61 @@ import {
 import { useState, useRef, useCallback, useEffect } from "react";
 import { NextVisitForCarer } from "../components/organisms/NextVisit";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
 
 export const CarerDashboardPage = () => {
+  //mutations
   const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
+  const [
+    getUpdatedData,
+    { data: dayData, loading: dayLoading, error: dayError },
+  ] = useLazyQuery(NEXT_WORKING_DAY_APPOINTMENTS, {
+    fetchPolicy: "network-only",
+  });
+
+  //state variables
+  const [timelineDate, setTimelineDate] = useState(new Date());
   const [timelineData, setTimelineData] = useState([]);
+  const [statusChanged, setStatusChanged] = useState();
+  const [appointmentDetail, setAppointmentDetail] = useState();
+
+  //useEffect for update of the page
   useEffect(() => {
     if (data) {
       setTimelineData(data.appointmentsForNextWorkingDay);
+      setTimelineDate(data.appointmentsForNextWorkingDay[0].start);
     }
   }, [data]);
-  console.log(timelineData);
 
-  const [appointmentDetail, setAppointmentDetail] = useState();
+  useEffect(() => {
+    getUpdatedData();
+  }, [statusChanged]);
 
+  useEffect(() => {
+    if (dayData) {
+      setTimelineData(dayData.appointmentsForNextWorkingDay);
+    }
+  }, [dayData]);
+
+  //getting status change from nextVisit component
+  const handleStatusChange = (e) => {
+    setStatusChanged(e);
+  };
+
+  //function to display selected appointment into right hand side panel
+  const viewAppointment = (event) => {
+    const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
+    setAppointmentDetail(appointment);
+  };
+
+  //google map and directions
   const center = { lat: 52.489471, lng: -1.898575 };
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyDUUFeATzTUoPA37N2JF00Qzfz-2E_v09w",
     libraries: ["places"],
   });
-
-  const viewAppointment = (event) => {
-    console.log(event.target);
-    const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
-    setAppointmentDetail(appointment);
-  };
-
-  // const appointments = [
-  //   {
-  //     id: "484251",
-  //     start: "08:00",
-  //     status: "completed",
-  //     patientId: {
-  //       firstName: "Bob",
-  //       lastName: "Smith",
-  //       patientProfileId: {
-  //         username: "Bob Smith",
-  //         gender: "male",
-  //       },
-  //       postcode: "B29 6AG",
-  //       address: {
-  //         fullAddress: "Dale Rd B29 6AG",
-  //       },
-  //     },
-  //   },
-  //   {
-  //     id: "484252",
-  //     start: "09:00",
-  //     status: "ongoing",
-  //     patientId: {
-  //       firstName: "alice",
-  //       lastName: "Smith",
-  //       patientProfileId: {
-  //         username: "Alice Smith",
-  //         gender: "female",
-  //       },
-  //       postcode: "B29 6AG",
-  //       address: {
-  //         fullAddress: "Dale Rd B29 6AG",
-  //       },
-  //     },
-  //   },
-  //   {
-  //     id: "484253",
-  //     start: "10:00",
-  //     status: "upcoming",
-  //     patientId: {
-  //       firstName: "chris",
-  //       lastName: "Smith",
-  //       patientProfileId: {
-  //         username: "chris Smith",
-  //         gender: "male",
-  //       },
-  //       postcode: "B29 6AG",
-  //       address: {
-  //         fullAddress: "Dale Rd B29 6AG",
-  //       },
-  //     },
-  //   },
-  // ];
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionResponse, setDirectionResponse] = useState(null);
@@ -154,20 +128,24 @@ export const CarerDashboardPage = () => {
       <Box sx={{ height: 800 }}>
         {/* next appointment detail */}
         {appointmentDetail && (
-          <NextVisitForCarer appointmentDetail={appointmentDetail} />
+          <NextVisitForCarer
+            appointmentDetail={appointmentDetail}
+            handleStatusChange={handleStatusChange}
+          />
         )}
         {/* carer timeline box container */}
-        <Box
-          zIndex="modal"
-          sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
-        >
-          {" "}
-          <CarerTimeline
-            date="Monday 8th August"
-            appointments={timelineData}
-            viewAppointment={viewAppointment}
-          />
-        </Box>
+        {timelineData && (
+          <Box
+            zIndex="modal"
+            sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
+          >
+            <CarerTimeline
+              date={timelineDate}
+              appointments={timelineData}
+              viewAppointment={viewAppointment}
+            />
+          </Box>
+        )}
         {/* Appointments' directions box container */}
         <Box
           zIndex="modal"

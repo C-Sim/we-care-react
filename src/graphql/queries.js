@@ -256,3 +256,29 @@ export const AVAILABLE_PATIENTS = gql`
     }
   }
 `;
+
+export const PAST_NOTES = gql`
+  query AppointmentNotesByUserId($userId: ID!) {
+    appointmentNotesByUserId(userId: $userId) {
+      start
+      carerNotes
+    }
+  }
+`;
+
+export const VIEW_PATIENT_PROFILE = gql`
+  query PatientInfo($userId: ID!) {
+    patientInfo(userId: $userId) {
+      userId {
+        id
+        email
+        phoneNumber
+        imageUrl
+      }
+      username
+      gender
+      genderPreference
+      days
+    }
+  }
+`;
