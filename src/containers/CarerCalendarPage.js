@@ -15,7 +15,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ASK_FOR_REALLOCATION } from "../graphql/mutations";
-import signUpImage from "../components/atoms/images/sign-up.svg";
+import signUpImage from "../components/atoms/images/sign-up.png";
 
 export const CarerCalendarPage = () => {
   const { data, loading, error } = useQuery(APPOINTMENTS_BY_ID, {
