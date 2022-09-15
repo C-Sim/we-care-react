@@ -188,10 +188,17 @@ export const CreateCarerForm = ({ isMobile }) => {
   return (
     <Paper
       sx={{
-        marginBottom: 20,
+        margin: isMobile ? 5 : 0,
+        marginBottom: 5,
         marginTop: 5,
+
         p: 3,
         minWidth: isMobile ? "90%" : "400px",
+        background: `linear-gradient(
+          to top,
+          rgba(238, 245, 219, 0.2),
+          rgba(0, 176, 255, 0.18)
+        )`,
       }}
       elevation={6}
     >
