@@ -27,7 +27,7 @@ export const SignUpPage = () => {
             fontWeight: "bold",
           }}
         >
-          <img src={signUpImage} height="500vh" />
+          <img src={signUpImage} alt="sign up" height="500vh" />
         </Box>
       )}
     </Box>

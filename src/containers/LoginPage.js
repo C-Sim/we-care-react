@@ -27,7 +27,7 @@ export const LoginPage = () => {
             fontWeight: "bold",
           }}
         >
-          <img src={loginImage} height="500vh" />
+          <img src={loginImage} alt="login" height="500vh" />
         </Box>
       )}
     </Box>
