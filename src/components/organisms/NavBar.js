@@ -31,7 +31,7 @@ export const NavBar = () => {
   };
 
   const navItems = getNavItems(isLoggedIn, user?.accountType);
-  console.log(isLoggedIn);
+
   const drawer = (
     <Box
       onClick={handleDrawerToggle}

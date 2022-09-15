@@ -135,8 +135,7 @@ export const CreateCarerForm = ({ isMobile }) => {
   };
 
   const handleAddressLookup = () => {
-    console.log("searching...");
-    console.log(getValues("postcode"));
+
     addressLookup({
       variables: {
         postcode: getValues("postcode"),
