@@ -25,7 +25,7 @@ export const PatientTimeline = ({ appointments, viewAppointment }) => {
       }}
     >
       <Typography align="center" color="#00b0ff" fontWeight={200}>
-        Your visits for the day:
+        Your upcoming appointments
       </Typography>
 
       <Timeline sx={{ color: "#3f3d56" }}>
