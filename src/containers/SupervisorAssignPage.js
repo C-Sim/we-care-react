@@ -273,6 +273,9 @@ export const SupervisorAssignPage = () => {
           mt: 2,
           minWidth: isMobile ? "90%" : "400px",
           align: "center",
+          display: "bock",
+          width: "fit-content",
+          margin: "auto",
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
