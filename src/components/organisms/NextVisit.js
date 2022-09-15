@@ -306,8 +306,8 @@ export const NextVisitForCarer = ({
             {notesData.appointmentNotesByUserId.map((note, index) => (
               <Typography
                 key={index}
-                component="h1"
-                variant="h6"
+                component="h3"
+                variant="caption"
                 align="left"
                 sx={{ mb: 2 }}
               >
