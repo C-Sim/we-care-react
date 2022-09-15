@@ -58,7 +58,6 @@ export const CarerDashboardPage = () => {
 
   //function to display selected appointment into right hand side panel
   const viewAppointment = (event) => {
-    console.log(event.target.id);
     const appointment = timelineData.filter((i) => i.id === event.target.id)[0];
     setAppointmentDetail(appointment);
   };

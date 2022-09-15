@@ -86,20 +86,25 @@ export const NextVisitForCarer = ({
   });
 
   const status = appointmentDetail.status;
-  const patient = useState(appointmentDetail.patientId.id);
+  const patient = appointmentDetail.patientId.id;
 
   const [pastVisitNotesBtn, setPastVisitNoteBtn] = useState(false);
   const [patientProfileBtn, setPatientProfileBtn] = useState(false);
+  const [nextVisitRefresh, setNextVisitRefresh] = useState(0);
 
-  //useEffects hooks to monitors changes
-  // useEffect(() => {
-  //   setPatientProfileBtn(false);
-  // }, [patient]);
+  // useEffects hooks to monitors changes in next visit container
+  useEffect(() => {
+    const count = nextVisitRefresh + 1;
+    setNextVisitRefresh(count);
+  }, [patient]);
+  useEffect(() => {
+    setPastVisitNoteBtn(false);
+    setPatientProfileBtn(false);
+  }, [nextVisitRefresh]);
 
   //function to check in/ check out of appointment
   const CheckInAndOut = () => {
     const checkin = (event) => {
-      console.log(event.target.id);
       const trigger = "checkin";
       updateCheckin({
         variables: {
@@ -110,7 +115,6 @@ export const NextVisitForCarer = ({
     };
 
     const checkout = (event) => {
-      console.log(event.target.id);
       const trigger = "checkout";
       updateCheckout({
         variables: {
@@ -167,12 +171,9 @@ export const NextVisitForCarer = ({
 
   const UpdateNotes = () => {
     const handleUpdateNotes = (formData) => {
-      console.log("update carer notes");
-
       const trigger = "carerNote";
       const note = formData.carerNote;
-      console.log(note);
-      console.log(appointmentDetail.id);
+
       updateCarerNotes({
         variables: {
           appointmentId: appointmentDetail.id,
@@ -252,7 +253,7 @@ export const NextVisitForCarer = ({
   const BtnPatientProfile = () => {
     const viewPatientProfile = (event) => {
       const patientId = event.target.id;
-
+      setPastVisitNoteBtn(false);
       setPatientProfileBtn(true);
       getPatientProfile({
         variables: {
@@ -277,11 +278,7 @@ export const NextVisitForCarer = ({
           </Button>
         )}
         {patientProfileBtn && (
-          <Button
-            variant="Contained"
-            onClick={hidePatientProfile}
-            id={appointmentDetail.patientId.id}
-          >
+          <Button variant="Contained" onClick={hidePatientProfile} id="hide">
             Hide Patient Profile
           </Button>
         )}
@@ -341,7 +338,7 @@ export const NextVisitForCarer = ({
               {patientData.patientInfo.genderPreference}
             </Typography>
             <Typography
-              key="genderPreference"
+              key="days"
               component="h3"
               variant="caption"
               align="left"
@@ -371,9 +368,9 @@ export const NextVisitForCarer = ({
 
   const BtnPastVisitNotes = () => {
     const viewPastNotes = () => {
-      console.log("showing past notes");
+      setPatientProfileBtn(false);
       setPastVisitNoteBtn(true);
-      console.log(appointmentDetail.patientId.id);
+
       getPastNotes({
         variables: {
           userId: appointmentDetail.patientId.id,
