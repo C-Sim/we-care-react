@@ -1,6 +1,6 @@
 // For carers to see their assignments by date
 
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import Box from "@mui/material/Box";
 import { PageTitle } from "../components/atoms/PageTitle";
@@ -11,7 +11,7 @@ import { APPOINTMENTS_BY_ID } from "../graphql/queries";
 import "react-calendar/dist/Calendar.css";
 import { Grid, Typography } from "@mui/material";
 import { Paper } from "@mui/material";
-import { useLazyQuery, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ASK_FOR_REALLOCATION } from "../graphql/mutations";
@@ -82,20 +82,25 @@ export const CarerCalendarPage = () => {
   };
 
   return (
-    <Box>
+    <Box
+      bgcolor="#eef5dbff1"
+      sx={{
+        width: "100%",
+        justifyContent: "center",
+      }}
+    >
       <Paper
         sx={{
-          mt: 4,
-          mb: 4,
+          m: 4,
           p: 3,
           minWidth: isMobile ? "90%" : "80%",
-          color: "#3f3d56",
-          backgroundColor: "#0b0f2e",
+          color: "#00b0ff2e",
+          backgroundColor: "#D1F1FF",
           borderRadius: "25px",
         }}
         elevation={6}
       >
-        <PageTitle title="Assignments By Date" />
+        <PageTitle title="View Your Appointment Calendar" />
 
         <Grid
           container
@@ -103,11 +108,13 @@ export const CarerCalendarPage = () => {
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           paddingLeft={3}
           paddingRight={3}
+          alignItems="top"
+          sx={{ display: "flex", flexWrap: "wrap" }}
         >
-          <Grid item xs={8}>
+          <Grid item xs={3}>
             <Calendar onChange={onChange} value={calDate} />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={9}>
             {/* <div className="weekView-wrapper">
               <div className="weekView-calendar"></div>
               {/* to be replaced by a timeline component */}
