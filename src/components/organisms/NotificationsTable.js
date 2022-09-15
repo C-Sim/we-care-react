@@ -195,7 +195,14 @@ export const NotificationsTable = ({ notifications }) => {
   const [updatedReceivedArray, setUpdatedReceivedArray] = useState();
   const [emailError, setEmailError] = useState();
 
-  const [updateRead] = useMutation(UPDATE_READ);
+  const [
+    updateRead,
+    { data: readData, loading: readLoading, error: readError },
+  ] = useMutation(UPDATE_READ, {
+    onCompleted: () => {
+      setIsReadStatus(true);
+    },
+  });
 
   const context = useContext(AppContext);
   const userAccount = context.user.accountType;
@@ -244,32 +251,20 @@ export const NotificationsTable = ({ notifications }) => {
     createData("Comment:", modalRowData?.notificationText),
   ];
 
-  const handleUpdateRead = async (id) => {
-    try {
-      await updateRead({
-        variables: { notificationId: id },
-      });
-
-      notifications = notifications.map((notification) => {
-        if (notification.id === id) {
-          return { ...notification, isRead: true };
-        }
-
-        return notification;
-      });
-
-      setIsReadStatus(true);
-    } catch (err) {
-      console.error(err);
-    }
+  const handleUpdateRead = (id) => {
+    updateRead({
+      variables: { notificationId: id },
+    });
   };
 
   const handleClickOpen = (event, id, type) => {
     event.preventDefault();
 
     setNotificationId(id);
+    console.log(id);
 
     setNotificationType(type);
+    console.log(type);
 
     handleUpdateRead(id);
 
