@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import signUpImage from "../atoms/images/sign-up.svg";
+import signUpImage from "../atoms/images/login.svg";
 import carePlanImage from "../atoms/images/care-plan.svg";
 import visitImage from "../atoms/images/home-visit.svg";
 import { PageTitle } from "../atoms/PageTitle";

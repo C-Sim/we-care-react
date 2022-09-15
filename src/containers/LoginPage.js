@@ -1,10 +1,9 @@
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { LoginForm } from "../components/organisms/LoginForm";
-import loginImage from "../components/atoms/images/sign-up.png";
+import loginImage from "../components/atoms/images/login.png";
 
 export const LoginPage = () => {
   const isMobile = useMediaQuery("(max-width:900px)");
