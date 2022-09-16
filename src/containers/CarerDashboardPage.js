@@ -159,7 +159,18 @@ export const CarerDashboardPage = () => {
         {/* Appointments' directions box container */}
         <Box
           zIndex="modal"
-          sx={{ backgroundColor: "#9AC7C7", width: 300, height: 300, p: 2 }}
+          sx={{
+            backgroundColor: "#DDF4FE",
+            minWidth: isMobile ? "100%" : "400px",
+            maxWidth: isMobile ? "100%" : "400px",
+            padding: isMobile ? 4 : 0,
+            p: isMobile ? 3 : 0,
+            background: "#DDF4FE",
+            opacity: 0.95,
+            borderRadius: "20px",
+            height: 300,
+            p: 2,
+          }}
         >
           <FormControl variant="filled" sx={{ m: 1, width: 230 }}>
             <InputLabel id="demo-simple-select-filled-label">
