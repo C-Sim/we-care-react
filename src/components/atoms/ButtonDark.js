@@ -13,7 +13,6 @@ export const ButtonDark = ({ label, type, onClick }) => {
         color: "#eef5dbff",
         "&:hover": { backgroundColor: "#f7b801" },
         borderRadius: "18px",
-        marginLeft: 2,
       }}
       onClick={onClick}
     >
