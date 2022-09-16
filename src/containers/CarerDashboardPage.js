@@ -82,6 +82,7 @@ export const CarerDashboardPage = () => {
 
   const originRef = useRef(null);
   const destinationRef = useRef(null);
+  console.log(timelineData);
 
   const onClick = useCallback(() => {
     if (
