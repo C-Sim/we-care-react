@@ -164,11 +164,12 @@ export const NextVisitPatient = ({ appointmentDetail }) => {
   };
 
   return (
-    <Paper
+    <Box
       sx={{
         p: 6,
+        pr: 12,
         width: "60%",
-        minHeight: "60%",
+        minHeight: "64%",
         position: "absolute",
         right: 1,
         top: 150,
@@ -176,19 +177,34 @@ export const NextVisitPatient = ({ appointmentDetail }) => {
       elevation={6}
     >
       <div>
-        <Typography component="h1" variant="h6" align="left" sx={{ mb: 2 }}>
+        <Typography
+          component="h1"
+          variant="h6"
+          align="center"
+          sx={{ mb: 2, color: "#3f3d56", fontWeight: "200" }}
+        >
           Your appointment details
         </Typography>
 
-        <h4>Date: {format(new Date(appointmentDetail.start), "yyyy-MM-dd")}</h4>
-        <h4>
-          Start Time: {format(new Date(appointmentDetail.start), "HH:mm")}
-        </h4>
+        <Typography
+          align="center"
+          sx={{ mb: 2, color: "#00b0ff", fontWeight: "200" }}
+        >
+          <strong>Date</strong>{" "}
+          {format(new Date(appointmentDetail.start), "yyyy-MM-dd")}
+        </Typography>
+        <Typography
+          align="center"
+          sx={{ mb: 2, color: "#00b0ff", fontWeight: "200" }}
+        >
+          <strong>Time</strong>{" "}
+          {format(new Date(appointmentDetail.start), "HH:mm")}
+        </Typography>
         <div>
           <CarerCard />
         </div>
       </div>
       <UpdateNotes />
-    </Paper>
+    </Box>
   );
 };

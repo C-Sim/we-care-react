@@ -24,8 +24,6 @@ const navItems = {
       path: "/about",
     },
 
-    { label: "Resources", path: "/resources" },
-
     { label: "profile", path: "/patient-profile" },
 
     { label: "Care Plan", path: "/care-plan" },
