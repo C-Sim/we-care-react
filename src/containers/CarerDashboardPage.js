@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { useMediaQuery } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -126,22 +126,22 @@ export const CarerDashboardPage = () => {
 
   return (
     <>
-      <Box sx={{ m: 0 }}>
-        {/* next appointment detail */}
-        {appointmentDetail && (
-          <NextVisitForCarer
-            appointmentDetail={appointmentDetail}
-            handleStatusChange={handleStatusChange}
-          />
-        )}
-
+      <Grid
+        container
+        sx={{
+          m: 0,
+        }}
+      >
         {/* carer timeline box container */}
         {timelineData && (
-          <Box
-            zIndex="modal"
+          <Grid
+            item
+            xs={12}
+            md={4}
+            // zIndex="modal"
             sx={{
-              minWidth: isMobile ? "100%" : "400px",
-              maxWidth: isMobile ? "100%" : "400px",
+              // minWidth: isMobile ? "100%" : "400px",
+              // maxWidth: isMobile ? "100%" : "400px",
               padding: isMobile ? 4 : 0,
               p: isMobile ? 3 : 0,
               background: "#DDF4FE",
@@ -155,102 +155,101 @@ export const CarerDashboardPage = () => {
               appointments={timelineData}
               viewAppointment={viewAppointment}
             />
-          </Box>
-        )}
-
-        {/* Appointments' directions box container */}
-        <Box
-          zIndex="modal"
-          sx={{
-            backgroundColor: "#DDF4FE",
-            minWidth: isMobile ? "100%" : "400px",
-            maxWidth: isMobile ? "100%" : "400px",
-            padding: isMobile ? 4 : 0,
-            p: isMobile ? 3 : 0,
-            background: "#DDF4FE",
-            opacity: 0.95,
-            borderRadius: "20px",
-            height: 320,
-            p: 2,
-          }}
-        >
-          <FormControl variant="filled" sx={{ m: 1, width: 230 }}>
-            <InputLabel id="demo-simple-select-filled-label">
-              Choose Your Origin
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-              value={origin}
-              onChange={handleOriginClick}
-            >
-              {timelineData.map((appointment, index) => (
-                <MenuItem
-                  value={appointment.patientId.address.fullAddress}
-                  key={index}
-                >
-                  {appointment.patientId.address.fullAddress}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl variant="filled" sx={{ m: 1, width: 230 }}>
-            <InputLabel id="demo-simple-select-filled-label">
-              Choose Your Destination
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-              value={destination}
-              onChange={handleDestinationClick}
-            >
-              {timelineData.map((appointment, index) => (
-                <MenuItem
-                  value={appointment.patientId.address.fullAddress}
-                  key={index}
-                >
-                  {appointment.patientId.address.fullAddress}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <div className="map-settings">
-            <hr className="mt-0 mb-3" />
-            <div>
-              <h4>distance: {distance}</h4>
-              <h4>duration: {duration}</h4>
-            </div>
-
-            <Button
-              variant="Contained"
-              onClick={calculateRoute}
+            {/* Appointments' directions box container */}
+            <Box
+              zIndex="modal"
               sx={{
-                fontWeight: 100,
-                backgroundColor: "#3f3d56",
-                color: "#eef5dbff",
-                "&:hover": { backgroundColor: "#f7b801" },
-                borderRadius: "18px",
+                backgroundColor: "#DDF4FE",
+                minWidth: isMobile ? "100%" : "400px",
+                maxWidth: isMobile ? "100%" : "400px",
+                padding: isMobile ? 4 : 0,
+                p: isMobile ? 3 : 0,
+                background: "#DDF4FE",
+                opacity: 0.95,
+                borderRadius: "20px",
+                height: 320,
+                p: 2,
               }}
             >
-              Check Directions
-            </Button>
-          </div>
-        </Box>
+              <FormControl variant="filled" sx={{ m: 1, width: 230 }}>
+                <InputLabel id="demo-simple-select-filled-label">
+                  Choose Your Origin
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                  value={origin}
+                  onChange={handleOriginClick}
+                >
+                  {timelineData.map((appointment, index) => (
+                    <MenuItem
+                      value={appointment.patientId.address.fullAddress}
+                      key={index}
+                    >
+                      {appointment.patientId.address.fullAddress}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl variant="filled" sx={{ m: 1, width: 230 }}>
+                <InputLabel id="demo-simple-select-filled-label">
+                  Choose Your Destination
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                  value={destination}
+                  onChange={handleDestinationClick}
+                >
+                  {timelineData.map((appointment, index) => (
+                    <MenuItem
+                      value={appointment.patientId.address.fullAddress}
+                      key={index}
+                    >
+                      {appointment.patientId.address.fullAddress}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <div className="map-settings">
+                <hr className="mt-0 mb-3" />
+                <div>
+                  <h4>distance: {distance}</h4>
+                  <h4>duration: {duration}</h4>
+                </div>
+
+                <Button
+                  variant="Contained"
+                  onClick={calculateRoute}
+                  sx={{
+                    fontWeight: 100,
+                    backgroundColor: "#3f3d56",
+                    color: "#eef5dbff",
+                    "&:hover": { backgroundColor: "#f7b801" },
+                    borderRadius: "18px",
+                  }}
+                >
+                  Check Directions
+                </Button>
+              </div>
+            </Box>
+          </Grid>
+        )}
 
         {/* map goes here  */}
-        <Box>
+        <Grid item xs={12} md={4}>
           {" "}
           <GoogleMap
             center={center}
             zoom={14}
             mapContainerStyle={{
-              width: "50%",
-              minHeight: isMobile ? "100%" : "930px",
-              position: "absolute",
-              top: "0px",
-              left: "400px",
-              // right: "-400px",
+              // width: "40%",
+              minHeight: isMobile ? "930px" : "930px",
+              // position: "absolute",
+              // top: "0px",
+              // left: "400px",
+              // // right: "-400px",
               zIndex: "-1",
               center: { center },
             }}
@@ -261,8 +260,40 @@ export const CarerDashboardPage = () => {
             )}
             <Circle options={options} />
           </GoogleMap>
-        </Box>
-      </Box>
+        </Grid>
+
+        {/* next appointment detail */}
+        <Grid item xs={12} md={4} sx={{ backgroundColor: "#DDF4FE" }}>
+          {appointmentDetail && (
+            <NextVisitForCarer
+              appointmentDetail={appointmentDetail}
+              handleStatusChange={handleStatusChange}
+            />
+          )}
+          {!appointmentDetail && (
+            <Box
+              sx={{
+                // position: "absolute",
+                right: 0.1,
+                backgroundColor: "#DDF4FE",
+                // minWidth: isMobile ? "100%" : "30%",
+                // maxWidth: isMobile ? "100%" : "30%",
+                // height: "900px",
+                padding: isMobile ? 4 : 0,
+                p: isMobile ? 3 : 5,
+                background: "#DDF4FE",
+                opacity: 0.95,
+                // borderRadius: "20px",
+                m: 0,
+              }}
+              elevation={6}
+            >
+              Please click the timeline to see the appointment detail and check
+              directions between addresses
+            </Box>
+          )}
+        </Grid>
+      </Grid>
     </>
   );
 };

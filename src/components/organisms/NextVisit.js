@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 
 import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -443,19 +444,19 @@ export const NextVisitForCarer = ({
   };
 
   return (
-    <Paper
+    <Box
       sx={{
-        position: "absolute",
+        // position: "absolute",
         right: 0.1,
         backgroundColor: "#DDF4FE",
-        minWidth: isMobile ? "100%" : "30%",
-        maxWidth: isMobile ? "100%" : "30%",
-        height: "865px",
+        // minWidth: isMobile ? "100%" : "30%",
+        // maxWidth: isMobile ? "100%" : "30%",
+        // height: "865px",
         padding: isMobile ? 4 : 0,
         p: isMobile ? 3 : 5,
         background: "#DDF4FE",
         opacity: 0.95,
-        borderRadius: "20px",
+        // borderRadius: "20px",
         m: 0,
       }}
       elevation={6}
@@ -491,6 +492,6 @@ export const NextVisitForCarer = ({
       </Stack>
       <PastVisitNotesBtn />
       <PatientProfileBtn />
-    </Paper>
+    </Box>
   );
 };
