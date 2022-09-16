@@ -10,13 +10,14 @@ export const CarePlanPage = () => {
 
   return (
     <Box
-      borderRadius={25}
       sx={{
-        marginTop: 2,
-        marginBottom: 1,
-        marginLeft: 1,
-        marginRight: 1,
-        backgroundColor: "rgba(97, 218, 251, 0.2)",
+        borderRadius: "25px",
+        margin: 6,
+        background: `linear-gradient(
+          to top,
+          rgba(238, 245, 219, 0.2),
+          rgba(0, 176, 255, 0.18)
+        )`,
       }}
     >
       <PageTitle title="Your Care Plan" />
