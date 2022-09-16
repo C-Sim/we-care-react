@@ -2,8 +2,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import signUpImage from "../atoms/images/login.svg";
-import carePlanImage from "../atoms/images/care-plan.svg";
+import signUpImage from "../atoms/images/login.png";
+import carePlanImage from "../atoms/images/sign-up.png";
 import visitImage from "../atoms/images/home-visit.svg";
 import { PageTitle } from "../atoms/PageTitle";
 
@@ -32,7 +32,7 @@ export const HowItWorks = () => {
           justifyContent: "center",
         }}
       >
-        <img src={signUpImage} width="50%" alt="sign up" />
+        <img src={signUpImage} width="44%" alt="sign up" />
         <Typography
           sx={{
             fontSize: isMobile ? "0.8rem" : isTablet ? "0.64rem" : "0.84rem",
@@ -58,7 +58,7 @@ export const HowItWorks = () => {
           justifyContent: "center",
         }}
       >
-        <img src={carePlanImage} width="80%" alt="care plan" />
+        <img src={carePlanImage} width="45%" alt="care plan" />
         <Typography
           sx={{
             fontSize: isMobile ? "0.8rem" : isTablet ? "0.64rem" : "0.84rem",
