@@ -14,7 +14,7 @@ const navItems = {
 
     { label: "Notifications", path: "/notifications" },
 
-    { label: "Assignments", path: "/assignments" },
+    { label: "Calendar", path: "/carer-calendar" },
 
     { label: "Dashboard", path: "/carer-dashboard" },
   ],
