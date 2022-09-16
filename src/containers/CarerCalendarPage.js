@@ -115,7 +115,7 @@ export const CarerCalendarPage = () => {
         sx={{
           mt: 3,
           mb: 3,
-          p: 3,
+          p: 8,
           minWidth: isMobile ? "90%" : "90%",
           marginLeft: isMobile ? 1 : 0,
           marginRight: isMobile ? 1 : 0,
@@ -163,7 +163,7 @@ export const CarerCalendarPage = () => {
           display="flex"
           sx={{ flexDirection: isMobile ? "column" : "row" }}
         >
-          <Box sx={{ textAlign: "center" }}>
+          <Box sx={{ textAlign: "center" }} pb={8}>
             <Typography color="#3f3d56" variant="h6">
               Please select a date to view appointments
             </Typography>
@@ -198,7 +198,13 @@ export const CarerCalendarPage = () => {
             </Box>
           )}
           {resultArr.length && (
-            <Box display="flex" flexDirection="column" alignItems="center">
+            <Box
+              pb={8}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
               <Box width="64%">
                 <CarerTimeline
                   date={calDate}
