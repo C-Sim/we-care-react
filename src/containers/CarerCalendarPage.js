@@ -117,8 +117,8 @@ export const CarerCalendarPage = () => {
           mb: 3,
           p: 3,
           minWidth: isMobile ? "90%" : "400px",
-          marginLeft: isMobile ? 0 : 18,
-          marginRight: isMobile ? 0 : 18,
+          marginLeft: isMobile ? 1 : 18,
+          marginRight: isMobile ? 1 : 18,
           color: "#00b0ff2e",
           background: `linear-gradient(
             to top,
@@ -158,36 +158,27 @@ export const CarerCalendarPage = () => {
           </DialogActions>
         </Dialog>
         <PageTitle title="View Your Appointment Calendar" />
-        <Typography
-          color="#3f3d56"
-          pt={4}
-          pl={4}
-          variant="h6"
-          sx={{ textAlign: isMobile ? "center" : "left" }}
-        >
-          Please select a date to view appointments
-        </Typography>
-        <Grid
-          container
-          rowSpacing={0}
-          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-          mt={3}
-          paddingLeft={5}
-          paddingRight={2}
-          alignItems="top"
-          sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-        >
-          <Grid item xs={12} s={12} md={4} paddingBottom={5}>
-            <Calendar onChange={onChange} value={calDate} pb={3} />
-          </Grid>
-          {/* {!resultArr.length && (
-            <Grid item xs={12} s={12} md={6} pt={8}>
-              <Typography color="#3f3d56" fontWeight={200}>
-                You have no appointments on the selected date. Please chose
-                another date.
-              </Typography>
-            </Grid>
-          )} */}
+        <Box display="flex" flexDirection="row">
+          <Box sx={{ textAlign: "center" }}>
+            <Typography color="#3f3d56" variant="h6">
+              Please select a date to view appointments.
+            </Typography>
+            <Typography
+              mb={8}
+              textAlign="center"
+              color="#3f3d56"
+              fontWeight={200}
+            >
+              Any appointments will show on a timeline.
+            </Typography>
+            <Calendar
+              onChange={onChange}
+              value={calDate}
+              mt={3}
+              justifyContent="center"
+            />
+          </Box>
+
           {!isMobile && !resultArr.length && (
             <Box
               sx={{
@@ -218,7 +209,6 @@ export const CarerCalendarPage = () => {
               </Box>
             </Grid>
           )}
-
           {appointmentId && !askReallocationSuccess && (
             <Grid item sx={{ paddingTop: isMobile ? 2 : 15 }}>
               <ButtonBright
@@ -233,16 +223,7 @@ export const CarerCalendarPage = () => {
               />
             </Grid>
           )}
-
-          {/* {appointmentId && !askReallocationSuccess && (
-            <div>
-              <Typography align="center" color="#00b0ff" fontWeight={200}>
-                You cannot ask for another reschedule yet (only 1 request a
-                time).
-              </Typography>
-            </div>
-          )} */}
-        </Grid>
+        </Box>
       </Paper>
     </Box>
   );
