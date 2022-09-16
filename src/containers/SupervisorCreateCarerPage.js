@@ -24,11 +24,6 @@ export const SupervisorCreateCarerPage = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: `linear-gradient(
-            to top,
-            rgba(20, 20, 20, 0.2),
-            rgba(133, 133, 133, 0.2)
-          )`,
         }}
       >
         <CreateCarerForm isMobile={isMobile} />
