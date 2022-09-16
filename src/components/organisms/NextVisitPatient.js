@@ -47,27 +47,42 @@ export const NextVisitPatient = ({ appointmentDetail }) => {
 
   const CarerCard = () => {
     return (
-      <Card sx={{ display: "flex", flexDirection: "row" }}>
-        <CardContent sx={{ maxWidth: 400 }}>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Your carer: {appointmentDetail.carerId.carerProfileId.username}
-          </Typography>
-          <CardMedia
-            component="img"
-            height="100"
-            image={appointmentDetail.carerId.imageUrl}
-            alt="Carer image"
-          />
-          <Typography variant="body2">
-            Gender: {appointmentDetail.carerId.carerProfileId.gender}
-          </Typography>
-          <Typography variant="body2">
-            Email: {appointmentDetail.carerId.email}
-          </Typography>
-          <Typography variant="body2">
-            Phone number:
-            {appointmentDetail.carerId.phoneNumber}
-          </Typography>
+      <Card width="100%">
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
+            <Typography sx={{ fontSize: 14 }} color="#3f3d56" gutterBottom>
+              <strong>Your carer:</strong>{" "}
+              {appointmentDetail.carerId.carerProfileId.username}
+            </Typography>
+
+            <Typography variant="body2">
+              <strong>Gender:</strong>{" "}
+              {appointmentDetail.carerId.carerProfileId.gender}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Email:</strong> {appointmentDetail.carerId.email}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Phone number:</strong>{" "}
+              {appointmentDetail.carerId.phoneNumber}
+            </Typography>
+          </Box>
+          <Box>
+            <CardMedia
+              component="img"
+              height="80"
+              width="20"
+              image={appointmentDetail.carerId.imageUrl}
+              alt="Carer image"
+              align="right"
+            />
+          </Box>
         </CardContent>
       </Card>
     );
