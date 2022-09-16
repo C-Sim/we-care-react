@@ -158,41 +158,26 @@ export const CarerCalendarPage = () => {
           </DialogActions>
         </Dialog>
         <PageTitle title="View Your Appointment Calendar" />
-        <Typography
-          color="#3f3d56"
-          pt={4}
-          pl={4}
-          variant="h6"
-          sx={{ textAlign: isMobile ? "center" : "left" }}
-        >
-          Please select a date to view appointments.
-        </Typography>
-        <Typography
-          textAlign="center"
-          color="#3f3d56"
-          fontWeight={200}
-          sx={{ textAlign: isMobile ? "center" : "left" }}
-        >
-          Any appointments will show on a timeline.
-        </Typography>
-        <Grid
-          container
-          rowSpacing={0}
-          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-          mt={3}
-          paddingLeft={5}
-          paddingRight={1}
-          alignItems="top"
-          sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-        >
-          <Grid item xs={12} s={12} md={4} pb={5} justifyContent="center">
+        <Box display="flex" flexDirection="row">
+          <Box sx={{ textAlign: "center" }}>
+            <Typography color="#3f3d56" variant="h6">
+              Please select a date to view appointments.
+            </Typography>
+            <Typography
+              mb={8}
+              textAlign="center"
+              color="#3f3d56"
+              fontWeight={200}
+            >
+              Any appointments will show on a timeline.
+            </Typography>
             <Calendar
               onChange={onChange}
               value={calDate}
-              pb={3}
+              mt={3}
               justifyContent="center"
             />
-          </Grid>
+          </Box>
 
           {!isMobile && !resultArr.length && (
             <Box
@@ -238,7 +223,7 @@ export const CarerCalendarPage = () => {
               />
             </Grid>
           )}
-        </Grid>
+        </Box>
       </Paper>
     </Box>
   );
