@@ -90,6 +90,7 @@ export const NavBar = () => {
           <Box className="LogoNav">
             <img
               src={logo}
+              alt="logo"
               height="40"
               onClick={() => {
                 navigate("/", { replace: true });
