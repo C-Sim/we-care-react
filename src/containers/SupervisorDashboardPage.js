@@ -47,7 +47,7 @@ export const SupervisorDashboardPage = () => {
             Overall Gender Preferences Distribution
           </Typography>
           <VictoryPie
-            colorScale={["pink", "#61dafb", "grey"]}
+            colorScale={["#3f3d56", "#00b0ff", "#d0cde1"]}
             data={genderPreference}
           />
         </Box>
@@ -60,7 +60,10 @@ export const SupervisorDashboardPage = () => {
           >
             Overall Gender Distribution
           </Typography>
-          <VictoryPie colorScale={["pink", "#61dafb", "grey"]} data={gender} />
+          <VictoryPie
+            colorScale={["#3f3d56", "#00b0ff", "#d0cde1"]}
+            data={gender}
+          />
         </Box>
         <Box sx={{ height: 300 }}>
           <Typography
@@ -73,7 +76,7 @@ export const SupervisorDashboardPage = () => {
           </Typography>
           <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
             <VictoryBar
-              style={{ data: { fill: "#c43a31" } }}
+              style={{ data: { fill: "#3f3d56" } }}
               data={carerDays}
             />
           </VictoryChart>

@@ -116,9 +116,9 @@ export const CarerCalendarPage = () => {
           mt: 3,
           mb: 3,
           p: 3,
-          minWidth: isMobile ? "90%" : "400px",
-          marginLeft: isMobile ? 1 : 18,
-          marginRight: isMobile ? 1 : 18,
+          minWidth: isMobile ? "90%" : "90%",
+          marginLeft: isMobile ? 1 : 0,
+          marginRight: isMobile ? 1 : 0,
           color: "#00b0ff2e",
           background: `linear-gradient(
             to top,
@@ -158,47 +158,36 @@ export const CarerCalendarPage = () => {
           </DialogActions>
         </Dialog>
         <PageTitle title="View Your Appointment Calendar" />
-        <Typography
-          color="#3f3d56"
-          pt={4}
-          pl={4}
-          variant="h6"
-          sx={{ textAlign: isMobile ? "center" : "left" }}
+        <Box
+          mt={8}
+          display="flex"
+          sx={{ flexDirection: isMobile ? "column" : "row" }}
         >
-          Please select a date to view appointments.
-        </Typography>
-        <Typography
-          textAlign="center"
-          color="#3f3d56"
-          fontWeight={200}
-          sx={{ textAlign: isMobile ? "center" : "left" }}
-        >
-          Any appointments will show on a timeline.
-        </Typography>
-        <Grid
-          container
-          rowSpacing={0}
-          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-          mt={3}
-          paddingLeft={5}
-          paddingRight={1}
-          alignItems="top"
-          sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-        >
-          <Grid item xs={12} s={12} md={4} pb={5} justifyContent="center">
+          <Box sx={{ textAlign: "center" }}>
+            <Typography color="#3f3d56" variant="h6">
+              Please select a date to view appointments
+            </Typography>
+            <Typography
+              mb={8}
+              textAlign="center"
+              color="#3f3d56"
+              fontWeight={200}
+            >
+              Any appointments will show on a timeline
+            </Typography>
             <Calendar
               onChange={onChange}
               value={calDate}
-              pb={3}
+              mt={3}
               justifyContent="center"
             />
-          </Grid>
+          </Box>
 
           {!isMobile && !resultArr.length && (
             <Box
               sx={{
                 position: "relative",
-                marginTop: "-1%",
+                marginTop: "14.3%",
                 marginLeft: "3%",
                 zIndex: 20,
                 color: "#fff",
@@ -209,23 +198,28 @@ export const CarerCalendarPage = () => {
             </Box>
           )}
           {resultArr.length && (
-            <Grid item xs={12} s={12} md={5}>
-              <CarerTimeline
-                date={calDate}
-                appointments={resultArr}
-                viewAppointment={viewReallocateButton}
-                pt={3}
-              />
-              <Box item xs={12} s={12} md={2} sx={{ justifyContent: "center" }}>
-                <Typography align="center" color="#00b0ff" fontWeight={200}>
-                  Want to make a request to change an appointment? Click on
-                  patient name to change.
-                </Typography>
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Box width="64%">
+                <CarerTimeline
+                  date={calDate}
+                  appointments={resultArr}
+                  viewAppointment={viewReallocateButton}
+                  pt={3}
+                />
               </Box>
-            </Grid>
+              <Typography align="center" color="#00b0ff" fontWeight={200}>
+                Want to make a request to change an appointment? Click on
+                patient name to change.
+              </Typography>
+            </Box>
           )}
           {appointmentId && !askReallocationSuccess && (
-            <Grid item sx={{ paddingTop: isMobile ? 2 : 15 }}>
+            <Box
+              sx={{ flexDirection: isMobile ? "row" : "column" }}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
               <ButtonBright
                 id={appointmentId}
                 label="Send Request"
@@ -236,9 +230,9 @@ export const CarerCalendarPage = () => {
                 }}
                 sx={{ paddingTop: isMobile ? 2 : 20 }}
               />
-            </Grid>
+            </Box>
           )}
-        </Grid>
+        </Box>
       </Paper>
     </Box>
   );

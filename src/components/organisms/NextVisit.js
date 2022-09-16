@@ -380,6 +380,7 @@ export const NextVisitForCarer = ({
           userId: appointmentDetail.patientId.id,
         },
       });
+      console.log(getPastNotes);
     };
 
     const hidePastNotes = () => {
@@ -442,7 +443,6 @@ export const NextVisitForCarer = ({
   return (
     <Paper
       sx={{
-        p: 3,
         position: "absolute",
         right: 0.1,
         backgroundColor: "#DDF4FE",
@@ -450,11 +450,11 @@ export const NextVisitForCarer = ({
         maxWidth: isMobile ? "100%" : "30%",
         height: "865px",
         padding: isMobile ? 4 : 0,
-        p: isMobile ? 3 : 0,
+        p: isMobile ? 3 : 5,
         background: "#DDF4FE",
         opacity: 0.95,
         borderRadius: "20px",
-        p: 2,
+        m: 0,
       }}
       elevation={6}
     >

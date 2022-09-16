@@ -10,6 +10,7 @@ import {
   GoogleMap,
   Marker,
   DirectionsRenderer,
+  Circle,
 } from "@react-google-maps/api";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { NextVisitForCarer } from "../components/organisms/NextVisit";
@@ -67,6 +68,7 @@ export const CarerDashboardPage = () => {
 
   //google map and directions
   const center = { lat: 52.489471, lng: -1.898575 };
+  const options = { draggable: true };
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API,
@@ -124,7 +126,7 @@ export const CarerDashboardPage = () => {
 
   return (
     <>
-      <Box>
+      <Box sx={{ m: 0 }}>
         {/* next appointment detail */}
         {appointmentDetail && (
           <NextVisitForCarer
@@ -241,7 +243,7 @@ export const CarerDashboardPage = () => {
           {" "}
           <GoogleMap
             center={center}
-            zoom={16}
+            zoom={14}
             mapContainerStyle={{
               width: "100%",
               minHeight: isMobile ? "100%" : "930px",
@@ -249,14 +251,14 @@ export const CarerDashboardPage = () => {
               top: "0px",
               left: "0px",
               zIndex: "-1",
+              center: { center },
             }}
             onLoad={(map) => setMap(map)}
           >
-            {/* displaying markers -render appointments later */}
-            <Marker position={center} />
             {directionResponse && (
               <DirectionsRenderer directions={directionResponse} />
             )}
+            <Circle options={options} />
           </GoogleMap>
         </Box>
       </Box>
