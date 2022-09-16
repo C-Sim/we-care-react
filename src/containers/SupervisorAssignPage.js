@@ -266,7 +266,7 @@ export const SupervisorAssignPage = () => {
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
-          Step 1 - Pick the date to assign appointments on
+          Step 1 - Pick the date to assign appointments for
         </Typography>
         <Box
           sx={{
@@ -311,7 +311,7 @@ export const SupervisorAssignPage = () => {
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
-          Step 2 - Pick a carer available on that date from the list
+          Step 2 - Pick a Carer available on that date from the list
         </Typography>
         <Box
           sx={{
@@ -346,7 +346,7 @@ export const SupervisorAssignPage = () => {
               align="center"
               sx={{ mb: 2 }}
             >
-              Selected carer: {selectedCarer.carerName}
+              Selected Carer: {selectedCarer.carerName}
             </Typography>
           )}
         </Box>
@@ -363,7 +363,7 @@ export const SupervisorAssignPage = () => {
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
-          Step 3 - Pick the patients you would like to assign to that carer
+          Step 3 - Pick the Patients you would like to assign to that Carer
         </Typography>
         <Box
           sx={{

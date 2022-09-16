@@ -165,8 +165,17 @@ export const UserInfoForm = () => {
         spacing={4}
         onSubmit={handleSubmit(handleUserUpdate)}
       >
-        <Typography component="h6" variant="h6" align="center">
-          You only need to make changes in the fields you would like to update
+        <Typography
+          component="h6"
+          variant="h6"
+          align="center"
+          sx={{
+            color: "#3f3d56",
+            fontWeight: 100,
+            fontSize: 18,
+          }}
+        >
+          You only need to make changes in the fields you'd like to update
         </Typography>
         <Stack spacing={4}>
           <FormControl pb={40}>

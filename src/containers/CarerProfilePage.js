@@ -12,7 +12,7 @@ import { ButtonBright } from "../components/atoms/ButtonBright";
 import { AppContext } from "../context/AppProvider";
 import { UserInfoForm } from "../components/organisms/updateInfo/UserInfoForm";
 
-export const CarerProfilePage = () => {
+export const CarerProfilePage = ({ isMobile }) => {
   //get context
   const context = useContext(AppContext);
 
@@ -25,7 +25,7 @@ export const CarerProfilePage = () => {
   return (
     <Box
       container
-      pb={15}
+      p={2}
       xs={12}
       sm={12}
       md={6}
@@ -34,11 +34,6 @@ export const CarerProfilePage = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: `linear-gradient(
-        to top,
-        rgba(20, 20, 20, 0.2),
-        rgba(133, 133, 133, 0.2)
-      )`,
       }}
     >
       {/* <Grid>
@@ -52,33 +47,51 @@ export const CarerProfilePage = () => {
           mt: 4,
           mb: 4,
           p: 3,
-          //minWidth: isMobile ? "90%" : "80%",
+          minWidth: isMobile ? "90%" : "80%",
           color: "#3f3d56",
-          backgroundColor: "#0b0f2e",
+          background: `linear-gradient(
+            to top,
+            rgba(238, 245, 219, 0.2),
+            rgba(0, 176, 255, 0.18)
+          )`,
           borderRadius: "25px",
         }}
         elevation={6}
       >
         {/* form */}
-        <Typography component="h4" variant="h4" align="center">
+        <Typography
+          component="h4"
+          variant="h4"
+          align="center"
+          sx={{
+            color: "#3f3d56",
+            fontWeight: 100,
+          }}
+        >
           My Personal Details
         </Typography>
-        <Divider />
-        <UserInfoForm />
-        <Divider />
 
+        <UserInfoForm />
         <Typography
           component="h5"
           variant="h6"
           color="#00B0FF"
-          align="left"
+          align="center"
+          fontWeight="100"
+          fontSize={18}
           pt={3}
         >
           Shift Pattern Changes?
         </Typography>
-        <Typography component="h6" variant="h6" align="left" pt={3}>
-          If you would like make changes to your shift patterns, please contact
-          your supervisor.
+        <Typography
+          component="h6"
+          variant="h6"
+          align="center"
+          fontWeight="100"
+          fontSize={12}
+        >
+          If you'd like make changes to your shift patterns, please contact your
+          supervisor.
         </Typography>
       </Paper>
       {/* </Grid> */}

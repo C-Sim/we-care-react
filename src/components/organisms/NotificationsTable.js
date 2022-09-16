@@ -477,7 +477,18 @@ export const NotificationsTable = ({ notifications }) => {
           )}
 
           <DialogActions>
-            <Button autoFocus onClick={handleClose} variant="contained">
+            <Button
+              autoFocus
+              onClick={handleClose}
+              variant="contained"
+              sx={{
+                fontWeight: 100,
+                backgroundColor: "#3f3d56",
+                color: "#eef5dbff",
+                "&:hover": { backgroundColor: "#f7b801" },
+                borderRadius: "18px",
+              }}
+            >
               Close
             </Button>
           </DialogActions>
