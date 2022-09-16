@@ -9,25 +9,24 @@ import { ButtonBright } from "../components/atoms/ButtonBright";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { APPOINTMENTS_BY_ID } from "../graphql/queries";
 import "react-calendar/dist/Calendar.css";
-import { Grid, Typography, Stack } from "@mui/material";
-import { Paper, Divider } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import { Paper } from "@mui/material";
 import { useQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ASK_FOR_REALLOCATION } from "../graphql/mutations";
 import calendar from "../components/atoms/images/calendar.png";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { TextFieldsOutlined } from "@mui/icons-material";
 
 export const CarerCalendarPage = () => {
   const { data, loading, error } = useQuery(APPOINTMENTS_BY_ID, {
     fetchPolicy: "network-only",
   });
+
   const isMobile = useMediaQuery("(max-width:600px)");
   const [userResults, setUserResults] = useState();
   const [open, setOpen] = useState(false);
@@ -38,8 +37,6 @@ export const CarerCalendarPage = () => {
       setUserResults(data.appointmentsByUserId);
     }
   }, [data]);
-
-  //this component contains the calendar item and will need to contain the timeline inside it too, so the required states can be set here and not at parent component level
 
   // set states of calendar date
   const [calDate, setCalDate] = useState(new Date());
@@ -136,7 +133,6 @@ export const CarerCalendarPage = () => {
         >
           <DialogTitle>Request for change in appointment</DialogTitle>
           <DialogContent>
-            {/* <TextFieldsOutlined multiline> </TextFieldsOutlined> */}
             <DialogContentText id="alert-dialog-description">
               <Typography align="center" color="#3f3d56" fontWeight={200} p={2}>
                 Successfully notified your supervisor. Please wait for approval
@@ -234,7 +230,7 @@ export const CarerCalendarPage = () => {
             </Grid>
           )}
 
-          {appointmentId && askReallocationSuccess && (
+          {appointmentId && !askReallocationSuccess && (
             <div>
               <Typography align="center" color="#00b0ff" fontWeight={200}>
                 You cannot ask for another reschedule yet (only 1 request a
