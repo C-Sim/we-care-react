@@ -459,7 +459,15 @@ export const CarePlanForm = ({ isMobile }) => {
             variant="contained"
             type="submit"
             loading={loading}
-            sx={{ marginRight: 3, marginLeft: 3 }}
+            sx={{
+              marginRight: 3,
+              marginLeft: 3,
+              fontWeight: 100,
+              backgroundColor: "#3f3d56",
+              color: "#eef5dbff",
+              "&:hover": { backgroundColor: "#f7b801" },
+              borderRadius: "18px",
+            }}
           >
             Create your care plan
           </LoadingButton>

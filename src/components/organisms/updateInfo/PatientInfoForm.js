@@ -184,7 +184,18 @@ export const PatientInfoForm = () => {
       </FormControl>
 
       <Stack spacing={4}>
-        <LoadingButton variant="contained" type="submit" loading={loading}>
+        <LoadingButton
+          variant="contained"
+          type="submit"
+          loading={loading}
+          sx={{
+            fontWeight: 100,
+            backgroundColor: "#3f3d56",
+            color: "#eef5dbff",
+            "&:hover": { backgroundColor: "#f7b801" },
+            borderRadius: "18px",
+          }}
+        >
           Update your care preferences
         </LoadingButton>
         {error && (

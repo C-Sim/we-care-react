@@ -3,6 +3,8 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import { AppContext } from "../../context/AppProvider";
 
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import PropTypes from "prop-types";
 
 import Box from "@mui/material/Box";
@@ -198,6 +200,8 @@ export const NotificationsTable = ({ notifications }) => {
   const [approveSuccess, setApproveSuccess] = useState(false);
   const [reallocateSuccess, setReallocateSuccess] = useState(false);
 
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   //query for carers
   const {
     data: allCarersData,
@@ -233,7 +237,6 @@ export const NotificationsTable = ({ notifications }) => {
     },
   ] = useMutation(UPDATE_CARER, {
     onCompleted: () => {
-
       setReallocateSuccess(true);
     },
   });
@@ -296,9 +299,7 @@ export const NotificationsTable = ({ notifications }) => {
 
     setNotificationId(id);
 
-
     setNotificationType(type);
-
 
     handleUpdateRead(id);
 
@@ -375,7 +376,7 @@ export const NotificationsTable = ({ notifications }) => {
         </DialogTitle>
         <TableContainer component={Paper}>
           <Table
-            sx={{ minWidth: 400, maxWidth: 500 }}
+            sx={{ minWidth: isMobile ? 200 : 400, maxWidth: 500 }}
             aria-label="simple table"
           >
             <TableBody>
@@ -505,8 +506,6 @@ export const NotificationsTable = ({ notifications }) => {
               {stableSort(Notifications, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  //   const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
                     <TableRow
                       hover

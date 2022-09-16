@@ -20,8 +20,8 @@ export const PatientTimeline = ({ appointments, viewAppointment }) => {
         p: 5,
         width: "40%",
         minHeight: "60%",
-        position: "absolute",
         top: 150,
+        margin: 2,
       }}
     >
       <Typography align="center" color="#00b0ff" fontWeight={200}>

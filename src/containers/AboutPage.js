@@ -1,5 +1,6 @@
 // overview of how the service works
 import { useNavigate } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -13,6 +14,8 @@ import { HowItWorks } from "../components/molecules/HowItWorks";
 import logo from "../components/atoms/images/WeCare-dark.png";
 
 export const AboutPage = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   const navigate = useNavigate();
 
   return (
@@ -21,24 +24,33 @@ export const AboutPage = () => {
         align="center"
         sx={{
           display: "flex",
+          flexDirection: isMobile ? "column" : "row",
           alignItems: "center",
           justifyContent: "center",
           padding: "18px",
+          paddingTop: isMobile ? "4px" : "18px",
         }}
       >
         <PageTitle title="Welcome to" />
         <img alt="logo" src={logo} width="300px" height="80px" />
       </Box>
-      <Stack spacing={2} p={2} pl={18} pr={18}>
+      <Stack
+        spacing={2}
+        sx={{
+          padding: 2,
+          paddingLeft: isMobile ? 0 : 18,
+          paddingRight: isMobile ? 0 : 18,
+        }}
+      >
         <Typography fontSize="0.8rem" fontWeight={100} align="center">
           WeCare was created for everyone involved in the provision of care
-          services, including care users and our wide network of cares across
+          services, including care users and our wide network of carers across
           the city of Birmingham.{" "}
         </Typography>
 
         <Typography fontSize="0.8rem" fontWeight={100} align="center">
           Our aim is to give all users access to all of the care information
-          relevant to them in a single place on a digital platform so that they
+          relevant to them in a single place on a digital platform, so that they
           can move away from paper-based systems, make in-moment changes and see
           live updates.{" "}
         </Typography>
