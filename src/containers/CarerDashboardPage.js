@@ -1,10 +1,9 @@
-import zIndex from "@mui/material/styles/zIndex";
 import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useMediaQuery } from "@mui/material";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -18,6 +17,9 @@ import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
 
 export const CarerDashboardPage = () => {
+  // MediaQuery for mobile viewport
+  const isMobile = useMediaQuery("(max-width:900px)");
+
   //mutations
   const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
   const [
@@ -94,10 +96,6 @@ export const CarerDashboardPage = () => {
   }, []);
 
   const calculateRoute = async () => {
-    // if (originRef.current.value === "" || destinationRef.current.value === "") {
-    //   return;
-    // }
-
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
@@ -125,19 +123,30 @@ export const CarerDashboardPage = () => {
 
   return (
     <>
-      <Box sx={{ height: 800 }}>
+      <Box>
         {/* next appointment detail */}
         {appointmentDetail && (
           <NextVisitForCarer
             appointmentDetail={appointmentDetail}
             handleStatusChange={handleStatusChange}
+            sx={{ minWidth: isMobile ? "90%" : "400px" }}
           />
         )}
+
         {/* carer timeline box container */}
         {timelineData && (
           <Box
             zIndex="modal"
-            sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
+            sx={{
+              minWidth: isMobile ? "100%" : "400px",
+              maxWidth: isMobile ? "100%" : "400px",
+              padding: isMobile ? 4 : 0,
+              p: isMobile ? 3 : 0,
+              background: "#DDF4FE",
+              opacity: 0.95,
+              borderRadius: "20px",
+              p: 1,
+            }}
           >
             <CarerTimeline
               date={timelineDate}
@@ -146,6 +155,7 @@ export const CarerDashboardPage = () => {
             />
           </Box>
         )}
+
         {/* Appointments' directions box container */}
         <Box
           zIndex="modal"
@@ -208,6 +218,7 @@ export const CarerDashboardPage = () => {
             </button>
           </div>
         </Box>
+
         {/* map goes here  */}
         <Box>
           {" "}
@@ -215,8 +226,8 @@ export const CarerDashboardPage = () => {
             center={center}
             zoom={16}
             mapContainerStyle={{
-              width: "99.8%",
-              height: "90%",
+              width: "100%",
+              minHeight: "100%",
               position: "absolute",
               top: "0px",
               left: "0px",

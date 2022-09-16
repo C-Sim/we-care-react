@@ -19,11 +19,15 @@ import { UPDATE_CHECKIN } from "../../graphql/mutations";
 import { UPDATE_CHECKOUT } from "../../graphql/mutations";
 import { UPDATE_CARER_NOTES } from "../../graphql/mutations";
 import { PAST_NOTES, VIEW_PATIENT_PROFILE } from "../../graphql/queries";
+import { useMediaQuery } from "@mui/material";
 
 export const NextVisitForCarer = ({
   appointmentDetail,
   handleStatusChange,
 }) => {
+  // MediaQuery for mobile viewport
+  const isMobile = useMediaQuery("(max-width:900px)");
+
   //state variables for each button
   const [checkedIn, setCheckedIn] = useState(false);
   const [checkedOut, setCheckedOut] = useState(false);
@@ -437,7 +441,14 @@ export const NextVisitForCarer = ({
 
   return (
     <Paper
-      sx={{ p: 3, width: "30%", height: 800, position: "absolute", right: 1 }}
+      sx={{
+        p: 3,
+        width: "30%",
+        minWidth: isMobile ? "100%" : "400px",
+        height: "100%",
+        position: "absolute",
+        right: 0.1,
+      }}
       elevation={6}
     >
       <div>
