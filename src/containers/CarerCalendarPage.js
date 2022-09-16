@@ -117,8 +117,8 @@ export const CarerCalendarPage = () => {
           mb: 3,
           p: 3,
           minWidth: isMobile ? "90%" : "400px",
-          marginLeft: isMobile ? 0 : 18,
-          marginRight: isMobile ? 0 : 18,
+          marginLeft: isMobile ? 1 : 18,
+          marginRight: isMobile ? 1 : 18,
           color: "#00b0ff2e",
           background: `linear-gradient(
             to top,

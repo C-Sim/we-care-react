@@ -4,6 +4,7 @@ import { VictoryBar, VictoryChart, VictoryPie, VictoryTheme } from "victory";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
+import { PageTitle } from "../components/atoms/PageTitle";
 
 const genderPreference = [
   { x: "female", y: 35 },
@@ -25,14 +26,17 @@ const carerDays = [
 export const SupervisorDashboardPage = () => {
   return (
     <div>
-      <Typography component="h1" variant="h4" align="center" sx={{ p: 3 }}>
-        My Team
-      </Typography>
+      <PageTitle title="My Team" />
 
       <Stack direction="row" justifyContent="center" alignItems="center">
         <Box sx={{ height: 400 }}>
-          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
-            Overall gender preferences distribution
+          <Typography
+            component="h4"
+            variant="h6"
+            align="center"
+            sx={{ mb: 2, fontWeight: "100", color: "#00b0ff", fontSize: 16 }}
+          >
+            Overall Gender Preferences Distribution
           </Typography>
           <VictoryPie
             colorScale={["pink", "#61dafb", "grey"]}
@@ -40,14 +44,24 @@ export const SupervisorDashboardPage = () => {
           />
         </Box>
         <Box sx={{ height: 400 }}>
-          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
-            Overall gender distribution
+          <Typography
+            component="h4"
+            variant="h6"
+            align="center"
+            sx={{ mb: 2, fontWeight: "100", color: "#00b0ff", fontSize: 16 }}
+          >
+            Overall Gender Distribution
           </Typography>
           <VictoryPie colorScale={["pink", "#61dafb", "grey"]} data={gender} />
         </Box>
         <Box sx={{ height: 400 }}>
-          <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
-            Carers availability - Distribution over weekdays
+          <Typography
+            component="h4"
+            variant="h6"
+            align="center"
+            sx={{ mb: 2, fontWeight: "100", color: "#00b0ff", fontSize: 16 }}
+          >
+            Carer Availability - Distribution Over Weekdays
           </Typography>
           <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
             <VictoryBar
