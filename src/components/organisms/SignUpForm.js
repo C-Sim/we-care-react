@@ -220,12 +220,18 @@ export const SignUpForm = ({ isMobile }) => {
           <Button onClick={handleCloseModal}>Cancel</Button>
         </DialogActions>
       </Dialog>
-
-      {/* form */}
-      <Typography component="h1" variant="h4" align="center">
+      <Typography
+        component="h1"
+        variant="h4"
+        align="center"
+        sx={{
+          color: "#3f3d56",
+          fontWeight: 400,
+        }}
+      >
         Sign Up
       </Typography>
-      <Divider />
+
       <Stack
         component="form"
         sx={{ p: 3 }}
@@ -493,7 +499,18 @@ export const SignUpForm = ({ isMobile }) => {
         </Stack>
 
         <Stack spacing={2}>
-          <LoadingButton variant="contained" type="submit" loading={loading}>
+          <LoadingButton
+            variant="contained"
+            type="submit"
+            loading={loading}
+            sx={{
+              fontWeight: 100,
+              backgroundColor: "#3f3d56",
+              color: "#eef5dbff",
+              "&:hover": { backgroundColor: "#f7b801" },
+              borderRadius: "18px",
+            }}
+          >
             Sign Up
           </LoadingButton>
           <Typography variant="caption" component="div" align="center">

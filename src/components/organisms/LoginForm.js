@@ -79,10 +79,18 @@ export const LoginForm = ({ isMobile }) => {
       }}
       elevation={6}
     >
-      <Typography component="h1" variant="h4" align="center">
+      <Typography
+        component="h1"
+        variant="h4"
+        align="center"
+        sx={{
+          color: "#3f3d56",
+          fontWeight: 400,
+        }}
+      >
         Login
       </Typography>
-      <Divider />
+
       <Stack
         component="form"
         sx={{ p: 3 }}
@@ -138,7 +146,18 @@ export const LoginForm = ({ isMobile }) => {
           </FormControl>
         </Stack>
         <Stack spacing={2}>
-          <LoadingButton variant="contained" type="submit" loading={loading}>
+          <LoadingButton
+            variant="contained"
+            type="submit"
+            loading={loading}
+            sx={{
+              fontWeight: 100,
+              backgroundColor: "#3f3d56",
+              color: "#eef5dbff",
+              "&:hover": { backgroundColor: "#f7b801" },
+              borderRadius: "18px",
+            }}
+          >
             Login
           </LoadingButton>
           <Typography variant="caption" component="div" align="center">

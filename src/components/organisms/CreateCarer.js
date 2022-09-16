@@ -37,6 +37,7 @@ import Select from "@mui/material/Select";
 import { CARER_SIGNUP } from "../../graphql/mutations";
 import { ADDRESS_LOOKUP } from "../../graphql/queries";
 import { ButtonDark } from "../atoms/ButtonDark";
+import { PageTitle } from "../atoms/PageTitle";
 
 export const CreateCarerForm = ({ isMobile }) => {
   const [carerSignup, { data, loading, error }] = useMutation(CARER_SIGNUP);
@@ -135,7 +136,6 @@ export const CreateCarerForm = ({ isMobile }) => {
   };
 
   const handleAddressLookup = () => {
-
     addressLookup({
       variables: {
         postcode: getValues("postcode"),
@@ -229,10 +229,8 @@ export const CreateCarerForm = ({ isMobile }) => {
       </Dialog>
 
       {/* form */}
-      <Typography component="h1" variant="h4" align="center">
-        Add a carer
-      </Typography>
-      <Divider />
+      <PageTitle title="Add a Carer" sx={{ marginTop: 0 }} />
+
       {!successStatus && (
         <Stack
           component="form"
@@ -481,7 +479,18 @@ export const CreateCarerForm = ({ isMobile }) => {
           </Stack>
 
           <Stack spacing={2}>
-            <LoadingButton variant="contained" type="submit" loading={loading}>
+            <LoadingButton
+              variant="contained"
+              type="submit"
+              loading={loading}
+              sx={{
+                fontWeight: 100,
+                backgroundColor: "#3f3d56",
+                color: "#eef5dbff",
+                "&:hover": { backgroundColor: "#f7b801" },
+                borderRadius: "18px",
+              }}
+            >
               Create Carer Account
             </LoadingButton>
             {error && (
