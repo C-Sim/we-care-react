@@ -198,7 +198,10 @@ export const NextVisitForCarer = ({
       >
         <Stack>
           <TextField
-            sx={{ width: "500px", mt: 2 }}
+            sx={{
+              width: isMobile ? "80%" : "450px",
+              mt: 2,
+            }}
             required
             id="carerNote"
             label="Carer's note"
@@ -380,7 +383,6 @@ export const NextVisitForCarer = ({
           userId: appointmentDetail.patientId.id,
         },
       });
-      console.log(getPastNotes);
     };
 
     const hidePastNotes = () => {

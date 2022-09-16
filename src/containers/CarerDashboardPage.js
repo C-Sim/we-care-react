@@ -245,11 +245,12 @@ export const CarerDashboardPage = () => {
             center={center}
             zoom={14}
             mapContainerStyle={{
-              width: "100%",
+              width: "50%",
               minHeight: isMobile ? "100%" : "930px",
               position: "absolute",
               top: "0px",
-              left: "0px",
+              left: "400px",
+              // right: "-400px",
               zIndex: "-1",
               center: { center },
             }}
