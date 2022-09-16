@@ -380,6 +380,7 @@ export const NextVisitForCarer = ({
           userId: appointmentDetail.patientId.id,
         },
       });
+      console.log(getPastNotes);
     };
 
     const hidePastNotes = () => {
@@ -453,6 +454,7 @@ export const NextVisitForCarer = ({
         background: "#DDF4FE",
         opacity: 0.95,
         borderRadius: "20px",
+        m: 0,
       }}
       elevation={6}
     >
