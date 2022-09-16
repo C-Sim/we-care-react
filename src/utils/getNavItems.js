@@ -8,7 +8,7 @@ const navItems = {
   ],
   carer: [
     {
-      label: "profile",
+      label: "Profile",
       path: "/carer-profile",
     },
 
@@ -24,7 +24,7 @@ const navItems = {
       path: "/about",
     },
 
-    { label: "profile", path: "/patient-profile" },
+    { label: "Profile", path: "/patient-profile" },
 
     { label: "Care Plan", path: "/care-plan" },
 
