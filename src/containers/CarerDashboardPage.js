@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { Grid, useMediaQuery } from "@mui/material";
+import { Grid, Typography, useMediaQuery } from "@mui/material";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -17,6 +17,7 @@ import { NextVisitForCarer } from "../components/organisms/NextVisit";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
+import visitImage from "../components/atoms/images/home-visit.svg";
 
 export const CarerDashboardPage = () => {
   // MediaQuery for mobile viewport
@@ -238,7 +239,12 @@ export const CarerDashboardPage = () => {
         )}
 
         {/* map goes here  */}
-        <Grid item xs={12} md={4}>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          sx={{ backgroundColor: "#DDF4FE", zIndex: "0" }}
+        >
           {" "}
           <GoogleMap
             center={center}
@@ -288,8 +294,11 @@ export const CarerDashboardPage = () => {
               }}
               elevation={6}
             >
-              Please click the timeline to see the appointment detail and check
-              directions between addresses
+              <Typography variant="h6" sx={{ p: 10 }}>
+                Please click the timeline to see the appointment detail and
+                check directions between addresses
+              </Typography>
+              <img src={visitImage} width="100%" alt="visit" />
             </Box>
           )}
         </Grid>
