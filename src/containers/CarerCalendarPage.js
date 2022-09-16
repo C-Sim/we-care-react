@@ -230,14 +230,14 @@ export const CarerCalendarPage = () => {
             </Grid>
           )}
 
-          {appointmentId && !askReallocationSuccess && (
+          {/* {appointmentId && !askReallocationSuccess && (
             <div>
               <Typography align="center" color="#00b0ff" fontWeight={200}>
                 You cannot ask for another reschedule yet (only 1 request a
                 time).
               </Typography>
             </div>
-          )}
+          )} */}
         </Grid>
       </Paper>
     </Box>
