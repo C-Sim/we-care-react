@@ -109,7 +109,7 @@ export const NavBar = () => {
             {navItems.map((item) => (
               <Button
                 key={item.label}
-                sx={{ color: "#fff" }}
+                sx={{ color: "#fff", fontWeight: "100" }}
                 onClick={() => {
                   navigate(item.path, { replace: true });
                 }}
@@ -118,7 +118,10 @@ export const NavBar = () => {
               </Button>
             ))}
             {isLoggedIn && (
-              <Button sx={{ color: "#fff" }} onClick={logOut}>
+              <Button
+                sx={{ color: "#fff", fontWeight: "100" }}
+                onClick={logOut}
+              >
                 Logout
               </Button>
             )}

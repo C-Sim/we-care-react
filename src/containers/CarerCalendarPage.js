@@ -120,7 +120,11 @@ export const CarerCalendarPage = () => {
           marginLeft: isMobile ? 0 : 18,
           marginRight: isMobile ? 0 : 18,
           color: "#00b0ff2e",
-          backgroundColor: "#D1F1FF",
+          background: `linear-gradient(
+            to top,
+            rgba(238, 245, 219, 0.2),
+            rgba(0, 176, 255, 0.18)
+          )`,
           borderRadius: "25px",
         }}
         elevation={6}
