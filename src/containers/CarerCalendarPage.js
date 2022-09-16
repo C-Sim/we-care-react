@@ -187,14 +187,14 @@ export const CarerCalendarPage = () => {
             <Box
               sx={{
                 position: "relative",
-                marginTop: "14.3%",
-                marginLeft: "3%",
+                marginTop: "-2%",
+                marginLeft: "6%",
                 zIndex: 20,
                 color: "#fff",
                 fontWeight: "bold",
               }}
             >
-              <img src={calendar} height="500vh" />
+              <img src={calendar} height="700vh" />
             </Box>
           )}
           {resultArr.length && (
