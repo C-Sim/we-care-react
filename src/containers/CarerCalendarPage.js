@@ -1,7 +1,7 @@
 // For carers to see their assignments by date
 
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { PageTitle } from "../components/atoms/PageTitle";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
@@ -15,7 +15,14 @@ import { useQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ASK_FOR_REALLOCATION } from "../graphql/mutations";
-import signUpImage from "../components/atoms/images/sign-up.png";
+import calendar from "../components/atoms/images/calendar.png";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { TextFieldsOutlined } from "@mui/icons-material";
 
 export const CarerCalendarPage = () => {
   const { data, loading, error } = useQuery(APPOINTMENTS_BY_ID, {
@@ -23,6 +30,8 @@ export const CarerCalendarPage = () => {
   });
   const isMobile = useMediaQuery("(max-width:600px)");
   const [userResults, setUserResults] = useState();
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data && data.appointmentsByUserId) {
@@ -81,31 +90,73 @@ export const CarerCalendarPage = () => {
       },
     });
   };
-  console.log("Asking for" || askForReallocation());
+
+  //modal
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const redirectToDashboard = () => {
+    navigate("/carer-dashboard", { replace: true });
+  };
+
   return (
     <Box
       bgcolor="#eef5dbff1"
       sx={{
         width: "100%",
         justifyContent: "center",
-        height: "100vh",
+        minHeight: "95vh",
         display: "flex",
         flexWrap: "wrap",
       }}
     >
       <Paper
         sx={{
-          //m: 4,
+          mt: 3,
+          mb: 3,
           p: 3,
-          pb: 15,
-          minWidth: "100%",
+          minWidth: isMobile ? "90%" : "400px",
+          marginLeft: isMobile ? 0 : 18,
+          marginRight: isMobile ? 0 : 18,
           color: "#00b0ff2e",
           backgroundColor: "#D1F1FF",
-          //borderRadius: "25px",
-          //mb: 20,
+          borderRadius: "25px",
         }}
         elevation={6}
       >
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle>Request for change in appointment</DialogTitle>
+          <DialogContent>
+            {/* <TextFieldsOutlined multiline> </TextFieldsOutlined> */}
+            <DialogContentText id="alert-dialog-description">
+              <Typography align="center" color="#3f3d56" fontWeight={200} p={2}>
+                Successfully notified your supervisor. Please wait for approval
+                from your supervisor.
+              </Typography>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions sx={{ justifyContent: "space-evenly" }}>
+            <ButtonBright
+              label="Back to Calendar"
+              type="button"
+              onClick={handleClose}
+            />
+            <ButtonBright
+              label="Back to Dashboard"
+              type="button"
+              onClick={redirectToDashboard}
+            />
+          </DialogActions>
+        </Dialog>
         <PageTitle title="View Your Appointment Calendar" />
         <Typography
           color="#3f3d56"
@@ -124,10 +175,10 @@ export const CarerCalendarPage = () => {
           paddingLeft={5}
           paddingRight={2}
           alignItems="top"
-          sx={{ display: "flex", flexWrap: "wrap" }}
+          sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
         >
-          <Grid item xs={12} s={12} md={4}>
-            <Calendar onChange={onChange} value={calDate} />
+          <Grid item xs={12} s={12} md={4} paddingBottom={5}>
+            <Calendar onChange={onChange} value={calDate} pb={3} />
           </Grid>
           {/* {!resultArr.length && (
             <Grid item xs={12} s={12} md={6} pt={8}>
@@ -137,26 +188,27 @@ export const CarerCalendarPage = () => {
               </Typography>
             </Grid>
           )} */}
-          {/* {!isMobile && !resultArr.length && (
+          {!isMobile && !resultArr.length && (
             <Box
               sx={{
                 position: "relative",
-                marginTop: "1%",
-                marginLeft: "auto",
+                marginTop: "-1%",
+                marginLeft: "3%",
                 zIndex: 20,
                 color: "#fff",
                 fontWeight: "bold",
               }}
             >
-              <img src={signUpImage} height="500vh" />
+              <img src={calendar} height="500vh" />
             </Box>
-          )} */}
+          )}
           {resultArr.length && (
-            <Grid item xs={12} s={12} md={6}>
+            <Grid item xs={12} s={12} md={5}>
               <CarerTimeline
                 date={calDate}
                 appointments={resultArr}
                 viewAppointment={viewReallocateButton}
+                pt={3}
               />
               <Box item xs={12} s={12} md={2} sx={{ justifyContent: "center" }}>
                 <Typography align="center" color="#00b0ff" fontWeight={200}>
@@ -168,37 +220,27 @@ export const CarerCalendarPage = () => {
           )}
 
           {appointmentId && !askReallocationSuccess && (
-            <Box sx={{ justifyItems: "center", paddingTop: isMobile ? 2 : 20 }}>
+            <Grid item sx={{ paddingTop: isMobile ? 2 : 15 }}>
               <ButtonBright
                 id={appointmentId}
                 label="Send Request"
                 type="button"
-                onClick={handleReallocationDemand}
+                onClick={() => {
+                  handleReallocationDemand();
+                  handleClickOpen();
+                }}
                 sx={{ paddingTop: isMobile ? 2 : 20 }}
               />
-            </Box>
+            </Grid>
           )}
 
-          {/* {appointmentId && !askReallocationSuccess && (
-              <div>
-                <Typography align="center" color="#00b0ff" fontWeight={200}>
-                  You cannot ask for another reschedule yet (only 2 demand at a
-                  time).
-                </Typography>
-              </div>
-            )} */}
-
           {appointmentId && askReallocationSuccess && (
-            <Typography
-              align="center"
-              backgroundColor="#b1ffb1"
-              color="#3f3d56"
-              fontWeight={200}
-              border="1px solid #b1ffb1"
-              p={2}
-            >
-              Successfully notified your supervisor. Please wait for approval.
-            </Typography>
+            <div>
+              <Typography align="center" color="#00b0ff" fontWeight={200}>
+                You cannot ask for another reschedule yet (only 1 request a
+                time).
+              </Typography>
+            </div>
           )}
         </Grid>
       </Paper>
