@@ -261,8 +261,8 @@ export const SupervisorAssignPage = () => {
           mt: 2,
           minWidth: isMobile ? "90%" : "400px",
           marginTop: 5,
-          marginLeft: 20,
-          marginRight: 20,
+          marginLeft: isMobile ? 1 : 20,
+          marginRight: isMobile ? 1 : 20,
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
@@ -306,8 +306,8 @@ export const SupervisorAssignPage = () => {
           minWidth: isMobile ? "90%" : "400px",
           align: "center",
           marginTop: 5,
-          marginLeft: 20,
-          marginRight: 20,
+          marginLeft: isMobile ? 1 : 20,
+          marginRight: isMobile ? 1 : 20,
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
@@ -358,8 +358,8 @@ export const SupervisorAssignPage = () => {
           mt: 1,
           minWidth: isMobile ? "90%" : "400px",
           marginTop: 5,
-          marginLeft: 20,
-          marginRight: 20,
+          marginLeft: isMobile ? 1 : 20,
+          marginRight: isMobile ? 1 : 20,
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
@@ -437,9 +437,9 @@ export const SupervisorAssignPage = () => {
           mb: 24,
           minWidth: isMobile ? "90%" : "400px",
           marginTop: 5,
-          marginLeft: 20,
-          marginRight: 20,
           marginBottom: 5,
+          marginLeft: isMobile ? 1 : 20,
+          marginRight: isMobile ? 1 : 20,
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
@@ -477,8 +477,8 @@ export const SupervisorAssignPage = () => {
             mt: 1,
             minWidth: isMobile ? "90%" : "400px",
             marginBottom: 10,
-            marginLeft: 20,
-            marginRight: 20,
+            marginLeft: isMobile ? 1 : 20,
+            marginRight: isMobile ? 1 : 20,
           }}
         >
           <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
@@ -516,8 +516,8 @@ export const SupervisorAssignPage = () => {
                 sx={{
                   marginBottom: 10,
                   marginTop: 2,
-                  marginLeft: 20,
-                  marginRight: 20,
+                  marginLeft: isMobile ? 1 : 20,
+                  marginRight: isMobile ? 1 : 20,
                 }}
               >
                 <Alert severity="success">
