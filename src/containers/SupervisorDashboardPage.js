@@ -7,20 +7,22 @@ import { Typography } from "@mui/material";
 import { PageTitle } from "../components/atoms/PageTitle";
 
 const genderPreference = [
-  { x: "female", y: 35 },
-  { x: "male", y: 40 },
-  { x: "none", y: 55 },
+  { x: "Female", y: 35 },
+  { x: "Male", y: 40 },
+  { x: "None", y: 55 },
 ];
 
 const gender = [
-  { x: "female", y: 60 },
-  { x: "male", y: 40 },
+  { x: "Female", y: 60 },
+  { x: "Male", y: 40 },
 ];
 
 const carerDays = [
-  { x: "monday", y: 35 },
-  { x: "tuesday", y: 40 },
-  { x: "wednesday", y: 55 },
+  { x: "Monday", y: 35 },
+  { x: "Tuesday", y: 40 },
+  { x: "Wednesday", y: 55 },
+  { x: "Thursday", y: 18 },
+  { x: "Friday", y: 8 },
 ];
 
 export const SupervisorDashboardPage = () => {
@@ -28,8 +30,14 @@ export const SupervisorDashboardPage = () => {
     <div>
       <PageTitle title="My Team" />
 
-      <Stack direction="row" justifyContent="center" alignItems="center">
-        <Box sx={{ height: 400 }}>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        mt={4}
+        mb={8}
+      >
+        <Box sx={{ height: 300 }}>
           <Typography
             component="h4"
             variant="h6"
@@ -43,7 +51,7 @@ export const SupervisorDashboardPage = () => {
             data={genderPreference}
           />
         </Box>
-        <Box sx={{ height: 400 }}>
+        <Box sx={{ height: 300 }}>
           <Typography
             component="h4"
             variant="h6"
@@ -54,7 +62,7 @@ export const SupervisorDashboardPage = () => {
           </Typography>
           <VictoryPie colorScale={["pink", "#61dafb", "grey"]} data={gender} />
         </Box>
-        <Box sx={{ height: 400 }}>
+        <Box sx={{ height: 300 }}>
           <Typography
             component="h4"
             variant="h6"
