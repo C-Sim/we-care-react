@@ -23,7 +23,6 @@ export const CarerCalendarPage = () => {
   });
   const isMobile = useMediaQuery("(max-width:600px)");
   const [userResults, setUserResults] = useState();
-  const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
     if (data && data.appointmentsByUserId) {
@@ -38,7 +37,6 @@ export const CarerCalendarPage = () => {
   const [resultArr, setResultArr] = useState([]);
   const [appointmentId, setAppointmentId] = useState();
   const [askReallocationSuccess, setAskReallocationSuccess] = useState(false);
-  const [noAppointment, setNoAppointment] = useState(false);
 
   //mutation
   const [
@@ -83,9 +81,7 @@ export const CarerCalendarPage = () => {
       },
     });
   };
-
-  const handleText = (e) => {};
-
+  console.log("Asking for" || askForReallocation());
   return (
     <Box
       bgcolor="#eef5dbff1"
@@ -131,25 +127,21 @@ export const CarerCalendarPage = () => {
           sx={{ display: "flex", flexWrap: "wrap" }}
         >
           <Grid item xs={12} s={12} md={4}>
-            <Calendar
-              onChange={onChange}
-              onClick={() => setHidden((s) => !s)}
-              value={calDate}
-            />
+            <Calendar onChange={onChange} value={calDate} />
           </Grid>
-          {!resultArr.length && (
+          {/* {!resultArr.length && (
             <Grid item xs={12} s={12} md={6} pt={8}>
               <Typography color="#3f3d56" fontWeight={200}>
                 You have no appointments on the selected date. Please chose
                 another date.
               </Typography>
             </Grid>
-          )}
-          {!isMobile && !resultArr.length && (
+          )} */}
+          {/* {!isMobile && !resultArr.length && (
             <Box
               sx={{
                 position: "relative",
-                marginTop: "-18%",
+                marginTop: "1%",
                 marginLeft: "auto",
                 zIndex: 20,
                 color: "#fff",
@@ -158,11 +150,11 @@ export const CarerCalendarPage = () => {
             >
               <img src={signUpImage} height="500vh" />
             </Box>
-          )}
+          )} */}
           {resultArr.length && (
             <Grid item xs={12} s={12} md={6}>
               <CarerTimeline
-                value={calDate}
+                date={calDate}
                 appointments={resultArr}
                 viewAppointment={viewReallocateButton}
               />

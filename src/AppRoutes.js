@@ -48,7 +48,7 @@ export const AppRoutes = () => {
           <Route path="/supervisor-assign" element={<SupervisorAssignPage />} />
 
           <Route path="/care-plan" element={<CarePlanPage />} />
-          <Route path="/assignments" element={<SupervisorAssignPage />} />
+          {/* <Route path="/assignments" element={<SupervisorAssignPage />} /> */}
           <Route path="/carer-calendar" element={<CarerCalendarPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/create-carer" element={<SupervisorCreateCarerPage />} />
