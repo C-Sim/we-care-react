@@ -81,7 +81,7 @@ export const CarerCalendarPage = () => {
       },
     });
   };
-
+  console.log("Asking for" || askForReallocation());
   return (
     <Box
       bgcolor="#eef5dbff1"
@@ -137,7 +137,7 @@ export const CarerCalendarPage = () => {
               </Typography>
             </Grid>
           )} */}
-          {!isMobile && !resultArr.length && (
+          {/* {!isMobile && !resultArr.length && (
             <Box
               sx={{
                 position: "relative",
@@ -150,11 +150,11 @@ export const CarerCalendarPage = () => {
             >
               <img src={signUpImage} height="500vh" />
             </Box>
-          )}
+          )} */}
           {resultArr.length && (
             <Grid item xs={12} s={12} md={6}>
               <CarerTimeline
-                value={calDate}
+                date={calDate}
                 appointments={resultArr}
                 viewAppointment={viewReallocateButton}
               />
