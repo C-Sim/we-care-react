@@ -3,6 +3,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Button from "@mui/material/Button";
 import { useMediaQuery } from "@mui/material";
 import {
   useJsApiLoader,
@@ -129,7 +130,6 @@ export const CarerDashboardPage = () => {
           <NextVisitForCarer
             appointmentDetail={appointmentDetail}
             handleStatusChange={handleStatusChange}
-            sx={{ minWidth: isMobile ? "90%" : "400px" }}
           />
         )}
 
@@ -168,7 +168,7 @@ export const CarerDashboardPage = () => {
             background: "#DDF4FE",
             opacity: 0.95,
             borderRadius: "20px",
-            height: 300,
+            height: 320,
             p: 2,
           }}
         >
@@ -220,13 +220,19 @@ export const CarerDashboardPage = () => {
               <h4>duration: {duration}</h4>
             </div>
 
-            <button
-              className="btn btn-primary"
-              type="button"
+            <Button
+              variant="Contained"
               onClick={calculateRoute}
+              sx={{
+                fontWeight: 100,
+                backgroundColor: "#3f3d56",
+                color: "#eef5dbff",
+                "&:hover": { backgroundColor: "#f7b801" },
+                borderRadius: "18px",
+              }}
             >
               Check Directions
-            </button>
+            </Button>
           </div>
         </Box>
 
@@ -238,7 +244,7 @@ export const CarerDashboardPage = () => {
             zoom={16}
             mapContainerStyle={{
               width: "100%",
-              minHeight: "100%",
+              minHeight: isMobile ? "100%" : "930px",
               position: "absolute",
               top: "0px",
               left: "0px",

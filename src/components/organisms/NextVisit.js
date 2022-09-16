@@ -443,11 +443,18 @@ export const NextVisitForCarer = ({
     <Paper
       sx={{
         p: 3,
-        width: "30%",
-        minWidth: isMobile ? "100%" : "400px",
-        height: "100%",
         position: "absolute",
         right: 0.1,
+        backgroundColor: "#DDF4FE",
+        minWidth: isMobile ? "100%" : "30%",
+        maxWidth: isMobile ? "100%" : "30%",
+        height: "865px",
+        padding: isMobile ? 4 : 0,
+        p: isMobile ? 3 : 0,
+        background: "#DDF4FE",
+        opacity: 0.95,
+        borderRadius: "20px",
+        p: 2,
       }}
       elevation={6}
     >
