@@ -1,10 +1,10 @@
-import zIndex from "@mui/material/styles/zIndex";
 import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Button from "@mui/material/Button";
+import { useMediaQuery } from "@mui/material";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -18,6 +18,9 @@ import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
 
 export const CarerDashboardPage = () => {
+  // MediaQuery for mobile viewport
+  const isMobile = useMediaQuery("(max-width:900px)");
+
   //mutations
   const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
   const [
@@ -94,10 +97,6 @@ export const CarerDashboardPage = () => {
   }, []);
 
   const calculateRoute = async () => {
-    // if (originRef.current.value === "" || destinationRef.current.value === "") {
-    //   return;
-    // }
-
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
@@ -125,7 +124,7 @@ export const CarerDashboardPage = () => {
 
   return (
     <>
-      <Box sx={{ height: 800 }}>
+      <Box>
         {/* next appointment detail */}
         {appointmentDetail && (
           <NextVisitForCarer
@@ -133,11 +132,21 @@ export const CarerDashboardPage = () => {
             handleStatusChange={handleStatusChange}
           />
         )}
+
         {/* carer timeline box container */}
         {timelineData && (
           <Box
             zIndex="modal"
-            sx={{ backgroundColor: "#DFE2E2", width: 300, height: 400, p: 1 }}
+            sx={{
+              minWidth: isMobile ? "100%" : "400px",
+              maxWidth: isMobile ? "100%" : "400px",
+              padding: isMobile ? 4 : 0,
+              p: isMobile ? 3 : 0,
+              background: "#DDF4FE",
+              opacity: 0.95,
+              borderRadius: "20px",
+              p: 1,
+            }}
           >
             <CarerTimeline
               date={timelineDate}
@@ -146,10 +155,22 @@ export const CarerDashboardPage = () => {
             />
           </Box>
         )}
+
         {/* Appointments' directions box container */}
         <Box
           zIndex="modal"
-          sx={{ backgroundColor: "#9AC7C7", width: 300, height: 300, p: 2 }}
+          sx={{
+            backgroundColor: "#DDF4FE",
+            minWidth: isMobile ? "100%" : "400px",
+            maxWidth: isMobile ? "100%" : "400px",
+            padding: isMobile ? 4 : 0,
+            p: isMobile ? 3 : 0,
+            background: "#DDF4FE",
+            opacity: 0.95,
+            borderRadius: "20px",
+            height: 320,
+            p: 2,
+          }}
         >
           <FormControl variant="filled" sx={{ m: 1, width: 230 }}>
             <InputLabel id="demo-simple-select-filled-label">
@@ -199,15 +220,22 @@ export const CarerDashboardPage = () => {
               <h4>duration: {duration}</h4>
             </div>
 
-            <button
-              className="btn btn-primary"
-              type="button"
+            <Button
+              variant="Contained"
               onClick={calculateRoute}
+              sx={{
+                fontWeight: 100,
+                backgroundColor: "#3f3d56",
+                color: "#eef5dbff",
+                "&:hover": { backgroundColor: "#f7b801" },
+                borderRadius: "18px",
+              }}
             >
               Check Directions
-            </button>
+            </Button>
           </div>
         </Box>
+
         {/* map goes here  */}
         <Box>
           {" "}
@@ -215,8 +243,8 @@ export const CarerDashboardPage = () => {
             center={center}
             zoom={16}
             mapContainerStyle={{
-              width: "99.8%",
-              height: "90%",
+              width: "100%",
+              minHeight: isMobile ? "100%" : "930px",
               position: "absolute",
               top: "0px",
               left: "0px",

@@ -165,7 +165,15 @@ export const CarerCalendarPage = () => {
           variant="h6"
           sx={{ textAlign: isMobile ? "center" : "left" }}
         >
-          Please select a date to view appointments
+          Please select a date to view appointments.
+        </Typography>
+        <Typography
+          textAlign="center"
+          color="#3f3d56"
+          fontWeight={200}
+          sx={{ textAlign: isMobile ? "center" : "left" }}
+        >
+          Any appointments will show on a timeline.
         </Typography>
         <Grid
           container
@@ -173,21 +181,19 @@ export const CarerCalendarPage = () => {
           columnSpacing={{ xs: 1, sm: 2, md: 2 }}
           mt={3}
           paddingLeft={5}
-          paddingRight={2}
+          paddingRight={1}
           alignItems="top"
           sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
         >
-          <Grid item xs={12} s={12} md={4} paddingBottom={5}>
-            <Calendar onChange={onChange} value={calDate} pb={3} />
+          <Grid item xs={12} s={12} md={4} pb={5} justifyContent="center">
+            <Calendar
+              onChange={onChange}
+              value={calDate}
+              pb={3}
+              justifyContent="center"
+            />
           </Grid>
-          {/* {!resultArr.length && (
-            <Grid item xs={12} s={12} md={6} pt={8}>
-              <Typography color="#3f3d56" fontWeight={200}>
-                You have no appointments on the selected date. Please chose
-                another date.
-              </Typography>
-            </Grid>
-          )} */}
+
           {!isMobile && !resultArr.length && (
             <Box
               sx={{
@@ -218,7 +224,6 @@ export const CarerCalendarPage = () => {
               </Box>
             </Grid>
           )}
-
           {appointmentId && !askReallocationSuccess && (
             <Grid item sx={{ paddingTop: isMobile ? 2 : 15 }}>
               <ButtonBright
@@ -232,15 +237,6 @@ export const CarerCalendarPage = () => {
                 sx={{ paddingTop: isMobile ? 2 : 20 }}
               />
             </Grid>
-          )}
-
-          {appointmentId && !askReallocationSuccess && (
-            <div>
-              <Typography align="center" color="#00b0ff" fontWeight={200}>
-                You cannot ask for another reschedule yet (only 1 request a
-                time).
-              </Typography>
-            </div>
           )}
         </Grid>
       </Paper>
