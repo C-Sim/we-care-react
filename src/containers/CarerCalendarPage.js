@@ -131,11 +131,7 @@ export const CarerCalendarPage = () => {
           sx={{ display: "flex", flexWrap: "wrap" }}
         >
           <Grid item xs={12} s={12} md={4}>
-            <Calendar
-              onChange={onChange}
-              onClick={() => setHidden((s) => !s)}
-              value={calDate}
-            />
+            <Calendar onChange={onChange} value={calDate} />
           </Grid>
           {!resultArr.length && (
             <Grid item xs={12} s={12} md={6} pt={8}>
