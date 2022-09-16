@@ -208,7 +208,6 @@ export const SupervisorAssignPage = () => {
 
   //creates appointments with a useMutation and a loop over the array of draft appointments
   const assignAppointments = () => {
-
     //useMutation
 
     createAppointments({
@@ -219,7 +218,6 @@ export const SupervisorAssignPage = () => {
   };
 
   const resetAssign = () => {
-
     //TODO: it puts the states back to their original state
     setDateValue(format(new Date(), "yyyy-MM-dd"));
     setSelectedDate();
@@ -262,10 +260,9 @@ export const SupervisorAssignPage = () => {
           p: 3,
           mt: 2,
           minWidth: isMobile ? "90%" : "400px",
-          align: "center",
-          display: "bock",
-          width: "fit-content",
-          margin: "auto",
+          marginTop: 5,
+          marginLeft: 20,
+          marginRight: 20,
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
@@ -308,6 +305,9 @@ export const SupervisorAssignPage = () => {
           mt: 2,
           minWidth: isMobile ? "90%" : "400px",
           align: "center",
+          marginTop: 5,
+          marginLeft: 20,
+          marginRight: 20,
         }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
@@ -353,7 +353,14 @@ export const SupervisorAssignPage = () => {
       </Paper>
       <Paper
         variant="outlined"
-        sx={{ p: 3, mt: 1, minWidth: isMobile ? "90%" : "400px" }}
+        sx={{
+          p: 3,
+          mt: 1,
+          minWidth: isMobile ? "90%" : "400px",
+          marginTop: 5,
+          marginLeft: 20,
+          marginRight: 20,
+        }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
           Step 3 - Pick the patients you would like to assign to that carer
@@ -386,7 +393,6 @@ export const SupervisorAssignPage = () => {
           )}
           {patientLock && (
             <Box
-              backgroundColor="#d0cde1"
               sx={{
                 marginTop: 3,
                 maxWidth: 700,
@@ -409,7 +415,6 @@ export const SupervisorAssignPage = () => {
               >
                 Selected patients:
               </Typography>
-              <Divider />
 
               <List aria-labelledby="basic-list-demo" display="inline-block">
                 {selectedPatients.map((result) => {
@@ -426,7 +431,16 @@ export const SupervisorAssignPage = () => {
       </Paper>
       <Paper
         variant="outlined"
-        sx={{ p: 3, mt: 1, mb: 24, minWidth: isMobile ? "90%" : "400px" }}
+        sx={{
+          p: 3,
+          mt: 1,
+          mb: 24,
+          minWidth: isMobile ? "90%" : "400px",
+          marginTop: 5,
+          marginLeft: 20,
+          marginRight: 20,
+          marginBottom: 5,
+        }}
       >
         <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
           Step 4 - View the appointments based on your selections
@@ -458,7 +472,14 @@ export const SupervisorAssignPage = () => {
       {simulatedAppointments && (
         <Paper
           variant="outlined"
-          sx={{ p: 3, mt: 1, minWidth: isMobile ? "90%" : "400px" }}
+          sx={{
+            p: 3,
+            mt: 1,
+            minWidth: isMobile ? "90%" : "400px",
+            marginBottom: 10,
+            marginLeft: 20,
+            marginRight: 20,
+          }}
         >
           <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
             If you're satisfied with this selection, click the button below to
@@ -491,19 +512,29 @@ export const SupervisorAssignPage = () => {
         <div>
           {assignSuccess && (
             <>
-              <Alert severity="success">
-                The appointments have been created successfully!
-              </Alert>
-              <ButtonDark
-                label="Assign again"
-                type="button"
-                onClick={resetAssign}
-              />
-              <ButtonDark
-                label="Back to Dashboard"
-                type="button"
-                onClick={redirectToDashboard}
-              />
+              <Box
+                sx={{
+                  marginBottom: 10,
+                  marginTop: 2,
+                  marginLeft: 20,
+                  marginRight: 20,
+                }}
+              >
+                <Alert severity="success">
+                  The appointments have been created successfully!
+                </Alert>
+
+                <ButtonDark
+                  label="Assign again"
+                  type="button"
+                  onClick={resetAssign}
+                />
+                <ButtonDark
+                  label="Back to Dashboard"
+                  type="button"
+                  onClick={redirectToDashboard}
+                />
+              </Box>
             </>
           )}
           {createError && (
