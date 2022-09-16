@@ -23,7 +23,6 @@ export const CarerCalendarPage = () => {
   });
   const isMobile = useMediaQuery("(max-width:600px)");
   const [userResults, setUserResults] = useState();
-  const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
     if (data && data.appointmentsByUserId) {
@@ -38,7 +37,6 @@ export const CarerCalendarPage = () => {
   const [resultArr, setResultArr] = useState([]);
   const [appointmentId, setAppointmentId] = useState();
   const [askReallocationSuccess, setAskReallocationSuccess] = useState(false);
-  const [noAppointment, setNoAppointment] = useState(false);
 
   //mutation
   const [
@@ -83,8 +81,6 @@ export const CarerCalendarPage = () => {
       },
     });
   };
-
-  const handleText = (e) => {};
 
   return (
     <Box
@@ -133,19 +129,19 @@ export const CarerCalendarPage = () => {
           <Grid item xs={12} s={12} md={4}>
             <Calendar onChange={onChange} value={calDate} />
           </Grid>
-          {!resultArr.length && (
+          {/* {!resultArr.length && (
             <Grid item xs={12} s={12} md={6} pt={8}>
               <Typography color="#3f3d56" fontWeight={200}>
                 You have no appointments on the selected date. Please chose
                 another date.
               </Typography>
             </Grid>
-          )}
+          )} */}
           {!isMobile && !resultArr.length && (
             <Box
               sx={{
                 position: "relative",
-                marginTop: "-18%",
+                marginTop: "1%",
                 marginLeft: "auto",
                 zIndex: 20,
                 color: "#fff",
