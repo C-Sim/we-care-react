@@ -88,7 +88,13 @@ export const NavBar = () => {
             <MenuIcon></MenuIcon>
           </IconButton>
           <Box className="LogoNav">
-            <img src={logo} height="40"></img>
+            <img
+              src={logo}
+              height="40"
+              onClick={() => {
+                navigate("/", { replace: true });
+              }}
+            ></img>
           </Box>
           <Box
             variant="h6"
