@@ -4,7 +4,8 @@
 
 React-powered front-end for app allowing efficient collaboration between carers and care users.
 
-[Deployed URL](https://floating-river-62141.herokuapp.com/)
+[Deployed URL](https://floating-river-62141.herokuapp.com/) </br>
+[Server Repo](https://github.com/C-Sim/we-care-server)
 
 ## Technologies
 
