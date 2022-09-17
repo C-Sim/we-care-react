@@ -20,7 +20,7 @@ export const SignUpPage = () => {
         <Box
           sx={{
             position: "relative",
-            marginTop: "-18%",
+            marginTop: "-4%",
             marginLeft: "auto",
             zIndex: 20,
             color: "#fff",
