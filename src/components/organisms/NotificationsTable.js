@@ -32,7 +32,6 @@ import {
   UPDATE_CARER,
 } from "../../graphql/supervisorMutations";
 import { CARERS } from "../../graphql/supervisorQueries";
-import emailjs from "@emailjs/browser";
 
 import { UPDATE_APPOINTMENT, UPDATE_READ } from "../../graphql/mutations";
 
@@ -193,8 +192,6 @@ export const NotificationsTable = ({ notifications }) => {
   const [isReadStatus, setIsReadStatus] = useState(false);
   const [selectedNotificationId, setNotificationId] = useState("");
   const [selectedNotificationType, setNotificationType] = useState("");
-  const [updatedReceivedArray, setUpdatedReceivedArray] = useState();
-  const [emailError, setEmailError] = useState();
 
   const [notifData, setNotifData] = useState(notifications);
   const [approveSuccess, setApproveSuccess] = useState(false);
@@ -395,6 +392,7 @@ export const NotificationsTable = ({ notifications }) => {
           </Table>
 
           {!approveSuccess &&
+            userAccount === "supervisor" &&
             selectedNotificationType === "New patient review" && (
               <Box
                 sx={{ m: 1, display: "flex", justifyContent: "space-around" }}
@@ -436,6 +434,7 @@ export const NotificationsTable = ({ notifications }) => {
           )}
 
           {!reallocateSuccess &&
+            userAccount === "supervisor" &&
             selectedNotificationType === "Schedule change" && (
               <Box
                 sx={{ m: 1, display: "flex", justifyContent: "space-around" }}
