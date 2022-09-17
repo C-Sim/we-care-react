@@ -32,7 +32,7 @@ React-powered front-end for app allowing efficient collaboration between carers 
 </details>
 
 <details>
-<summary>Sample Page: Desktop</summary>
+<summary>Sample Page: Desktop - Supervisor page - Add a carer to the team</summary>
 
 ![sample-dt](src/components/atoms/images/sample-dt.png)
 
@@ -48,9 +48,44 @@ I WANT to access my all the information about care in one place and make live ch
 SO THAT the quality of care provision is optimised
 ```
 
+### Supervisor
+
+Tasks and actions that can be performed by a supervisor on the app:
+
+- see my team's performance
+- review notifications and act on them (for example: approve a new patient, reallocate an appointment following a carer's request)
+- add a carer to the team (by creating a carer profile)
+- assign patients to a carer (which creates the appointments for that carer's timeline)
+
+### Carer
+
+Tasks and actions that can be performed by a carer on the app:
+
+- see my next working day timeline
+- ability to check in / check out of my appointments (for live feedback)
+- ability to check the distance between 2 appointments using the integrated google map on the carer dashboard
+- ability to add my carer notes to an appointment
+- view my patient's info
+- consult my patient's past care notes
+- consult any day on the calendar page and see my working timeline for that day
+- ability to ask for one of my appointments to be rescheduled (pending supervisor review)
+- edit my user info (such as address, phone number, email)
+- see my notifications (for example: approval from supervisor, notes from patients)
+
+### Patient
+
+Tasks and actions that can be performed by a patient on the app:
+
+- sign up as a new patient
+- see my next week timeline
+- ability to add my notes to an appointment (if I want to share specific requirements with my carer prior to their visit)
+- view my carer's info
+- edit my user info (such as address, phone number, email)
+- add a care plan to my profile (providing more specific information such as disabilities, dietary requirements etc)
+
 ## Sample accounts
 
-When accessing the application, the following sample user accounts can be used:
+When accessing the deployed application, the following sample user accounts can be used:
 
 - Log in as a carer: Darien53@example.org
 - Log in as a patient: Riley_Lueilwitz@example.org
