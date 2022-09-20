@@ -126,15 +126,11 @@ export const SignUpForm = ({ isMobile }) => {
           imageUrl: formData.imageUrl,
         };
 
-        console.log(signupInput);
-
         const patientInput = {
           gender: gender,
           genderPreference: genderCare,
           days: day,
         };
-
-        console.log(patientInput);
 
         signup({
           variables: {
@@ -159,15 +155,11 @@ export const SignUpForm = ({ isMobile }) => {
         address: selectedAddressId,
       };
 
-      console.log(signupInput);
-
       const patientInput = {
         gender: gender,
         genderPreference: genderCare,
         days: day,
       };
-
-      console.log(patientInput);
 
       signup({
         variables: {
