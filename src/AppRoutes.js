@@ -7,7 +7,7 @@ import { CarerDashboardPage } from "./containers/CarerDashboardPage";
 import { PatientDashboardPage } from "./containers/PatientDashboardPage";
 import { SupervisorDashboardPage } from "./containers/SupervisorDashboardPage";
 import { AboutPage } from "./containers/AboutPage";
-
+import { AwaitApproval } from "./containers/AwaitApproval";
 import { CarePlanPage } from "./containers/CarePlanPage";
 import { NotificationsPage } from "./containers/NotificationsPage";
 import { SupervisorCreateCarerPage } from "./containers/SupervisorCreateCarerPage";
@@ -19,7 +19,7 @@ import { useAuth } from "./context/AppProvider";
 import { CarerCalendarPage } from "./containers/CarerCalendarPage";
 
 export const AppRoutes = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
 
   return (
     <Routes>
@@ -32,7 +32,18 @@ export const AppRoutes = () => {
         </>
       )}
 
-      {isLoggedIn && (
+      {isLoggedIn && !user.approvedStatus && (
+        <>
+          <Route path="/about" element={<AboutPage />} />
+
+          <Route path="/patient-dashboard" element={<AwaitApproval />} />
+
+          <Route path="/patient-profile" element={<AwaitApproval />} />
+
+          <Route path="/care-plan" element={<AwaitApproval />} />
+        </>
+      )}
+      {isLoggedIn && user.approvedStatus && (
         <>
           <Route path="/about" element={<AboutPage />} />
 
