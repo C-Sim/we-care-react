@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { get, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import Typography from "@mui/material/Typography";
@@ -14,7 +14,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Divider from "@mui/material/Divider";
+
 import Link from "@mui/material/Link";
 import FormHelperText from "@mui/material/FormHelperText";
 import Dialog from "@mui/material/Dialog";
@@ -89,6 +89,7 @@ export const SignUpForm = ({ isMobile }) => {
   }, [addressLookupData]);
 
   const onSubmit = (formData) => {
+    debugger;
     if (formData.password !== formData.confirmPassword) {
       setError("confirmPassword", {
         type: "manual",
@@ -99,6 +100,54 @@ export const SignUpForm = ({ isMobile }) => {
         type: "manual",
         message: "Please select an address",
       });
+    } else if (formData.imageUrl) {
+      const isValidUrl = (urlString) => {
+        var urlPattern = new RegExp(
+          "^(https?:\\/\\/)?" + // validate protocol
+            "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // validate domain name
+            "((\\d{1,3}\\.){3}\\d{1,3}))" + // validate OR ip (v4) address
+            "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // validate port and path
+            "(\\?[;&a-z\\d%_.~+=-]*)?" + // validate query string
+            "(\\#[-a-z\\d_]*)?$",
+          "i"
+        ); // validate fragment locator
+        return !!urlPattern.test(urlString);
+      };
+      const isValid = isValidUrl(formData.imageUrl);
+      if (isValid) {
+        const signupInput = {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phoneNumber: formData.phoneNumber,
+          email: formData.email,
+          password: formData.password,
+          postcode: formData.postcode,
+          address: selectedAddressId,
+          imageUrl: formData.imageUrl,
+        };
+
+        console.log(signupInput);
+
+        const patientInput = {
+          gender: gender,
+          genderPreference: genderCare,
+          days: day,
+        };
+
+        console.log(patientInput);
+
+        signup({
+          variables: {
+            signupInput,
+            patientInput,
+          },
+        });
+      } else {
+        setError("imageUrl", {
+          type: "manual",
+          message: "Please enter a valid URL",
+        });
+      }
     } else {
       const signupInput = {
         firstName: formData.firstName,
@@ -110,11 +159,15 @@ export const SignUpForm = ({ isMobile }) => {
         address: selectedAddressId,
       };
 
+      console.log(signupInput);
+
       const patientInput = {
         gender: gender,
         genderPreference: genderCare,
         days: day,
       };
+
+      console.log(patientInput);
 
       signup({
         variables: {
@@ -243,7 +296,6 @@ export const SignUpForm = ({ isMobile }) => {
           <Typography component="h2" variant="button" align="left">
             User account Details
           </Typography>
-
           <TextField
             required
             error={!!errors.firstName}
@@ -278,6 +330,10 @@ export const SignUpForm = ({ isMobile }) => {
                 ? "Please enter your first name."
                 : ""
             }
+            {...register("lastName", {
+              required: true,
+              minLength: 2,
+            })}
           />
           <TextField
             required
@@ -289,6 +345,19 @@ export const SignUpForm = ({ isMobile }) => {
               required: true,
             })}
           />
+          <TextField
+            label="Image URL"
+            error={!!errors.imageUrl}
+            variant="outlined"
+            {...register("imageUrl", {
+              required: false,
+            })}
+          />
+          {!!errors.imageUrl && (
+            <FormHelperText error={!!errors.imageUrl}>
+              {errors.imageUrl?.message}
+            </FormHelperText>
+          )}
           <FormControl sx={{ m: 1 }} variant="outlined">
             <InputLabel error={!!errors.password} htmlFor="password">
               Password
@@ -426,7 +495,6 @@ export const SignUpForm = ({ isMobile }) => {
           <Typography variant="caption" align="left">
             Days Care Required*
           </Typography>
-
           {/* check boxes */}
           <FormGroup
             sx={{
