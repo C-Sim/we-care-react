@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,11 +16,14 @@ import logo from "../atoms/images/WeCare-1_260x60.png";
 import { useAuth } from "../../context/AppProvider";
 import { getNavItems } from "../../utils/getNavItems";
 import { NotificationBadge } from "../molecules/NotificationBadge";
+import { UNREAD_NOTIFICATIONS } from "../../graphql/queries";
 
 export const NavBar = () => {
+  const { data: unreadData } = useQuery(UNREAD_NOTIFICATIONS);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { isLoggedIn, user, setIsLoggedIn } = useAuth();
+  const [badgeContent, setBadgeContent] = useState(0);
 
   const logOut = () => {
     localStorage.clear();
@@ -30,6 +34,11 @@ export const NavBar = () => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  //useEffects hooks to get unread notification count into badge
+  useEffect(() => {
+    setBadgeContent(unreadData?.unreadNotificationsByUserId?.unreadCount);
+  }, [unreadData]);
 
   const navItems = getNavItems(isLoggedIn, user?.accountType);
 
@@ -127,7 +136,7 @@ export const NavBar = () => {
                   navigate("/notifications", { replace: true });
                 }}
               >
-                <NotificationBadge notificationCount="4" />
+                <NotificationBadge notificationCount={badgeContent} />
               </Button>
             )}
 
