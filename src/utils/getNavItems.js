@@ -12,7 +12,7 @@ const navItems = {
       path: "/carer-profile",
     },
 
-    { label: "Notifications", path: "/notifications" },
+    // { label: "Notifications", path: "/notifications" },
 
     { label: "Calendar", path: "/carer-calendar" },
 
@@ -31,10 +31,10 @@ const navItems = {
     { label: "Dashboard", path: "/patient-dashboard" },
   ],
   supervisor: [
-    {
-      label: "Notifications",
-      path: "/notifications",
-    },
+    // {
+    //   label: "Notifications",
+    //   path: "/notifications",
+    // },
     { label: "Add Carer", path: "/create-carer" },
 
     { label: "Assignments", path: "/supervisor-assign" },
