@@ -1,14 +1,16 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { useState, useEffect } from "react";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
+import calendar from "../components/atoms/images/calendar.png";
 import { PatientTimeline } from "../components/molecules/PatientTimeline";
 import { NextVisitPatient } from "../components/organisms/NextVisitPatient";
 
 import { NEXT_WEEK_APPOINTMENTS } from "../graphql/queries";
-
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 export const PatientDashboardPage = () => {
+  const isMobile = useMediaQuery("(max-width:900px)");
   const { data, loading, error } = useQuery(NEXT_WEEK_APPOINTMENTS, {
     fetchPolicy: "network-only",
   });
@@ -27,7 +29,13 @@ export const PatientDashboardPage = () => {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        p: 0,
+        width: "100%",
+        height: "85%",
+      }}
+    >
       <Typography
         variant="h3"
         component="h1"
@@ -51,6 +59,22 @@ export const PatientDashboardPage = () => {
       {appointmentDetail && (
         <NextVisitPatient appointmentDetail={appointmentDetail} />
       )}
-    </>
+      {!appointmentDetail && !isMobile && (
+        <Box
+          sx={{
+            position: "absolute",
+            right: 10,
+            top: 150,
+            marginTop: "-2%",
+            marginLeft: "6%",
+            zIndex: 20,
+            color: "#fff",
+            fontWeight: "bold",
+          }}
+        >
+          <img src={calendar} height="500vh" />
+        </Box>
+      )}
+    </Box>
   );
 };
