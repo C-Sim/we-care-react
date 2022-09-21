@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,8 +18,9 @@ import { getNavItems } from "../../utils/getNavItems";
 import { NotificationBadge } from "../molecules/NotificationBadge";
 import { UNREAD_NOTIFICATIONS } from "../../graphql/queries";
 
-export const NavBar = () => {
-  const { data: unreadData } = useQuery(UNREAD_NOTIFICATIONS);
+export const NavBar = ({ clearClient }) => {
+  const [getUnreadCount, { data: unreadData }] =
+    useLazyQuery(UNREAD_NOTIFICATIONS);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { isLoggedIn, user, setIsLoggedIn } = useAuth();
@@ -28,6 +29,8 @@ export const NavBar = () => {
   const logOut = () => {
     localStorage.clear();
     setIsLoggedIn(false);
+    setBadgeContent(0);
+    clearClient();
     navigate("/login");
   };
 
@@ -35,7 +38,11 @@ export const NavBar = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  //useEffects hooks to get unread notification count into badge
+  //useEffects hooks to get unread notification count on load
+  useEffect(() => {
+    getUnreadCount();
+  }, [isLoggedIn]);
+  //useEffects hooks to get unread notification count if unreadData changes
   useEffect(() => {
     setBadgeContent(unreadData?.unreadNotificationsByUserId?.unreadCount);
   }, [unreadData]);
