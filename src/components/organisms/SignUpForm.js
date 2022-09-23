@@ -272,12 +272,16 @@ export const SignUpForm = ({ isMobile }) => {
             label="Last name"
             variant="outlined"
             helperText={
-              getValues("firstName")?.length < 2
+              getValues("lastName")?.length < 2
                 ? "Please enter at least 2 characters"
                 : !!errors.lastName
-                ? "Please enter your first name."
+                ? "Please enter your last name."
                 : ""
             }
+            {...register("lastName", {
+              required: true,
+              minLength: 2,
+            })}
           />
           <TextField
             required
