@@ -38,6 +38,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const clearClient = () => {
+  client.clearStore().then(() => {
+    client.resetStore();
+  });
+};
+
 export const App = () => {
   return (
     <ApolloProvider client={client}>
@@ -51,7 +57,7 @@ export const App = () => {
             }}
             spacing={0}
           >
-            <NavBar />
+            <NavBar clearClient={clearClient} />
             <AppRoutes />
             <Box sx={{ marginTop: "auto" }}>
               <Footer />

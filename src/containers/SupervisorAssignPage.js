@@ -3,10 +3,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { format, addHours, parseISO } from "date-fns";
+import { format, addHours } from "date-fns";
 import { Dropdown } from "../components/molecules/Dropdown";
 import { CheckList } from "../components/molecules/CheckList";
-import { CarerTimeline } from "../components/molecules/CarerTimeline";
 import { DatePicker } from "../components/atoms/DatePicker";
 import { ButtonDark } from "../components/atoms/ButtonDark";
 import {
@@ -15,7 +14,6 @@ import {
   Typography,
   useMediaQuery,
   Box,
-  Divider,
   List,
   ListItem,
 } from "@mui/material";
@@ -45,18 +43,14 @@ export const SupervisorAssignPage = () => {
   const isMobile = useMediaQuery("(max-width:900px)");
   const navigate = useNavigate();
   //mutations
-  const [
-    getAvailableCarers,
-    { data: carerData, loading: carerLoading, error: carerError },
-  ] = useLazyQuery(AVAILABLE_CARERS, {
-    fetchPolicy: "network-only",
-  });
-  const [
-    getAvailablePatients,
-    { data: patientData, loading: patientLoading, error: patientError },
-  ] = useLazyQuery(AVAILABLE_PATIENTS, {
-    fetchPolicy: "network-only",
-  });
+  const [getAvailableCarers, { data: carerData, loading: carerLoading }] =
+    useLazyQuery(AVAILABLE_CARERS, {
+      fetchPolicy: "network-only",
+    });
+  const [getAvailablePatients, { data: patientData, loading: patientLoading }] =
+    useLazyQuery(AVAILABLE_PATIENTS, {
+      fetchPolicy: "network-only",
+    });
   const [
     createAppointments,
     { data: createData, loading: createLoading, error: createError },
@@ -469,7 +463,7 @@ export const SupervisorAssignPage = () => {
           />
         )}
       </Paper>
-      {simulatedAppointments && (
+      {simulatedAppointments && !assignSuccess && (
         <Paper
           variant="outlined"
           sx={{

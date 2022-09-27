@@ -10,6 +10,7 @@ React-powered front-end for app allowing efficient collaboration between carers 
 ## Technologies
 
 - React
+- MUI
 - MongoDB
 - Mongoose ODM
 - GraphQL

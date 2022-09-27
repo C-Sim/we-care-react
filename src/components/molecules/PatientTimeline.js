@@ -1,4 +1,5 @@
 import * as React from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -14,6 +15,7 @@ import { Paper } from "@mui/material";
 import { format } from "date-fns";
 
 export const PatientTimeline = ({ appointments, viewAppointment }) => {
+  const isMobile = useMediaQuery("(max-width:900px)");
   return (
     <Paper
       sx={{

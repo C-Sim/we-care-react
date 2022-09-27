@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,21 +15,37 @@ import Button from "@mui/material/Button";
 import logo from "../atoms/images/WeCare-1_260x60.png";
 import { useAuth } from "../../context/AppProvider";
 import { getNavItems } from "../../utils/getNavItems";
+import { NotificationBadge } from "../molecules/NotificationBadge";
+import { UNREAD_NOTIFICATIONS } from "../../graphql/queries";
 
-export const NavBar = () => {
+export const NavBar = ({ clearClient }) => {
+  const [getUnreadCount, { data: unreadData }] =
+    useLazyQuery(UNREAD_NOTIFICATIONS);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { isLoggedIn, user, setIsLoggedIn } = useAuth();
+  const [badgeContent, setBadgeContent] = useState(0);
 
   const logOut = () => {
     localStorage.clear();
     setIsLoggedIn(false);
+    setBadgeContent(0);
+    clearClient();
     navigate("/login");
   };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  //useEffects hooks to get unread notification count on load
+  useEffect(() => {
+    getUnreadCount();
+  }, [isLoggedIn]);
+  //useEffects hooks to get unread notification count if unreadData changes
+  useEffect(() => {
+    setBadgeContent(unreadData?.unreadNotificationsByUserId?.unreadCount);
+  }, [unreadData]);
 
   const navItems = getNavItems(isLoggedIn, user?.accountType);
 
@@ -38,11 +55,23 @@ export const NavBar = () => {
       sx={{ textAlign: "center", backgroundColor: "#d0cde1" }}
     >
       <List>
+        <ListItem key="notifications" disablePadding>
+          <ListItemButton
+            sx={{
+              textAlign: "center",
+            }}
+            onClick={() => {
+              navigate("/notifications", { replace: true });
+            }}
+          >
+            <ListItemText primary="Notifications" />
+          </ListItemButton>
+        </ListItem>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
             <ListItemButton
               sx={{
-                textAlign: "centre",
+                textAlign: "center",
               }}
               onClick={() => {
                 navigate(item.path, { replace: true });
@@ -106,6 +135,18 @@ export const NavBar = () => {
               display: { xs: "none", sm: "block" },
             }}
           >
+            {isLoggedIn && (
+              <Button
+                key="notifications"
+                sx={{ color: "#fff", fontWeight: "100" }}
+                onClick={() => {
+                  navigate("/notifications", { replace: true });
+                }}
+              >
+                <NotificationBadge notificationCount={badgeContent} />
+              </Button>
+            )}
+
             {navItems.map((item) => (
               <Button
                 key={item.label}
@@ -150,10 +191,11 @@ export const NavBar = () => {
               sx={{
                 backgroundColor: "#d0cde1",
                 color: "#212121",
+                textAlign: "center",
               }}
               onClick={logOut}
             >
-              <ListItemText primary="Logout" />
+              <ListItemText primary="Log out" />
             </ListItemButton>
           )}
           {drawer}

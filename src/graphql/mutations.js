@@ -30,6 +30,7 @@ export const LOGIN = gql`
         lastName
         email
         accountType
+        approvedStatus
         phoneNumber
         postcode
         address {

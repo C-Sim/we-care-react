@@ -316,3 +316,11 @@ export const VIEW_PATIENT_PROFILE = gql`
     }
   }
 `;
+
+export const UNREAD_NOTIFICATIONS = gql`
+  query UnreadNotificationsByUserId {
+    unreadNotificationsByUserId {
+      unreadCount
+    }
+  }
+`;
