@@ -6,9 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
 
-import { ButtonBright } from "../components/atoms/ButtonBright";
 import { AppContext } from "../context/AppProvider";
 import { UserInfoForm } from "../components/organisms/updateInfo/UserInfoForm";
 

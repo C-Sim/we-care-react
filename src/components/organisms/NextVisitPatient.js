@@ -1,14 +1,11 @@
-import { useState, useRef, useEffect } from "react";
-import { get, useForm } from "react-hook-form";
-import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+
 import Stack from "@mui/material/Stack";
 import LoadingButton from "@mui/lab/LoadingButton";
 import FormControl from "@mui/material/FormControl";
 
-import FormHelperText from "@mui/material/FormHelperText";
-import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -38,9 +35,6 @@ export const NextVisitPatient = ({ appointmentDetail }) => {
     register,
     formState: { errors },
     handleSubmit,
-    setError,
-    clearErrors,
-    getValues,
   } = useForm({
     mode: "all",
   });

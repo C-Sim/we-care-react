@@ -9,14 +9,13 @@ import useWindowDimensions from "../utils/windowSize";
 import {
   useJsApiLoader,
   GoogleMap,
-  Marker,
   DirectionsRenderer,
   Circle,
 } from "@react-google-maps/api";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { NextVisitForCarer } from "../components/organisms/NextVisit";
 import { CarerTimeline } from "../components/molecules/CarerTimeline";
-import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { NEXT_WORKING_DAY_APPOINTMENTS } from "../graphql/queries";
 import visitImage from "../components/atoms/images/home-visit.svg";
 

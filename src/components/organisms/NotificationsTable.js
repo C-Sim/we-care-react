@@ -33,7 +33,7 @@ import {
 } from "../../graphql/supervisorMutations";
 import { CARERS } from "../../graphql/supervisorQueries";
 
-import { UPDATE_APPOINTMENT, UPDATE_READ } from "../../graphql/mutations";
+import { UPDATE_READ } from "../../graphql/mutations";
 
 const PaperComponent = (props) => {
   return (

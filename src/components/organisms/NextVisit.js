@@ -1,9 +1,7 @@
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
 
 import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -12,9 +10,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import { format } from "date-fns";
 
 import { useState, useRef, useEffect } from "react";
-import { get, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { ButtonDisabled } from "../atoms/ButtonDisabled";
 import { UPDATE_CHECKIN } from "../../graphql/mutations";
 import { UPDATE_CHECKOUT } from "../../graphql/mutations";
@@ -83,9 +80,6 @@ export const NextVisitForCarer = ({
     register,
     formState: { errors },
     handleSubmit,
-    setError,
-    clearErrors,
-    getValues,
   } = useForm({
     mode: "all",
   });

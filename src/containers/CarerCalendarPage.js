@@ -9,7 +9,7 @@ import { ButtonBright } from "../components/atoms/ButtonBright";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { APPOINTMENTS_BY_ID } from "../graphql/queries";
 import "react-calendar/dist/Calendar.css";
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Paper } from "@mui/material";
 import { useQuery, useMutation } from "@apollo/client";
 import Calendar from "react-calendar";
