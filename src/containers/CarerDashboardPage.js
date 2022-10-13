@@ -189,7 +189,8 @@ export const CarerDashboardPage = () => {
                       value={appointment.patientId.address.fullAddress}
                       key={index}
                     >
-                      {appointment.patientId.address.fullAddress}
+                      {appointment.patientId.address.fullAddress} ,{" "}
+                      {appointment.patientId.postcode}
                     </MenuItem>
                   ))}
                 </Select>
@@ -209,7 +210,8 @@ export const CarerDashboardPage = () => {
                       value={appointment.patientId.address.fullAddress}
                       key={index}
                     >
-                      {appointment.patientId.address.fullAddress}
+                      {appointment.patientId.address.fullAddress} ,{" "}
+                      {appointment.patientId.postcode}
                     </MenuItem>
                   ))}
                 </Select>
