@@ -16,7 +16,6 @@ export const NotificationsPage = () => {
 
   const { data, loading, error } = useQuery(RECEIVED_NOTIFICATIONS);
 
-  console.log(data);
   return (
     <Box>
       <PageTitle title="Notifications" />
