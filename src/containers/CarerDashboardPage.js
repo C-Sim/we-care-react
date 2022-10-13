@@ -5,6 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import { Grid, Typography, useMediaQuery } from "@mui/material";
+import useWindowDimensions from "../utils/windowSize";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -22,6 +23,7 @@ import visitImage from "../components/atoms/images/home-visit.svg";
 export const CarerDashboardPage = () => {
   // MediaQuery for mobile viewport
   const isMobile = useMediaQuery("(max-width:900px)");
+  const { width } = useWindowDimensions();
 
   //mutations
   const { data, loading } = useQuery(NEXT_WORKING_DAY_APPOINTMENTS);
@@ -138,7 +140,7 @@ export const CarerDashboardPage = () => {
           <Grid
             item
             xs={12}
-            md={4}
+            md={width > 1200 ? 3 : 4}
             // zIndex="modal"
             sx={{
               // minWidth: isMobile ? "100%" : "400px",
@@ -216,8 +218,16 @@ export const CarerDashboardPage = () => {
               <div className="map-settings">
                 <hr className="mt-0 mb-3" />
                 <div>
-                  <h4>distance: {distance}</h4>
-                  <h4>duration: {duration}</h4>
+                  {distance && (
+                    <Typography variant="subtitle1">
+                      Distance: {distance}
+                    </Typography>
+                  )}
+                  {duration && (
+                    <Typography variant="subtitle1">
+                      Duration: {duration}
+                    </Typography>
+                  )}
                 </div>
 
                 <Button
@@ -242,7 +252,7 @@ export const CarerDashboardPage = () => {
         <Grid
           item
           xs={12}
-          md={4}
+          md={width > 1200 ? 5 : 4}
           sx={{ backgroundColor: "#DDF4FE", zIndex: "0" }}
         >
           {" "}

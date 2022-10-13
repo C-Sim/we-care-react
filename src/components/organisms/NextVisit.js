@@ -463,21 +463,25 @@ export const NextVisitForCarer = ({
     >
       <div>
         <Typography component="h1" variant="h6" align="left" sx={{ mb: 2 }}>
-          Your appointment details
+          Your Appointment Details
         </Typography>
-        <h4>{appointmentDetail.title}</h4>
-        <h4>
-          {appointmentDetail.patientId.patientProfileId.username} |
+        <Typography component="p" variant="body2" align="left" sx={{ mb: 2 }}>
+          {appointmentDetail.title}
+        </Typography>
+        <Typography component="p" variant="body2" align="left" sx={{ mb: 2 }}>
+          {appointmentDetail.patientId.patientProfileId.username} |{" "}
           {appointmentDetail.patientId.patientProfileId.gender}
-        </h4>
-        <h4>
+        </Typography>
+        <Typography component="p" variant="body2" align="left" sx={{ mb: 2 }}>
           {appointmentDetail.patientId.address.fullAddress} |{" "}
           {appointmentDetail.patientId.postcode}
-        </h4>
-        <h4>
+        </Typography>
+        <Typography component="p" variant="body2" align="left" sx={{ mb: 2 }}>
           Start Time: {format(new Date(appointmentDetail.start), "HH:mm")}
-        </h4>
-        <h4>End Time: {format(new Date(appointmentDetail.end), "HH:mm")}</h4>
+        </Typography>
+        <Typography component="p" variant="body2" align="left" sx={{ mb: 2 }}>
+          End Time: {format(new Date(appointmentDetail.end), "HH:mm")}
+        </Typography>
       </div>
       <CheckInAndOut />
       <UpdateNotes />
