@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
 
 import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -192,24 +193,26 @@ export const NextVisitForCarer = ({
         onSubmit={handleSubmit(handleUpdateNotes)}
       >
         <Stack>
-          <TextField
-            sx={{
-              width: isMobile ? "80%" : "450px",
-              mt: 2,
-            }}
-            required
-            id="carerNote"
-            label="Carer's note"
-            multiline
-            row={4}
-            variant="filled"
-            helperText={
-              !!errors.carerNote ? "Please enter your note here " : ""
-            }
-            {...register("carerNote", {
-              required: true,
-            })}
-          />
+          <FormControl>
+            <TextField
+              sx={{
+                width: isMobile ? "80%" : "450px",
+                mt: 2,
+              }}
+              required
+              id="carerNote"
+              label="Carer's note"
+              multiline
+              row={4}
+              variant="filled"
+              helperText={
+                !!errors.carerNote ? "Please enter your note here " : ""
+              }
+              {...register("carerNote", {
+                required: true,
+              })}
+            />
+          </FormControl>
         </Stack>
         <Stack>
           <LoadingButton
@@ -403,9 +406,12 @@ export const NextVisitForCarer = ({
   const PastVisitNotesBtn = () => {
     if (pastVisitNotesBtn) {
       if (notesData) {
+        const pastNotes = notesData.appointmentNotesByUserId.filter(
+          (note) => new Date(note.start) <= new Date()
+        );
         return (
           <>
-            {notesData.appointmentNotesByUserId.map((note, index) => (
+            {pastNotes.map((note, index) => (
               <Typography
                 key={index}
                 component="h3"

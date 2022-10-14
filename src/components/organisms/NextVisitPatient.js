@@ -145,7 +145,7 @@ export const NextVisitPatient = ({ appointmentDetail }) => {
               borderRadius: "18px",
             }}
           >
-            Update carer notes
+            Update appointment notes
           </LoadingButton>
           {noteSuccess && (
             <Typography
