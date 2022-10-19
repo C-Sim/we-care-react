@@ -411,18 +411,30 @@ export const NextVisitForCarer = ({
         );
         return (
           <>
-            {pastNotes.map((note, index) => (
+            {pastNotes.length ? (
+              pastNotes.map((note, index) => (
+                <Typography
+                  key={index}
+                  component="h3"
+                  variant="caption"
+                  align="left"
+                  sx={{ mb: 2 }}
+                >
+                  {format(new Date(note.start), "yyyy-MM-dd")} :{" "}
+                  {note.carerNotes.join(" - ")}
+                </Typography>
+              ))
+            ) : (
               <Typography
-                key={index}
-                component="h3"
-                variant="caption"
+                key="no-notes"
+                component="h1"
+                variant="h6"
                 align="left"
                 sx={{ mb: 2 }}
               >
-                {format(new Date(note.start), "yyyy-MM-dd")} :{" "}
-                {note.carerNotes.join(" - ")}
+                No Carer notes for this patient yet.
               </Typography>
-            ))}
+            )}
           </>
         );
       } else {

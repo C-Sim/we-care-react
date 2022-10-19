@@ -413,9 +413,16 @@ export const SupervisorAssignPage = () => {
               <List aria-labelledby="basic-list-demo" display="inline-block">
                 {selectedPatients.map((result) => {
                   return (
-                    <ListItem key={result} value={result}>
+                    <Typography
+                      key={result}
+                      component="h4"
+                      value={result}
+                      variant="subtitle1"
+                      align="left"
+                      sx={{ mb: 2 }}
+                    >
                       {result}
-                    </ListItem>
+                    </Typography>
                   );
                 })}
               </List>
